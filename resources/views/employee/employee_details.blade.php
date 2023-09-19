@@ -389,8 +389,6 @@
                             </div>
                         </div>
 
-
-
                         {{-- Document --}}
                         <div class="tab-pane fade" id="nav-document" role="tabpanel" aria-labelledby="nav-document-tab">
 
@@ -962,6 +960,7 @@
                                 <div class="col-md-12">
                                     <div class="text-left">
                                         <div class="table-responsive">
+                                       
                                             <table id="ul-contact-list" class="display table data_datatable"
                                                 >
                                                 <thead>

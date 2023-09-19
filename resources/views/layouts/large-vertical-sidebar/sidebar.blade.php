@@ -119,8 +119,7 @@
                 </li>
             @endcan
 
-            @if (auth()->user()->can('employee_view') ||
-    auth()->user()->can('employee_add'))
+            @if (auth()->user()->can('employee_view') || auth()->user()->can('employee_add') )
                 <li class="nav-item {{ request()->is('employees') || request()->is('employees/*') ? 'active' : '' }}"
                     data-item="employees">
                     <a class="nav-item-hold" href="#">
@@ -143,11 +142,7 @@
                     <div class="triangle"></div>
                 </li>
             @endcan
-
-
-
-
-
+            
             @can('attendance_view')
                 <li class="nav-item {{ request()->is('daily_attendance') || request()->is('attendances/*') ? 'active' : '' }}"
                     data-item="attendances">
@@ -175,8 +170,7 @@
                 </li>
             @endif
 
-            @if (auth()->user()->can('leave_view') ||
-    auth()->user()->can('leave_type'))
+            @if (auth()->user()->can('leave_view') ||auth()->user()->can('leave_type'))
                 <li class="nav-item {{ request()->is('leave') || request()->is('leave_type') ? 'active' : '' }}"
                     data-item="leave">
                     <a class="nav-item-hold" href="#">
@@ -288,6 +282,13 @@
                     </a>
                 </li>
             @endcan
+            <li class="nav-item">
+                <a href="{{ route('attendances.index') }}"
+                    class="{{ Route::currentRouteName() == 'attendances.index' ? 'open' : '' }}">
+                    <i class="nav-icon i-Home-4"></i>
+                    <span class="item-name">{{ __('translate.Home_Office') }}</span>
+                </a>
+            </li>
         </ul>
 
 
@@ -343,7 +344,15 @@
                     </a>
                 </li>
             @endcan
-            
+            @can('comp_docs_link_view')
+                 <li class="nav-item">
+                    <a class="{{ Route::currentRouteName() == 'comp_docs_links.index' ? 'open' : '' }}"
+                         href="{{ route('comp_docs_links.index') }}">
+                         <i class="nav-icon i-Letter-Open"></i>
+                         <span class="item-name">{{ __('translate.Docs_&_Links') }}</span>
+                     </a>
+                 </li>
+            @endcan
 
         </ul>
 

@@ -568,6 +568,26 @@ class PermissionsSeeder extends Seeder
 			'id'    => 111,
 			'name'  => 'kanban_task',
 			'guard_name'  => 'web',
+		],
+		[
+			'id'    => 112,
+			'name'  => 'comp_docs_link_view',
+			'guard_name'  => 'web',
+		],
+		[
+			'id'    => 113,
+			'name'  => 'comp_docs_link_add',
+			'guard_name'  => 'web',
+		],
+		[
+			'id'    => 114,
+			'name'  => 'comp_docs_link_edit',
+			'guard_name'  => 'web',
+		],
+		[
+			'id'    => 115,
+			'name'  => 'comp_docs_link_delete',
+			'guard_name'  => 'web',
 		])
 	);
     }

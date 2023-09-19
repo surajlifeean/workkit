@@ -837,6 +837,7 @@
                                                         <th>{{ __('translate.Finish_Date') }}</th>
                                                         <th>{{ __('translate.Days') }}</th>
                                                         <th>{{ __('translate.Status') }}</th>
+                                                        <th>{{ __('translate.Action') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -847,6 +848,13 @@
                                                         <td>{{$leave->end_date}}</td>
                                                         <td>{{$leave->days}}</td>
                                                         <td>{{$leave->status}}</td>
+                                                        <td>
+                                                            <a @click="Cancel_leave( {{auth()->user()->id}}, {{$leave->id}})"
+                                                                class="ul-link-action text-danger mr-1" data-toggle="tooltip"
+                                                                data-placement="top" title="Cancel Leave Request">
+                                                                <i class="i-Close-Window"></i>
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
@@ -977,6 +985,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
 
@@ -1351,6 +1360,35 @@
             this.Get_leave_types();
             $('#Leave_Modal').modal('show');
         },
+
+        Cancel_leave(id, leave_id) {
+
+               swal({
+                   title: '{{ __('translate.Are_you_sure') }}',
+                   text: '{{ __('translate.You_wont_be_able_to_revert_this') }}',
+                   type: 'warning',
+                   showCancelButton: true,
+                   confirmButtonColor: '#0CC27E',
+                   cancelButtonColor: '#FF586B',
+                   confirmButtonText: '{{ __('translate.Yes') }}',
+                   cancelButtonText: '{{ __('translate.No_cancel') }}',
+                   confirmButtonClass: 'btn btn-primary mr-5',
+                   cancelButtonClass: 'btn btn-danger',
+                   buttonsStyling: false
+               }).then(function () {
+                       
+                       axios
+                           .post("/cancel_leave_by_employee/" + id + '/' + leave_id)
+                           .then((res) => {
+                               console.log(res.data);
+                               location.reload();
+                               toastr.success(res.data.success);
+                           })
+                           .catch(() => {
+                            toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                           });
+                   });
+         },
 
          //---------------------- Get_leave_types  ------------------------------\\
          Get_leave_types() {
