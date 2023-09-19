@@ -281,6 +281,21 @@ class LeaveController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function cancelLeave($id, $leave_id){
+        $user_auth = auth()->user();
+        if ( $user_auth->id != $id) {
+            return abort('403', __('You are not authorized'));
+        }
+        $leave = Leave::where('id', $leave_id)->where('status', 'pending')->first();
+        if ($leave) {
+           $leave->deleted_at = Carbon::now();
+           $leave->save();
+           return response()->json(['success' => 'Leave successfully canceled.']);
+        } else {
+            return abort('403', __('You are not authorized'));
+        }
+    }
+
     public function destroy($id)
     {
         $user_auth = auth()->user();

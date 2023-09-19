@@ -19,6 +19,9 @@ return [
     'Add_Experience' => 'Ajouter',
     'Announcement_List' => 'Liste des annonces',
     'Announcements' => 'annonces',
+    'Docs_&_Links' => "Documents et liens de l'entreprise",
+    'Docs_&_Links_Lists' => "Liste des documents et liens de l'entreprise",
+    'Upload' => 'Télécharger',
     'Annual_Leave' => 'Congé annuel',
     'Arrangement_Type' => 'Type d\'arrangement',
     'Assign_Role' => 'Attribuer un rôle',
@@ -457,6 +460,7 @@ return [
     'Created_in_successfully' => 'Créé en avec succès',
     'Updated_in_successfully' => 'Mis à jour avec succès',
     'Yes_delete_it'  => 'Oui, supprimez-le !',
+    'Yes' => 'Oui',
     'No_cancel'  => 'Non, annulez !',
     'remaining_leaves_are_insufficient'  => 'Pas assez de vacances',
     'Module_settings' => 'Paramètres des modules',
@@ -489,5 +493,5 @@ return [
     'Delete_Selected' => 'Supprimer la sélection',
     'Kanban_View' => 'Vue Kanban',
     'Due' => 'Date de fin',
-
+    'Home_Office' => 'Bureau à domicile'
 ];

@@ -19,6 +19,8 @@ return [
     'Add_Experience' => 'إضافة خبرة',
     'Announcement_List' => 'قائمة الإعلانات',
     'Announcements' => 'الإعلانات',
+    'Docs_&_Links' => "وثائق الشركة والروابط",
+    'Docs_&_Links_Lists' => 'وثائق الشركة وقائمة الروابط',
     'Annual_Leave' => 'الإجازة السنوية',
     'Arrangement_Type' => 'نوع الترتيب',
     'Assign_Role' => 'إسناد الدور',
@@ -311,6 +313,7 @@ return [
     'Payment_method' => 'طريقة الدفع',
     'Pending' => 'قيد الانتظار',
     'Permissions' => 'أذونات',
+    'Upload' => 'رفع',
     'Phone' => 'هاتف',
     'Phone_Number' => 'رقم التليفون',
     'Please_provide_any_details' => 'يرجى تقديم أي تفاصيل',
@@ -457,6 +460,7 @@ return [
     'Created_in_successfully' => 'تم الإنشاء بنجاح',
     'Updated_in_successfully' => 'تم التحديث بنجاح',
     'Yes_delete_it'  => 'نعم ، احذفها',
+    'Yes' => 'نعم',
     'No_cancel'  => 'لا ، إلغاء',
     'remaining_leaves_are_insufficient'  => 'الإجازات المتبقية غير كافية',
     'Module_settings' => 'إعدادات الوحدة',
@@ -489,4 +493,5 @@ return [
     'Delete_Selected' => 'احذف المختار',
     'Kanban_View' => 'نموذج كانبان',
     'Due' => 'تاريخ الانتهاء',
+    'Home_Office' => 'مكتب البيت'
 ];

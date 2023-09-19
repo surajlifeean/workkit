@@ -19,6 +19,8 @@ return [
     'Add_Experience' => 'Add Experience',
     'Announcement_List' => 'Announcement list',
     'Announcements' => 'Announcements',
+    'Docs_&_Links' => 'Company Documents and Links',
+    'Docs_&_Links_Lists' => 'Company Documents and Links List',
     'Annual_Leave' => 'Annual leave',
     'Arrangement_Type' => 'Arrangement type',
     'Assign_Role' => 'Assign role',
@@ -428,6 +430,7 @@ return [
     'Enter_Bank_Branch' => 'Enter bank branch',
     'Enter_Bank_Name' => 'Enter bank name',
     'Type' => 'Type',
+    'Upload' => 'Upload',
     'Company_Country' => 'Company country',
     'Enter_Department_Name' => 'Enter department name',
     'Holiday_Title' => 'Holiday title',
@@ -458,6 +461,7 @@ return [
     'Created_in_successfully' => 'Created in successfully',
     'Updated_in_successfully' => 'Updated in successfully',
     'Yes_delete_it'  => 'Yes, delete it',
+    'Yes' => 'Yes',
     'No_cancel'  => 'No, cancel!',
     'remaining_leaves_are_insufficient'  => 'Remaining leaves are insufficient',
     'Email_Settings' => 'Email Settings',
@@ -520,4 +524,5 @@ return [
     'Delete_Selected' => 'Delete Selected',
     'Kanban_View' => 'Kanban View',
     'Due' => 'Due',
+    'Home_Office' => 'Home Office'
 ];

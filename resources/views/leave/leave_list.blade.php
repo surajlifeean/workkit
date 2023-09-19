@@ -474,6 +474,7 @@
                 axios
                     .post("/leave", self.data)
                     .then(response => {
+                        console.log(response.data);
                         if(response.data.isvalid == false){
                             self.SubmitProcessing = false;
                             self.errors = {};

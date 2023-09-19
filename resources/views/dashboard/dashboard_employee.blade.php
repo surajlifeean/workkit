@@ -9,6 +9,7 @@
      <div class="d-flex align-items-center w-100">
      <img src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}" alt="employee avatar" class="h-100px w-100px mr-4">
        <h1 class="text-secondary">Hi, {{ Auth::user()->username }}</h1>
+       {{-- @dump(auth()->user());  --}}
      </div>
 </div>
 

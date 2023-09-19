@@ -118,6 +118,9 @@ if ($installed === true) {
                 //--------------------------------------------------------------------\\
                 Route::resource('announcements', 'AnnouncementsController');
                 Route::post("announcements/delete/by_selection", "AnnouncementsController@delete_by_selection");
+                //-------------------------------- Company docs and links ---------------\\
+                //-------------------------------------------------------------------------\\
+                Route::resource('comp_docs_links', 'CompDocsAndLinkController');
 
             });
 
@@ -189,6 +192,7 @@ if ($installed === true) {
             Route::resource('leave_type', 'LeaveTypeController');
             Route::post("leave/delete/by_selection", "LeaveController@delete_by_selection");
             Route::post("leave_type/delete/by_selection", "LeaveTypeController@delete_by_selection");
+            Route::post("cancel_leave_by_employee/{id}/{leave_id}", "LeaveController@cancelLeave");
 
 
 
