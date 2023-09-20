@@ -588,6 +588,26 @@ class PermissionsSeeder extends Seeder
 			'id'    => 115,
 			'name'  => 'comp_docs_link_delete',
 			'guard_name'  => 'web',
+		],
+		[
+			'id'    => 116,
+			'name'  => 'Home_Office_View',
+			'guard_name'  => 'web',
+		],
+		[
+			'id' => 117,
+            'name' => 'Home_Office_Add',
+            'guard_name' => 'web',
+		],
+		[
+			'id' => 118,
+            'name' => 'Home_Office_Edit',
+            'guard_name' => 'web',
+		],
+		[
+			'id' => 119,
+            'name' => 'Home_Office_Delete',
+            'guard_name' => 'web',
 		])
 	);
     }

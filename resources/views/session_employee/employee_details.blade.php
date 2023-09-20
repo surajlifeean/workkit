@@ -85,7 +85,7 @@
                                 aria-selected="false">{{ __('translate.Training') }} </a>
                             <a class="nav-item nav-link" id="nav-projects-tab" data-toggle="tab" href="#nav-projects"
                                 role="tab" aria-controls="nav-projects"
-                                aria-selected="false">{{ __('translate.Projects') }}</a>
+                                aria-selected="false">{{ __('translate.Personal_Goals') }}</a>
                             <a class="nav-item nav-link" id="nav-tasks-tab" data-toggle="tab" href="#nav-tasks"
                                 role="tab" aria-controls="nav-tasks"
                                 aria-selected="false">{{ __('translate.Tasks') }}</a>
@@ -854,6 +854,11 @@
                                                                 data-placement="top" title="Cancel Leave Request">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
+                                                            <a @click="Follow_up_msg({{ $leave->id }})"
+                                                                class="ul-link-action text-primary mr-1" data-toggle="tooltip"
+                                                                data-placement="top" title="Send message to hr">
+                                                                <i class="i-Pen-6"></i>
+                                                            </a>
                                                         </td>
                                                     </tr>
                                                     @endforeach
@@ -985,7 +990,72 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!-- send messages -->
+                                <div class="modal fade" id="send_msg_Modal" tabindex="-1" role="dialog"
+                                    aria-labelledby="send_msg_Modal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">{{ __('translate.Send_Message_to_HR') }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 h-400px overflow-auto" id="msg-box">
+                                                        <div class="d-flex flex-column" id="msg_box">
 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <form @submit.prevent="Send_msg()" enctype="multipart/form-data">
+
+                                                    <div class="row">
+
+                                                        <div class="col-md-12">
+                                                            <label for="send_message"
+                                                                class="ul-form__label">{{ __('translate.Send_Message') }}
+                                                            </label>
+                                                            <input type="text" hidden name="title" id="title" value="From Employee" v-model="send_message.title">
+                                                            <div class="d-flex">
+                                                            <textarea type="text" v-model="send_message.message"
+                                                                class="form-control" name="message" id="message"
+                                                                placeholder="{{ __('translate.Send_Message') }}"></textarea>
+
+                                                                <button type="submit" class="btn btn-primary text-white ml-2"
+                                                                    :disabled="Submit_Processing_message">
+                                                                    <i class="i-Pen"></i>
+                                                                </button>
+                                                                
+                                                            </div>
+                                                           
+                                                        </div> 
+
+                                                    </div>
+
+                                                    {{-- <div class="row mt-3">
+
+                                                        <div class="col-md-6">
+                                                            <button type="submit" class="btn btn-primary"
+                                                                :disabled="Submit_Processing_message">
+                                                                {{ __('translate.Submit') }}
+                                                            </button>
+                                                            <div v-once class="typo__p" v-if="Submit_Processing_message">
+                                                                <div class="spinner spinner-primary mt-3"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div> --}}
+
+
+                                                </form> 
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div> 
                             </div>
                         </div>
 
@@ -1306,6 +1376,10 @@
         errors_leave:[],
         leave_types :[],
 
+        Submit_Processing_message:false,
+        messages:[],
+        
+
         documents :@json($documents),
         experiences :@json($experiences),
         leaves :@json($leaves),
@@ -1317,6 +1391,8 @@
         tasks :@json($tasks),
         accounts_bank :@json($accounts_bank),
         employee: @json($employee),
+        user_id: @json(auth()->user()),
+        leave_id: null,
 
         experience: {
                 title: "",
@@ -1350,17 +1426,25 @@
             attachment:"",
             half_day:"",
         }, 
+        send_message: {
+            message: '',
+            title: 'Leave Request Follow Up',
+        },
     },
-   
-   
-    methods: {
 
+    methods: {
+        //----------------------------------- request leaves -------------------------\\
         Request_Leave() {
             this.reset_Form_leave();
             this.Get_leave_types();
             $('#Leave_Modal').modal('show');
         },
-
+        //-------------------------------- Follow up messages ------------------------\\
+        Follow_up_msg(id){
+            this.Get_messages(id);
+            $('#send_msg_Modal').modal('show');
+        },
+        //-------------------------------- cancel leaves --------------------------\\
         Cancel_leave(id, leave_id) {
 
                swal({
@@ -1388,8 +1472,64 @@
                             toastr.error('{{ __('translate.There_was_something_wronge') }}');
                            });
                    });
+        },
+
+         //---------------------- Get messages ----------------------------------\\
+      
+         Get_messages(id){
+            this.leave_id = id;
+            axios
+                .get("/get_messages/"+ id)
+                .then(response => {
+                    this.messages = response.data;
+                    $('#msg_box').empty();
+                    console.log(response.data)
+                    response.data.forEach(data => {
+                        const date = new Date(data.created_at);
+                        const formattedDate = date.toLocaleString();
+                        if(data.user_id === this.user_id.id){
+                            $('#msg_box').append(`
+                               <div class="mt-4  p-2 text-dark font-weight-bold ml-auto" style="background: #D9FDD3; width: fit-content; max-width: 90%; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);  border-radius: 0.6rem;">
+                                     <p class="m-0 text-right">${data.message}</p>
+                                     <p class="mt-2 m-0 text-right" style="font-size: 10px">${formattedDate}</p>
+                               </div>
+                           `);
+                        }else{
+                            $('#msg_box').append(`
+                               <div class="mt-4 bg-white p-2 text-dark font-weight-bold mr-auto" style="width: fit-content; max-width: 90%; box-shadow: 3px 2px 11px rgba(0, 1, 0, 0.2);border-radius: 0.6rem;">
+                                     <p  class="m-0 text-left">${data.message}</p>
+                                     <p class="mt-2  m-0 text-left" style="font-size: 10px">${formattedDate}</p>
+                               </div>
+                           `);
+                        }
+                      
+                    })
+                })
+                .catch(error => {
+                    
+                });
          },
 
+         //------------------------ send messages --------------------------------\\
+         Send_msg(){
+                if(this.send_message.message === ''){
+                  return toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                }
+                this.Submit_Processing_message = true;
+                axios.post(`/notifications/${this.leave_id}`, {
+                  title: this.send_message.title,
+                  message: this.send_message.message,
+                })
+                 .then(response => {
+                     toastr.success('{{ __('translate.Created_in_successfully') }}');
+                     location.reload();
+                     console.log('Resource created successfully:', response.data);
+                 })
+                 .catch(error => {
+                     toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                     console.error('Error creating resource:', error);
+                 });
+         },
          //---------------------- Get_leave_types  ------------------------------\\
          Get_leave_types() {
             axios

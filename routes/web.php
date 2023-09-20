@@ -131,7 +131,9 @@ if ($installed === true) {
             Route::get("daily_attendance", "AttendancesController@daily_attendance")->name('daily_attendance');
             Route::post('attendance_by_employee/{id}', 'EmployeeSessionController@attendance_by_employee')->name('attendance_by_employee.post');
             Route::post("attendances/delete/by_selection", "AttendancesController@delete_by_selection");
+            //------------------------------ Work From Home --------------------\\
 
+            Route::resource('work_from', 'WorkFromController');
 
 
             //------------------------------- Accounting -----------------------\\
@@ -207,6 +209,12 @@ if ($installed === true) {
             Route::resource('training_skills', 'TrainingSkillsController');
             Route::post("training_skills/delete/by_selection", "TrainingSkillsController@delete_by_selection");
 
+
+            //------------------------------- Notifications ------------------\\
+            Route::resource('notifications', 'NotificationController');   
+            Route::post('notifications/{id}', 'NotificationController@store');
+            Route::get("get_messages/{id}", "NotificationController@index");
+            
 
             //------------------------------- Apps Management ----------------\\
             //--------------------------------------------------------------------\\

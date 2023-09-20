@@ -524,5 +524,16 @@ return [
     'Delete_Selected' => 'Delete Selected',
     'Kanban_View' => 'Kanban View',
     'Due' => 'Due',
-    'Home_Office' => 'Home Office'
+    'Home_Office' => 'Home Office',
+    'Home_Office_List' => 'Home office list',
+    'Personal_Goals' => 'Personal Goals',
+    'Send_Message_to_HR' => 'Send Message to HR',
+    'Send_Message' => 'Send Message',
+    'Mon' => 'Mon',
+    'Tue' => 'Tue',
+    'Wed' => 'Wed',
+    'Thu' => 'Thu',
+    'Fri' => 'Fri',
+    'Sat' => 'Sat',
+    'Sun' => 'Sun'
 ];
