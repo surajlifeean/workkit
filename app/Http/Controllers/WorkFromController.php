@@ -27,7 +27,8 @@ class WorkFromController extends Controller
             ->pluck('work_from_home_date');
 
         $otherEmployees = Employee::
-            select('username', 'id as employee_id', 'office_shift_id')
+            where('id', '<>', auth()->user()->id)
+            ->select('username', 'id as employee_id', 'office_shift_id')
             ->get();
             
 
@@ -35,9 +36,9 @@ class WorkFromController extends Controller
            $wfh = WorkFrom::where('employee_id', $value->employee_id)
            ->whereBetween('work_from_home_date', [$startDate, $endDate])
            ->pluck('work_from_home_date');
-           
+        //    dd($wfh);
            $shift = OfficeShift::where('id', $value->office_shift_id)->first();
-    
+          
            if ($wfh) {
             $value['from_home'] = $wfh;
            } else {

@@ -221,7 +221,6 @@
         for (var i = 0; i < 7; i++) {
             var cellDate = new Date(startDate);
             cellDate.setDate(startDate.getDate() + (i + 1));
-            console.log('cell===>',cellDate);
             dateCells.push(cellDate);
         }
 
@@ -263,6 +262,14 @@
         } else {
             return "No schedule available for " + dayName;
         }
+    }
+
+    function getDayName(dateString) {
+         var date = new Date(dateString);       
+         var daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];       
+         var dayIndex = date.getDay();       
+         var dayName = daysOfWeek[dayIndex];       
+         return dayName.toLowerCase();
     }
 
     function checkWorkFromHome(date){
@@ -321,12 +328,22 @@
                        toastr.error('{{ __('translate.There_was_something_wronge') }}');
                      });
     }
-       
+     
+    
     otherEmployees.forEach(element => {
+        console.log(element)
+        element.from_home.forEach(e => {
+           let shiftsTime = getWorkScheduleForDate(e, element.shifts);
+           let day = getDayName(e);
+           $(`#em${element.employee_id} .${day}-cell`).append(`
+                <a  class="from-home d-flex align-items-center flex-column justify-content-center d-none  w-100px py-1 px-1" style="border: 2px solid #ff000040;border-radius: 0.5rem;box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.1);">
+                  <p class="text-dark m-0 mb-1 " style="font-size: 10px;">${shiftsTime}</p>
+                  <p class="text-dark font-weight-bold m-0">From Home</p>
+                </a>
+           `);
+        })
+        // let dataNdate = getWorkScheduleForDate(element.);
         
-        $(`#em${element.employee_id}`).append(`
-           
-        `);
     });
     
     
