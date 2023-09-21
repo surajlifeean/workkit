@@ -19,6 +19,7 @@
         <li><a href="/attendances">{{ __('translate.Home_Office') }}</a></li>
         <li>{{ __('translate.Home_Office_List') }}</li>
     </ul>
+    {{-- @dump($otherEmployees) --}}
 </div>
 
 <div class="separator-breadcrumb border-top"></div>
@@ -38,6 +39,7 @@
             </div> --}}
             <div class="card-body">
                 <div class="table-responsive">
+                   
                     <table id="attendance_list_table" class="display table">
                         <thead>
                             <tr>
@@ -58,6 +60,19 @@
                                 <td class="align-middle"></td>
                                 <td class="align-middle">{{ $employee->username }}</td>
                              </tr>
+                             @foreach ($otherEmployees as $item)
+                                <tr id="em{{$item->employee_id}}">
+                                    <td class="align-middle"></td>
+                                    <td class="align-middle">{{ $item->username }}</td>
+                                    <td class="monday-cell"></td>
+                                    <td class="tuesday-cell"></td>
+                                    <td class="wednesday-cell"></td>
+                                    <td class="thursday-cell"></td>
+                                    <td class="friday-cell"></td>
+                                    <td class="saturday-cell"></td>
+                                    <td class="sunday-cell"></td>
+                                </tr>
+                             @endforeach
                         </tbody>
 
                     </table>
@@ -191,20 +206,22 @@
 <script src="{{asset('assets/js/vendor/vuejs-datepicker/vuejs-datepicker.min.js')}}"></script>
 
 <script>
-$(document).ready(function() {
-    // Function to get the current week's dates
+    var wfhDates = @json($work_from_home);
+    var shifts = @json($officeShift);
+    var otherEmployees = @json($otherEmployees);
+    
     function getCurrentWeekDates() {
         var currentDate = new Date();
-        var dayOfWeek = currentDate.getDay(); // 0 for Sunday, 1 for Monday, etc.
+        var dayOfWeek = currentDate.getDay(); 
         var startDate = new Date(currentDate);
-        startDate.setDate(currentDate.getDate() - dayOfWeek); // Set to Monday of the current week
-
+        startDate.setDate(currentDate.getDate() - dayOfWeek); 
+     
         var dateCells = [];
 
-        // Loop through the days of the week (from Monday to Sunday)
         for (var i = 0; i < 7; i++) {
             var cellDate = new Date(startDate);
-            cellDate.setDate(startDate.getDate() + i);
+            cellDate.setDate(startDate.getDate() + (i + 1));
+            console.log('cell===>',cellDate);
             dateCells.push(cellDate);
         }
 
@@ -218,24 +235,13 @@ $(document).ready(function() {
     var headerRow = $('table thead tr');
     var headerCells = headerRow.find('th');
 
-    // Loop through the header cells (starting from the third cell)
     for (var i = 2; i < headerCells.length; i++) {
-        // Format the date as "dd/mm/yy" and append it after the original content
         var formattedDate = formatDate(weekDates[i - 2]);
         $(headerCells[i]).append('<br>' + formattedDate);
-        $('#self_row').append(`
-           <td class="align-middle">
-             <a @click="Wfh(this)" class="text-success p-1" style="border-radius: 100%;"><i class="i-Add"></i>
-             <input class="border-0 d-none" value="${formattedDate}"></a>
-             <div class="d-flex align-items-center-justify-content-center d-none border-success w-100px py-4 px-1">
-               <p class="text-dark" style="font-size: 10px;"></p>
-               <p class="text-dark">From Home</p>
-             </div>
-           </td>
-        `);
+        
+        checkWorkFromHome(formattedDate);
     }
-
-    // Function to format a date as "dd/mm/yy"
+ 
     function formatDate(date) {
         var day = date.getDate().toString().padStart(2, '0');
         var month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -243,10 +249,87 @@ $(document).ready(function() {
         return  year + '-' + month + '-' + day ;
     }
 
-   
-});
+    function getWorkScheduleForDate(date, data) {
+        const dateTime = new Date(date);
+        const dayOfWeek = dateTime.getDay();
+        const dayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    
+        const dayName = dayNames[dayOfWeek];
+        if (data[dayName + "_in"] && data[dayName + "_out"]) {
+            const inTime = data[dayName + "_in"];
+            const outTime = data[dayName + "_out"];
+            
+            return inTime + " - " + outTime;
+        } else {
+            return "No schedule available for " + dayName;
+        }
+    }
 
-   
+    function checkWorkFromHome(date){
+        let shiftTime = getWorkScheduleForDate(date, shifts);
+        if (wfhDates.includes(date)) {
+            $('#self_row').append(`
+               <td class="align-middle ${formattedDate}">
+                   <a onclick="Wfh('${formattedDate}', 'From Home')" class="from-home d-flex align-items-center flex-column justify-content-center d-none  w-100px py-1 px-1" style="border: 2px solid #ff000040;border-radius: 0.5rem;box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.1);">
+                    <p class="text-dark m-0 mb-1 " style="font-size: 10px;">${shiftTime}</p>
+                    <p class="text-dark font-weight-bold m-0">From Home</p>
+                    <input class="border-0 d-none" value="${formattedDate}">
+                  </a>
+              </td>
+            `);
+        } else {
+         $('#self_row').append(`
+           <td class="align-middle ${formattedDate}">
+             <a onclick="Wfh('${formattedDate}', 'From Office')" class="from-office text-success p-1 " style="border-radius: 100%;"><i class="i-Add"></i>
+             <input class="border-0 d-none" value="${formattedDate}"></a>
+           </td>
+         `);
+
+        }
+       
+       
+    }
+
+    function Wfh(date, type){
+                axios.post('/work_from_home', {
+                    work_from_home_date: date,
+                    type: type,
+                })
+                     .then(response => {
+                       console.log(response.data);
+                       toastr.success('{{ __('translate.Created_in_successfully') }}');
+                       let shiftTime = getWorkScheduleForDate(date, shifts);
+
+                       if(type === 'From Office'){
+                        $(`.${date}`).empty().append(`
+                        <a onclick="Wfh('${date}', 'From Home')" class="from-home d-flex align-items-center flex-column justify-content-center d-none  w-100px py-1 px-1" style="border: 2px solid #ff000040;border-radius: 0.5rem;box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.1);">
+                          <p class="text-dark m-0 mb-1 " style="font-size: 10px;">${shiftTime}</p>
+                          <p class="text-dark font-weight-bold m-0">From Home</p>
+                          <input class="border-0 d-none" value="${date}">
+                        </a>
+                        `);
+                       }else{
+                        $(`.${date}`).empty().append(`
+                          <a onclick="Wfh('${date}', 'From Office')" class="from-office text-success p-1 " style="border-radius: 100%;"><i class="i-Add"></i>
+                          <input class="border-0 d-none" value="${date}"></a>
+                       `);
+                       }
+                     
+                     })
+                     .catch(error => {
+                       console.error(error);
+                       toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                     });
+    }
+       
+    otherEmployees.forEach(element => {
+        
+        $(`#em${element.employee_id}`).append(`
+           
+        `);
+    });
+    
+    
 </script>
 
 <script>
@@ -278,9 +361,7 @@ $(document).ready(function() {
        
         methods: {
             //--------------------------------     Adding the Wfh ------------------------\\
-            Wfh(src){
-              console.log(src)
-            },
+             
              //---- Event selected_row
              selected_row(id) {
                 //in here you can check what ever condition  before append to array.
@@ -493,7 +574,7 @@ $(document).ready(function() {
 <script type="text/javascript">
     $(function () {
       "use strict";
-
+    //   $('#attendance_list_table').DataTable().destroy();
         $('#attendance_list_table').DataTable( {
             "processing": true, // for show progress bar
             select: {

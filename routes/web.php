@@ -134,7 +134,8 @@ if ($installed === true) {
             //------------------------------ Work From Home --------------------\\
 
             Route::resource('work_from', 'WorkFromController');
-
+            Route::post('/work_from_home', 'WorkFromController@workFromHome');
+            Route::get('/other_employees_work_from_home', 'WorkFromController@othersWorkFromHome');
 
             //------------------------------- Accounting -----------------------\\
             //----------------------------------------------------------------\\
