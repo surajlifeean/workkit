@@ -282,13 +282,15 @@
                     </a>
                 </li>
             @endcan
+            @can('Home_Office_View')
             <li class="nav-item">
-                <a href="{{ route('attendances.index') }}"
-                    class="{{ Route::currentRouteName() == 'attendances.index' ? 'open' : '' }}">
+                <a href="{{ route('work_from.index') }}"
+                    class="{{ Route::currentRouteName() == 'work_from.index' ? 'open' : '' }}">
                     <i class="nav-icon i-Home-4"></i>
                     <span class="item-name">{{ __('translate.Home_Office') }}</span>
                 </a>
             </li>
+            @endcan
         </ul>
 
 

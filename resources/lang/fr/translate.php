@@ -493,5 +493,16 @@ return [
     'Delete_Selected' => 'Supprimer la sélection',
     'Kanban_View' => 'Vue Kanban',
     'Due' => 'Date de fin',
-    'Home_Office' => 'Bureau à domicile'
+    'Home_Office' => 'Bureau à domicile',
+    'Home_Office_List' => 'Liste des bureaux à domicile',
+    'Personal_Goals' => 'Buts personnels',
+    'Send_Message_to_HR' => 'Envoyer un message aux RH',
+    'Send_Message' => 'Envoyer le message',
+    'Mon' => 'Lun',
+    'Tue' => 'Mar',
+    'Wed' => 'Mer',
+    'Thu' => 'Jeu',
+    'Fri' => 'Ven',
+    'Sat' => 'Sam',
+    'Sun' => 'Dim'
 ];
