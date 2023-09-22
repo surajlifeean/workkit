@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'Home' => 'Home',
     'Dashboard' => 'لوحة القيادة',
     'Account' => 'الحساب',
     'Account_List' => 'قائمة الحسابات',

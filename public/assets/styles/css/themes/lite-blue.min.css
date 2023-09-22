@@ -19035,7 +19035,7 @@ a.typo_link.text-gray-900:after {
   z-index: 100;
 }
 
-.main-header .menu-toggle {
+.sub-header .menu-toggle {
   width: 90px;
   display: flex;
   flex-direction: column;
@@ -19044,7 +19044,7 @@ a.typo_link.text-gray-900:after {
   margin-right: 12px;
 }
 
-.main-header .menu-toggle div {
+.sub-header .menu-toggle div {
   width: 24px;
   height: 1px;
   background: #0b192b;

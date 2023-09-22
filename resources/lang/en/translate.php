@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'Home' => 'Home',
     'Dashboard' => 'Dashboard',
     'Account' => 'Account',
     'Account_List' => 'Account list',

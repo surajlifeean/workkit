@@ -20,13 +20,16 @@ class RedirectIfAuthenticated
     {
 
         if (Auth::guard($guard)->check() && Auth::User()->status) {
-            if($request->user()->role_users_id == 1)
-            {
+            if($request->user()->role_users_id == 1){
                 return redirect('/dashboard/admin');
             }elseif($request->user()->role_users_id == 2){
                 return redirect('/dashboard/employee');
-            }else{
+            }elseif($request->user()->role_users_id == 3){
                 return redirect('/dashboard/client');
+            }elseif($request->user()->role_users_id = 4){
+                return redirect('/dashboard/admin');
+            } else{
+                return redirect('/dashboard/employee');
             }
             
         }
