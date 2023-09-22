@@ -33,6 +33,12 @@ class RoleSeeder extends Seeder
                     'description' => 'Client Access',
                     'guard_name' => 'web',
                 ],
+                [
+                    'id'    => 4,
+                    'name'  => 'Hr',
+                    'description' => 'Human Resource Access',
+                    'guard_name' => 'web',
+                ]
             )
         );
     }

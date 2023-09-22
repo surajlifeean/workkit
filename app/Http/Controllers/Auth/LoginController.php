@@ -59,9 +59,10 @@ class LoginController extends Controller
                     return redirect('/dashboard/admin');
                 }elseif($user_Auth->role_users_id = 3){
                     return redirect('/dashboard/client');
+                }elseif($user_Auth->role_users_id = 4){
+                    return redirect('/dashboard/admin');
                 }else{
                     return redirect('/dashboard/employee');
-                   
                 }
         }
 

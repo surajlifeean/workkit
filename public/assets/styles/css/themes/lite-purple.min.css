@@ -19064,7 +19064,7 @@ a.typo_link.text-gray-900:after {
   z-index: 100;
 }
 
-.main-header .menu-toggle {
+.sub-header .menu-toggle {
   width: 90px;
   display: flex;
   flex-direction: column;
@@ -19073,7 +19073,7 @@ a.typo_link.text-gray-900:after {
   margin-right: 12px;
 }
 
-.main-header .menu-toggle div {
+.sub-header .menu-toggle div {
   width: 24px;
   height: 1px;
   background: #47404f;
@@ -19598,18 +19598,33 @@ a.typo_link.text-gray-900:after {
 [dir=rtl] .layout-sidebar-compact .main-content-wrap {
   float: left;
 }
+.layout-sidebar-large .header-body{
+  z-index: 100;
+}
 
-.layout-sidebar-large .main-header {
-  position: fixed;
+.layout-sidebar-large .header-body .main-header {
+  /* position: fixed; */
   width: 100%;
-  height: 80px;
+  height: 60px;
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.04), 0 1px 6px rgba(0, 0, 0, 0.04);
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
-  background: #fff;
+  background: #0e1726; 
   z-index: 100;
+}
+
+.layout-sidebar-large .header-body .sub-header{
+  width: 100%;
+  height: 60px;
+  box-shadow: 0 1px 14px rgba(0, 0, 0, 0.1), 0 1px 6px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  background: #fff; 
+  z-index: 98;
 }
 
 .layout-sidebar-large .main-header .menu-toggle {
@@ -19659,12 +19674,12 @@ a.typo_link.text-gray-900:after {
 }
 
 .layout-sidebar-large .main-header .logo {
-  width: 120px;
+  width: 100px;
 }
 
 .layout-sidebar-large .main-header .logo img {
-  width: 60px;
-  height: 60px;
+  width: 45px;
+  height: 45px;
   margin: 0 auto;
   display: block;
 }
@@ -19803,7 +19818,7 @@ a.typo_link.text-gray-900:after {
 .main-content-wrap {
   width: 100%;
   float: right;
-  margin-top: 80px;
+  margin-top: 112px;
   transition: width 0.24s ease-in-out;
   padding: 2rem 2rem 0;
   position: relative;
@@ -19818,7 +19833,7 @@ a.typo_link.text-gray-900:after {
 .layout-sidebar-large .sidebar-left-secondary,
 .layout-sidebar-large .sidebar-left {
   position: fixed;
-  top: 80px;
+  top: 119px;
   height: calc(100vh - 80px);
   background: #fff;
   box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.08);
@@ -33033,6 +33048,9 @@ blockquote {
 
 .dark-theme {
   background: #10163a;
+}
+.dark-theme .header-body .sub-header{
+  background-color: #1a1c2d !important;
 }
 
 .dark-theme .sidebar-left,

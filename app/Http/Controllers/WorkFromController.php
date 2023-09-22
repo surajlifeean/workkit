@@ -25,18 +25,19 @@ class WorkFromController extends Controller
             ->whereBetween('work_from_home_date', [$startDate, $endDate])
             ->orderBy('work_from_home_date', 'asc')
             ->pluck('work_from_home_date');
-
-        $otherEmployees = Employee::
-            where('id', '<>', auth()->user()->id)
-            ->select('username', 'id as employee_id', 'office_shift_id')
+        
+        $otherEmployees = Employee::leftJoin('designations', 'designations.id', '=', 'employees.designation_id')
+            ->leftJoin('departments', 'departments.id', '=', 'employees.department_id')
+            ->where('employees.id', '<>', auth()->user()->id)
+            ->select('employees.username', 'employees.id as employee_id', 'employees.office_shift_id', 'designations.designation', 'departments.department')
             ->get();
-            
+               
 
         foreach ($otherEmployees as $value) {
            $wfh = WorkFrom::where('employee_id', $value->employee_id)
            ->whereBetween('work_from_home_date', [$startDate, $endDate])
            ->pluck('work_from_home_date');
-        //    dd($wfh);
+    
            $shift = OfficeShift::where('id', $value->office_shift_id)->first();
           
            if ($wfh) {

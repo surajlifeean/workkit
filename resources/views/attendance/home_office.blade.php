@@ -39,7 +39,24 @@
             </div> --}}
             <div class="card-body">
                 <div class="table-responsive">
-                   
+                    <div class="row mb-3">
+                        <div class="col-md-3 mb-2">
+                            <select id="customFilterDep" class="form-select form-control">
+                                 <option value="">Chose department</option>
+                                 @foreach($otherEmployees as $item)
+                                  <option value="{{$item->department}}">{{$item->department}}</option>
+                                 @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-3 ">
+                            <select id="customFilterDesignation" class="form-select form-control">
+                                <option value="">Chose designation</option>
+                                 @foreach($otherEmployees as $item)
+                                  <option value="{{$item->designation}}">{{$item->designation}}</option>
+                                 @endforeach                            
+                            </select>
+                        </div>
+                    </div>
                     <table id="attendance_list_table" class="display table">
                         <thead>
                             <tr>
@@ -63,7 +80,8 @@
                              @foreach ($otherEmployees as $item)
                                 <tr id="em{{$item->employee_id}}">
                                     <td class="align-middle"></td>
-                                    <td class="align-middle">{{ $item->username }}</td>
+                                    <td class="align-middle">{{ $item->username }} 
+                                        <span hidden>{{ $item->designation }} {{ $item->department }}</span></td>
                                     <td class="monday-cell"></td>
                                     <td class="tuesday-cell"></td>
                                     <td class="wednesday-cell"></td>
@@ -330,7 +348,7 @@
     }
      
     
-    otherEmployees.forEach(element => {
+    otherEmployees?.forEach(element => {
         console.log(element)
         element.from_home.forEach(e => {
            let shiftsTime = getWorkScheduleForDate(e, element.shifts);
@@ -592,7 +610,7 @@
     $(function () {
       "use strict";
     //   $('#attendance_list_table').DataTable().destroy();
-        $('#attendance_list_table').DataTable( {
+        var dataTable = $('#attendance_list_table').DataTable({
             "processing": true, // for show progress bar
             select: {
                 style: 'multi',
@@ -626,7 +644,14 @@
                     ]
                 }]
         });
-
+        $('#customFilterDep').on('change', function () {
+            let value = $(this).val().toLowerCase();
+            dataTable.search(value, true, false).draw();
+         });
+         $('#customFilterDesignation').on('change', function () {
+            let value = $(this).val().toLowerCase();
+            dataTable.search(value, true, false).draw();
+         });
     });
 </script>
 @endsection

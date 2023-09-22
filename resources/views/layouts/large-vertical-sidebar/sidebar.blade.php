@@ -28,7 +28,7 @@
                 </li>
             @endif
 
-            @if (auth()->user()->role_users_id == 2 )
+            @if (auth()->user()->role_users_id == 2 || auth()->user()->role_users_id == 4)
                 <li class="nav-item {{ request()->is('employee/my_requests') ? 'active' : '' }}">
                     <a class="nav-item-hold" href="/employee/my_requests">
                         <i class="nav-icon i-Bar-Chart"></i>
@@ -99,7 +99,7 @@
                 <li class="nav-item {{ request()->is('core/*') ? 'active' : '' }}" data-item="core">
                     <a class="nav-item-hold" href="#">
                         <i class="nav-icon i-Management"></i>
-                        @if(auth()->user()->role_users_id == 2)
+                        @if(auth()->user()->role_users_id == 2 || auth()->user()->role_users_id == 4)
                         <span class="nav-text">{{ __('translate.Communication') }}</span>
                         @else
                         <span class="nav-text">{{ __('translate.Company_Management') }}</span>
