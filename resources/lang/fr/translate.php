@@ -505,5 +505,11 @@ return [
     'Thu' => 'Jeu',
     'Fri' => 'Ven',
     'Sat' => 'Sam',
-    'Sun' => 'Dim'
+    'Sun' => 'Dim',
+    'Team_Goal' => "Objectif de l'équipe",
+    'Actions' => 'Actions',
+    'Team_Goal_List' =>  "Liste des objectifs de l'équipe",
+    'All_Employees' => 'Tous les employés',
+    'Upload_Document' => 'Télécharger un document',
+    'Link' => 'Lien',
 ];

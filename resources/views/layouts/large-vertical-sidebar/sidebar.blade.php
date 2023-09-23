@@ -56,25 +56,7 @@
                 </li>
             @endif
 
-            @can('project_view')
-                <li class="nav-item {{ request()->is('projects') ? 'active' : '' }}">
-                    <a class="nav-item-hold" href="/projects">
-                        <i class="nav-icon i-Dropbox"></i>
-                        <span class="nav-text">{{ __('translate.Projects') }}</span>
-                    </a>
-                    <div class="triangle"></div>
-                </li>
-            @endcan
-
-            @can('task_view')
-                <li class="nav-item {{ request()->is('tasks') ? 'active' : '' }}">
-                    <a class="nav-item-hold" href="/tasks">
-                        <i class="nav-icon i-Check"></i>
-                        <span class="nav-text">{{ __('translate.Tasks') }}</span>
-                    </a>
-                    <div class="triangle"></div>
-                </li>
-            @endcan
+        
 
             @if (auth()->user()->can('office_shift_view') ||
     auth()->user()->can('event_view') ||
@@ -130,8 +112,33 @@
                 </li>
             @endif
 
+            @can('project_view')
+                <li class="nav-item {{ request()->is('projects') ? 'active' : '' }}">
+                    <a class="nav-item-hold" href="/projects">
+                        <i class="nav-icon i-Dropbox"></i>
+                        <span class="nav-text">{{ __('translate.Projects') }}</span>
+                    </a>
+                    <div class="triangle"></div>
+                </li>
+            @endcan
 
-
+            @can('task_view')
+                <li class="nav-item {{ request()->is('tasks') ? 'active' : '' }}">
+                    <a class="nav-item-hold" href="/tasks">
+                        <i class="nav-icon i-Dropbox"></i>
+                        <span class="nav-text">{{ __('translate.Team_Goal') }}</span>
+                    </a>
+                    <div class="triangle"></div>
+                </li>
+            @endcan
+              
+                <li class="nav-item {{ request()->is('tasks') ? 'active' : '' }}">
+                    <a class="nav-item-hold" href="/tasks">
+                        <i class="nav-icon i-Check"></i>
+                        <span class="nav-text">{{ __('translate.Actions') }}</span>
+                    </a>
+                    <div class="triangle"></div>
+                </li>
 
             @can('client_view')
                 <li class="nav-item {{ request()->is('clients') ? 'active' : '' }}">

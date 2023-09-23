@@ -150,6 +150,7 @@ return [
     'Employee_against' => 'Employee against',
     'Employee_count_by_department' => 'Employee count by department',
     'Employees' => 'Employees',
+    'All_Employees' => 'All Employees',
     'Employment_type' => 'Employment type',
     'Enter_Account_Name' => 'Enter account name',
     'Enter_Account_Num' => 'Enter account num',
@@ -536,5 +537,10 @@ return [
     'Thu' => 'Thu',
     'Fri' => 'Fri',
     'Sat' => 'Sat',
-    'Sun' => 'Sun'
+    'Sun' => 'Sun',
+    'Team_Goal' => 'Team goal',
+    'Actions' => 'Actions',
+    'Team_Goal_List' => 'Team Goal List',
+    'Upload_Document' => 'Upload Document',
+    'Link' => 'Link',
 ];

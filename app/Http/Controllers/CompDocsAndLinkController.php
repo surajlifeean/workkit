@@ -19,4 +19,29 @@ class CompDocsAndLinkController extends Controller
 
         return view('links_docs.index', compact('linksDocs'));
     }
+
+    public function store(Request $request){
+
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255', 
+            'type' => 'required|in:doc,link',   
+            'company_id' => 'required|integer',  
+            'upload' => 'max:2048', 
+            'link' => 'url',                  
+        ]);
+        if ($request->hasFile('upload')) {
+            $image = $request->file('upload');
+            $filename = time().'.'.$image->extension();  
+            $image->move(public_path('/comp_docs'), $filename);
+        
+        
+            return response()->json('File uploaded successfully.');
+        }
+        
+        
+        // return response()->json($request);
+   
+
+    }
 }

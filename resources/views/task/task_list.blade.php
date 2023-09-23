@@ -8,10 +8,10 @@
 @endsection
 
 <div class="breadcrumb">
-    <h1>{{ __('translate.Task_List') }}</h1>
+    <h1>{{ __('translate.Team_Goal_List') }}</h1>
     <ul>
-        <li><a href="/tasks">{{ __('translate.Tasks') }}</a></li>
-        <li>{{ __('translate.Task_List') }}</li>
+        <li><a href="/tasks">{{ __('translate.Team_Goal') }}</a></li>
+        <li>{{ __('translate.Team_Goal_List') }}</li>
     </ul>
 </div>
 
