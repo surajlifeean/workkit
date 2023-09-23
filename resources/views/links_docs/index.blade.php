@@ -95,7 +95,7 @@
         </div>
 
         <!-- Modal Add & Edit Announcement -->
-        {{-- <div class="modal fade" id="Announcement_Modal" tabindex="-1" role="dialog" aria-labelledby="Announcement_Modal"
+        <div class="modal fade" id="Announcement_Modal" tabindex="-1" role="dialog" aria-labelledby="Announcement_Modal"
             aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
@@ -108,65 +108,41 @@
                     </div>
                     <div class="modal-body">
 
-                        <form @submit.prevent="editmode?Update_Announcement():Create_Announcement()">
+                        <form @submit.prevent="editmode?Update_Announcement():Create_Links_Docs()" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="title" class="ul-form__label">{{ __('translate.Title') }} <span
+                                    <label for="name" class="ul-form__label">{{ __('translate.Name') }} <span
                                             class="field_required">*</span></label>
-                                    <input type="text" v-model="announcement.title" class="form-control" name="title"
-                                        id="title" placeholder="{{ __('translate.Enter_title') }}">
-                                    <span class="error" v-if="errors && errors.title">
-                                        @{{ errors.title[0] }}
+                                    <input type="text" v-model="links_docs.name" class="form-control" name="name"
+                                        id="name" placeholder="{{ __('translate.Enter_title') }}">
+                                    <span class="error" v-if="errors && errors.name">
+                                        @{{ errors.name[0] }}
                                     </span>
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="summary" class="ul-form__label">{{ __('translate.Brief_Summary') }}
-                                        <span class="field_required">*</span></label>
-                                    <input type="text" v-model="announcement.summary" class="form-control"
-                                        name="summary" id="summary" placeholder="{{ __('translate.Enter_summary') }}">
-                                    <span class="error" v-if="errors && errors.summary">
-                                        @{{ errors.summary[0] }}
-                                    </span>
-                                </div>
-
-
-                                <div class="col-md-6">
-                                    <label for="start_date" class="ul-form__label">{{ __('translate.Start_Date') }}
-                                        <span class="field_required">*</span></label>
-
-                                    <vuejs-datepicker id="start_date" name="start_date"
-                                        placeholder="{{ __('translate.Enter_Start_date') }}"
-                                        v-model="announcement.start_date" input-class="form-control" format="yyyy-MM-dd"
-                                        @closed="announcement.start_date=formatDate(announcement.start_date)">
-                                    </vuejs-datepicker>
-
-                                    <span class="error" v-if="errors && errors.start_date">
-                                        @{{ errors.start_date[0] }}
-                                    </span>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="end_date" class="ul-form__label">{{ __('translate.Finish_Date') }} <span
+                                    <label class="ul-form__label">{{ __('translate.Choose_type') }} <span
                                             class="field_required">*</span></label>
+                                   
+                                            <v-select 
+                                               placeholder="{{ __('translate.Choose_type') }}"
+                                               v-model="links_docs.type"
+                                               :reduce="label => label.value"
+                                               :options="types.map(type => ({ label: type.up, value: type.name }))">
+                                            </v-select>
 
-                                    <vuejs-datepicker id="end_date" name="end_date"
-                                        placeholder="{{ __('translate.Enter_Finish_date') }}"
-                                        v-model="announcement.end_date" input-class="form-control" format="yyyy-MM-dd"
-                                        @closed="announcement.end_date=formatDate(announcement.end_date)">
-                                    </vuejs-datepicker>
 
-                                    <span class="error" v-if="errors && errors.end_date">
-                                        @{{ errors.end_date[0] }}
+                                    <span class="error" v-if="errors && errors.type">
+                                        @{{ errors.type[0] }}
                                     </span>
-                                </div>
+                                </div>                                   
 
                                 <div class="col-md-6">
                                     <label class="ul-form__label">{{ __('translate.Company') }} <span
                                             class="field_required">*</span></label>
                                     <v-select @input="Selected_Company"
                                         placeholder="{{ __('translate.Choose_Company') }}"
-                                        v-model="announcement.company_id" :reduce="label => label.value"
+                                        v-model="announcements.company_id" :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
                                     </v-select>
 
@@ -175,28 +151,61 @@
                                     </span>
                                 </div>
 
+
                                 <div class="col-md-6">
-                                    <label class="ul-form__label">{{ __('translate.Department') }} <span
-                                            class="field_required">*</span></label>
-                                    <v-select @input="Selected_Department"
-                                        placeholder="{{ __('translate.Choose_Department') }}"
-                                        v-model="announcement.department_id" :reduce="label => label.value"
-                                        :options="departments.map(departments => ({label: departments.department, value: departments.id}))">
-
-                                    </v-select>
-
-                                    <span class="error" v-if="errors && errors.department">
-                                        @{{ errors.department[0] }}
+                                    <label for="all_em" class="ul-form__label">{{ __('translate.All_Employees') }}
+                                    </label>
+                                    <div class="d-flex align-items-center justify-content-start">
+                                     <input type="checkbox" v-model="links_docs.all_em" class="form-check mr-2"
+                                        name="links_docs.all_em" id="all_em" placeholder="{{ __('translate.All_Employees') }}">
+                                        <h6 class=" m-0">{{ __('translate.All_Employees') }}</h6>
+                                    </div>
+                                    
+                                    <span class="error" v-if="errors && errors.all_em">
+                                        @{{ errors.all_em[0] }}
                                     </span>
                                 </div>
+
+                                <div class="col-md-6" v-if="links_docs.all_em !== true">
+                                    <label class="ul-form__label">{{ __('translate.Choose_Employees') }}</label>
+                                    <v-select multiple
+                                        placeholder="{{ __('translate.Choose_Employees') }}" v-model="links_docs.employees_id"
+                                        :reduce="label => label.value"
+                                        :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
+                                    </v-select>
+                                    <span class="error" v-if="errors && errors.employees_id">
+                                        @{{ errors.employees_id[0] }}
+                                    </span>
+                                </div>
+                                
+                                <div class="col-md-6" v-if="links_docs.type === 'doc' || links_docs.type === '' ">
+                                    <label class="ul-form__label">{{ __('translate.Upload_Document') }} <span class="field_required">*</span></label>
+                                    <input type="file" v-model="links_docs.upload" accept=".pdf,.doc,.docx,.png,.jpg,image/*" />
+                                    <span class="error" v-if="errors && errors.upload">
+                                        @{{ errors.upload[0] }}
+                                    </span>
+                                </div>
+                                
+                                <div class="col-md-6" v-else-if="links_docs.type === 'link'">
+                                    <label class="ul-form__label">{{ __('translate.Link') }} <span class="field_required">*</span></label>
+                                    <input type="text" class="form-control" name="link" id="name" v-model="links_docs.link" placeholder="{{ __('translate.Link') }}" />
+                                    <span class="error" v-if="errors && errors.link">
+                                        @{{ errors.link[0] }}
+                                    </span>
+                                </div>
+
+
 
 
                                 <div class="col-md-12">
                                     <label for="description"
                                         class="ul-form__label">{{ __('translate.Detailed_Description') }}</label>
-                                    <textarea type="text" v-model="announcement.description" class="form-control"
+                                    <textarea type="text" v-model="links_docs.description" class="form-control"
                                         name="description" id="description"
                                         placeholder="{{ __('translate.Enter_description') }}"></textarea>
+                                    <span class="error" v-if="errors && errors.description">
+                                        @{{ errors.upload[0] }}
+                                    </span>
                                 </div>
 
                             </div>
@@ -221,7 +230,7 @@
 
                 </div>
             </div>
-        </div> --}}
+        </div> 
     </div>
 </div>
 
@@ -242,10 +251,15 @@
             vuejsDatepicker
         },
         data: {
+            data: new FormData(),
             selectedIds:[],
             editmode: false,
             SubmitProcessing:false,
             errors:[],
+            types: [
+                {'name': 'doc' , 'up': 'Document'}, {'name': 'link', 'up': 'Link'}
+            ],
+            employees: [], 
             companies: [],
             departments: [],
             announcements: {}, 
@@ -253,19 +267,21 @@
                 id :"null",
                 department :'all departments',
             },
-            announcement: {
-                title: "",
-                description:"",
-                summary:"",
-                company_id:"",
-                department_id:"",
-                start_date:"",
-                end_date:"",
-            }, 
+       
+            links_docs: {
+                name: "",
+                all_em: "",
+                upload: "",
+                employee_id: "",
+                type: "",
+                description: "",
+                link: "",
+            },
         },
        
         methods: {
 
+            
               //---- Event selected_row
               selected_row(id) {
                 //in here you can check what ever condition  before append to array.
@@ -322,11 +338,17 @@
                     this.departments = [];
                     this.announcement.department_id = "";
                 
-                    this.Get_departments_by_company(value);
+                    this.Get_employees_by_company(value);
                 }
             },
 
-
+            //---------------------- Get_employees_by_company ------------------------------\\
+            
+            Get_employees_by_company(value) {
+                axios
+                .get("/Get_employees_by_company?id=" + value)
+                .then(({ data }) => (this.employees = data));
+            },
             
              //---------------------- Get Data Create  ------------------------------\\
              Get_Data_Create() {
@@ -382,28 +404,32 @@
                 this.errors = {};
             },
             
-            //------------------------ Create Announcement ---------------------------\\
-            Create_Announcement() {
+            //------------------------ Create Links and Docs ---------------------------\\
+            Create_Links_Docs() {
                 var self = this;
                 self.SubmitProcessing = true;
-                axios.post("/core/announcements", {
-                    title: self.announcement.title,
-                    description: self.announcement.description,
-                    summary: self.announcement.summary,
-                    company_id: self.announcement.company_id,
-                    department: self.announcement.department_id,
-                    start_date: self.announcement.start_date,
-                    end_date: self.announcement.end_date,
-                }).then(response => {
+                self.data.append('name', this.links_docs.name);
+                self.data.append('type', this.links_docs.type);
+                self.data.append('company_id', this.announcements.company_id);
+                self.data.append('all_em', this.links_docs.all_em);
+                self.data.append('employees_id', this.links_docs.employees_id);
+                self.data.append('upload', this.links_docs.upload);
+                self.data.append('link', this.links_docs.link);
+                self.data.append('description', this.links_docs.description);
+
+                axios.post("/core/comp_docs_links", self.data).then(response => {
                         self.SubmitProcessing = false;
-                        window.location.href = '/core/announcements'; 
+                        console.log(response.data)
+                        // window.location.href = '/core/comp_docs_links'; 
                         toastr.success('{{ __('translate.Created_in_successfully') }}');
                         self.errors = {};
                 })
                 .catch(error => {
                     self.SubmitProcessing = false;
                     if (error.response.status == 422) {
+                        // console.log(error.response.data.errors);
                         self.errors = error.response.data.errors;
+                        console.log(this.errors);
                     }
                     toastr.error('{{ __('translate.There_was_something_wronge') }}');
                 });

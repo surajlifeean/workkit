@@ -27,7 +27,7 @@ class RedirectIfAuthenticated
             }elseif($request->user()->role_users_id == 3){
                 return redirect('/dashboard/client');
             }elseif($request->user()->role_users_id = 4){
-                return redirect('/dashboard/admin');
+                return redirect('/dashboard/hr');
             } else{
                 return redirect('/dashboard/employee');
             }
