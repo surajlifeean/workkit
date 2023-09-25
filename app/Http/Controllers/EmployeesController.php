@@ -80,7 +80,7 @@ class EmployeesController extends Controller
     {
         $user_auth = auth()->user();
         if($user_auth->can('employee_add')){
-
+      
             $this->validate($request, [
                 'firstname'      => 'required|string|max:255',
                 'lastname'       => 'required|string|max:255',
@@ -114,6 +114,7 @@ class EmployeesController extends Controller
             $data['office_shift_id'] = $request['office_shift_id'];
             $data['joining_date'] = $request['joining_date'];
             $data['role_users_id'] = $request['role_users_id'];
+            $data['direct_manager_user_id'] =  intval($request['direct_manager_user_id']);
             
             $user_data = [];
             $user_data['username'] = $request['firstname'] .' '.$request['lastname'];
@@ -121,17 +122,17 @@ class EmployeesController extends Controller
             $user_data['avatar'] = 'no_avatar.png';
             $user_data['password'] = Hash::make($request['password']);
             $user_data['status'] = 1;
-            $user_data['role_users_id'] = $request['role_users_id'];
-
+            $user_data['role_users_id'] = intval($request['role_users_id']);
+            // return response()->json($data);
             \DB::transaction(function () use ($request , $user_data , $data) {
-
+               
                 $user = User::create($user_data);
                 $user->syncRoles($request['role_users_id']);
 
                 $data['id'] = $user->id;
                 $data['user_id'] = Auth::user()->id;
-        
-                Employee::create($data);
+                $emp = Employee::create($data);
+           
 
             }, 10);
 
@@ -241,13 +242,18 @@ class EmployeesController extends Controller
     {
         $user_auth = auth()->user();
         if($user_auth->can('employee_edit')){
-            $employee = Employee::where('deleted_at', '=', null)->findOrFail($id);
+            $employee = Employee::leftJoin('users', 'users.id', '=', 'employees.direct_manager_user_id')
+            ->select('employees.*', 'users.username')
+            ->where('employees.id', $id)
+            ->firstOrFail();
             $roles = Role::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
             $companies = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
             $office_shifts = OfficeShift::where('company_id' , $employee->company_id)->where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
             $departments = Department::where('company_id' , $employee->company_id)->where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','department']);
             $designations = Designation::where('department_id' , $employee->department_id)->where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','designation']);
-            return view('employee.edit_employee', compact('employee','companies','departments','designations','office_shifts','roles'));
+            $users = User::select('id', 'username')->get();
+            // return response()->json($employee);
+            return view('employee.edit_employee', compact('employee','companies','departments','designations','office_shifts','roles', 'users'));
         }
         return abort('403', __('You are not authorized'));
     }
@@ -309,6 +315,7 @@ class EmployeesController extends Controller
             $data['address'] = $request['address'];
             $data['basic_salary'] = $request['basic_salary'];
             $data['hourly_rate'] = $request['hourly_rate'];
+            $data['direct_manager_user_id'] =  intval($request['direct_manager_user_id']);
 
             //calculation of total_leave & remaining_leave
             $employee_leave_info = Employee::find($id);

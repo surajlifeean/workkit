@@ -209,6 +209,17 @@
                             </span>
                         </div>
 
+                        <div class="form-group col-md-6">
+                            <label class="ul-form__label">{{ __('translate.Direct_Manager') }} <span
+                                    class="field_required">*</span></label>
+                            <v-select
+                                placeholder="{{ __('translate.Direct_Manager') }}"
+                                v-model="employee.direct_manager_user_id" :reduce="label => label.value"
+                                :options="users.map(user => ({label: user.username, value: user.id}))">
+                            </v-select>
+
+                            
+                        </div>
 
 
 
@@ -252,6 +263,7 @@
         designations :@json($designations),
         office_shifts :@json($office_shifts),
         employee: @json($employee),
+        users: @json($users),
     },
    
    
@@ -361,6 +373,8 @@
                 exit_date: self.employee.exit_date,
                 role_users_id: self.employee.role_users_id,
                 total_leave: self.employee.total_leave,
+                direct_manager_user_id: self.employee.direct_manager_user_id,
+
             }).then(response => {
                     self.SubmitProcessing = false;
                     window.location.href = '/employees'; 

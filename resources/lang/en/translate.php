@@ -238,6 +238,7 @@ return [
     'Events' => 'Events',
     'Expected_Budget' => 'Expected budget',
     'Expense' => 'Expense',
+    'Manage_Expenses' => 'Manage expenses',
     'Expense_List' => 'Expense list',
     'Expense_Ref' => 'Expense Ref',
     'Expense_Report' => 'Expense report',
@@ -446,7 +447,7 @@ return [
     'Select_status' => 'Select status',
     'Documents' => 'Documents',
     'Request_leave' => 'Request leave',
-    'Request_Leave' => 'Request leave',
+    'Manage_leaves' => 'Manage leaves',
     'half_day' => 'half day',
     'Company_Adress' => 'Company adress',
     'Create_Permissions' => 'Create permissions',
@@ -531,6 +532,7 @@ return [
     'Personal_Goals' => 'Personal Goals',
     'Send_Message_to_HR' => 'Send Message to HR',
     'Send_Message' => 'Send Message',
+    'Send_Message_To_Employee' => 'Send Message To Employee',
     'Mon' => 'Mon',
     'Tue' => 'Tue',
     'Wed' => 'Wed',
@@ -543,4 +545,5 @@ return [
     'Team_Goal_List' => 'Team Goal List',
     'Upload_Document' => 'Upload Document',
     'Link' => 'Link',
+    'Direct_Manager' => 'Direct Manager'
 ];

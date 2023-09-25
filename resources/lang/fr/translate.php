@@ -237,6 +237,7 @@ return [
     'Events' => 'Événements',
     'Expected_Budget' => 'Budget prévu',
     'Expense' => 'Dépense',
+    'Manage_Expenses' => 'Gérer les dépenses',
     'Expense_List' => 'Liste des dépenses',
     'Expense_Ref' => 'Dépense Réf',
     'Expense_Report' => 'Rapport de dépenses',
@@ -445,7 +446,7 @@ return [
     'Select_status' => 'Sélectionnez le statut',
     'Documents' => 'Documents',
     'Request_leave' => 'Demander un congé',
-    'Request_Leave' => 'Demander un congé',
+    'Manage_leaves' => 'Gérer les congés',
     'half_day' => 'demi-journée',
     'Company_Adress' => 'Adresse de la société',
     'Create_Permissions' => 'Créer des autorisations',
@@ -499,6 +500,7 @@ return [
     'Personal_Goals' => 'Buts personnels',
     'Send_Message_to_HR' => 'Envoyer un message aux RH',
     'Send_Message' => 'Envoyer le message',
+    'Send_Message_To_Employee' => "Envoyer un message à l'employee",
     'Mon' => 'Lun',
     'Tue' => 'Mar',
     'Wed' => 'Mer',
@@ -512,4 +514,5 @@ return [
     'All_Employees' => 'Tous les employés',
     'Upload_Document' => 'Télécharger un document',
     'Link' => 'Lien',
+    'Direct_Manager' => 'Manager direct'.
 ];

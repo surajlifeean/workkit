@@ -35,7 +35,7 @@ class UserController extends Controller
     }
 
 
-
+     
     /**
      * Show the form for creating a new resource.
      *
@@ -140,8 +140,9 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('user_edit')){
 
+		if ($user_auth->can('user_edit')){
+            
             $this->validate($request, [
                 'email' => 'required|string|email|max:255|unique:users',
                 'email' => Rule::unique('users')->ignore($id),
@@ -153,7 +154,7 @@ class UserController extends Controller
                 'email.unique' => 'This Email already taken.',
             ]);
 
-            $user = User::findOrFail($id);
+     
             $current = $user->password;
 
             if ($request->password != null) {
@@ -243,7 +244,11 @@ class UserController extends Controller
         return abort('403', __('You are not authorized'));
     }
 
+    function getAllUsers(){
+        $users = User::select('username', 'id')->get();
 
+        return response()->json($users);
+    }
 
 
      // Factory data

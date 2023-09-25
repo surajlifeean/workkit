@@ -320,7 +320,8 @@ if ($installed === true) {
 
                 Route::get('getAllPermissions', 'UserController@getAllPermissions');
 
-            
+                Route::get('get_all_users', 'UserController@getAllUsers');
+
 
             //------------------------------- Settings --------------------------\\
             //----------------------------------------------------------------\\

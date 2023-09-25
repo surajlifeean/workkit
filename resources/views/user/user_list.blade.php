@@ -60,6 +60,7 @@
                                 @elseif($user->role_users_id === 3)
                                 <td>{{ __('translate.Cannot_change_Permissions_for_client') }}</td>
                                 @else
+
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-primary btn-md m-1 dropdown-toggle" type="button"
@@ -77,15 +78,23 @@
                                 </td>
                                 @endif
                                 @endcan
-
+                                @if(auth()->user()->role_users_id == 4)
+                                  <td>--</td>
+                                @endif
                                 <td>
+                                  
                                     @can('user_edit')
-                                    <a @click="Edit_User( {{ $user}})" class="ul-link-action text-success"
+                                     @if( auth()->user()->role_users_id == 1 || $user->id != 1)
+                                      <a @click="Edit_User( {{ $user}})" class="ul-link-action text-success"
                                         data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="i-Edit"></i>
-                                    </a>
+                                      </a>
+                                     @endif
+                                     @if(auth()->user()->roles_users_id == 4 && $user->id == 1)
+                                       <td>--</td>
+                                     @endif
                                     @endcan
-
+                                    
                                     @can('user_delete')
                                     <a @click="Remove_User( {{ $user->id}})" class="ul-link-action text-danger mr-1"
                                         data-toggle="tooltip" data-placement="top" title="Delete">
@@ -432,7 +441,7 @@
         created() {
         }
 
-    })
+    });
 
 </script>
 
@@ -443,6 +452,12 @@
         $('#ul-contact-list').DataTable( {
             "processing": true, // for show progress bar
             dom: "<'row'<'col-sm-12 col-md-4'l><'col-sm-12 col-md-4'f><'col-sm-12 col-md-4'B>>rtip",
+            oLanguage:
+                { 
+                sLengthMenu: "_MENU_", 
+                sSearch: '',
+                sSearchPlaceholder: "Search..."
+            },
             buttons: [
                 'csv', 'excel', 'pdf', 'print','colvis'
             ]

@@ -58,12 +58,7 @@
 
         
 
-            @if (auth()->user()->can('office_shift_view') ||
-    auth()->user()->can('event_view') ||
-    auth()->user()->can('holiday_view') ||
-    auth()->user()->can('award_view') ||
-    auth()->user()->can('complaint_view') ||
-    auth()->user()->can('travel_view'))
+            @if (auth()->user()->can('office_shift_view') || auth()->user()->can('event_view') || auth()->user()->can('holiday_view') || auth()->user()->can('award_view') || auth()->user()->can('complaint_view') || auth()->user()->can('travel_view'))
                 <li class="nav-item {{ request()->is('hr/*') ? 'active' : '' }}" data-item="hr">
                     <a class="nav-item-hold" href="#">
                         <i class="nav-icon i-Library"></i>
@@ -73,11 +68,7 @@
                 </li>
             @endif
 
-            @if (auth()->user()->can('company_view') ||
-    auth()->user()->can('department_view') ||
-    auth()->user()->can('designation_view') ||
-    auth()->user()->can('policy_view') ||
-    auth()->user()->can('announcement_view'))
+            @if (auth()->user()->can('company_view') || auth()->user()->can('department_view') || auth()->user()->can('designation_view') || auth()->user()->can('policy_view') || auth()->user()->can('announcement_view'))
                 <li class="nav-item {{ request()->is('core/*') ? 'active' : '' }}" data-item="core">
                     <a class="nav-item-hold" href="#">
                         <i class="nav-icon i-Management"></i>
@@ -131,14 +122,16 @@
                     <div class="triangle"></div>
                 </li>
             @endcan
-              
-                <li class="nav-item {{ request()->is('tasks') ? 'active' : '' }}">
+
+            @if( auth()->user()->role_users_id == 4 )
+                <li class="nav-item {{ request()->is('tasks') ? 'active' : '' }}" data-item="actions">
                     <a class="nav-item-hold" href="/tasks">
                         <i class="nav-icon i-Check"></i>
                         <span class="nav-text">{{ __('translate.Actions') }}</span>
                     </a>
                     <div class="triangle"></div>
                 </li>
+            @endif
 
             @can('client_view')
                 <li class="nav-item {{ request()->is('clients') ? 'active' : '' }}">
@@ -160,37 +153,33 @@
                     <div class="triangle"></div>
                 </li>
             @endcan
-
-            @if (auth()->user()->can('account_view') ||
-    auth()->user()->can('deposit_view') ||
-    auth()->user()->can('expense_view') ||
-    auth()->user()->can('expense_category') ||
-    auth()->user()->can('deposit_category') ||
-    auth()->user()->can('payment_method'))
+            
+            @if(auth()->user()->role_users_id != 4)
+            @if (auth()->user()->can('account_view') ||auth()->user()->can('deposit_view') ||auth()->user()->can('expense_view') ||auth()->user()->can('expense_category') ||auth()->user()->can('deposit_category') ||auth()->user()->can('payment_method'))
                 <li class="nav-item {{ request()->is('accounting') || request()->is('accounting/*') ? 'active' : '' }}"
                     data-item="accounting">
                     <a class="nav-item-hold" href="#">
-                        <i class="nav-icon i-Financial"></i>
-                        <span class="nav-text">{{ __('translate.Accounting') }}</span>
+                         <span class="nav-text">{{ __('translate.Accounting') }}</span>
                     </a>
                     <div class="triangle"></div>
                 </li>
             @endif
+            @endif 
 
-            @if (auth()->user()->can('leave_view') ||auth()->user()->can('leave_type'))
-                <li class="nav-item {{ request()->is('leave') || request()->is('leave_type') ? 'active' : '' }}"
-                    data-item="leave">
-                    <a class="nav-item-hold" href="#">
-                        <i class="nav-icon i-Calendar"></i>
-                        <span class="nav-text">{{ __('translate.Leave_Request') }}</span>
-                    </a>
-                    <div class="triangle"></div>
-                </li>
+            @if(auth()->user()->role_users_id != 4)
+                @if (auth()->user()->can('leave_view') ||auth()->user()->can('leave_type'))
+                    <li class="nav-item {{ request()->is('leave') || request()->is('leave_type') ? 'active' : '' }}"
+                        data-item="leave">
+                        <a class="nav-item-hold" href="#">
+                            <i class="nav-icon i-Calendar"></i>
+                            <span class="nav-text">{{ __('translate.Leave_Request') }}</span>
+                        </a>
+                        <div class="triangle"></div>
+                    </li>
+                @endif
             @endif
 
-            @if (auth()->user()->can('training_view') ||
-    auth()->user()->can('trainer') ||
-    auth()->user()->can('training_skills'))
+            @if (auth()->user()->can('training_view') || auth()->user()->can('trainer') || auth()->user()->can('training_skills'))
                 <li class="nav-item {{ request()->is('trainings') || request()->is('trainers') || request()->is('training_skills') ? 'active' : '' }}"
                     data-item="training">
                     <a class="nav-item-hold" href="#">
@@ -208,11 +197,7 @@
                 @endif
             @endforeach
 
-            @if (auth()->user()->can('settings') ||
-    auth()->user()->can('group_permission') ||
-    auth()->user()->can('currency') ||
-    auth()->user()->can('backup') ||
-    auth()->user()->can('module_settings'))
+            @if (auth()->user()->can('settings') || auth()->user()->can('group_permission') || auth()->user()->can('currency') || auth()->user()->can('backup') || auth()->user()->can('module_settings'))
                 <li class="nav-item {{ request()->is('settings/*') ? 'active' : '' }}" data-item="settings">
                     <a class="nav-item-hold" href="#">
                         <i class="nav-icon i-Data-Settings"></i>
@@ -222,12 +207,7 @@
                 </li>
             @endif
 
-            @if (auth()->user()->can('attendance_report') ||
-    auth()->user()->can('employee_report') ||
-    auth()->user()->can('project_report') ||
-    auth()->user()->can('task_report') ||
-    auth()->user()->can('expense_report') ||
-    auth()->user()->can('deposit_report'))
+            @if (auth()->user()->can('attendance_report') || auth()->user()->can('employee_report') || auth()->user()->can('project_report') || auth()->user()->can('task_report') || auth()->user()->can('expense_report') || auth()->user()->can('deposit_report'))
                 <li class="nav-item {{ request()->is('report/*') ? 'active' : '' }}" data-item="report">
                     <a class="nav-item-hold" href="#">
                         <i class="nav-icon i-Line-Chart"></i>
@@ -398,9 +378,7 @@
                 </li>
             @endcan
 
-            @if (auth()->user()->can('expense_category') ||
-    auth()->user()->can('deposit_category') ||
-    auth()->user()->can('payment_method'))
+            @if (auth()->user()->can('expense_category') || auth()->user()->can('deposit_category') || auth()->user()->can('payment_method'))
                 <li class="nav-item dropdown-sidemenu">
                     <a>
                         <i class="nav-icon i-Gear"></i>
@@ -521,8 +499,7 @@
                 </li>
             @endcan
 
-            @if (auth()->user()->can('award_view') ||
-    auth()->user()->can('award_type'))
+            @if (auth()->user()->can('award_view') || auth()->user()->can('award_type'))
                 <li class="nav-item dropdown-sidemenu">
                     <a>
                         <i class="nav-icon i-Gift-Box"></i>
@@ -552,8 +529,7 @@
                 </li>
             @endcan
 
-            @if (auth()->user()->can('travel_view') ||
-    auth()->user()->can('arrangement_type'))
+            @if (auth()->user()->can('travel_view') || auth()->user()->can('arrangement_type'))
                 <li class="nav-item dropdown-sidemenu">
                     <a>
                         <i class="nav-icon i-Map-Marker"></i>
@@ -637,7 +613,28 @@
             @endcan
         </ul>
 
-
+        
+        <ul class="childNav" data-parent="actions">
+            @can('leave_view')
+                <li class="nav-item">
+                    <a class="{{ Route::currentRouteName() == 'leave.index' ? 'open' : '' }}"
+                        href="{{ route('leave.index') }}">
+                        <i class="nav-icon i-Wallet"></i>
+                        <span class="item-name">{{ __('translate.Manage_leaves') }}</span>
+                    </a>
+                </li>
+            @endcan
+            @can('expense_view')
+                <li class="nav-item">
+                    <a href="{{ route('expense.index') }}"
+                        class="{{ Route::currentRouteName() == 'expense.index' ? 'open' : '' }}">
+                        <i class="nav-icon i-Money-Bag"></i>
+                        <span class="item-name">{{ __('translate.Manage_Expenses') }}</span>
+                    </a>
+                </li>
+            @endcan
+        </ul>
+        
         <!-- Submenu Reports -->
         <ul class="childNav" data-parent="report">
             @can('attendance_report')
@@ -702,7 +699,7 @@
         </ul>
 
 
-
+         
 
         </ul>
     </div>

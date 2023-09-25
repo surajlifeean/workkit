@@ -257,7 +257,8 @@
             SubmitProcessing:false,
             errors:[],
             types: [
-                {'name': 'doc' , 'up': 'Document'}, {'name': 'link', 'up': 'Link'}
+                {'name': 'doc' , 'up': 'Document'},
+                {'name': 'link', 'up': 'Link'}
             ],
             employees: [], 
             companies: [],

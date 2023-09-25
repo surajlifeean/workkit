@@ -37,6 +37,7 @@ class LeaveController extends Controller
             'departments.department AS department_name', 'departments.id AS department_id')
             ->orderBy('id', 'desc')
             ->get();
+          
 
             return view('leave.leave_list', compact('leaves'));
 

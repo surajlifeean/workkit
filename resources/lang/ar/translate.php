@@ -236,6 +236,7 @@ return [
     'Events' => 'الأحداث',
     'Expected_Budget' => 'الميزانية المتوقعة',
     'Expense' => 'مصروف',
+    'Manage_Expenses' => 'إدارة النفقات',
     'Expense_List' => 'قائمة المصاريف',
     'Expense_Ref' => 'مرجع مصروف',
     'Expense_Report' => 'تقرير المصاريف',
@@ -445,7 +446,7 @@ return [
     'Select_status' => 'حدد الحالة',
     'Documents' => 'الوثائق',
     'Request_leave' => 'طلب إجازة',
-    'Request_Leave' => 'طلب إجازة',
+    'Manage_leaves' => 'إدارة الأوراق',
     'half_day' => 'نصف يوم',
     'Company_Adress' => 'عنوان الشركة',
     'Create_Permissions' => 'إنشاء أذونات',
@@ -499,6 +500,8 @@ return [
     'Personal_Goals' => 'أهداف شخصية',
     'Send_Message_to_HR' => 'أرسل رسالة إلى الموارد البشرية',
     'Send_Message' => 'أرسل رسالة',
+    'Send_Message_To_Employee' => "أرسل رسالة إلى الموظف",
+
     'Mon' => 'الاثنين',
     'Tue' => 'الثلاثاء',
     'Wed' => 'الأربعاء',
@@ -511,6 +514,7 @@ return [
     'Team_Goal_List' => 'قائمة أهداف الفريق',
     'All_Employees' => 'كل الموظفين',
     'Upload_Document' => 'تحميل الوثيقة',
-    'Link' => 'وصلة'
+    'Link' => 'وصلة',
+    'Direct_Manager' => 'المدير المباشر',
 
 ];

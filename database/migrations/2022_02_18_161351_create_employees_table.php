@@ -43,6 +43,7 @@ class CreateEmployeesTable extends Migration {
 			$table->decimal('hourly_rate', 10)->nullable()->default(0.00);
 			$table->decimal('basic_salary', 10)->nullable()->default(0.00);
 			$table->string('employment_type', 192)->nullable()->default('full_time');
+			$table->integer('direct_manager_user_id')->nullable();
 			$table->date('leaving_date')->nullable();
 			$table->string('marital_status', 192)->nullable()->default('single');
 			$table->string('facebook', 192)->nullable();

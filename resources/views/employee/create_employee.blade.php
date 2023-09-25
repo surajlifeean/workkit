@@ -199,6 +199,18 @@
                             </span>
                         </div>
 
+                        <div class="form-group col-md-6">
+                            <label class="ul-form__label">{{ __('translate.Direct_Manager') }} <span
+                                    class="field_required">*</span></label>
+                            <v-select
+                                placeholder="{{ __('translate.Direct_Manager') }}"
+                                v-model="employee.direct_manager_user_id" :reduce="label => label.value"
+                                :options="users.map(user => ({label: user.username, value: user.id}))">
+                            </v-select>
+
+                            
+                        </div>
+
                     </div>
 
                     <div class="row mt-3">
@@ -238,6 +250,7 @@
         departments: [],
         designations :[],
         office_shifts :[],
+        users: [],
         employee: {
             firstname: "",
             lastname:"",
@@ -254,12 +267,14 @@
             password: "",
             password_confirmation:"",
             role_users_id: "",
+            direct_manager_user_id: "",
         }, 
     },
    
    
     methods: {
-
+       
+  
         formatDate(d){
             var m1 = d.getMonth()+1;
             var m2 = m1 < 10 ? '0' + m1 : m1;
@@ -359,14 +374,15 @@
                 designation_id: self.employee.designation_id,
                 office_shift_id: self.employee.office_shift_id,
                 joining_date: self.employee.joining_date,
-
+                direct_manager_user_id: self.employee.direct_manager_user_id,
                 password: self.employee.password,
                 password_confirmation: self.employee.password_confirmation,
                 role_users_id: self.employee.role_users_id,
 
             }).then(response => {
                     self.SubmitProcessing = false;
-                    window.location.href = '/employees'; 
+                    // window.location.href = '/employees'; 
+                    console.log(response)
                     toastr.success('{{ __('translate.Created_in_successfully') }}');
                     self.errors = {};
             })
@@ -378,11 +394,26 @@
                 toastr.error('{{ __('translate.There_was_something_wronge') }}');
             });
         },
+        //----------------------------- Get Users ------------------------------\\
+        getUsers() {
+            console.log("inputting");
+
+            axios.get("/get_all_users")
+              .then((res) => {
+                console.log(res);
+                this.users = res.data;
+              })
+              .catch((error) => {
+                console.log(error)
+                toastr.error('{{ __('translate.There_was_something_wronge') }}');
+              });
+        },
 
     },
+
     //-----------------------------Autoload function-------------------
     created () {
-        
+        this.getUsers();
     },
 
 })
