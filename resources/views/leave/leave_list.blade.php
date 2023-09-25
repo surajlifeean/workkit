@@ -73,6 +73,13 @@
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
+                                    @if(auth()->user()->id != $leave->employee_id)
+                                    <a @click="Follow_up_msg({{ $leave->id }})"
+                                        class="ul-link-action text-primary mr-1" data-toggle="tooltip"
+                                        data-placement="top" title="Send message to Employee">
+                                        <i class="i-Pen-6"></i>
+                                    </a>
+                                    @endcan
                                 </td>
                             </tr>
                             @endforeach
@@ -253,6 +260,71 @@
                 </div>
             </div>
         </div>
+                                <div class="modal fade" id="send_msg_Modal" tabindex="-1" role="dialog"
+                                    aria-labelledby="send_msg_Modal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">{{ __('translate.Send_Message_To_Employee') }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 h-400px overflow-auto" id="msg-box">
+                                                        <div class="d-flex flex-column" id="msg_box">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <form @submit.prevent="Send_msg()" enctype="multipart/form-data">
+
+                                                    <div class="row">
+
+                                                        <div class="col-md-12">
+                                                            <label for="send_message"
+                                                                class="ul-form__label">{{ __('translate.Send_Message') }}
+                                                            </label>
+                                                            <input type="text" hidden name="title" id="title" value="From Employee" v-model="send_message.title">
+                                                            <div class="d-flex">
+                                                            <textarea type="text" v-model="send_message.message"
+                                                                class="form-control" name="message" id="message"
+                                                                placeholder="{{ __('translate.Send_Message') }}"></textarea>
+
+                                                                <button type="submit" class="btn btn-primary text-white ml-2"
+                                                                    :disabled="Submit_Processing_message">
+                                                                    <i class="i-Pen"></i>
+                                                                </button>
+                                                                
+                                                            </div>
+                                                           
+                                                        </div> 
+
+                                                    </div>
+
+                                                    {{-- <div class="row mt-3">
+
+                                                        <div class="col-md-6">
+                                                            <button type="submit" class="btn btn-primary"
+                                                                :disabled="Submit_Processing_message">
+                                                                {{ __('translate.Submit') }}
+                                                            </button>
+                                                            <div v-once class="typo__p" v-if="Submit_Processing_message">
+                                                                <div class="spinner spinner-primary mt-3"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div> --}}
+
+
+                                                </form> 
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div> 
     </div>
 </div>
 
@@ -278,12 +350,17 @@
             data: new FormData(),
             editmode: false,
             SubmitProcessing:false,
+
+            Submit_Processing_message:false,
+            messages:[],
+
             employees:[],
             companies:[],
             departments:[],
             leave_types:[],
             errors:[],
             leaves: [], 
+            user_id: @json(auth()->user()),
             leave: {
                 company_id: "",
                 department_id: "",
@@ -297,9 +374,64 @@
                 half_day:"",
                 status:"",
             }, 
+            send_message: {
+              message: '',
+              title: 'Leave Request Reply',
+            },
         },
        
         methods: {
+            //-------------------------- Reply to employee ---------------------\\
+            Send_msg(){
+
+            },
+
+            //-------------------------------- Follow up messages ------------------------\\
+             Follow_up_msg(id){
+                 this.Get_messages(id);
+                 $('#send_msg_Modal').modal('show');
+             },
+
+             //---------------------- Get messages ----------------------------------\\
+      
+             Get_messages(id) {
+                 this.leave_id = id;
+                 console.log('hgjhkj');
+                 axios
+                     .get("/get_messages/" + id)
+                     .then(response => {
+                         this.messages = response.data[0];
+                         $('#msg_box').empty();
+                         console.log(this.messages);
+             
+                         const messagesHTML = response.data[0].map(data => {
+                             const date = new Date(data.created_at);
+                             const formattedDate = date.toLocaleString();
+                            
+                             if (data.user_id === this.user_id.id) {
+                                 return `
+                                    <div class="mt-4 p-2 text-dark font-weight-bold ml-auto" style="background: #D9FDD3; width: fit-content; max-width: 90%; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); border-radius: 0.6rem;">
+                                          <p class="m-0 text-right">${data.message}</p>
+                                          <p class="mt-2 m-0 text-right" style="font-size: 10px">${formattedDate}</p>
+                                    </div>
+                                `;
+                             } else {
+                                 return `
+                                    <div class="mt-4 bg-white p-2 text-dark font-weight-bold mr-auto" style="width: fit-content; max-width: 90%; box-shadow: 3px 2px 11px rgba(0, 1, 0, 0.2); border-radius: 0.6rem;">
+                                          <p class="m-0 text-left">${data.message}</p>
+                                          <p class="mt-2 m-0 text-left" style="font-size: 10px">${formattedDate}</p>
+                                    </div>
+                                `;
+                             }
+                         });
+             
+                         $('#msg_box').append(messagesHTML.join(''));
+                     })
+                     .catch(error => {
+             
+                     });
+             },
+
 
             //---- Event selected_row
             selected_row(id) {
