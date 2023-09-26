@@ -61,7 +61,7 @@ class WorkFromController extends Controller
     public function workFromHome(Request $request)
     {
         $employee_id = auth()->user()->id;
-
+        $comp_id = Employee::where('id', $employee_id)->select('company_id')->first();
         if ($request->type == 'From Office') {
             $check_home = WorkFrom::where('work_from_home_date', $request->work_from_home_date)
                 ->where('employee_id', $employee_id)
@@ -70,6 +70,7 @@ class WorkFromController extends Controller
                 $new = WorkFrom::create([
                     'work_from_home_date' => $request->work_from_home_date,
                     'employee_id' => $employee_id,
+                    'company_id'  => $comp_id->company_id,
                 ]);
                 return response()->json(['200' => $new]);
             }

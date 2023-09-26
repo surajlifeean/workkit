@@ -12,7 +12,7 @@ class WorkFrom extends Model
     protected $table = 'work_from';
 
     protected $fillable = [
-       'work_from_home_date', 'employee_id'
+       'work_from_home_date', 'employee_id', 'company_id'
     ]; 
 
     protected $dates = ['deleted_at'];

@@ -18,9 +18,17 @@
                     </a>
                     <div class="triangle"></div>
                 </li>
-            @else
+            @elseif(auth()->user()->role_users_id == 2)
                 <li class="nav-item {{ request()->is('dashboard/employee') ? 'active' : '' }}">
                     <a class="nav-item-hold" href="/dashboard/employee">
+                        <i class="nav-icon i-Bar-Chart"></i>
+                        <span class="nav-text">{{ __('translate.Dashboard') }}</span>
+                    </a>
+                    <div class="triangle"></div>
+                </li>
+            @elseif(auth()->user()->role_users_id == 4)
+                <li class="nav-item {{ request()->is('dashboard/hr') ? 'active' : '' }}">
+                    <a class="nav-item-hold" href="/dashboard/hr">
                         <i class="nav-icon i-Bar-Chart"></i>
                         <span class="nav-text">{{ __('translate.Dashboard') }}</span>
                     </a>

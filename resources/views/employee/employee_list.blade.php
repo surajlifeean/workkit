@@ -149,7 +149,7 @@
                                 toastr.error('{{ __('translate.There_was_something_wronge') }}');
                             });
                     });
-                },
+            },
 
 
                 

@@ -121,9 +121,10 @@ if ($installed === true) {
                 //-------------------------------- Company docs and links ---------------\\
                 //-------------------------------------------------------------------------\\
                 Route::resource('comp_docs_links', 'CompDocsAndLinkController');
+                Route::post('comp_docs_links/multiple_ids', 'CompDocsAndLinkController@multiple_delete');
 
             });
-
+            
 
             //------------------------------- Attendances ------------------------\\
             //--------------------------------------------------------------------\\

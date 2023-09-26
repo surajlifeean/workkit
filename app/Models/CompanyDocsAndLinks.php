@@ -11,5 +11,5 @@ class CompanyDocsAndLinks extends Model
 
     protected $dates = ['deleted_at'];
 
-    protected $fillable = ['name', 'description', 'type', 'upload'];
+    protected $fillable = ['name', 'description', 'type', 'upload', 'employee_id'];
 }

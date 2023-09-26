@@ -21,12 +21,12 @@
     <div class="col-md-12">
         <div class="card text-left">
             <div class="card-header text-right bg-transparent">
-                @can('announcement_add')
+                @can('comp_docs_link_add')
                 <a class="btn btn-primary btn-md m-1" @click="New_Announcement"><i class="i-Add text-white mr-2"></i>
                     {{ __('translate.Create') }}</a>
                 @endcan
-                @can('announcement_delete')
-                <a v-if="selectedIds.length > 0" class="btn btn-danger btn-md m-1" @click="delete_selected()"><i
+                @can('comp_docs_link_delete')
+                <a v-if="selectedIds.length > 0" class="btn btn-danger btn-md m-1" @click="Delete_Selected()"><i
                         class="i-Close-Window text-white mr-2"></i> {{ __('translate.Delete') }}</a>
                 @endcan
             </div>
@@ -62,11 +62,12 @@
                                       Link    
                                     @endif
                                 </td>
-                                <td>{{ $ld->upload }}</td>
+                                <td>
+                                    {{ $ld->upload }}</td>
                                 <td>{{ $ld->created_at }}</td>
                                 <td>
                                     
-                                   @if(auth()->user()->role_users_id == 2)
+                                   
                                     @if($ld->type == 'doc')
                                      <a  href="{{ asset('comp_docs/'. $ld->upload) }}" download="{{ $ld->upload }}"
                                          class="ul-link-action text-success" data-toggle="tooltip" data-placement="top"
@@ -81,9 +82,15 @@
                                         <i class="i-File-Link"></i>
                                       </a>
                                      @endif
-                                   @else
                                      
-                                   @endif
+                                    @can('comp_docs_link_delete')
+                                    <a @click="Remove_Doc_Link( {{ $ld->id}} )"
+                                        class="ul-link-action text-danger mr-1" data-toggle="tooltip"
+                                        data-placement="top" title="Delete">
+                                        <i class="i-Close-Window"></i>
+                                    </a>
+                                    @endcan
+                                 
                                 </td>
                             </tr>
                             @endforeach
@@ -180,17 +187,24 @@
                                 
                                 <div class="col-md-6" v-if="links_docs.type === 'doc' || links_docs.type === '' ">
                                     <label class="ul-form__label">{{ __('translate.Upload_Document') }} <span class="field_required">*</span></label>
-                                    <input type="file" v-model="links_docs.upload" accept=".pdf,.doc,.docx,.png,.jpg,image/*" />
+                                    <input type="file" ref="fileInput" name="upload" id="upload" @change="change_Upload" accept=".pdf,.doc,.docx,.png,.jpg,image/*" />
                                     <span class="error" v-if="errors && errors.upload">
                                         @{{ errors.upload[0] }}
                                     </span>
+                                    <span class="error" v-if="errors && errors.upload_or_link">
+                                        @{{ errors.upload_or_link[0] }}
+                                    </span>
                                 </div>
+                                
                                 
                                 <div class="col-md-6" v-else-if="links_docs.type === 'link'">
                                     <label class="ul-form__label">{{ __('translate.Link') }} <span class="field_required">*</span></label>
                                     <input type="text" class="form-control" name="link" id="name" v-model="links_docs.link" placeholder="{{ __('translate.Link') }}" />
                                     <span class="error" v-if="errors && errors.link">
                                         @{{ errors.link[0] }}
+                                    </span>
+                                    <span class="error" v-if="errors && errors.upload_or_link">
+                                        @{{ errors.upload_or_link[0] }}
                                     </span>
                                 </div>
 
@@ -204,7 +218,7 @@
                                         name="description" id="description"
                                         placeholder="{{ __('translate.Enter_description') }}"></textarea>
                                     <span class="error" v-if="errors && errors.description">
-                                        @{{ errors.upload[0] }}
+                                        @{{ errors.description[0] }}
                                     </span>
                                 </div>
 
@@ -404,7 +418,14 @@
                 };
                 this.errors = {};
             },
+            //------------------------------ upload ------------------------------------\\
             
+            change_Upload(e) {
+                let file = e.target.files[0];
+                console.log(file);
+                this.links_docs.upload = file;
+            },
+
             //------------------------ Create Links and Docs ---------------------------\\
             Create_Links_Docs() {
                 var self = this;
@@ -414,11 +435,16 @@
                 self.data.append('company_id', this.announcements.company_id);
                 self.data.append('all_em', this.links_docs.all_em);
                 self.data.append('employees_id', this.links_docs.employees_id);
+                console.log('File data:', this.links_docs.upload);
                 self.data.append('upload', this.links_docs.upload);
                 self.data.append('link', this.links_docs.link);
                 self.data.append('description', this.links_docs.description);
 
-                axios.post("/core/comp_docs_links", self.data).then(response => {
+                axios.post("/core/comp_docs_links", self.data, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            },
+                        }).then(response => {
                         self.SubmitProcessing = false;
                         console.log(response.data)
                         // window.location.href = '/core/comp_docs_links'; 
@@ -437,10 +463,10 @@
             },
 
            //----------------------- Update Announcement ---------------------------\\
-            Update_Announcement() {
+            Update_Links_Docs() {
                 var self = this;
                 self.SubmitProcessing = true;
-                axios.put("/core/announcements/" + self.announcement.id, {
+                axios.put("/core/comp_docs_links/" + self.announcement.id, {
                     title: self.announcement.title,
                     description: self.announcement.description,
                     summary: self.announcement.summary,
@@ -450,7 +476,7 @@
                     end_date: self.announcement.end_date,
                 }).then(response => {
                         self.SubmitProcessing = false;
-                        window.location.href = '/core/announcements'; 
+                        window.location.href = '/core/comp_docs_links'; 
                         toastr.success('{{ __('translate.Updated_in_successfully') }}');
                         self.errors = {};
                     })
@@ -464,7 +490,7 @@
             },
 
              //--------------------------------- Remove Announcement ---------------------------\\
-            Remove_Announcement(id) {
+            Remove_Doc_Link(id) {
 
                 swal({
                     title: '{{ __('translate.Are_you_sure') }}',
@@ -480,9 +506,10 @@
                     buttonsStyling: false
                 }).then(function () {
                         axios
-                            .delete("/core/announcements/" + id)
-                            .then(() => {
-                                window.location.href = '/core/announcements'; 
+                            .delete("/core/comp_docs_links/" + id)
+                            .then((response) => {
+                                console.log(response.data);
+                                window.location.href = '/core/comp_docs_links'; 
                                 toastr.success('{{ __('translate.Deleted_in_successfully') }}');
 
                             })
@@ -490,11 +517,15 @@
                                 toastr.error('{{ __('translate.There_was_something_wronge') }}');
                             });
                     });
-                },
+            },
 
                 
             //--------------------------------- delete_selected ---------------------------\\
-            delete_selected() {
+            // Remove_Docs_Links(id){
+             
+            // },
+            
+            Delete_Selected() {
                 var self = this;
                 swal({
                     title: '{{ __('translate.Are_you_sure') }}',
@@ -510,11 +541,12 @@
                     buttonsStyling: false
                 }).then(function () {
                         axios
-                        .post("/core/announcements/delete/by_selection", {
-                            selectedIds: self.selectedIds
+                        .post("/core/comp_docs_links/multiple_ids", {
+                            selectedIds: self.selectedIds,
                         })
-                            .then(() => {
-                                window.location.href = '/core/announcements'; 
+                            .then((res) => {
+                                console.log(res);
+                                // window.location.href = '/core/comp_docs_links'; 
                                 toastr.success('{{ __('translate.Deleted_in_successfully') }}');
 
                             })
