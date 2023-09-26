@@ -60,13 +60,27 @@
     </div>
 
     <div class="col-lg-3 col-md-6 col-sm-6">
-        <a href="/clients">
+        <a href="/employee/my_requests">
             <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                 <div class="card-body text-center">
                     <i class="i-Boy"></i>
                     <div class="content">
-                        <p class="text-muted mt-2 mb-0">{{ __('translate.Clients') }}</p>
-                        <p class="text-primary text-24 line-height-1 mb-2">{{ $count_clients }}</p>
+                        <p class="text-muted mt-2 mb-0">{{ __('translate.My_Request') }}</p>
+                        {{-- <p class="text-primary text-24 line-height-1 mb-2">{{ $count_clients }}</p> --}}
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <a href="/tasks">
+            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                <div class="card-body text-center">    
+                    <i class="i-Dropbox"></i>
+                    <div class="content">
+                        <p class="text-muted mt-2 mb-0">{{ __('translate.Team_Goal') }}</p>
+                        <p class="text-primary text-24 line-height-1 mb-2">{{ $count_task }}</p>
                     </div>
                 </div>
             </div>
@@ -77,9 +91,9 @@
         <a href="/projects">
             <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                 <div class="card-body text-center">
-                    <i class="i-Dropbox"></i>
+                    <i class="i-Check"></i>
                     <div class="content">
-                        <p class="text-muted mt-2 mb-0">{{ __('translate.Projects') }}</p>
+                        <p class="text-muted mt-2 mb-0">{{ __('translate.Actions') }}</p>
                         <p class="text-primary text-24 line-height-1 mb-2">{{ $count_project }}</p>
                     </div>
                 </div>
@@ -87,37 +101,56 @@
         </a>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <a href="/tasks">
-            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                <div class="card-body text-center">
-                    <i class="i-Check"></i>
-                    <div class="content">
-                        <p class="text-muted mt-2 mb-0">{{ __('translate.Tasks') }}</p>
-                        <p class="text-primary text-24 line-height-1 mb-2">{{ $count_task }}</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-    </div>
+   
 
 </div>
 
 <div class="row">
     <div class="col-lg-8 col-md-12">
-        <div class="card mb-4">
+        <div class="card mb-5">
             <div class="card-body">
-                <div class="card-title">{{ __('translate.This_Week_Expense_Deposit') }}</div>
-                <div id="echart_Bar_Expense"></div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <h4 class="h4">Today is not clock in</h4>
+                        <div class="d-flex mx-1" style="overflow-x: scroll; display: flex;">
+                            @foreach($not_clock_in as $notpresent)
+                            <div class="mr-4" style="border-radius: 100%; overflow: hidden; min-height: 49px; min-width: 49px; max-width: 50px; max-height: 50px;">
+                                <img src="{{ asset('assets/images/avatar/'. $notpresent['avatar'] ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $notpresent['username'] }}">
+                            </div>
+                        @endforeach                        
+                       </div>
+                    </div>
+                </div>
+                <div class="row">
+                     <div class="col-12">
+                         <h4 class="h4">Work from home</h4>
+                         <div class="d-flex mx-1" style="overflow-x: scroll; display: flex;">
+                            @foreach($work_from_home as $wfh)
+                                <div class="mr-4" style="border-radius: 100%; overflow: hidden; min-height: 49px;min-width: 49px;max-width: 50px;max-height: 50px;">
+                                    <img src="{{ asset('assets/images/avatar/'. $wfh->avatar ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $wfh->username }}">
+                                </div>
+                            @endforeach
+                        </div>
+                        
+                     </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-4 col-sm-12">
+    {{-- <div class="col-lg-4 col-sm-12">
         <div class="card mb-4">
             <div class="card-body">
                 <div class="card-title">{{ __('translate.Projects_by_Status') }}</div>
                 <div id="echartProject"></div>
+            </div>
+        </div>
+    </div> --}}
+    <div class="col-lg-4 col-sm-12">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="card-title">{{ __('translate.Team_Goal') }}</div>
+                <div id="echartTask"></div>
             </div>
         </div>
     </div>
@@ -166,14 +199,14 @@
         </div>
     </div>
 
-    <div class="col-lg-4 col-sm-12">
+    {{-- <div class="col-lg-4 col-sm-12">
         <div class="card mb-4">
             <div class="card-body">
                 <div class="card-title">{{ __('translate.Tasks_by_Status') }}</div>
                 <div id="echartTask"></div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
 </div>

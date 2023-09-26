@@ -16,6 +16,7 @@ use App\Models\Award;
 use App\Models\Announcement;
 use App\Models\EmployeeProject;
 use App\Models\EmployeeTask;
+use App\Models\WorkFrom;
 use Carbon\Carbon;
 use DB;
 
@@ -287,6 +288,8 @@ class DashboardController extends Controller
         if ($user_auth->role_users_id === 4) {
             $day_in_now = strtolower(Carbon::now()->format('l')) . '_in';
             $day_out_now = strtolower(Carbon::now()->format('l')) . '_out';
+            $today = Carbon::now()->format('Y-m-d');
+
             $employee = Employee::with('company:id,name', 'department:id,department', 'office_shift')->findOrFail($user_auth->id);
 
             $punch_in = $employee->office_shift->$day_in_now;
@@ -412,6 +415,28 @@ class DashboardController extends Controller
                 ])
                 ->pluck('count', 'status_task');
 
+            $work_from_home = WorkFrom::leftJoin('users', 'users.id', '=', 'work_from.employee_id')
+                ->select('users.username', 'users.avatar')
+                ->where('work_from.company_id', $employee->company_id)
+                ->where('work_from.work_from_home_date', $today)
+                ->get();
+            $employeeIds = Employee::where('company_id', $employee->company_id)
+                ->leftJoin('users', 'employees.id' , '=', 'users.id')
+                ->select('employees.id', 'employees.username', 'users.avatar') // Select the desired columns
+                ->get()
+                ->toArray();
+
+            $attendance = Attendance::where('date', $today)
+                ->where('company_id', $employee->company_id)
+                ->pluck("employee_id")
+                ->toArray();
+
+            $not_clock_in = array_filter($employeeIds, function ($employeeData) use ($attendance) {
+                return !in_array($employeeData['id'], $attendance);
+            });
+
+            // dd($not_clock_in);
+
 
             return view('dashboard.dashboard_hr', ([
                 'employee' => $employee,
@@ -438,6 +463,8 @@ class DashboardController extends Controller
                 'punch_name' => $punch_name,
                 'punch_in' => $punch_in,
                 'punch_out' => $punch_out,
+                'work_from_home' => $work_from_home,
+                'not_clock_in' => $not_clock_in
             ]));
         }
         return abort('403', __('You are not authorized'));

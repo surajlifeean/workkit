@@ -328,22 +328,6 @@ class PermissionRoleSeeder extends Seeder
 					'role_id'       => 1,
 				],
 				[
-					'permission_id' => 78,
-					'role_id'       => 1,
-				],
-				[
-					'permission_id' => 79,
-					'role_id'       => 1,
-				],
-				[
-					'permission_id' => 80,
-					'role_id'       => 1,
-				],
-				[
-					'permission_id' => 81,
-					'role_id'       => 1,
-				],
-				[
 					'permission_id' => 82,
 					'role_id'       => 1,
 				],
@@ -614,6 +598,18 @@ class PermissionRoleSeeder extends Seeder
 				],
 				[
 					'permission_id' => 112,
+					'role_id' => 4
+				],
+				[
+					'permission_id' => 113,
+					'role_id' => 4
+				],
+				[
+					'permission_id' => 114,
+					'role_id' => 4
+				],
+				[
+					'permission_id' => 115,
 					'role_id' => 4
 				],
 				[
