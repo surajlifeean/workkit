@@ -115,7 +115,69 @@
 
 
     @yield('bottom-js')
+    <script>
+        let user_auth = @json(auth()->user());
+        let notificationBox = $('#notification_box');
+        let countBox = $('#notification-count');
 
+        get_notifications();
+        
+        console.log(notificationBox)
+        function get_notifications() {
+
+            notificationBox.empty();
+
+            notificationBox.append(`
+                <h4 class="m-0 mb-3 pb-1 text-muted" style="border-bottom: 2px solid gray;">{{ __('translate.Notifications') }}</h4>
+            `);
+
+            fetch('/get_notifications')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Data:', data);
+                    countBox.empty().append(`${data.length}`)
+                    notificationBoxAppend(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+            });
+        }
+
+        function notificationBoxAppend(data) {
+
+            data.forEach(e => {
+                const formattedDate = new Date(e.created_at).toLocaleString('en-GB', {
+                              day: '2-digit',
+                              month: '2-digit',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              second: '2-digit',
+                              hour12: true, 
+                            }).replace(/,/g, '');
+
+                const url = user_auth.role_users_id === 4 ? `/leave?leave_id=${e.leave_id}` : `/employee/my_requests?leave_id=${e.leave_id}`;
+                notificationBox.append(`
+                 <a href="${url}" class="my-2" style="border-bottom: 1px solid gray;">
+                   <div class="d-flex flex-column ">
+                      <h5 class="m-0">${e.title}</h5>
+                      <p>${e.message}</p>
+                      <p style="font-size: 9px;" class="text-right">${formattedDate}</p>
+                   </div>
+                 </a>
+            `);
+            });
+        }
+
+        setInterval(() => {
+            get_notifications();
+        }, 30000);
+    </script>
 </body>
 
 </html>

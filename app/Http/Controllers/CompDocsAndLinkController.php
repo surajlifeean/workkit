@@ -74,6 +74,49 @@ class CompDocsAndLinkController extends Controller
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'type' => 'required|in:doc,link',
+            'upload' => ($request->type == 'doc') ? 'required|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048' : '',
+            'link' => ($request->type == 'link') ? 'required|url' : '',
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'type' => $request->type,
+            'description' => $request->description,
+        ];
+
+        try {
+            if ($request->type == 'doc' && $request->hasFile('upload')) {
+                $image = $request->file('upload');
+                $filename = time() . '_' . $image->getClientOriginalName();
+                $image->move(public_path('/comp_docs'), $filename);
+                $data['upload'] = $filename;
+
+            } elseif ($request->type == 'link') {
+                $data['upload'] = $request->link;
+            }
+
+            CompanyDocsAndLinks::where('id', $id)->update($data);
+
+            return response()->json('Data updated successfully');
+        } catch (\Exception $e) {
+            return response()->json('File upload failed: ' . $e->getMessage(), 500);
+        }
+    }
+
+    public function get_em_data($id)
+    {
+        $docs_links = CompanyDocsAndLinks::findOrFail($id);
+        if (filter_var($docs_links->upload, FILTER_VALIDATE_URL) && $docs_links->type == 'link') {
+            $docs_links['link'] = $docs_links->upload;
+            $docs_links['upload'] = "";
+        }
+        return response()->json($docs_links);
+    }
 
     public function destroy($id)
     {
@@ -81,24 +124,24 @@ class CompDocsAndLinkController extends Controller
 
         if ($recordToDelete) {
             $filePath = $recordToDelete->upload;
-        
+
             $multipleDocs = CompanyDocsAndLinks::where('upload', $filePath)
-                ->where('id', '!=', $id) 
+                ->where('id', '!=', $id)
                 ->count();
-        
-            if ($multipleDocs < 1) {
+
+            if ($multipleDocs < 1 && $filePath && !filter_var($filePath, FILTER_VALIDATE_URL)) {
+
                 if (file_exists(public_path('comp_docs/' . $filePath))) {
                     unlink(public_path('comp_docs/' . $filePath));
                 }
             }
-        
+
             $recordToDelete->delete();
-        
+
             return response()->json(['message' => 'Record deleted successfully']);
         } else {
             return response()->json(['message' => 'Record not found'], 404);
         }
-        
     }
 
     public function multiple_delete(Request $request)
@@ -112,13 +155,13 @@ class CompDocsAndLinkController extends Controller
             $filePath = $record->upload;
 
             $multipleDocs = CompanyDocsAndLinks::where('upload', $filePath)
-            ->where('id', '!=', $record->id) 
-            ->count();
-    
-            if ($multipleDocs < 1) {
-               if (file_exists(public_path('comp_docs/' . $filePath))) {
-                unlink(public_path('comp_docs/' . $filePath));
-               }
+                ->where('id', '!=', $record->id)
+                ->count();
+
+            if ($multipleDocs < 1 && $filePath && !filter_var($filePath, FILTER_VALIDATE_URL)) {
+                if (file_exists(public_path('comp_docs/' . $filePath))) {
+                    unlink(public_path('comp_docs/' . $filePath));
+                }
             }
         }
 

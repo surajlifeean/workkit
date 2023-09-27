@@ -90,6 +90,13 @@
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
+                                    @can('comp_docs_link_delete')
+                                    <a @click="Update_Docs_Link( {{ $ld->id}} )"
+                                        class="ul-link-action text-success mr-1" data-toggle="tooltip"
+                                        data-placement="top" title="Update">
+                                        <i class="i-Edit"></i>
+                                    </a>
+                                    @endcan
                                  
                                 </td>
                             </tr>
@@ -115,7 +122,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <form @submit.prevent="editmode?Update_Announcement():Create_Links_Docs()" enctype="multipart/form-data">
+                        <form @submit.prevent="Create_Links_Docs()" enctype="multipart/form-data">
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="name" class="ul-form__label">{{ __('translate.Name') }} <span
@@ -245,6 +252,106 @@
                 </div>
             </div>
         </div> 
+
+        <div class="modal fade" id="update_docs_links_Modal" tabindex="-1" role="dialog" aria-labelledby="update_docs_links_Modal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5  class="modal-title">{{ __('translate.Edit') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form @submit.prevent="Update_Doc_Link()" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="name" class="ul-form__label">{{ __('translate.Name') }} <span
+                                            class="field_required">*</span></label>
+                                    <input type="text" v-model="em_links_docs.name" class="form-control" name="name"
+                                        id="name" placeholder="{{ __('translate.Enter_title') }}">
+                                    <span class="error" v-if="errors && errors.name">
+                                        @{{ errors.name[0] }}
+                                    </span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="ul-form__label">{{ __('translate.Choose_type') }} <span
+                                            class="field_required">*</span></label>
+                                   
+                                            <v-select 
+                                               placeholder="{{ __('translate.Choose_type') }}"
+                                               v-model="em_links_docs.type"
+                                               :reduce="label => label.value"
+                                               :options="types.map(type => ({ label: type.up, value: type.name }))">
+                                            </v-select>
+
+
+                                    <span class="error" v-if="errors && errors.type">
+                                        @{{ errors.type[0] }}
+                                    </span>
+                                </div>                                   
+
+                               
+                                
+                                <div class="col-md-6" v-if="em_links_docs.type === 'doc' || em_links_docs.type === '' ">
+                                    <label class="ul-form__label">{{ __('translate.Upload_Document') }} <span class="field_required">*</span></label>
+                                    <input type="file" ref="fileInput" name="upload" id="upload" @change="change_Upload" accept=".pdf,.doc,.docx,.png,.jpg,image/*" />
+                                    <span class="error" v-if="errors && errors.upload">
+                                        @{{ errors.upload[0] }}
+                                    </span>
+                                    
+                                </div>
+                                
+                                
+                                <div class="col-md-6" v-else-if="em_links_docs.type === 'link'">
+                                    <label class="ul-form__label">{{ __('translate.Link') }} <span class="field_required">*</span></label>
+                                    <input type="text" class="form-control" name="link" id="link" v-model="em_links_docs.link" placeholder="{{ __('translate.Link') }}" />
+                                    <span class="error" v-if="errors && errors.link">
+                                        @{{ errors.link[0] }}
+                                    </span>
+                                
+                                </div>
+
+
+
+
+                                <div class="col-md-12">
+                                    <label for="description"
+                                        class="ul-form__label">{{ __('translate.Detailed_Description') }}</label>
+                                    <textarea type="text" v-model="em_links_docs.description" class="form-control"
+                                        name="description" id="description"
+                                        placeholder="{{ __('translate.Enter_description') }}"></textarea>
+                                    <span class="error" v-if="errors && errors.description">
+                                        @{{ errors.description[0] }}
+                                    </span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row mt-3">
+
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary" :disabled="SubmitProcessingEdit">
+                                        {{ __('translate.Submit') }}
+                                    </button>
+                                    <div v-once class="typo__p" v-if="SubmitProcessingEdit">
+                                        <div class="spinner spinner-primary mt-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        </div> 
     </div>
 </div>
 
@@ -266,10 +373,13 @@
         },
         data: {
             data: new FormData(),
+      
             selectedIds:[],
             editmode: false,
             SubmitProcessing:false,
+            SubmitProcessingEdit:false,
             errors:[],
+            em_links_docs: [],
             types: [
                 {'name': 'doc' , 'up': 'Document'},
                 {'name': 'link', 'up': 'Link'}
@@ -292,6 +402,7 @@
                 description: "",
                 link: "",
             },
+            
         },
        
         methods: {
@@ -425,6 +536,12 @@
                 console.log(file);
                 this.links_docs.upload = file;
             },
+            // change_Upload_Edit(e) {
+            //     let file = e.target.files[0];
+            //     console.log(file);
+            //     this.em_links_docs.upload = file;
+            // },
+
 
             //------------------------ Create Links and Docs ---------------------------\\
             Create_Links_Docs() {
@@ -447,7 +564,7 @@
                         }).then(response => {
                         self.SubmitProcessing = false;
                         console.log(response.data)
-                        // window.location.href = '/core/comp_docs_links'; 
+                        window.location.href = '/core/comp_docs_links'; 
                         toastr.success('{{ __('translate.Created_in_successfully') }}');
                         self.errors = {};
                 })
@@ -462,32 +579,57 @@
                 });
             },
 
-           //----------------------- Update Announcement ---------------------------\\
-            Update_Links_Docs() {
-                var self = this;
-                self.SubmitProcessing = true;
-                axios.put("/core/comp_docs_links/" + self.announcement.id, {
-                    title: self.announcement.title,
-                    description: self.announcement.description,
-                    summary: self.announcement.summary,
-                    company_id: self.announcement.company_id,
-                    department: self.announcement.department_id,
-                    start_date: self.announcement.start_date,
-                    end_date: self.announcement.end_date,
-                }).then(response => {
-                        self.SubmitProcessing = false;
-                        window.location.href = '/core/comp_docs_links'; 
-                        toastr.success('{{ __('translate.Updated_in_successfully') }}');
-                        self.errors = {};
+           //----------------------- Update Docs & Llinks ---------------------------\\
+           Update_Docs_Link(id){
+                this.Get_Em_Data(id);
+                $('#update_docs_links_Modal').modal('show');
+           },
+
+           Get_Em_Data(id){
+              axios
+                .get("/core/get_Em_Data/" + id)
+                    .then(response => {
+                        console.log(response.data)
+                        this.em_links_docs = response.data;
                     })
                     .catch(error => {
-                        self.SubmitProcessing = false;
-                        if (error.response.status == 422) {
-                            self.errors = error.response.data.errors;
-                        }
-                        toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                       
                     });
+           },
+
+            Update_Doc_Link() {
+                var self = this;
+                self.SubmitProcessingEdit = true;
+                console.log(this.em_links_docs)
+                self.data.append('name', this.em_links_docs.name);
+                self.data.append('type', this.em_links_docs.type);
+                self.data.append('description', this.em_links_docs.description);
+            
+                if (this.em_links_docs.type === 'doc') {
+                    self.data.append('upload', this.links_docs.upload);
+                } else {
+                    self.data.append('link', this.em_links_docs.link);
+                }
+                self.data.append("_method", "put");
+
+                console.log(self.data)
+                axios.post("/core/comp_docs_links/" + self.em_links_docs.id, self.data)
+                .then(response => {
+                    self.SubmitProcessingEdit = false;
+                    console.log(response.data);
+                    window.location.href = '/core/comp_docs_links'; 
+                    toastr.success('{{ __('translate.Updated_in_successfully') }}');
+                    self.errors = {};
+                }).catch(error => {
+                    self.SubmitProcessingEdit = false;
+                    console.log(error.response.data.errors);
+                    if (error.response.status == 422) {
+                        self.errors = error.response.data.errors;
+                    }
+                    toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                });
             },
+
 
              //--------------------------------- Remove Announcement ---------------------------\\
             Remove_Doc_Link(id) {

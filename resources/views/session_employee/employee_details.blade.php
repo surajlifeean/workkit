@@ -1431,7 +1431,27 @@
             title: 'Leave Request Follow Up',
         },
     },
+    mounted() {
+        window.onload = () => {
+            const queryParams = new URLSearchParams(window.location.search);
+     
+             if (queryParams.has('leave_id')) {
+                 $("#nav-basic-tab").attr("aria-selected", "false");
+        
+                 $('.nav-link.active').removeClass('show active');
+                 $('.tab-pane.fade').removeClass('show active');
 
+                 $('#nav-leave-tab').addClass('show active');
+                 $("#nav-leave-tab").attr("aria-selected", "true");
+        
+                 $('#nav-leave').addClass('show active');
+        
+                 const leaveId = queryParams.get('leave_id');
+                 this.Follow_up_msg(leaveId);
+                 this.Notification_checked(leaveId);
+             }
+        };
+    },
     methods: {
         //----------------------------------- request leaves -------------------------\\
         Request_Leave() {
@@ -1444,6 +1464,20 @@
             this.Get_messages(id);
             $('#send_msg_Modal').modal('show');
         },
+
+         //-------------------------------------- Notification checked -------------------\\
+
+         Notification_checked(id){
+                axios.post(`/notifications_seen/${id}`)
+                 .then(response => {
+                     toastr.success('{{ __('translate.Created_in_successfully') }}');
+                     console.log('Resource created successfully:', response.data);
+                 })
+                 .catch(error => {
+                     toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                     console.error('Error creating resource:', error);
+                 });
+            },
         //-------------------------------- cancel leaves --------------------------\\
         Cancel_leave(id, leave_id) {
 
@@ -1475,7 +1509,10 @@
         },
 
          //---------------------- Get messages ----------------------------------\\
-      
+         scrollToBottom() {
+              var msgBox = document.getElementById("msg-box");
+             msgBox.scrollTop = msgBox.scrollHeight;
+         },
          Get_messages(id){
             this.leave_id = id;
             axios
@@ -1502,7 +1539,7 @@
                                </div>
                            `);
                         }
-                      
+                        this.scrollToBottom();
                     })
                 })
                 .catch(error => {
@@ -2058,11 +2095,11 @@
     },
     //-----------------------------Autoload function-------------------
     created () {
-        
+      
     },
 
 })
-
+      
 </script>
 
 <script type="text/javascript">

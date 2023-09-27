@@ -19250,6 +19250,13 @@ a.typo_link.text-gray-900:after {
   }
 }
 
+#notification-count{
+  width: fit-content;
+  height: fit-content;
+  margin: 0 !important;
+  position: absolute;
+  left: 1.9rem;
+}
 .layout-sidebar-compact.app-admin-wrap {
   width: 100%;
 }

@@ -122,6 +122,8 @@ if ($installed === true) {
                 //-------------------------------------------------------------------------\\
                 Route::resource('comp_docs_links', 'CompDocsAndLinkController');
                 Route::post('comp_docs_links/multiple_ids', 'CompDocsAndLinkController@multiple_delete');
+                Route::get("get_Em_Data/{id}", "CompDocsAndLinkController@get_em_data");
+                Route::put('comp_docs_links/{id}', 'CompDocsAndLinkController@update');
 
             });
             
@@ -192,6 +194,7 @@ if ($installed === true) {
             //------------------------------- Request leave  -----------------------\\
             //----------------------------------------------------------------\\
 
+
             Route::resource('leave', 'LeaveController');
             Route::resource('leave_type', 'LeaveTypeController');
             Route::post("leave/delete/by_selection", "LeaveController@delete_by_selection");
@@ -216,7 +219,9 @@ if ($installed === true) {
             Route::resource('notifications', 'NotificationController');   
             Route::post('notifications/{id}', 'NotificationController@store');
             Route::get("get_messages/{id}", "NotificationController@index");
-            
+            Route::get("get_notifications", "NotificationController@get_notifications");
+            Route::post('notifications_seen/{id}', 'NotificationController@notifications_seen');
+
 
             //------------------------------- Apps Management ----------------\\
             //--------------------------------------------------------------------\\

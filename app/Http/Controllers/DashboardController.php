@@ -180,6 +180,7 @@ class DashboardController extends Controller
         // Date now
         $day_in_now = strtolower(Carbon::now()->format('l')) . '_in';
         $day_out_now = strtolower(Carbon::now()->format('l')) . '_out';
+        $today = Carbon::now()->format('Y-m-d');
 
         //shift office
         $punch_in = $employee->office_shift->$day_in_now;
@@ -222,6 +223,25 @@ class DashboardController extends Controller
         $total_leave_taken =  $employee->total_leave - $employee->remaining_leave;
         $total_leave_remaining = $employee->remaining_leave;
 
+        $work_from_home = WorkFrom::leftJoin('users', 'users.id', '=', 'work_from.employee_id')
+            ->select('users.username', 'users.avatar')
+            ->where('work_from.company_id', $employee->company_id)
+            ->where('work_from.work_from_home_date', $today)
+            ->get();
+        $employeeIds = Employee::where('company_id', $employee->company_id)
+            ->leftJoin('users', 'employees.id', '=', 'users.id')
+            ->select('employees.id', 'employees.username', 'users.avatar') // Select the desired columns
+            ->get()
+            ->toArray();
+
+        $attendance = Attendance::where('date', $today)
+            ->where('company_id', $employee->company_id)
+            ->pluck("employee_id")
+            ->toArray();
+
+        $not_clock_in = array_filter($employeeIds, function ($employeeData) use ($attendance) {
+            return !in_array($employeeData['id'], $attendance);
+        });
         return view('dashboard.dashboard_employee', ([
             'total_leave_taken' => $total_leave_taken,
             'total_leave_remaining' => $total_leave_remaining,
@@ -236,6 +256,8 @@ class DashboardController extends Controller
             'punch_out' => $punch_out,
             'latest_projects' => $latest_projects,
             'latest_tasks' => $latest_tasks,
+            'work_from_home' => $work_from_home,
+            'not_clock_in' => $not_clock_in,
         ]));
     }
 
@@ -421,7 +443,7 @@ class DashboardController extends Controller
                 ->where('work_from.work_from_home_date', $today)
                 ->get();
             $employeeIds = Employee::where('company_id', $employee->company_id)
-                ->leftJoin('users', 'employees.id' , '=', 'users.id')
+                ->leftJoin('users', 'employees.id', '=', 'users.id')
                 ->select('employees.id', 'employees.username', 'users.avatar') // Select the desired columns
                 ->get()
                 ->toArray();

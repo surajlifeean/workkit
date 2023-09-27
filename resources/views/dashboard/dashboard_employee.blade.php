@@ -16,13 +16,9 @@
 <div class="separator-breadcrumb border-top"></div>
 
 <div id="section_Dashboard_employee">
-
     <div class="row">
-        <div class="col-lg-6 col-md-12 col-sm-12">
-            <!-- ICON BG -->
-            <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="card o-hidden mb-4">
+                <div class="col-lg-8 col-md-12 col-sm-12">
+                     <div class="card o-hidden mb-4">
                         <div class="card-header  border-0">
                             @if(!$punch_in)
                             <span class="float-left card-title m-0">{{ __('translate.No_Shift_Today') }}</span>
@@ -52,7 +48,22 @@
 
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6">
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-12 col-sm-12">
+            <!-- ICON BG -->
+           
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                   
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="card-title">{{ __('translate.Leave_taken_vs_remaining') }}</div>
+                            <div id="echart_leave"></div>
+                        </div>
+                    </div>
+                </div>
+               {{-- <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                         <div class="card-body text-center">
                             <i class="i-Dropbox"></i>
@@ -62,27 +73,71 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
-                        <div class="card-body text-center">
-                            <i class="i-Check"></i>
-                            <div class="content">
-                                <p class="text-muted mt-2 mb-0">{{ __('translate.Tasks') }}</p>
-                                <p class="text-primary text-24 line-height-1 mb-2">{{$count_tasks}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
 
-                <div class="col-lg-6 col-md-6 col-sm-6">
+               {{-- <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
                         <div class="card-body text-center">
                             <i class="i-Gift-Box"></i>
                             <div class="content">
                                 <p class="text-muted mt-2 mb-0">{{ __('translate.Awards') }}</p>
                                 <p class="text-primary text-24 line-height-1 mb-2">{{$count_awards}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> --}}
+
+                
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-sm-12">
+            {{-- <div class="card mb-4">
+                <div class="card-body">
+                    <div class="card-title">{{ __('translate.Leave_taken_vs_remaining') }}</div>
+                    <div id="echart_leave"></div>
+                </div>
+            </div> --}}
+            <div class="row mb-3">
+                    <div class="col-12">
+                        <h4 class="h4">Today is not clock in</h4>
+                        <div class="d-flex mx-1" style="overflow-x: scroll; display: flex;">
+                            @foreach($not_clock_in as $notpresent)
+                            <div class="mr-4" style="border-radius: 100%; overflow: hidden; min-height: 49px; min-width: 49px; max-width: 50px; max-height: 50px;">
+                                <img src="{{ asset('assets/images/avatar/'. $notpresent['avatar'] ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $notpresent['username'] }}">
+                            </div>
+                        @endforeach                        
+                       </div>
+                    </div>
+                </div>
+                <div class="row">
+                     <div class="col-12">
+                         <h4 class="h4">Work from home</h4>
+                         <div class="d-flex mx-1" style="overflow-x: scroll; display: flex;">
+                            @foreach($work_from_home as $wfh)
+                                <div class="mr-4" style="border-radius: 100%; overflow: hidden; min-height: 49px;min-width: 49px;max-width: 50px;max-height: 50px;">
+                                    <img src="{{ asset('assets/images/avatar/'. $wfh->avatar ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $wfh->username }}">
+                                </div>
+                            @endforeach
+                        </div>
+                        
+                     </div>
+                </div>
+        </div>
+
+
+    </div>
+
+    <div class="row">
+               <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                        <div class="card-body text-center">
+                            <i class="i-Check"></i>
+                            <div class="content">
+                                <p class="text-muted mt-2 mb-0">{{ __('translate.Team_Goal') }}</p>
+                                <p class="text-primary text-24 line-height-1 mb-2">{{$count_tasks}}</p>
                             </div>
                         </div>
                     </div>
@@ -99,23 +154,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-sm-12">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <div class="card-title">{{ __('translate.Leave_taken_vs_remaining') }}</div>
-                    <div id="echart_leave"></div>
-                </div>
-            </div>
-        </div>
-
 
     </div>
 
 
-    <div class="row">
+    {{-- <div class="row">
 
         <div class="col-lg-6 col-sm-12">
             <div class="card o-hidden mb-4">
@@ -207,7 +250,7 @@
             </div>
         </div>
 
-    </div>
+    </div> --}}
 
 </div>
 @endsection

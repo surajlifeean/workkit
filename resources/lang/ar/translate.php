@@ -279,6 +279,7 @@ return [
     'Latest_Projects' => 'أحدث المشاريع',
     'Latest_Tasks' => 'أحدث المهام',
     'Leave' => 'إجازة',
+    'Leave_List' => 'قائمة الإجازة',
     'Leave_Reason' => 'سبب الإجازة',
     'Leave_Request' => 'طلب إجازة',
     'Leave_Type' => 'نوع الإجازة',
@@ -516,5 +517,5 @@ return [
     'Upload_Document' => 'تحميل الوثيقة',
     'Link' => 'وصلة',
     'Direct_Manager' => 'المدير المباشر',
-
+    'Notifications' => 'إشعارات'
 ];

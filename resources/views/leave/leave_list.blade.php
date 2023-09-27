@@ -10,7 +10,7 @@
 <div class="breadcrumb">
     <h1>{{ __('translate.Leave') }}</h1>
     <ul>
-        <li><a href="/leave">{{ __('translate.Request_Leave') }}</a></li>
+        <li><a href="/leave">{{ __('translate.Leave_List') }}</a></li>
         <li>{{ __('translate.Leave') }}</li>
     </ul>
 </div>
@@ -379,11 +379,49 @@
               title: 'Leave Request Reply',
             },
         },
-       
+        mounted() {
+            const queryParams = new URLSearchParams(window.location.search);
+
+            if (queryParams.has('leave_id')) {
+                const leaveId = queryParams.get('leave_id');
+                this.Follow_up_msg(leaveId);
+                this.Notification_checked(leaveId);
+            }
+        },
         methods: {
             //-------------------------- Reply to employee ---------------------\\
             Send_msg(){
+                if(this.send_message.message === ''){
+                  return toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                }
+                this.Submit_Processing_message = true;
+                axios.post(`/notifications/${this.leave_id}`, {
+                  title: this.send_message.title,
+                  message: this.send_message.message,
+                })
+                 .then(response => {
+                     toastr.success('{{ __('translate.Created_in_successfully') }}');
+                     location.reload();
+                     console.log('Resource created successfully:', response.data);
+                 })
+                 .catch(error => {
+                     toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                     console.error('Error creating resource:', error);
+                 });
+            },
 
+            //-------------------------------------- Notification checked -------------------\\
+
+            Notification_checked(id){
+                axios.post(`/notifications_seen/${id}`)
+                 .then(response => {
+                     toastr.success('{{ __('translate.Created_in_successfully') }}');
+                     console.log('Resource created successfully:', response.data);
+                 })
+                 .catch(error => {
+                     toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                     console.error('Error creating resource:', error);
+                 });
             },
 
             //-------------------------------- Follow up messages ------------------------\\
@@ -400,14 +438,22 @@
                  axios
                      .get("/get_messages/" + id)
                      .then(response => {
-                         this.messages = response.data[0];
+                         this.messages = response.data;
                          $('#msg_box').empty();
                          console.log(this.messages);
              
-                         const messagesHTML = response.data[0].map(data => {
-                             const date = new Date(data.created_at);
-                             const formattedDate = date.toLocaleString();
-                            
+                         const messagesHTML = response.data.map(data => {
+                            const formattedDate = new Date(data.created_at).toLocaleString('en-GB', {
+                              day: '2-digit',
+                              month: '2-digit',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              second: '2-digit',
+                              hour12: true, 
+                            }).replace(/,/g, '');
+
+                            console.log(formattedDate)
                              if (data.user_id === this.user_id.id) {
                                  return `
                                     <div class="mt-4 p-2 text-dark font-weight-bold ml-auto" style="background: #D9FDD3; width: fit-content; max-width: 90%; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); border-radius: 0.6rem;">
@@ -426,6 +472,7 @@
                          });
              
                          $('#msg_box').append(messagesHTML.join(''));
+                         this.scrollToBottom();
                      })
                      .catch(error => {
              
@@ -628,6 +675,10 @@
                 });
             },
 
+            scrollToBottom() {
+               var msgBox = document.getElementById("msg-box");
+               msgBox.scrollTop = msgBox.scrollHeight;
+            },
            //----------------------- Update Leave ---------------------------\\
             Update_Leave() {
                 var self = this;
