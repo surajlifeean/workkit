@@ -281,6 +281,7 @@ return [
     'Latest_Projects' => 'Latest projects',
     'Latest_Tasks' => 'Latest tasks',
     'Leave' => 'Leave',
+    'Leave_List' => 'Leave List',
     'Leave_Reason' => 'Leave reason',
     'Leave_Request' => 'Leave request',
     'Leave_Type' => 'Leave type',
@@ -545,5 +546,6 @@ return [
     'Team_Goal_List' => 'Team Goal List',
     'Upload_Document' => 'Upload Document',
     'Link' => 'Link',
-    'Direct_Manager' => 'Direct Manager'
+    'Direct_Manager' => 'Direct Manager',
+    'Notifications' => 'Notifications'
 ];

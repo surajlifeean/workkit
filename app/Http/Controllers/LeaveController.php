@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\LeaveType;
+use App\Models\Notification;
 use Carbon\Carbon;
 use DateTime;
 
@@ -291,6 +292,7 @@ class LeaveController extends Controller
         if ($leave) {
            $leave->deleted_at = Carbon::now();
            $leave->save();
+           Notification::where('leave_id', $leave_id)->delete();
            return response()->json(['success' => 'Leave successfully canceled.']);
         } else {
             return abort('403', __('You are not authorized'));
@@ -305,6 +307,7 @@ class LeaveController extends Controller
             Leave::whereId($id)->update([
                 'deleted_at' => Carbon::now(),
             ]);
+            Notification::where('leave_id', $id)->delete();
 
             return response()->json(['success' => true]);
 
@@ -324,6 +327,7 @@ class LeaveController extends Controller
                 Leave::whereId($leave_id)->update([
                     'deleted_at' => Carbon::now(),
                 ]);
+                Notification::where('leave_id', $id)->delete();
             }
             return response()->json(['success' => true]);
         }

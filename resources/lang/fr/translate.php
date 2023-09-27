@@ -280,6 +280,7 @@ return [
     'Latest_Projects' => 'Derniers projets',
     'Latest_Tasks' => 'Dernières tâches',
     'Leave' => 'Congé',
+    'Leave_List' => 'Quitter la liste',
     'Leave_Reason' => 'Raison de congé',
     'Leave_Request' => 'Demande de congé',
     'Leave_Type' => 'Type de congé',
@@ -514,5 +515,6 @@ return [
     'All_Employees' => 'Tous les employés',
     'Upload_Document' => 'Télécharger un document',
     'Link' => 'Lien',
-    'Direct_Manager' => 'Manager direct'.
+    'Direct_Manager' => 'Manager direct',
+    'Notifications' => 'Notifications'
 ];

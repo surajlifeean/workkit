@@ -21,6 +21,7 @@ class CreateNotificationsTable extends Migration
             $table->integer('user_id');
             $table->integer('receiver_role_user_id')->nullable();
             $table->integer('receiver_user_id')->nullable();
+            $table->integer('company_id');
             $table->integer('leave_id')->nullable();
             $table->string('is_seen', 1)->default('0');
             $table->timestamps(6);
