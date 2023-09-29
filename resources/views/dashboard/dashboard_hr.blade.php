@@ -107,12 +107,12 @@
 
 <div class="row">
     <div class="col-lg-8 col-md-12">
-        <div class="card mb-5">
+        <div class="card mb-5" style="height: 95%">
             <div class="card-body">
-                <div class="row mb-3">
+                <div class="row mb-3 ">
                     <div class="col-12">
                         <h4 class="h4">Today is not clock in</h4>
-                        <div class="d-flex mx-1" style="overflow-x: scroll; display: flex;">
+                        <div class="d-flex mx-1 p-4" style="overflow-x: scroll; display: flex;">
                             @foreach($not_clock_in as $notpresent)
                             <div class="mr-4" style="border-radius: 100%; overflow: hidden; min-height: 49px; min-width: 49px; max-width: 50px; max-height: 50px;">
                                 <img src="{{ asset('assets/images/avatar/'. $notpresent['avatar'] ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $notpresent['username'] }}">
@@ -124,7 +124,7 @@
                 <div class="row">
                      <div class="col-12">
                          <h4 class="h4">Work from home</h4>
-                         <div class="d-flex mx-1" style="overflow-x: scroll; display: flex;">
+                         <div class="d-flex mx-1 p-4" style="overflow-x: scroll; display: flex;">
                             @foreach($work_from_home as $wfh)
                                 <div class="mr-4" style="border-radius: 100%; overflow: hidden; min-height: 49px;min-width: 49px;max-width: 50px;max-height: 50px;">
                                     <img src="{{ asset('assets/images/avatar/'. $wfh->avatar ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $wfh->username }}">
@@ -213,24 +213,24 @@
 
 <div class="row">
 
-    <div class="col-lg-8 col-md-12">
+    {{-- <div class="col-lg-8 col-md-12">
         <div class="card mb-4">
             <div class="card-body">
                 <div class="card-title">{{ __('translate.Employee_count_by_department') }}</div>
                 <div id="echartBar"></div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
-    <div class="col-lg-4 col-sm-12">
+    {{-- <div class="col-lg-4 col-sm-12">
         <div class="card mb-4">
             <div class="card-body">
                 <div class="card-title">{{ __('translate.Expense_vs_Deposit') }}</div>
                 <div id="echartPie"></div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     
 </div>
