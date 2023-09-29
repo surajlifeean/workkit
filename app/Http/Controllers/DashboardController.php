@@ -334,7 +334,12 @@ class DashboardController extends Controller
                 ->get();
 
             //echart Employee count by department
+            $count_announcement = Announcement::where('start_date', '<=', now()->format('Y-m-d'))
+            ->where('end_date', '>=', now()->format('Y-m-d'))
+            ->where('deleted_at', '=', null)
+            ->count();
 
+            
             $employees_data = Employee::where('employees.deleted_at', '=', null)
                 ->join('departments', 'departments.id', '=', 'employees.department_id')
                 ->groupBy("departments.department")
