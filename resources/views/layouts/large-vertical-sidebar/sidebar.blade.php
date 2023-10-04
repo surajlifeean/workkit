@@ -3,7 +3,6 @@
     <div class="sidebar-left open rtl-ps-none" data-perfect-scrollbar data-suppress-scroll-x="true">
         <ul class="navigation-left">
             @if (auth()->user()->role_users_id == 1)
-            @can('Dashboard_view')
                 <li class="nav-item {{ request()->is('dashboard/admin') ? 'active' : '' }}">
                     <a class="nav-item-hold" href="/dashboard/admin">
                         <i class="nav-icon i-Bar-Chart"></i>
@@ -11,7 +10,6 @@
                     </a>
                     <div class="triangle"></div>
                 </li>
-            @endcan
             @elseif(auth()->user()->role_users_id == 3)
                 <li class="nav-item {{ request()->is('dashboard/client') ? 'active' : '' }}">
                     <a class="nav-item-hold" href="/dashboard/client">
@@ -79,7 +77,6 @@
             @endif
 
             @if (auth()->user()->can('company_view') || auth()->user()->can('department_view') || auth()->user()->can('designation_view') || auth()->user()->can('policy_view') || auth()->user()->can('announcement_view'))
-             @if (auth()->user()->role_users_id != 1)
                 <li class="nav-item {{ request()->is('core/*') ? 'active' : '' }}" data-item="core">
                     <a class="nav-item-hold" href="#">
                         <i class="nav-icon i-Management"></i>
@@ -91,11 +88,9 @@
                     </a>
                     <div class="triangle"></div>
                 </li>
-             @endif
             @endif
 
             @can('user_view')
-               @if (auth()->user()->role_users_id != 1)
                 <li class="nav-item {{ request()->is('/users') ? 'active' : '' }}">
                     <a class="nav-item-hold" href="/users">
                         <i class="nav-icon i-Business-Mens"></i>
@@ -103,7 +98,6 @@
                     </a>
                     <div class="triangle"></div>
                 </li>
-               @endif
             @endcan
 
             @if (auth()->user()->can('employee_view') || auth()->user()->can('employee_add') )
@@ -482,49 +476,6 @@
 
         <!-- Submenu HR -->
         <ul class="childNav" data-parent="hr">
-
-            @if (auth()->user()->role_users_id == 1)
-            
-                @can('company_view')
-                    <li class="nav-item ">
-                        <a class="{{ Route::currentRouteName() == 'company.index' ? 'open' : '' }}"
-                            href="{{ route('company.index') }}">
-                            <i class="nav-icon i-Management"></i>
-                            <span class="item-name">{{ __('translate.Company') }}</span>
-                        </a>
-                    </li>
-                @endcan
-        
-                @can('department_view')
-                    <li class="nav-item ">
-                        <a class="{{ Route::currentRouteName() == 'departments.index' ? 'open' : '' }}"
-                            href="{{ route('departments.index') }}">
-                            <i class="nav-icon i-Shop"></i>
-                            <span class="item-name">{{ __('translate.Departments') }}</span>
-                        </a>
-                    </li>
-                @endcan
-        
-                @can('designation_view')
-                    <li class="nav-item ">
-                        <a class="{{ Route::currentRouteName() == 'designations.index' ? 'open' : '' }}"
-                            href="{{ route('designations.index') }}">
-                            <i class="nav-icon i-Shutter"></i>
-                            <span class="item-name">{{ __('translate.Designations') }}</span>
-                        </a>
-                    </li>
-                @endcan
-                @can('user_view')
-                   <li class="nav-item {{ request()->is('/users') ? 'active' : '' }}">
-                       <a class="nav-item-hold" href="/users">
-                           <i class="nav-icon i-Business-Mens"></i>
-                           <span class="nav-text">{{ __('translate.User_Controller') }}</span>
-                       </a>
-                       <div class="triangle"></div>
-                   </li>
-                @endcan
-     
-            @endif
 
             @can('office_shift_view')
                 <li class="nav-item">
