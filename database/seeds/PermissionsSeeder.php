@@ -608,11 +608,6 @@ class PermissionsSeeder extends Seeder
 			'id' => 119,
             'name' => 'Home_Office_Delete',
             'guard_name' => 'web',
-		],
-		[
-			'id' => 120,
-            'name' => 'Dashboard_view',
-            'guard_name' => 'web',
 		])
 	);
     }
