@@ -242,6 +242,7 @@ class DashboardController extends Controller
         $not_clock_in = array_filter($employeeIds, function ($employeeData) use ($attendance) {
             return !in_array($employeeData['id'], $attendance);
         });
+        
         return view('dashboard.dashboard_employee', ([
             'total_leave_taken' => $total_leave_taken,
             'total_leave_remaining' => $total_leave_remaining,
