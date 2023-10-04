@@ -19834,7 +19834,7 @@ a.typo_link.text-gray-900:after {
 }
 
 .main-content-wrap.sidenav-open {
-  width: calc(100% - 120px);
+  width: calc(100% - 200px);
 }
 
 .layout-sidebar-large .sidebar-left-secondary,
@@ -19847,7 +19847,7 @@ a.typo_link.text-gray-900:after {
 }
 
 .layout-sidebar-large .sidebar-left {
-  left: calc(-120px - 20px);
+  left: calc(-120px - 84px);
   z-index: 90;
   transition: left 0.24s ease-in-out;
 }
@@ -19863,7 +19863,7 @@ a.typo_link.text-gray-900:after {
 .layout-sidebar-large .sidebar-left .navigation-left {
   list-style: none;
   text-align: center;
-  width: 120px;
+  width: 195px;
   height: 100%;
   margin: 0;
   padding: 0;
