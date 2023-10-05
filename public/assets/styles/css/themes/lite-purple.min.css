@@ -6,6 +6,7 @@
  * Copyright 2011-2020 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
+ @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,500;6..12,600;6..12,700&display=swap');
 
 :root {
   --blue: #003473;
@@ -54,7 +55,7 @@
 }
 
 html {
-  font-family: sans-serif;
+  font-family: "Nunito", sans-serif !important;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -2334,6 +2335,67 @@ pre code {
 
 .table-responsive > .table-bordered {
   border: 0;
+}
+
+.link_btn{
+  padding: 0.8rem 0.7rem 0.8rem 0.9rem;
+  display: inline-block;
+  width: 12rem;
+  border-radius: 1rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  font-size: 14px;
+  color: #191e3a;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: left;
+}
+.link_btn:hover{
+  background-color: #bfc9d4;
+}
+.link_btn div i:first-child{
+  font-size: 1.4rem;
+  color: #663399;
+  /* margin-left: -25px; */
+  margin-right: 10px;
+  font-weight: 600;
+}
+
+.link_btn div i:last-child{
+  font-size: 0.7rem;
+  color: #663399;
+  /* margin-left: -25px; */
+  margin-left: auto;
+  font-weight: 600;
+  transition: transform 0.5s ease;
+}
+
+.i_toggle_position{
+  transform: rotate(87deg);
+}
+
+.child_links{
+  margin: 1.2rem 0;
+  padding: 0 0 0 2rem;
+  text-align: left;
+  cursor: pointer;
+}
+.child_links span:hover, .child_links i:hover{
+ color: #663399;
+}
+
+.child_links a span{
+    font-size: 14px;
+    color: #515365;
+}
+
+.child_links a i:first-child{
+  margin-right: 10px;
+}
+
+.active_link{
+  background: #fff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.09);
 }
 
 .form-control {
@@ -19834,7 +19896,7 @@ a.typo_link.text-gray-900:after {
 }
 
 .main-content-wrap.sidenav-open {
-  width: calc(100% - 120px);
+  width: calc(100% - 220px);
 }
 
 .layout-sidebar-large .sidebar-left-secondary,
@@ -19844,10 +19906,11 @@ a.typo_link.text-gray-900:after {
   height: calc(100vh - 80px);
   background: #fff;
   box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-left: 1px solid rgb(215, 224, 234);
 }
 
 .layout-sidebar-large .sidebar-left {
-  left: calc(-120px - 20px);
+  left: calc(-120px - 99px);
   z-index: 90;
   transition: left 0.24s ease-in-out;
 }
@@ -19863,7 +19926,7 @@ a.typo_link.text-gray-900:after {
 .layout-sidebar-large .sidebar-left .navigation-left {
   list-style: none;
   text-align: center;
-  width: 120px;
+  width: 220px;
   height: 100%;
   margin: 0;
   padding: 0;
