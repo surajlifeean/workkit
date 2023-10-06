@@ -36,6 +36,14 @@ $(document).ready(function() {
         }
     });
 
+    $("#moon").click(function() {
+        $body.toggleClass("dark-theme");
+    });
+
+   $("#sun").click(function() {
+        $body.toggleClass("dark-theme");
+    });
+
     let $themeLink = $("#gull-theme");
   
     $(".bootstrap-colors .color").on("click", function(e) {

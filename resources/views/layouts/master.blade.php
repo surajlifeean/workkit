@@ -142,7 +142,11 @@
                 })
                 .then(data => {
                     console.log('Data:', data);
-                    countBox.empty().append(`${data.length}`)
+                    if (data.length > 0) {
+                        countBox.removeClass('d-none'); 
+                    } else {
+                        countBox.addClass('d-none');
+                    }
                     notificationBoxAppend(data);
                 })
                 .catch(error => {
