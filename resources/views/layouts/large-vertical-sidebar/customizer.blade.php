@@ -1,5 +1,5 @@
 <!-- ============ Customizer ============= -->
-<div class="customizer">
+<div class="customizer d-none">
     <div class="handle" (click)="isOpen = !isOpen">
         <i class="i-Gear spin"></i>
     </div>

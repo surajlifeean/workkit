@@ -9,7 +9,7 @@
                 </a>
             </li> --}}
             @if (auth()->user()->role_users_id == 1)
-            @can('Dashboard_view')
+            {{-- @can('Dashboard_view') --}}
                 <li class="">
                     <a class="link_btn {{ request()->is('dashboard/admin') ? 'active_link' : '' }}" href="/dashboard/admin">
                         <div class="d-flex align-items-center justify-content-start">
@@ -18,13 +18,13 @@
                         </div>                  
                     </a>
                 </li>
-            @endcan
+            {{-- @endcan --}}
             @elseif(auth()->user()->role_users_id == 3)
                 <li class="">
                     <a class="link_btn {{ request()->is('dashboard/client') ? 'active_link' : '' }}" href="/dashboard/client">
                         <div class="d-flex align-items-center justify-content-start">
                         <i class="nav-icon i-Bar-Chart"></i>
-                        <span class="nav-text">{{ __('translate.Dashboard') }}</span>
+                        <span>{{ __('translate.Dashboard') }}</span>
                         </div>
                     </a>
                 </li>
@@ -33,7 +33,7 @@
                     <a class="link_btn {{ request()->is('dashboard/employee') ? 'active_link' : '' }}" href="/dashboard/employee">
                         <div class="d-flex align-items-center justify-content-start">
                         <i class="nav-icon i-Bar-Chart"></i>
-                        <span class="nav-text">{{ __('translate.Dashboard') }}</span>
+                        <span>{{ __('translate.Dashboard') }}</span>
                         </div>
                     </a>
                 </li>
@@ -42,7 +42,7 @@
                     <a class="link_btn {{ request()->is('dashboard/hr') ? 'active_link' : '' }}" href="/dashboard/hr">
                         <div class="d-flex align-items-center justify-content-start">
                         <i class="nav-icon i-Bar-Chart"></i>
-                        <span class="nav-text">{{ __('translate.Dashboard') }}</span>
+                        <span>{{ __('translate.Dashboard') }}</span>
                         </div>
                     </a>
                 </li>
@@ -53,7 +53,7 @@
                     <a class="link_btn {{ request()->is('employee/my_requests') ? 'active_link' : '' }}" href="/employee/my_requests">
                         <div class="d-flex align-items-center justify-content-start">
                         <i class="nav-icon i-Bar-Chart"></i>
-                        <span class="nav-text">{{ __('translate.My_Request') }}</span>
+                        <span>{{ __('translate.My_Request') }}</span>
                         </div>
                     </a>
                 </li>
@@ -63,14 +63,14 @@
                  <li class="">
                      <a class="link_btn {{ request()->is('client_projects') ? 'active_link' : '' }}" href="/client_projects">
                          <i class="nav-icon i-Dropbox"></i>
-                         <span class="nav-text">{{ __('translate.Projects') }}</span>
+                         <span>{{ __('translate.Projects') }}</span>
                      </a>
                  </li>
      
                  <li class="">
                      <a class="link_btn {{ request()->is('client_tasks') ? 'active_link' : '' }}" href="/client_tasks">
                          <i class="nav-icon i-Check"></i>
-                         <span class="nav-text">{{ __('translate.Tasks') }}</span>
+                         <span>{{ __('translate.Tasks') }}</span>
                      </a>
                  </li>
             @endif
@@ -293,7 +293,7 @@
                         >
                         <div class="d-flex align-items-center justify-content-start">  
                           <i class="nav-icon i-Engineering"></i>
-                          <span class="nav-text">{{ __('translate.Employees') }}</span>
+                          <span>{{ __('translate.Employees') }}</span>
                           <i class="nav-icon i-Arrow-Right"></i>
                         </div>
                     </a>
@@ -329,7 +329,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('projects') ? 'active_link' : '' }}" href="/projects">
                       <div class="d-flex align-items-center justify-content-start">  
-                        <i class="nav-icon i-Dropbox"></i>
+                        <i class="nav-icon i-Box-Open"></i>
                         <span class="">{{ __('translate.Projects') }}</span>
                       </div>
                     </a>
@@ -341,7 +341,7 @@
                     <a class="link_btn {{ request()->is('tasks') ? 'active_link' : '' }}" href="/tasks">
                         <div class="d-flex align-items-center justify-content-start">  
                         <i class="nav-icon i-Dropbox"></i>
-                        <span class="nav-text">{{ __('translate.Team_Goal') }}</span></div>
+                        <span>{{ __('translate.Team_Goal') }}</span></div>
                     </a>
                 </li>
             @endcan
@@ -354,7 +354,7 @@
                         >
                         <div class="d-flex align-items-center justify-content-start">  
                         <i class="nav-icon i-Check"></i>
-                        <span class="nav-text">{{ __('translate.Actions') }}</span>
+                        <span>{{ __('translate.Actions') }}</span>
                         <i class="nav-icon i-Arrow-Right"></i>
                         </div>
                     </a>
@@ -387,7 +387,7 @@
                     <a class="link_btn {{ request()->is('clients') ? 'active_link' : '' }}" href="/clients">
                         <div class="d-flex align-items-center justify-content-start">  
                         <i class="nav-icon i-Boy"></i>
-                        <span class="nav-text">{{ __('translate.Clients') }}</span></div>
+                        <span>{{ __('translate.Clients') }}</span></div>
                     </a>
                 </li>
             @endcan
@@ -401,23 +401,23 @@
                         >
                         <div class="d-flex align-items-center justify-content-start">   
                           <i class="nav-icon i-Clock"></i>
-                          <span class="nav-text">{{ __('translate.Attendance') }}</span>
+                          <span>{{ __('translate.Attendance') }}</span>
                           <i class="nav-icon i-Arrow-Right"></i>
                         </div>
                     </a>
-                    <ul id="collapse_attendances" data-parent="attendances"
+                    <ul id="collapse_attendances" 
                         class="submenu list-unstyled collapse" 
                         aria-labelledby="headingOne" data-parent="#accordionExample"
                         >
                         @can('attendance_view')
-                            <li class="nav-item">
+                            <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'daily_attendance' ? 'open' : '' }}"
                                     href="{{ route('daily_attendance') }}">
                                     <i class="nav-icon i-Clock"></i>
                                     <span class="item-name">{{ __('translate.Daily_Attendance') }}</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="child_links">
                                 <a href="{{ route('attendances.index') }}"
                                     class="{{ Route::currentRouteName() == 'attendances.index' ? 'open' : '' }}">
                                     <i class="nav-icon i-Clock-4"></i>
@@ -426,7 +426,7 @@
                             </li>
                         @endcan
                         @can('Home_Office_View')
-                        <li class="nav-item">
+                        <li class="child_links">
                             <a href="{{ route('work_from.index') }}"
                                 class="{{ Route::currentRouteName() == 'work_from.index' ? 'open' : '' }}">
                                 <i class="nav-icon i-Home-4"></i>
@@ -437,34 +437,381 @@
                     </ul>
                 </li>
             @endcan
-            <li class="">
-                <a href="javascript:void(0)" class="link_btn "
-                     aria-expanded="true" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
-                     <div class="d-flex align-items-center justify-content-start">
-                        <i class="nav-icon i-Bar-Chart"></i>
-                        <span>dashboard</span>
-                        <i class="nav-icon i-Arrow-Right"></i>
-                     </div>
-                </a>
-                <ul id="collapse1" class="submenu list-unstyled collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                    <li class="">
-                        
-                    </li>
-                </ul>
-            </li>
+            
+            @if(auth()->user()->role_users_id != 4)
+            @if (auth()->user()->can('account_view') ||auth()->user()->can('deposit_view') ||auth()->user()->can('expense_view') ||auth()->user()->can('expense_category') ||auth()->user()->can('deposit_category') ||auth()->user()->can('payment_method'))
+                <li class="" data-item="accounting">
+                    <a class="link_btn {{ request()->is('accounting') || request()->is('accounting/*') ? 'active_link' : '' }}" href="#"
+                    aria-expanded="true" data-toggle="collapse" data-target="#collapse_accounting"
+                    aria-expanded="true" aria-controls="collapse_accounting"
+                    >
+                    <div class="d-flex align-items-center justify-content-start">   
+                         <i class="nav-icon i-Pen-6"></i>
+                         <span class="nav-text">{{ __('translate.Accounting') }}</span>
+                         <i class="nav-icon i-Arrow-Right"></i>
+                    </div>
+                    </a>
+                    <ul id="collapse_accounting" 
+                        class="submenu list-unstyled collapse" 
+                        aria-labelledby="headingOne" data-parent="#accordionExample">
+
+                        @can('account_view')
+                            <li class="child_links">
+                                <a href="{{ route('account.index') }}"
+                                    class="{{ Route::currentRouteName() == 'account.index' ? 'open' : '' }}">
+                                    <i class="nav-icon i-Financial"></i>
+                                    <span class="item-name">{{ __('translate.Account') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @can('deposit_view')
+                            <li class="child_links">
+                                <a href="{{ route('deposit.index') }}"
+                                    class="{{ Route::currentRouteName() == 'deposit.index' ? 'open' : '' }}">
+                                    <i class="nav-icon i-Money-2"></i>
+                                    <span class="item-name">{{ __('translate.Deposit') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @can('expense_view')
+                            <li class="child_links">
+                                <a href="{{ route('expense.index') }}"
+                                    class="{{ Route::currentRouteName() == 'expense.index' ? 'open' : '' }}">
+                                    <i class="nav-icon i-Money-Bag"></i>
+                                    <span class="item-name">{{ __('translate.Expense') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @if (auth()->user()->can('expense_category') || auth()->user()->can('deposit_category') || auth()->user()->can('payment_method'))
+                            <li class="child_links" id="accordionExample3">
+                                <a class=""
+                                aria-expanded="true" data-toggle="collapse" data-target="#collapse_accounting_settings"
+                                aria-controls="collapse_accounting_settings"
+                                >
+                                    <i class="nav-icon i-Gear"></i>
+                                    <span class="item-name">{{ __('translate.Account_Settings') }}</span>
+                                    <i class="dd-arrow i-Arrow-Down"></i>
+                                </a>
+                                <ul id="collapse_accounting_settings" 
+                                class="collapse submenu list-unstyled" 
+                                aria-labelledby="headingOne" data-parent="#accordionExample3"
+                                >
+                                    @can('expense_category')
+                                        <li class="child_links"><a class="{{ Route::currentRouteName() == 'expense_category.index' ? 'open' : '' }}"
+                                                href="{{ route('expense_category.index') }}">{{ __('translate.Expense_Category') }}</a>
+                                        </li>
+                                    @endcan
+            
+                                    @can('deposit_category')
+                                        <li class="child_links"><a class="{{ Route::currentRouteName() == 'deposit_category.index' ? 'open' : '' }}"
+                                                href="{{ route('deposit_category.index') }}">{{ __('translate.Deposit_Category') }}</a>
+                                        </li>
+                                    @endcan
+                                    @can('payment_method')
+                                        <li class="child_links"><a class="{{ Route::currentRouteName() == 'payment_methods.index' ? 'open' : '' }}"
+                                                href="{{ route('payment_methods.index') }}">{{ __('translate.Payment_Methods') }}</a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endif
+                    </ul>       
+                </li>
+            @endif
+            @endif 
            
+            @if(auth()->user()->role_users_id != 4)
+                @if (auth()->user()->can('leave_view') ||auth()->user()->can('leave_type'))
+                    <li class="" data-item="leave">
+                        <a class="link_btn {{ request()->is('leave') || request()->is('leave_type') ? 'active_link' : '' }}" href="#"
+                          aria-expanded="true" data-toggle="collapse" data-target="#collapse_leave"
+                          aria-controls="collapse_leave"
+                          >
+                          <div class="d-flex align-items-center justify-content-start">   
+                            <i class="nav-icon i-Calendar"></i>
+                            <span class="nav-text">{{ __('translate.Leave_Request') }}</span>
+                            <i class="nav-icon i-Arrow-Right"></i>
+                          </div>
+                        </a>
+                            <ul id="collapse_leave" class="submenu list-unstyled collapse" 
+                                aria-labelledby="headingOne" data-parent="#accordionExample"
+                               >
+                                @can('leave_view')
+                                    <li class="child_links">
+                                        <a class="{{ Route::currentRouteName() == 'leave.index' ? 'open' : '' }}"
+                                            href="{{ route('leave.index') }}">
+                                            <i class="nav-icon i-Wallet"></i>
+                                            <span class="item-name">{{ __('translate.Request_leave') }}</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                    
+                                @can('leave_type')
+                                    <li class="child_links">
+                                        <a class="{{ Route::currentRouteName() == 'leave_type.index' ? 'open' : '' }}"
+                                            href="{{ route('leave_type.index') }}">
+                                            <i class="nav-icon i-Wallet"></i>
+                                            <span class="item-name">{{ __('translate.Leave_Type') }}</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                            </ul>
+
+                            
+                    </li>
+                @endif
+            @endif
+            <!-- ---------------------------------------------------Tranings--------------------------------------------------- -->
+
+            @if (auth()->user()->can('training_view') || auth()->user()->can('trainer') || auth()->user()->can('training_skills'))
+                <li class=" " data-item="training">
+                    <a class="link_btn {{ request()->is('trainings') || request()->is('trainers') || request()->is('training_skills') ? 'active_link' : '' }}" href="#"
+                        aria-expanded="true" data-toggle="collapse" data-target="#collapse_training"
+                          aria-controls="collapse_training"
+                    >
+                    <div class="d-flex align-items-center justify-content-start">   
+                        <i class="nav-icon i-Windows-Microsoft"></i>
+                        <span class="nav-text">{{ __('translate.Training') }}</span>
+                        <i class="nav-icon i-Arrow-Right"></i>
+                    </div>
+                    </a>
+                    <ul class="submenu list-unstyled collapse" id="collapse_training"
+                    aria-labelledby="headingOne" data-parent="#accordionExample"
+                    >
+                        @can('training_view')
+                            <li class="child_links">
+                                <a class="{{ Route::currentRouteName() == 'trainings.index' ? 'open' : '' }}"
+                                    href="{{ route('trainings.index') }}">
+                                    <i class="nav-icon i-Windows-Microsoft"></i>
+                                    <span class="item-name">{{ __('translate.Training_List') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @can('trainer')
+                            <li class="child_links">
+                                <a class="{{ Route::currentRouteName() == 'trainers.index' ? 'open' : '' }}"
+                                    href="{{ route('trainers.index') }}">
+                                    <i class="nav-icon i-Business-Mens"></i>
+                                    <span class="item-name">{{ __('translate.Trainers') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @can('training_skills')
+                            <li class="child_links">
+                                <a class="{{ Route::currentRouteName() == 'training_skills.index' ? 'open' : '' }}"
+                                    href="{{ route('training_skills.index') }}">
+                                    <i class="nav-icon i-Wallet"></i>
+                                    <span class="item-name">{{ __('translate.Training_Skills') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
+            <!--  -->
+            @foreach ($plugins as $item)
+                @if (View::exists(strtolower($item) . '::layouts.large-vertical-sidebar.sidebar'))
+                    @include(strtolower($item) . '::layouts.large-vertical-sidebar.sidebar')
+                @endif
+            @endforeach
+            <!------------------------------------------------------ Settings ------------------------------------------------------>
+            @if (auth()->user()->can('settings') || auth()->user()->can('group_permission') || auth()->user()->can('currency') || auth()->user()->can('backup') || auth()->user()->can('module_settings'))
+                <li class="" data-item="settings">
+                    <a class="link_btn {{ request()->is('settings/*') ? 'active_link' : '' }}" href="#"
+                    aria-expanded="true" data-toggle="collapse" data-target="#collapse_settings"
+                          aria-controls="collapse_settings"
+                    >
+                    <div class="d-flex align-items-center justify-content-start">   
+                        <i class="nav-icon i-Data-Settings"></i>
+                        <span class="nav-text">{{ __('translate.Settings') }}</span>
+                        <i class="nav-icon i-Arrow-Right"></i>
+                    </div>
+                    </a>
+
+                    <ul class="submenu list-unstyled collapse" id="collapse_settings"
+                    aria-labelledby="headingOne" data-parent="#accordionExample"
+                    >
+                        @can('settings')
+                            <li class="child_links ">
+                                <a class="{{ Route::currentRouteName() == 'system_settings.index' ? 'open' : '' }}"
+                                    href="{{ route('system_settings.index') }}">
+                                    <i class="nav-icon i-Gear"></i>
+                                    <span class="item-name">{{ __('translate.System_Settings') }}</span>
+                                </a>
+                            </li>
+            
+                            <li class="child_links">
+                                <a class="{{ Route::currentRouteName() == 'update_settings.index' ? 'open' : '' }}"
+                                    href="{{ route('update_settings.index') }}">
+                                    <i class="nav-icon i-Data"></i>
+                                    <span class="item-name">{{ __('translate.Update_Log') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        {{-- @can('module_settings')
+                        <li class="child_links ">
+                            <a class="{{ Route::currentRouteName()=='module_settings.index' ? 'open' : '' }}"
+                        href="{{route('module_settings.index')}}">
+                        <i class="nav-icon i-Clock-3"></i>
+                        <span class="item-name">{{ __('translate.Module_settings') }}</span>
+                        </a>
+                        </li>
+                        @endcan --}}
+            
+                        @can('group_permission')
+                            <li class="child_links">
+                                <a href="{{ route('permissions.index') }}"
+                                    class="{{ Route::currentRouteName() == 'permissions.index' ? 'open' : '' }}">
+                                    <i class="nav-icon i-Lock-2"></i>
+                                    <span class="item-name">{{ __('translate.Permissions') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @can('currency')
+                            <li class="child_links">
+                                <a class="{{ Route::currentRouteName() == 'currency.index' ? 'open' : '' }}"
+                                    href="{{ route('currency.index') }}">
+                                    <i class="nav-icon i-Dollar-Sign"></i>
+                                    <span class="item-name">{{ __('translate.Currency') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @can('backup')
+                            <li class="child_links">
+                                <a class="{{ Route::currentRouteName() == 'backup.index' ? 'open' : '' }}"
+                                    href="{{ route('backup.index') }}">
+                                    <i class="nav-icon i-Download"></i>
+                                    <span class="item-name">{{ __('translate.Backup') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+
+                </li>
+            @endif
+
+            <!-- -----------------------------------------------------Reports----------------------------------------------------- -->
+            @if (auth()->user()->can('attendance_report') || auth()->user()->can('employee_report') || auth()->user()->can('project_report') || auth()->user()->can('task_report') || auth()->user()->can('expense_report') || auth()->user()->can('deposit_report'))
+                <li class="" data-item="report">
+                    <a class="link_btn {{ request()->is('report/*') ? 'active' : '' }}" href="#"
+                    aria-expanded="true" data-toggle="collapse" data-target="#collapse_report"
+                          aria-controls="collapse_report"
+                    >
+                    <div class="d-flex align-items-center justify-content-start"> 
+                        <i class="nav-icon i-Line-Chart"></i>
+                        <span class="nav-text">{{ __('translate.Reports') }}</span>
+                        <i class="nav-icon i-Arrow-Right"></i>
+                    </div>
+                    </a>
+                    <ul 
+                      class="submenu list-unstyled collapse" id="collapse_report"
+                      aria-labelledby="headingOne" data-parent="#accordionExample"
+                    >
+                        @can('attendance_report')
+                            <li class="child_links ">
+                                <a class="{{ Route::currentRouteName() == 'attendance_report_index' ? 'open' : '' }}"
+                                    href="{{ route('attendance_report_index') }}">
+                                    <i class="nav-icon i-Wallet"></i>
+                                    <span class="item-name">{{ __('translate.Attendance_Report') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @can('employee_report')
+                            <li class="child_links ">
+                                <a class="{{ Route::currentRouteName() == 'employee_report_index' ? 'open' : '' }}"
+                                    href="{{ route('employee_report_index') }}">
+                                    <i class="nav-icon i-Wallet"></i>
+                                    <span class="item-name">{{ __('translate.Employee_Report') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @can('project_report')
+                            <li class="child_links ">
+                                <a class="{{ Route::currentRouteName() == 'project_report_index' ? 'open' : '' }}"
+                                    href="{{ route('project_report_index') }}">
+                                    <i class="nav-icon i-Wallet"></i>
+                                    <span class="item-name">{{ __('translate.Project_Report') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @can('task_report')
+                            <li class="child_links ">
+                                <a class="{{ Route::currentRouteName() == 'task_report_index' ? 'open' : '' }}"
+                                    href="{{ route('task_report_index') }}">
+                                    <i class="nav-icon i-Wallet"></i>
+                                    <span class="item-name">{{ __('translate.Task_Report') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @can('expense_report')
+                            <li class="child_links ">
+                                <a class="{{ Route::currentRouteName() == 'expense_report_index' ? 'open' : '' }}"
+                                    href="{{ route('expense_report_index') }}">
+                                    <i class="nav-icon i-Wallet"></i>
+                                    <span class="item-name">{{ __('translate.Expense_Report') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+            
+                        @can('deposit_report')
+                            <li class="child_links mb-5">
+                                <a class="{{ Route::currentRouteName() == 'deposit_report_index' ? 'open' : '' }}"
+                                    href="{{ route('deposit_report_index') }}">
+                                    <i class="nav-icon i-Wallet"></i>
+                                    <span class="item-name">{{ __('translate.Deposit_Report') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endif
         </ul>
     </div>
 </div>
 
 <script>
-    const link_btns = document.querySelectorAll('.link_btn');
+   const link_btns = document.querySelectorAll('.link_btn');
 
     link_btns.forEach(link_btn => {
-      link_btn.addEventListener('click', () => {
-        const right_arrow = link_btn.querySelector('div i:last-child');
+        link_btn.addEventListener('click', (e) => {
+            link_btns.forEach(other_btn => {
+                if (other_btn !== link_btn) {
+                    const right_arrow = other_btn.querySelector('div i:last-child');
+    
+                    if (right_arrow) {
+                        other_btn.classList.remove('link_btn_colapsed');
+                        right_arrow.classList.remove('i_toggle_position');
+                    }
+                }
+            });
+    
+            const right_arrow = link_btn.querySelector('div i:last-child');
             right_arrow.classList.toggle('i_toggle_position');
-      });
+    
+            var targetSelector = e.currentTarget.getAttribute('data-target');
+            var targetElement = document.querySelector(targetSelector);
+    
+            if (targetElement && targetElement.classList.contains('collapse') && targetElement.classList.contains('show')) {
+                console.log('The collapse is currently shown.');
+                link_btn.classList.remove('link_btn_colapsed');
+            } else {
+                console.log('The collapse is not shown.');
+                link_btn.classList.toggle('link_btn_colapsed');
+            }
+        });
     });
+
 
 </script>
