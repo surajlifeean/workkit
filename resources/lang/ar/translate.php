@@ -517,5 +517,9 @@ return [
     'Upload_Document' => 'تحميل الوثيقة',
     'Link' => 'وصلة',
     'Direct_Manager' => 'المدير المباشر',
-    'Notifications' => 'إشعارات'
+    'Notifications' => 'إشعارات',
+    'Subscription' => 'الاشتراك',
+    'Manage_Plan' => 'إدارة الخطة',
+    'Subscription_List' => "قائمة الاشتراك",
+    'System_Setup' => 'إعداد النظام'
 ];

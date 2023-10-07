@@ -547,5 +547,9 @@ return [
     'Upload_Document' => 'Upload Document',
     'Link' => 'Link',
     'Direct_Manager' => 'Direct Manager',
-    'Notifications' => 'Notifications'
+    'Notifications' => 'Notifications',
+    'Subscription' => 'Subscription',
+    'Manage_Plan' => 'Manage plan',
+    'Subscription_List' => 'Subscription List',
+    'System_Setup' => 'System Setup'
 ];

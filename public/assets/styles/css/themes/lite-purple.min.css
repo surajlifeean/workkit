@@ -2464,6 +2464,14 @@ pre code {
   background: rgba(96, 125, 139, 0.54);
 }
 
+.plan_cont{
+  background: purple;
+  color: #fff;
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+  top: -1.2rem;
+}
+
 .form-control {
   display: block;
   width: 100%;
