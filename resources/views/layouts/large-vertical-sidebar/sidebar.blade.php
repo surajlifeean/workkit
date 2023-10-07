@@ -2,12 +2,7 @@
 <div class="side-content-wrap">
     <div class="sidebar-left open rtl-ps-none" data-perfect-scrollbar data-suppress-scroll-x="true">
         <ul class="navigation-left accordion mt-3" id="accordionExample">
-            {{-- <li class="">
-                <a class="link_btn {{ request()->is('dashboard/admin') ? 'active_link' : '' }}" href="/dashboard/admin">
-                    <i class="nav-icon i-Bar-Chart"></i>
-                    <span class="">{{ __('translate.Dashboard') }}</span>                   
-                </a>
-            </li> --}}
+            {{--------------------------------------------Dashboard----------------------------------------------}}
             @if (auth()->user()->role_users_id == 1)
             {{-- @can('Dashboard_view') --}}
                 <li class="">
@@ -47,7 +42,7 @@
                     </a>
                 </li>
             @endif
-            
+            {{---------------------------------------- My requests ------------------------------------------------}}
             @if (auth()->user()->role_users_id == 2 || auth()->user()->role_users_id == 4)
                 <li class="">
                     <a class="link_btn {{ request()->is('employee/my_requests') ? 'active_link' : '' }}" href="/employee/my_requests">
@@ -58,7 +53,7 @@
                     </a>
                 </li>
             @endif
-
+            {{--------------------------------------------------  client ------------------------------------------------}}
             @if (auth()->user()->role_users_id == 3)
                  <li class="">
                      <a class="link_btn {{ request()->is('client_projects') ? 'active_link' : '' }}" href="/client_projects">
@@ -74,7 +69,7 @@
                      </a>
                  </li>
             @endif
-
+            {{----------------------------------------------------------- core -----------------------------------------}}
             @if (auth()->user()->can('office_shift_view') || auth()->user()->can('event_view') || auth()->user()->can('holiday_view') || auth()->user()->can('award_view') || auth()->user()->can('complaint_view') || auth()->user()->can('travel_view'))
                 <li class="" data-item="hr">
                     <a class="link_btn {{  ( request()->is('hr/*') || request()->is('core/*') || request()->is('users')) ? 'active_link' : '' }}" href="#"
@@ -120,7 +115,7 @@
                             </li>
                         @endcan
 
-                        @can('user_view')
+                        {{-- @can('user_view')
                            <li class="child_links">
                                <a class="" href="/users">
                                    <i class="nav-icon i-Business-Mens"></i>
@@ -128,7 +123,7 @@
                                </a>
                                
                            </li>
-                        @endcan
+                        @endcan --}}
      
                         @endif
 
@@ -186,7 +181,7 @@
                     </ul>
                 </li>
             @endif
-
+            {{------------------------------------------------ Department -------------------------------------------}}
             @if (auth()->user()->can('company_view') || auth()->user()->can('department_view') || auth()->user()->can('designation_view') || auth()->user()->can('policy_view') || auth()->user()->can('announcement_view'))
              @if (auth()->user()->role_users_id != 1)
                 <li class=" " data-item="core">
@@ -270,9 +265,9 @@
                 </li>
              @endif
             @endif
-
+            {{--------------------------------------------- Users -------------------------------------------------}}
             @can('user_view')
-               @if (auth()->user()->role_users_id != 1)
+               {{-- @if (auth()->user()->role_users_id != 1) --}}
                 <li class="">
                     <a class="link_btn {{ request()->is('users') ? 'active_link' : '' }}" href="/users">
                       <div class="d-flex align-items-center justify-content-start">
@@ -282,9 +277,9 @@
                     </a>
                     
                 </li>
-               @endif
+               {{-- @endif --}}
             @endcan
-
+            {{---------------------------------------------- Employees -------------------------------------------}}
             @if (auth()->user()->can('employee_view') || auth()->user()->can('employee_add') )
                 <li class="" data-item="employees">
                     <a class="link_btn {{ request()->is('employees') || request()->is('employees/*') ? 'active_link' : '' }}" href="#"
@@ -324,7 +319,7 @@
                 </li>
 
             @endif
-
+            {{------------------------------------------ Projects -------------------------------------------------}}
             @can('project_view')
                 <li class="">
                     <a class="link_btn {{ request()->is('projects') ? 'active_link' : '' }}" href="/projects">
@@ -335,7 +330,7 @@
                     </a>
                 </li>
             @endcan
-
+            {{------------------------------------------- Team Goal ------------------------------------------------}}
             @can('task_view')
                 <li class=" ">
                     <a class="link_btn {{ request()->is('tasks') ? 'active_link' : '' }}" href="/tasks">
@@ -345,7 +340,7 @@
                     </a>
                 </li>
             @endcan
-
+            {{---------------------------------------------- Actions ----------------------------------------------}}
             @if( auth()->user()->role_users_id == 4 )
                 <li class="" data-item="actions">
                     <a class="link_btn {{ request()->is('leave') ||  request()->is('accounting/expense')  || request()->is('tasks') ? 'active_link' : '' }}" href="/tasks"
@@ -437,7 +432,7 @@
                     </ul>
                 </li>
             @endcan
-            
+            {{---------------------------------------------Accounting-----------------------------------------}}
             @if(auth()->user()->role_users_id != 4)
             @if (auth()->user()->can('account_view') ||auth()->user()->can('deposit_view') ||auth()->user()->can('expense_view') ||auth()->user()->can('expense_category') ||auth()->user()->can('deposit_category') ||auth()->user()->can('payment_method'))
                 <li class="" data-item="accounting">
@@ -522,7 +517,7 @@
                 </li>
             @endif
             @endif 
-           
+            {{------------------------------------------------leave------------------------------------------------}}
             @if(auth()->user()->role_users_id != 4)
                 @if (auth()->user()->can('leave_view') ||auth()->user()->can('leave_type'))
                     <li class="" data-item="leave">
@@ -624,10 +619,10 @@
                 <li class="" data-item="settings">
                     <a class="link_btn {{ request()->is('settings/*') ? 'active_link' : '' }}" href="#"
                     aria-expanded="true" data-toggle="collapse" data-target="#collapse_settings"
-                          aria-controls="collapse_settings"
+                    aria-controls="collapse_settings"
                     >
                     <div class="d-flex align-items-center justify-content-start">   
-                        <i class="nav-icon i-Data-Settings"></i>
+                        <i class="nav-icon i-Security-Settings"></i>
                         <span class="nav-text">{{ __('translate.Settings') }}</span>
                         <i class="nav-icon i-Arrow-Right"></i>
                     </div>
@@ -697,7 +692,37 @@
 
                 </li>
             @endif
-
+            {{------------------------------------------------------System setup-----------------------------------------}}
+            @if (auth()->user()->role_users_id == 1)
+            <li class="">
+                <a class="link_btn {{ request()->is('subscription') ? 'active_link' : '' }}" href="/subscription"
+                    aria-expanded="true" data-toggle="collapse" data-target="#collapse_system_setup"
+                    aria-controls="collapse_system_setup">
+                    <div class="d-flex align-items-center justify-content-start">  
+                        <i class="nav-icon i-Data-Settings"></i>
+                        <span>{{ __('translate.System_Setup') }}</span>
+                        <i class="nav-icon i-Arrow-Right"></i>
+                    </div>
+                </a>
+                <ul id="collapse_system_setup" class="submenu list-unstyled collapse"
+                    aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <li class="child_links">
+                                        
+                    </li>
+                </ul>
+            </li>
+            @endif
+            {{------------------------------------------------------Subscription-------------------------------------}}
+            @if (auth()->user()->role_users_id == 1)
+                <li class="">
+                    <a class="link_btn {{ request()->is('subscription') ? 'active_link' : '' }}" href="/subscription">
+                        <div class="d-flex align-items-center justify-content-start">  
+                            <i class="nav-icon i-Money-Bag"></i>
+                            <span>{{ __('translate.Subscription') }}</span>
+                        </div>
+                    </a>
+                </li>
+            @endif
             <!-- -----------------------------------------------------Reports----------------------------------------------------- -->
             @if (auth()->user()->can('attendance_report') || auth()->user()->can('employee_report') || auth()->user()->can('project_report') || auth()->user()->can('task_report') || auth()->user()->can('expense_report') || auth()->user()->can('deposit_report'))
                 <li class="" data-item="report">

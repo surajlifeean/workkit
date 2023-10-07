@@ -194,14 +194,11 @@ if ($installed === true) {
             //------------------------------- Request leave  -----------------------\\
             //----------------------------------------------------------------\\
 
-
             Route::resource('leave', 'LeaveController');
             Route::resource('leave_type', 'LeaveTypeController');
             Route::post("leave/delete/by_selection", "LeaveController@delete_by_selection");
             Route::post("leave_type/delete/by_selection", "LeaveTypeController@delete_by_selection");
             Route::post("cancel_leave_by_employee/{id}/{leave_id}", "LeaveController@cancelLeave");
-
-
 
             //------------------------------- training ----------------------\\
             //----------------------------------------------------------------\\
@@ -214,7 +211,6 @@ if ($installed === true) {
             Route::resource('training_skills', 'TrainingSkillsController');
             Route::post("training_skills/delete/by_selection", "TrainingSkillsController@delete_by_selection");
 
-
             //------------------------------- Notifications ------------------\\
             Route::resource('notifications', 'NotificationController');   
             Route::post('notifications/{id}', 'NotificationController@store');
@@ -222,11 +218,10 @@ if ($installed === true) {
             Route::get("get_notifications", "NotificationController@get_notifications");
             Route::post('notifications_seen/{id}', 'NotificationController@notifications_seen');
 
-
             //------------------------------- Apps Management ----------------\\
             //--------------------------------------------------------------------\\
 
-            Route::prefix('hr')->group(function () {
+               Route::prefix('hr')->group(function () {
 
 
                 //------------------------------- office_shift ------------------\\
@@ -346,7 +341,10 @@ if ($installed === true) {
             });
 
             Route::get('GenerateBackup', 'BackupController@GenerateBackup');
+            
+            //------------------------------- Subscriptions ----------------------------------------------\\
 
+            Route::resource('subscription', 'SubscriptionController');      
 
             //------------------------------- Reports --------------------------\\
             //----------------------------------------------------------------\\

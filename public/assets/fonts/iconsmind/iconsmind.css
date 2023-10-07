@@ -1094,6 +1094,9 @@
 .i-Circular-Point:before {
 	content: "\e764";
 }
+.ti-circle-plus:before{
+	content:"\ea69";
+}
 .i-City-Hall:before {
 	content: "\e765";
 }

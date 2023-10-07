@@ -516,5 +516,9 @@ return [
     'Upload_Document' => 'Télécharger un document',
     'Link' => 'Lien',
     'Direct_Manager' => 'Manager direct',
-    'Notifications' => 'Notifications'
+    'Notifications' => 'Notifications',
+    'Subscription' => 'Abonnement',
+    'Manage_Plan' => 'Gérer le forfait',
+    'Subscription_List' => "Liste d'abonnement",
+    'System_Setup' => 'Installation du système'
 ];
