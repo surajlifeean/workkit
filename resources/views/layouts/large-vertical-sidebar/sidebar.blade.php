@@ -632,13 +632,7 @@
                     aria-labelledby="headingOne" data-parent="#accordionExample"
                     >
                         @can('settings')
-                            <li class="child_links ">
-                                <a class="{{ Route::currentRouteName() == 'system_settings.index' ? 'open' : '' }}"
-                                    href="{{ route('system_settings.index') }}">
-                                    <i class="nav-icon i-Gear"></i>
-                                    <span class="item-name">{{ __('translate.System_Settings') }}</span>
-                                </a>
-                            </li>
+                       
             
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'update_settings.index' ? 'open' : '' }}"
@@ -695,7 +689,7 @@
             {{------------------------------------------------------System setup-----------------------------------------}}
             @if (auth()->user()->role_users_id == 1)
             <li class="">
-                <a class="link_btn {{ request()->is('subscription') ? 'active_link' : '' }}" href="/subscription"
+                <a class="link_btn {{ request()->is('business_settings') || request()->is('system_settings') ? 'active_link' : '' }}" href="/business_settings"
                     aria-expanded="true" data-toggle="collapse" data-target="#collapse_system_setup"
                     aria-controls="collapse_system_setup">
                     <div class="d-flex align-items-center justify-content-start">  
@@ -707,7 +701,18 @@
                 <ul id="collapse_system_setup" class="submenu list-unstyled collapse"
                     aria-labelledby="headingOne" data-parent="#accordionExample">
                     <li class="child_links">
-                                        
+                        <a class="{{ Route::currentRouteName() == 'business_settings.index' ? 'open' : '' }}"
+                            href="{{ route('business_settings') }}">
+                            <i class="nav-icon i-Data"></i>
+                            <span class="item-name">{{ __('translate.Business_settings') }}</span>
+                        </a>
+                    </li>
+                    <li class="child_links ">
+                        <a class="{{ Route::currentRouteName() == 'system_settings.index' ? 'open' : '' }}"
+                            href="{{ route('system_settings.index') }}">
+                            <i class="nav-icon i-Gear"></i>
+                            <span class="item-name">{{ __('translate.System_Settings') }}</span>
+                        </a>
                     </li>
                 </ul>
             </li>

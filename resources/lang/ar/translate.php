@@ -521,5 +521,6 @@ return [
     'Subscription' => 'الاشتراك',
     'Manage_Plan' => 'إدارة الخطة',
     'Subscription_List' => "قائمة الاشتراك",
-    'System_Setup' => 'إعداد النظام'
+    'System_Setup' => 'إعداد النظام',
+    'Business_settings' => 'إعدادات الأعمال'
 ];

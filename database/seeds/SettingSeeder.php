@@ -23,10 +23,9 @@ class SettingSeeder extends Seeder
                 'CompanyAdress' => '3618 Abia Martin Drive',
                 'footer' => 'WorkTick - Ultimate HRM & Project Management',
                 'developed_by' => 'Ui-Lib',
-                'logo' => 'logo-default.png',
+                'logo' => 'LOGO1.png',
                 'default_language' => 'en',
-            )
-            
+            )           
         );
     }
 }

@@ -25,6 +25,7 @@ class CreateSettingsTable extends Migration {
 			$table->string('footer', 191);
 			$table->string('developed_by', 191);
 			$table->string('logo', 191)->nullable();
+			$table->string('dark_logo', 191)->nullable();
 			$table->string('default_language', 192)->default('en');
 			$table->timestamps(6);
 			$table->softDeletes();

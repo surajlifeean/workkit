@@ -1,16 +1,13 @@
+@php
+    $setting = App\Models\Setting::where('id', 1)->select('logo')->first();
+@endphp
 <div class="d-flex position-fixed flex-column header-body" style="width: 100%;">
 
     <div class="main-header">
 
         <div class="logo">
-            <img src="{{asset('assets/images/logo.png')}}" alt="">
+            <img src="{{ asset('assets/images/' . $setting->logo ) }}" alt="">
         </div>
-
-        {{-- <div class="menu-toggle">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div> --}}
 
         <div class="margin_auto"></div>
 

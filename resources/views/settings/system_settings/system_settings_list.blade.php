@@ -50,13 +50,13 @@
                                 </span>
                             </div>
 
-                            <div class="col-md-4">
+                            {{-- <div class="col-md-4">
                                 <label for="logo" class="ul-form__label">{{ __('translate.Change_Logo') }} </label>
                                 <input name="logo" @change="changeLogo" type="file" class="form-control" id="logo">
                                 <span class="error" v-if="errors_settings && errors_settings.logo">
                                     @{{ errors_settings.logo[0] }}
                                 </span>
-                            </div>
+                            </div> --}}
 
 
                             <div class="col-md-4">

@@ -551,5 +551,6 @@ return [
     'Subscription' => 'Subscription',
     'Manage_Plan' => 'Manage plan',
     'Subscription_List' => 'Subscription List',
-    'System_Setup' => 'System Setup'
+    'System_Setup' => 'System Setup',
+    'Business_settings' => 'Business Settings'
 ];

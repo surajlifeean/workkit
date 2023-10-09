@@ -520,5 +520,6 @@ return [
     'Subscription' => 'Abonnement',
     'Manage_Plan' => 'Gérer le forfait',
     'Subscription_List' => "Liste d'abonnement",
-    'System_Setup' => 'Installation du système'
+    'System_Setup' => 'Installation du système',
+    'Business_settings' => 'Paramètres professionnels'
 ];
