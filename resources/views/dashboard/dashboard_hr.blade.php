@@ -5,7 +5,7 @@
 @endsection
 <div class="breadcrumb">
     <div class="d-flex align-items-center w-100">
-    <img src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}" alt="employee avatar" class="h-100px w-100px mr-4" style="border-radius: 6.5rem;">
+    <img src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}" alt="employee avatar" class="h-100px w-100px mr-4" style="border-radius: 6.5rem; width: 100px;">
       <h1 class="">Hi, {{ Auth::user()->username }}</h1>
       {{-- @dump(auth()->user());  --}}
     </div>
@@ -115,9 +115,9 @@
                         <div class="d-flex mx-1 p-4" style="overflow-x: scroll; display: flex;">
                             @foreach($not_clock_in as $notpresent)
                             <div class="mr-4" style="border-radius: 100%; overflow: hidden; min-height: 49px; min-width: 49px; max-width: 50px; max-height: 50px;">
-                                <img src="{{ asset('assets/images/avatar/'. $notpresent['avatar'] ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $notpresent['username'] }}">
+                                <img src="{{ asset('assets/images/avatar/'. $notpresent['avatar'] ) }}" style="height: 49px; width: 49px;" alt="avatar" title="{{ $notpresent['username'] }}">
                             </div>
-                        @endforeach                        
+                            @endforeach                        
                        </div>
                     </div>
                 </div>

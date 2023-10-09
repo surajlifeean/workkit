@@ -18,8 +18,8 @@ class SettingController extends Controller
     public function index()
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('settings')){
-            
+        if ($user_auth->can('settings')) {
+
             $setting_data = Setting::where('deleted_at', '=', null)->first();
 
             $email_settings['host'] = env('MAIL_HOST');
@@ -30,19 +30,20 @@ class SettingController extends Controller
             $email_settings['from_email'] = env('MAIL_FROM_ADDRESS');
             $email_settings['from_name'] = env('MAIL_FROM_NAME');
 
-            $currencies = Currency::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
+            $currencies = Currency::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id', 'name']);
             $setting['id'] = $setting_data->id;
             $setting['email'] = $setting_data->email;
             $setting['CompanyName'] = $setting_data->CompanyName;
             $setting['CompanyPhone'] = $setting_data->CompanyPhone;
             $setting['CompanyAdress'] = $setting_data->CompanyAdress;
             $setting['logo'] = "";
+
+
             $setting['footer'] = $setting_data->footer;
             $setting['developed_by'] = $setting_data->developed_by;
             $setting['currency_id'] = $setting_data->currency_id;
             $setting['default_language'] = $setting_data->default_language;
-            return view('settings.system_settings.system_settings_list', compact('setting','email_settings','currencies'));
-
+            return view('settings.system_settings.system_settings_list', compact('setting', 'email_settings', 'currencies'));
         }
         return abort('403', __('You are not authorized'));
     }
@@ -100,7 +101,7 @@ class SettingController extends Controller
     public function update(Request $request, $id)
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('settings')){
+        if ($user_auth->can('settings')) {
 
             $request->validate([
                 'CompanyName'      => 'required|string|max:255',
@@ -112,17 +113,19 @@ class SettingController extends Controller
                 'logo'             => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
                 'currency_id'      => 'required',
             ]);
-            
+
             $setting = Setting::findOrFail($id);
             $currentAvatar = $setting->logo;
 
             if ($request->logo != null) {
                 if ($request->logo != $currentAvatar) {
 
+                    // dd($request->logo);
+
                     $image = $request->file('logo');
-                    $filename = time().'.'.$image->extension();  
-                    $image->move(public_path('/assets/images/avatar'), $filename);
-                    $path = public_path() . '/assets/images/avatar';
+                    $filename = time() . '.' . $image->extension();
+                    $image->move(public_path('/assets/images/'), $filename);
+                    $path = public_path() . '/assets/images/';
 
                     $userPhoto = $path . '/' . $currentAvatar;
                     if (file_exists($userPhoto)) {
@@ -133,8 +136,7 @@ class SettingController extends Controller
                 } else {
                     $filename = $currentAvatar;
                 }
-
-            }else{
+            } else {
                 $filename = $currentAvatar;
             }
 
@@ -164,7 +166,6 @@ class SettingController extends Controller
             ]);
 
             return response()->json(['success' => true]);
-
         }
         return abort('403', __('You are not authorized'));
     }
@@ -180,8 +181,14 @@ class SettingController extends Controller
         //
     }
 
+    //-------------- Business setting ------------------\\
 
-    
+    public function business_settings()
+    {
+       
+        return view('settings.business_settings.business_setting');
+    }
+
     //-------------- Clear_Cache ---------------\\
 
     public function Clear_Cache(Request $request)
