@@ -1,3 +1,5 @@
+<?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
+
 @extends('layouts.master')
 @section('main-content')
 
@@ -26,26 +28,25 @@
                     <form @submit.prevent="Update_Settings()" enctype="multipart/form-data">
                         <div class="row">
 
-
-                            <div class="col-md-4">
-                                <div class="card">
-                                    <div class="card-header ">
-                                        <h5 class="">{{ __('Logo dark') }}</h5>
+                            <div class="col-md-4 my-2">
+                                <div class="card" style="box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.06); height: 18rem;">
+                                    <div class="card-header {{$setting->theme_color}}">
+                                        <h5 class="text-white">{{ __('Logo dark') }}</h5>
                                     </div>
-                                    <div class="card-body pt-0">
+                                    <div class="card-body pt-0 d-flex flex-column position-relative">
                                         <div class=" setting-card">
                                             <div class="logo-content mt-4 setting-logo">
-                                                <a href=""
+                                                <a href="{{ asset('/assets/images/' . $setting->dark_logo ) }}"
                                                     target="_blank">
                                                     <img id="image" alt="your image"
-                                                        src=""
-                                                        width="150px" class="big-logo">
+                                                        src="{{ asset('/assets/images/' . $setting->dark_logo ) }}"
+                                                        width="100px" height="100px" class="big-logo">
                                                 </a>
                                             </div>
-                                            <div class="choose-files mt-3">
+                                            <div class="choose-files input_cont_images">
 
                                                 <label for="logo" class="ul-form__label">{{ __('translate.Change_Logo') }} </label>
-                                                <input name="logo" @change="changeLogo" type="file" class="form-control" id="logo">
+                                                <input name="dark_logo" @change="changeDarkLogo" type="file" class="form-control" id="dark_logo">
                                                 <span class="error" v-if="errors_settings && errors_settings.logo">
                                                     @{{ errors_settings.logo[0] }}
                                                 </span>
@@ -55,34 +56,28 @@
                                         </div>
                                     </div>
                                 </div>
-
-                               
                             </div>
 
-
-                            <div class="col-md-4">
-
-                                <div class="card">
-                                    <div class="card-header ">
-                                        <h5 class="">{{ __('Logo Light') }}</h5>
+                            <div class="col-md-4 my-2">
+                                <div class="card" style="box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.06); height: 18rem;">
+                                    <div class="card-header {{$setting->theme_color}}">
+                                        <h5 class="text-white">{{ __('Logo Light') }}</h5>
                                     </div>
 
-                                    <div class="card-body pt-0">
+                                    <div class="card-body pt-0 d-flex flex-column position-relative">
                                         <div class=" setting-card">
                                             <div class="logo-content mt-4  setting-logo">
-                                                {{--  <img id="image1" src="{{ $logo . '/' . (isset($company_logo_light) && !empty($company_logo_light) ? $company_logo_light : 'logo-light.png') }}"
-                                                class="logo logo-sm img_setting"
-                                                style="filter: drop-shadow(2px 3px 7px #011c4b);">  --}}
-                                                <a href=""
+                                              
+                                                <a href="{{ asset('/assets/images/' . $setting->logo ) }}"
                                                     target="_blank">
                                                     <img id="image1" alt="your image"
-                                                        src=""
-                                                        width="150px"
+                                                        src="{{ asset('/assets/images/' . $setting->logo ) }}"
+                                                        width="100px" height="100px"
                                                         class="big-logo"style="">
                                                 </a>
 
                                             </div>
-                                            <div class="choose-files mt-3">
+                                            <div class="choose-files input_cont_images">
                                                 <label for="logo" class="ul-form__label">{{ __('translate.Change_Logo') }} </label>
                                                 <input name="logo" @change="changeLogo" type="file" class="form-control" id="logo">
                                                 <span class="error" v-if="errors_settings && errors_settings.logo">
@@ -100,33 +95,31 @@
                                         </div>
                                     </div>
                                 </div>
-                              
                             </div>
 
-                            <div class="col-md-4">
-
-                                <div class="card">
-                                    <div class="card-header ">
-                                        <h5 class="">{{ __('Favicon') }}</h5>
+                            <div class="col-md-4 my-2">
+                                <div class="card" style="box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.06); height: 18rem;">
+                                    <div class="card-header {{$setting->theme_color}}">
+                                        <h5 class="text-white">{{ __('Favicon') }}</h5>
                                     </div>
-                                    <div class="card-body pt-0">
+                                    <div class="card-body pt-0 d-flex flex-column position-relative">
                                         <div class=" setting-card">
                                             <div class="logo-content mt-4 setting-logo ">
-                                                {{-- <img src="{{ $logo . '/' . (isset($company_favicon) && !empty($company_favicon) ? $company_favicon : 'favicon.png') }}"
-                                                width="50px" class="logo logo-sm img_setting"> --}}
-                                                <a href=""
+                                             
+                                                <a href="{{ asset('/assets/images/' . $setting->favicon ) }}"
                                                     target="_blank">
                                                     <img id="image2" alt="your image"
-                                                        src=""
-                                                        width="50px"
+                                                        src="{{ asset('/assets/images/' . $setting->favicon ) }}"
+                                                        width="100px"
+                                                        height="100px"
                                                         class="big-logo">
                                                 </a>
                                             </div>
-                                            <div class="choose-files mt-3">
+                                            <div class="choose-files input_cont_images">
 
                                                 <label for="company_favicon">
                                                     <label for="logo" class="ul-form__label">{{ __('translate.Change_Logo') }} </label>
-                                                    <input name="logo" @change="changeLogo" type="file" class="form-control" id="logo">
+                                                    <input name="favicon" @change="changeFavicon" type="file" class="form-control" id="favicon">
                                                     <span class="error" v-if="errors_settings && errors_settings.logo">
                                                         @{{ errors_settings.logo[0] }}
                                                     </span>
@@ -143,114 +136,24 @@
                                         </div>
                                     </div>
                                 </div>
-
-                              
                             </div>
-                             @php
-                                 $color = 'errr'
-                             @endphp
-                            <h5 class="mt-3 mb-3">{{ __('Theme Customizer') }}</h5>
-                            <div class="col-12">
+                            
+                            <div class="col-12 mt-4">
                                 <div class="pct-body">
                                     <div class="row">
-                                        <div class="col-4">
+                                        <div class="col-lg-4 col-md-6 col-12">
+                                            <h5 class="mt-3 mb-3">{{ __('translate.Theme Customizer') }}</h5>
                                             <h6 class="">
                                                 <i data-feather="credit-card"
-                                                    class="me-2"></i>{{ __('Primary color Settings') }}
+                                                    class="me-2"></i>{{ __('translate.Primary color Settings') }}
                                             </h6>
                                             <hr class="my-2" />
-                                            <div class="theme-color themes-color">
-                                                <a href="#!"
-                                                    class="themes-color-change {{ $color == 'theme-1' ? 'active_color' : '' }}"
-                                                    data-value="theme-1"></a>
-                                                <input type="radio" class="theme_color d-none"
-                                                    name="theme_color" value="theme-1"
-                                                    {{ $color == 'theme-1' ? 'checked' : '' }}>
-                                                <a href="#!"
-                                                    class="themes-color-change {{ $color == 'theme-2' ? 'active_color' : '' }}"
-                                                    data-value="theme-2"></a>
-                                                <input type="radio" class="theme_color d-none"
-                                                    name="theme_color" value="theme-2"
-                                                    {{ $color == 'theme-2' ? 'checked' : '' }}>
-                                                <a href="#!"
-                                                    class="themes-color-change {{ $color == 'theme-3' ? 'active_color' : '' }}"
-                                                    data-value="theme-3"></a>
-                                                <input type="radio" class="theme_color d-none"
-                                                    name="theme_color" value="theme-3"
-                                                    {{ $color == 'theme-3' ? 'checked' : '' }}>
-                                                <a href="#!"
-                                                    class="themes-color-change {{ $color == 'theme-4' ? 'active_color' : '' }}"
-                                                    data-value="theme-4"></a>
-                                                <input type="radio" class="theme_color d-none"
-                                                    name="theme_color" value="theme-4"
-                                                    {{ $color == 'theme-4' ? 'checked' : '' }}>
-                                                <a href="#!"
-                                                    class="themes-color-change {{ $color == 'theme-5' ? 'active_color' : '' }}"
-                                                    data-value="theme-5"></a>
-                                                <input type="radio" class="theme_color d-none"
-                                                    name="theme_color" value="theme-5"
-                                                    {{ $color == 'theme-5' ? 'checked' : '' }}>
-                                                <br>
-                                                <a href="#!"
-                                                    class="themes-color-change {{ $color == 'theme-6' ? 'active_color' : '' }}"
-                                                    data-value="theme-6"></a>
-                                                <input type="radio" class="theme_color d-none"
-                                                    name="theme_color" value="theme-6"
-                                                    {{ $color == 'theme-6' ? 'checked' : '' }}>
-                                                <a href="#!"
-                                                    class="themes-color-change {{ $color == 'theme-7' ? 'active_color' : '' }}"
-                                                    data-value="theme-7"></a>
-                                                <input type="radio" class="theme_color d-none"
-                                                    name="theme_color" value="theme-7"
-                                                    {{ $color == 'theme-7' ? 'checked' : '' }}>
-                                                <a href="#!"
-                                                    class="themes-color-change {{ $color == 'theme-8' ? 'active_color' : '' }}"
-                                                    data-value="theme-8"></a>
-                                                <input type="radio" class="theme_color d-none"
-                                                    name="theme_color" value="theme-8"
-                                                    {{ $color == 'theme-8' ? 'checked' : '' }}>
-                                                <a href="#!"
-                                                    class="themes-color-change {{ $color == 'theme-9' ? 'active_color' : '' }}"
-                                                    data-value="theme-9"></a>
-                                                <input type="radio" class="theme_color d-none"
-                                                    name="theme_color" value="theme-9"
-                                                    {{ $color == 'theme-9' ? 'checked' : '' }}>
-                                                <a href="#!"
-                                                    class="themes-color-change {{ $color == 'theme-10' ? 'active_color' : '' }}"
-                                                    data-value="theme-10"></a>
-                                                <input type="radio" class="theme_color d-none"
-                                                    name="theme_color" value="theme-10"
-                                                    {{ $color == 'theme-10' ? 'checked' : '' }}>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <h6 class=" ">
-                                                <i data-feather="layout"
-                                                    class="me-2"></i>{{ __('Sidebar Settings') }}
-                                            </h6>
-                                            <hr class="my-2 " />
-                                            <div class="form-check form-switch ">
-                                                <input type="checkbox" class="form-check-input"
-                                                    id="cust_theme_bg" name="cust_theme_bg"
-                                                    {{-- {{ $settings['cust_theme_bg'] == 'on' ? 'checked' : '' }} --}}
-                                                <label class="form-check-label f-w-600 pl-1"
-                                                    for="cust_theme_bg">{{ __('Transparent layout') }}</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            < class=" ">
-                                                <i data-feather="sun"
-                                                    class=""></i>{{ __('Layout Settings') }}
-                                            </
-                                            <hr class=" my-2  " />
-                                            <div class="form-check form-switch mt-2 ">
-                                                <input type="hidden" name="cust_darklayout"
-                                                    value="off">
-                                                <input type="checkbox" class="form-check-input"
-                                                    id="cust_darklayout" name="cust_darklayout"
-                                                    {{-- {{ $settings['cust_darklayout'] == 'on' ? 'checked' : '' }} --}}
-                                                <label class="form-check-label f-w-600 pl-1"
-                                                    for="cust_darklayout">{{ __('Dark Layout') }}</label>
+                                            <div class="theme-color themes-color d-flex flex-wrap" style="width: 100%;">
+                                                @foreach(['primary', 'blue', 'indigo', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'gray', 'gray-dark'] as $color)
+                                                    <a class="bg-{{ $color }} cursor-pointer color_themes m-1 {{ $setting->theme_color == 'bg-' . $color ? 'checked_theme_color' : '' }}" onclick="changeTheme(this)" style="height: 2rem; width: 2rem; border-radius: 0.5rem; display: inline-block;">
+                                                     <input type="radio" value="bg-{{ $color }}" name="theme_color" v-model="setting.theme_color" {{ $setting->theme_color == 'bg-' . $color ? 'checked' : '' }} hidden>
+                                                    </a>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -293,17 +196,25 @@
             Submit_Processing_Email_Setting:false,
             errors_settings:[],
             errors_email_setting:[],
-            setting: {
-
-            },
+            setting: @json($setting),
         },
        
         methods: {
 
-
             changeLogo(e){
                 let file = e.target.files[0];
                 this.setting.logo = file;
+                console.log(this.setting)
+            },
+
+            changeDarkLogo(e){
+                let file = e.target.files[0];
+                this.setting.dark_logo = file;
+            },
+
+            changeFavicon(e){
+                let file = e.target.files[0];
+                this.setting.favicon = file;
             },
 
             Selected_Currency(value) {
@@ -339,21 +250,21 @@
            Update_Settings() {
                 var self = this;
                 self.SubmitProcessing = true;
-                self.data.append("currency_id", self.setting.currency_id);
-                self.data.append("email", self.setting.email);
-                self.data.append("logo", self.setting.logo);
-                self.data.append("CompanyName", self.setting.CompanyName);
-                self.data.append("CompanyPhone", self.setting.CompanyPhone);
-                self.data.append("CompanyAdress", self.setting.CompanyAdress);
-                self.data.append("footer", self.setting.footer);
-                self.data.append("developed_by", self.setting.developed_by);
-                self.data.append("_method", "put");
+                var selectedThemeColor = $('input[name="theme_color"]:checked').val();
 
+                this.setting.theme_color = selectedThemeColor;
+                self.data.append("logo", self.setting.logo);
+                self.data.append("favicon", self.setting.favicon);
+                self.data.append("dark_logo", self.setting.dark_logo);
+                self.data.append("theme_color", self.setting.theme_color);
+                self.data.append("_method", "put");
+                console.log(this.setting)
                 axios
-                    .post("/settings/system_settings/" + self.setting.id, self.data)
+                    .post("/settings/update_business_settings/" + self.setting.id, self.data)
                     .then(response => {
                         self.SubmitProcessing = false;
-                        window.location.href = '/settings/system_settings'; 
+                        console.log(response.data)
+                        window.location.href = '/settings/business_settings'; 
                         toastr.success('{{ __('translate.Updated_in_successfully') }}');
                         self.errors_settings = {};
                     })
@@ -405,7 +316,22 @@
         created() {
         }
 
-    })
+    });
 
+</script>
+
+<script>
+    function changeTheme(element) {
+    const radioButtons = document.querySelectorAll('input[name="theme_color"]');
+    radioButtons.forEach(button => button.checked = false);
+
+    const radioButton = element.querySelector('input[name="theme_color"]');
+    radioButton.checked = true;
+    console.log(radioButton)
+    const colorThemes = document.querySelectorAll('.color_themes');
+    colorThemes.forEach(theme => theme.style.border = '2px solid transparent');
+
+    element.style.border = '2px solid black';
+  }
 </script>
 @endsection

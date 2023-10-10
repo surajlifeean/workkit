@@ -522,5 +522,7 @@ return [
     'Manage_Plan' => 'إدارة الخطة',
     'Subscription_List' => "قائمة الاشتراك",
     'System_Setup' => 'إعداد النظام',
-    'Business_settings' => 'إعدادات الأعمال'
+    'Business_settings' => 'إعدادات الأعمال',
+    "Primary color Settings" => "إعدادات اللون الأساسي",
+    "Theme Customizer" => "أداة تخصيص الموضوع"
 ];

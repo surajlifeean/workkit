@@ -336,6 +336,8 @@ if ($installed === true) {
                 Route::resource('currency', 'CurrencyController');
                 Route::resource('backup', 'BackupController');
                 Route::get('business_settings', [\App\Http\Controllers\SettingController::class, 'business_settings'])->name('business_settings');
+                Route::put('update_business_settings/{id}', [\App\Http\Controllers\SettingController::class, 'update_business_settings'])->name('update_business_settings');
+
                 Route::post("currency/delete/by_selection", "CurrencyController@delete_by_selection");
             });
 
