@@ -521,5 +521,7 @@ return [
     'Manage_Plan' => 'Gérer le forfait',
     'Subscription_List' => "Liste d'abonnement",
     'System_Setup' => 'Installation du système',
-    'Business_settings' => 'Paramètres professionnels'
+    'Business_settings' => 'Paramètres professionnels',
+    "Primary color Settings" => "Paramètres de couleur primaire",
+    "Theme Customizer" => "Personnalisateur de thème"
 ];

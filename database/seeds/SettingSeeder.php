@@ -25,6 +25,7 @@ class SettingSeeder extends Seeder
                 'developed_by' => 'Ui-Lib',
                 'logo' => 'LOGO1.png',
                 'default_language' => 'en',
+                'theme_color' => 'bg-primary'
             )           
         );
     }

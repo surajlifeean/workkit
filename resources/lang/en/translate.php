@@ -552,5 +552,7 @@ return [
     'Manage_Plan' => 'Manage plan',
     'Subscription_List' => 'Subscription List',
     'System_Setup' => 'System Setup',
-    'Business_settings' => 'Business Settings'
+    'Business_settings' => 'Business Settings',
+    "Primary color Settings" => "Primary color Settings",
+    "Theme Customizer" => "Theme Customizer"
 ];

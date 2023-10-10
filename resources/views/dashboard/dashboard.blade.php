@@ -1,9 +1,10 @@
+<?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
 @extends('layouts.master')
 @section('main-content')
 @section('page-css')
     <link rel="stylesheet" href="{{ asset('assets/styles/vendor/datatables.min.css') }}">
 @endsection
-
+ 
 <div class="row" id="section_Dashboard">
     <!-- ICON BG -->
     <div class="col-lg-3 col-md-6 col-sm-6">
@@ -172,6 +173,7 @@
 <script src="{{ asset('assets/js/datatables.script.js') }}"></script>
 <script>
     // Chart Employee count by department
+
     let echartElemBar = document.getElementById('echartBar');
     if (echartElemBar) {
         let echartBar = echarts.init(echartElemBar);

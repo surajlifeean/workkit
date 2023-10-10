@@ -185,8 +185,68 @@ class SettingController extends Controller
 
     public function business_settings()
     {
+        $setting = Setting::where('id', 1)->first();
+
+        return view('settings.business_settings.business_setting', compact('setting'));
+    }
+
+    public function update_business_settings(Request $request, $id)
+    {
+        $setting = Setting::findOrFail($id);
+        $currentAvatar = $setting->logo;
        
-        return view('settings.business_settings.business_setting');
+        if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
+            if ($request->file('logo')->getClientOriginalName() != $setting->logo) {
+                $image = $request->file('logo');
+                $filename = time() . '.' . $image->extension();
+                $image->move(public_path('/assets/images/'), $filename);
+                $path = public_path() . '/assets/images/';
+        
+                $userPhoto = $path . '/' . $setting->logo;
+                if (file_exists($userPhoto)) {
+                    @unlink($userPhoto);
+                }
+                $setting->logo = $filename;
+            }
+        }
+        
+
+        if ($request->hasFile('dark_logo') && $request->file('dark_logo')->isValid()) {
+            if ($request->file('dark_logo')->getClientOriginalName() != $setting->dark_logo) {
+                $image = $request->file('dark_logo');
+                $filename = time() . '.' . $image->extension();
+                $image->move(public_path('/assets/images/'), $filename);
+                $path = public_path() . '/assets/images/';
+        
+                $userPhoto = $path . '/' . $setting->dark_logo;
+                if (file_exists($userPhoto)) {
+                    @unlink($userPhoto);
+                }
+                $setting->dark_logo = $filename;
+            }
+        }
+        
+        
+        // dd($request);
+        if ($request->hasFile('favicon') && $request->file('favicon')->isValid()) {
+            if ($request->file('favicon')->getClientOriginalName() != $setting->favicon) {
+                $image = $request->file('favicon');
+                $filename = time() . '.' . $image->extension();
+                $image->move(public_path('/assets/images/'), $filename);
+                $path = public_path() . '/assets/images/';
+        
+                $userPhoto = $path . '/' . $setting->favicon;
+                if (file_exists($userPhoto)) {
+                    @unlink($userPhoto);
+                }
+                $setting->favicon = $filename;
+            }
+        }
+        
+        $setting->theme_color = $request->theme_color;
+        $setting->save();
+
+        return response()->json(['status' => 'success', 'code' => 200]);
     }
 
     //-------------- Clear_Cache ---------------\\

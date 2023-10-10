@@ -1,5 +1,5 @@
 @php
-    $setting = App\Models\Setting::where('id', 1)->select('logo')->first();
+    $setting = App\Models\Setting::where('id', 1)->first();
 @endphp
 <div class="d-flex position-fixed flex-column header-body" style="width: 100%;">
 
