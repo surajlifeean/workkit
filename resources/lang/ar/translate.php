@@ -524,5 +524,7 @@ return [
     'System_Setup' => 'إعداد النظام',
     'Business_settings' => 'إعدادات الأعمال',
     "Primary color Settings" => "إعدادات اللون الأساسي",
-    "Theme Customizer" => "أداة تخصيص الموضوع"
+    "Theme Customizer" => "أداة تخصيص الموضوع",
+    "Users" => "Users"
+
 ];

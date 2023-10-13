@@ -15,43 +15,61 @@
         
     </ul>
 </div>
-
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('status') }}
+    </div>
+@endif
 <div class="separator-breadcrumb border-top"></div>
 
 <div class="row" id="section_Company_list">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-lg-3">
-                <div class="card position-relative">
-                    <div class="card-body d-flex  align-items-center justify-content-center flex-column">
-                        <div class="position-absolute bg-primary plan_cont">Free Plan</div>
-                        <h2 class="mt-3" style="font-size: 3rem;">$0<span style="font-size: 13px;font-weight: 600">/ Lifetime</span></h2>
-                        <p>Free plan offers</p>
-                        <div class="d-flex justify-content-center align-items-center flex-column">
+            @foreach($data as $dt)
+            @if($dt['active'] == 1)
+            <div class="col-lg-3 my-4">
+                <div class="card position-relative " style="height: 100%">
+                    <div class="card-body d-flex  align-items-center justify-content-center flex-column overflow-hidden">
+                        <div class="position-absolute bg-primary plan_cont">{{$dt['plan']}}</div>
+                        <div class="text-dark {{ $dt['is_offer_price'] == 1 ? 'mt-3 d-inline' : 'd-none'}}">Special offer</div>
+                        <h2 class="{{ $dt['is_offer_price'] == 1 ? '' : 'mt-4'}}" style="font-size: 2rem; margin-bottom: 0;">{{ $dt['currency'] == 'USD' ? '$' : ($dt['currency'] == 'EUR' ? '€' : ($dt['currency'] == 'XOF' || $dt['currency'] == 'XAF' ? 'FCFA' : '')) }}
+                        {{ $dt['is_offer_price'] == 1 ? $dt['offered_price'] : $dt['price'] }}
+                        <span style="font-size: 13px;font-weight: 600">
+                        / {{
+                                   
+                                   $dt['duration'] > 1 && $dt['duration'] < 12 ?
+                                       ($dt['duration'] == 1 ? $dt['duration'] . ' month' :  $dt['duration'] . ' months'):
+                                       ($dt['duration'] >= 12 ?
+                                           number_format($dt['duration'] / 12, 1) . ' year' :
+                                           $dt['duration'] . ' months')
+                               }}
+                        </span></h2>
+                        @if($dt['is_offer_price'] == 1)
+                        <p class="position-relative m-0">
+                             {{ $dt['price'] }}
+                            <span class="position-absolute" style="width: 100%;height: 1px;background: red; top: 9px; right: 0;"></span>
+                        </p>
+                        @endif
+                        <p class="m-0">{{$dt['description']}}</p>
+                        <div class="d-flex justify-content-center align-items-center flex-column mt-3">
                           <ul class="list-unstyled mb-4 mt-1">
                             <li class="mb-3">
                                 <i class="nav-icon text-primary i-Arrow-RightinCircle font-weight-900 mr-2" style="font-size: 1rem;"></i>
-                                <span style="font-size: 1rem; font-weight: 600">1 User</span>
+                                <span style="font-size: 1rem; font-weight: 600">{{ $dt['total_users'] == -1 ? 'Unlimited' : $dt['total_users'] }} {{ __('translate.Users') }}</span>
                             </li>
                             <li class="mb-3">
                                 <i class="nav-icon text-primary i-Arrow-RightinCircle font-weight-900 mr-2" style="font-size: 1rem;"></i>
-                                <span style="font-size: 1rem; font-weight: 600">1 Users and</span>
+                                <span style="font-size: 1rem; font-weight: 600">{{ $dt['total_users'] == -1 ? 'Unlimited' : $dt['total_users'] - 1 }} {{ __('translate.Employees') }}</span>
                             </li>
-                            <li class="mb-3">
-                                <i class="nav-icon text-primary i-Arrow-RightinCircle font-weight-900 mr-2" style="font-size: 1rem;"></i>
-                                <span style="font-size: 1rem; font-weight: 600">1 Users and</span>
-                            </li>
-                            <li class="mb-3">
-                                <i class="nav-icon text-primary i-Arrow-RightinCircle font-weight-900 mr-2" style="font-size: 1rem;"></i>
-                                <span style="font-size: 1rem; font-weight: 600">1 Users and</span>
-                            </li>
+                           
                           </ul>
                         </div>
-                           
+                        <a href="{{ route('stripe.checkout', [ 'price' => ( $dt['is_offer_price'] == 1 ? $dt['offered_price'] : $dt['price'] ), 'product' => $dt['plan'], 'currency' => $dt['currency'] , 'plan_id' => $dt['id'] , 'is_offer_price' => $dt['is_offer_price'] ] ) }}" class="btn btn-primary">Buy Now</a>
                     </div>
                 </div>
             </div>
-            
+            @endif
+            @endforeach
         </div>
     </div>
 </div>
@@ -280,4 +298,15 @@
 
     });
 </script>
+
+@if (session('error'))
+    <script>
+        toastr.error("{{ session('error') }}");
+    </script>
+@endif
+@if (session('success'))
+    <script>
+        toastr.success("{{ session('success') }}");
+    </script>
+@endif
 @endsection

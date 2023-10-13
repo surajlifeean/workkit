@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration {
 			$table->boolean('status')->default(1);
 			$table->bigInteger('role_users_id')->unsigned()->index('users_role_users_id');
 			$table->string('password', 192);
+			$table->string('client_id', 200)->nullable();
             $table->rememberToken();
 			$table->timestamps(6);
 			$table->softDeletes();
