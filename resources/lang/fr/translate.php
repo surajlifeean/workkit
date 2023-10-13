@@ -523,5 +523,7 @@ return [
     'System_Setup' => 'Installation du système',
     'Business_settings' => 'Paramètres professionnels',
     "Primary color Settings" => "Paramètres de couleur primaire",
-    "Theme Customizer" => "Personnalisateur de thème"
+    "Theme Customizer" => "Personnalisateur de thème",
+    "Users" => "Users"
+
 ];

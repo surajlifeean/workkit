@@ -35,20 +35,20 @@ if ($installed === true) {
     Auth::routes(['register' => false]);
 
 
-    Route::group(['middleware'=>'XSS'],function(){
+    Route::group(['middleware' => 'XSS'], function () {
 
         Route::get('/', "HomeController@RedirectToLogin");
         Route::get('switch/language/{lang}', 'LocalController@languageSwitch')->name('language.switch');
 
         //------------------------------- dashboard Admin--------------------------\\
 
-        Route::group(['middleware'=>'auth','Is_Admin'],function(){
+        Route::group(['middleware' => 'auth', 'Is_Admin'], function () {
 
             Route::get('dashboard/admin', "DashboardController@dashboard_admin")->name('dashboard');
         });
 
-        Route::group(['middleware'=>'auth'],function(){
-            
+        Route::group(['middleware' => 'auth'], function () {
+
             //------------------------------- dashboard --------------------------\\
             //--------------------------------------------------------------------\\
             Route::get('dashboard/employee', "DashboardController@dashboard_employee")->name('dashboard_employee');
@@ -66,21 +66,21 @@ if ($installed === true) {
             Route::put("update_employee_document/{id}", "EmployeesController@update_employee_document");
             Route::post("employees/delete/by_selection", "EmployeesController@delete_by_selection");
 
-            
+
             //------------------------------- Employee Experience ----------------\\
             //--------------------------------------------------------------------\\
-            
+
             Route::resource('work_experience', 'EmployeeExperienceController');
 
 
-                //------------------------------- Employee Document ----------------\\
+            //------------------------------- Employee Document ----------------\\
             //--------------------------------------------------------------------\\
-            
-            Route::resource('employee_document', 'EmployeeDocumentController'); 
-                
+
+            Route::resource('employee_document', 'EmployeeDocumentController');
+
             //------------------------------- Employee Accounts bank ----------------\\
             //--------------------------------------------------------------------\\
-            
+
             Route::resource('employee_account', 'EmployeeAccountController');
 
             //------------------------------- Hr Management --------------------------\\
@@ -124,9 +124,8 @@ if ($installed === true) {
                 Route::post('comp_docs_links/multiple_ids', 'CompDocsAndLinkController@multiple_delete');
                 Route::get("get_Em_Data/{id}", "CompDocsAndLinkController@get_em_data");
                 Route::put('comp_docs_links/{id}', 'CompDocsAndLinkController@update');
-
             });
-            
+
 
             //------------------------------- Attendances ------------------------\\
             //--------------------------------------------------------------------\\
@@ -157,7 +156,6 @@ if ($installed === true) {
                 Route::post("expense_category/delete/by_selection", "ExpenseCategoryController@delete_by_selection");
                 Route::post("deposit_category/delete/by_selection", "DepositCategoryController@delete_by_selection");
                 Route::post("payment_methods/delete/by_selection", "PaymentMethodController@delete_by_selection");
-
             });
 
 
@@ -212,7 +210,7 @@ if ($installed === true) {
             Route::post("training_skills/delete/by_selection", "TrainingSkillsController@delete_by_selection");
 
             //------------------------------- Notifications ------------------\\
-            Route::resource('notifications', 'NotificationController');   
+            Route::resource('notifications', 'NotificationController');
             Route::post('notifications/{id}', 'NotificationController@store');
             Route::get("get_messages/{id}", "NotificationController@index");
             Route::get("get_notifications", "NotificationController@get_notifications");
@@ -221,7 +219,7 @@ if ($installed === true) {
             //------------------------------- Apps Management ----------------\\
             //--------------------------------------------------------------------\\
 
-               Route::prefix('hr')->group(function () {
+            Route::prefix('hr')->group(function () {
 
 
                 //------------------------------- office_shift ------------------\\
@@ -266,62 +264,61 @@ if ($installed === true) {
 
                 Route::resource('arrangement_type', 'ArrangementTypeController');
                 Route::post("arrangement_type/delete/by_selection", "ArrangementTypeController@delete_by_selection");
-
             });
-                
-
-                //------------------------------- Clients ----------------------\\
-                //----------------------------------------------------------------\\
-
-                Route::resource('clients', 'ClientController');
-                Route::post("clients/delete/by_selection", "ClientController@delete_by_selection");
-
-                //------------------------------- Sessions Client ----------------------\\
-                //----------------------------------------------------------------\\
-
-                Route::get("client_projects", "ClientController@client_projects_index");
-                Route::get("client_projects/create", "ClientController@client_projects_create");
-                Route::post("client_projects", "ClientController@client_projects_store");
-
-                Route::get("client_tasks", "ClientController@client_tasks_index");
-                Route::get("client_tasks/create", "ClientController@client_tasks_create");
-                Route::post("client_tasks", "ClientController@client_tasks_store");
-
-                Route::put('client_profile/{id}', 'ProfileController@Update_client_profile');
-                Route::get('client_profile', 'ProfileController@get_client_profile')->name('client_profile');
-
-                //------------------------------- Sessions Employee ----------------------\\
-                //----------------------------------------------------------------\\
-
-                Route::put('employee_profile/{id}', 'EmployeeSessionController@Update_employee_profile');
-                Route::get('employee_profile', 'EmployeeSessionController@get_employee_profile')->name('employee_profile');
-
-                Route::get('employee/my_requests', 'EmployeeSessionController@employee_details')->name('employee_details');
-                Route::put('session_employee/basic/info/{id}', 'EmployeeSessionController@update_basic_info');
-                Route::put('session_employee/social/{id}', 'EmployeeSessionController@update_social_profile');
-                Route::put("session_employee/document/{id}", "EmployeeSessionController@update_employee_document");
-
-                Route::post("session_employee/storeExperiance", "EmployeeSessionController@storeExperiance");
-                Route::put("session_employee/updateExperiance/{id}", "EmployeeSessionController@updateExperiance");
-                Route::delete("session_employee/destroyExperiance/{id}", "EmployeeSessionController@destroyExperiance");
 
 
-                Route::post("session_employee/storeAccount", "EmployeeSessionController@storeAccount");
-                Route::put("session_employee/updateAccount/{id}", "EmployeeSessionController@updateAccount");
-                Route::delete("session_employee/destroyAccount/{id}", "EmployeeSessionController@destroyAccount");
+            //------------------------------- Clients ----------------------\\
+            //----------------------------------------------------------------\\
 
-                Route::get("session_employee/Get_leave_types", "EmployeeSessionController@Get_leave_types");
-                Route::post("session_employee/requestleave", "EmployeeSessionController@Request_leave");
+            Route::resource('clients', 'ClientController');
+            Route::post("clients/delete/by_selection", "ClientController@delete_by_selection");
+
+            //------------------------------- Sessions Client ----------------------\\
+            //----------------------------------------------------------------\\
+
+            Route::get("client_projects", "ClientController@client_projects_index");
+            Route::get("client_projects/create", "ClientController@client_projects_create");
+            Route::post("client_projects", "ClientController@client_projects_store");
+
+            Route::get("client_tasks", "ClientController@client_tasks_index");
+            Route::get("client_tasks/create", "ClientController@client_tasks_create");
+            Route::post("client_tasks", "ClientController@client_tasks_store");
+
+            Route::put('client_profile/{id}', 'ProfileController@Update_client_profile');
+            Route::get('client_profile', 'ProfileController@get_client_profile')->name('client_profile');
+
+            //------------------------------- Sessions Employee ----------------------\\
+            //----------------------------------------------------------------\\
+
+            Route::put('employee_profile/{id}', 'EmployeeSessionController@Update_employee_profile');
+            Route::get('employee_profile', 'EmployeeSessionController@get_employee_profile')->name('employee_profile');
+
+            Route::get('employee/my_requests', 'EmployeeSessionController@employee_details')->name('employee_details');
+            Route::put('session_employee/basic/info/{id}', 'EmployeeSessionController@update_basic_info');
+            Route::put('session_employee/social/{id}', 'EmployeeSessionController@update_social_profile');
+            Route::put("session_employee/document/{id}", "EmployeeSessionController@update_employee_document");
+
+            Route::post("session_employee/storeExperiance", "EmployeeSessionController@storeExperiance");
+            Route::put("session_employee/updateExperiance/{id}", "EmployeeSessionController@updateExperiance");
+            Route::delete("session_employee/destroyExperiance/{id}", "EmployeeSessionController@destroyExperiance");
 
 
-                //------------------------------- users --------------------------\\
-                //----------------------------------------------------------------\\
-                Route::resource('users', 'UserController');
-                Route::post('assignRole', 'UserController@assignRole');
+            Route::post("session_employee/storeAccount", "EmployeeSessionController@storeAccount");
+            Route::put("session_employee/updateAccount/{id}", "EmployeeSessionController@updateAccount");
+            Route::delete("session_employee/destroyAccount/{id}", "EmployeeSessionController@destroyAccount");
 
-                Route::get('getAllPermissions', 'UserController@getAllPermissions');
+            Route::get("session_employee/Get_leave_types", "EmployeeSessionController@Get_leave_types");
+            Route::post("session_employee/requestleave", "EmployeeSessionController@Request_leave");
 
-                Route::get('get_all_users', 'UserController@getAllUsers');
+
+            //------------------------------- users --------------------------\\
+            //----------------------------------------------------------------\\
+            Route::resource('users', 'UserController');
+            Route::post('assignRole', 'UserController@assignRole');
+
+            Route::get('getAllPermissions', 'UserController@getAllPermissions');
+
+            Route::get('get_all_users', 'UserController@getAllUsers');
 
 
             //------------------------------- Settings --------------------------\\
@@ -342,10 +339,10 @@ if ($installed === true) {
             });
 
             Route::get('GenerateBackup', 'BackupController@GenerateBackup');
-            
+
             //------------------------------- Subscriptions ----------------------------------------------\\
 
-            Route::resource('subscription', 'SubscriptionController');      
+            Route::resource('subscription', 'SubscriptionController');
 
             //------------------------------- Reports --------------------------\\
             //----------------------------------------------------------------\\
@@ -360,7 +357,6 @@ if ($installed === true) {
 
                 Route::POST('fetchDepartment', 'ReportController@fetchDepartment')->name('fetchDepartment');
                 Route::POST('fetchDesignation', 'ReportController@fetchDesignation')->name('fetchDesignation');
-
             });
 
             //------------------------------- Profile --------------------------\\
@@ -368,19 +364,25 @@ if ($installed === true) {
             Route::put('updateProfile/{id}', 'ProfileController@updateProfile');
             Route::resource('profile', 'ProfileController');
 
-                //------------------------------- updater --------------------------\\
+            //------------------------------- updater --------------------------\\
 
             Route::get('updater.check', 'UpdateController@check');
             Route::get('updater.currentVersion', 'UpdateController@getCurrentVersion');
             Route::get('updater.update', 'UpdateController@update');
 
-                //------------------------------- clear_cache --------------------------\\
+            //------------------------------- clear_cache --------------------------\\
 
             Route::get("clear_cache", "SettingController@Clear_Cache");
-
         });
-   
 
+        //------------------------- Stripe Controller --------------------------\\
+
+        Route::controller(StripePaymentController::class)->group(function(){
+            Route::get('stripe','stripe')->name('stripe.index');
+            Route::get('stripe/checkout','stripeCheckout')->name('stripe.checkout');
+            Route::get('stripe/checkout/success','stripeCheckoutSuccess')->name('stripe.checkout.success');
+            Route::post('stripe/checkout/cancel','stripeCheckoutCancel')->name('stripe.checkout.cancel');
+        });
 
 
         //------------------------------------------------------------------\\
@@ -395,80 +397,75 @@ if ($installed === true) {
         Route::post('/update_database/lastStep', [
             'as' => 'update_lastStep', 'uses' => 'UpdateController@lastStep',
         ]);
+    });
+} else {
 
+    Route::get(
+        '/{vue?}',
+        function () {
+            return redirect('/setup');
+        }
+    )->where('vue', '^(?!setup).*$');
+
+
+    Route::get('/setup', [
+        'uses' => 'SetupController@viewCheck',
+    ])->name('setup');
+
+    Route::get('/setup/step-1', [
+        'uses' => 'SetupController@viewStep1',
+    ]);
+
+    Route::post('/setup/step-2', [
+        'as' => 'setupStep1', 'uses' => 'SetupController@setupStep1',
+    ]);
+
+    Route::post('/setup/testDB', [
+        'as' => 'testDB', 'uses' => 'TestDbController@testDB',
+    ]);
+
+    Route::get('/setup/step-2', [
+        'uses' => 'SetupController@viewStep2',
+    ]);
+
+    Route::get('/setup/step-3', [
+        'uses' => 'SetupController@viewStep3',
+    ]);
+
+    Route::get('/setup/finish', function () {
+
+        return view('setup.finishedSetup');
     });
 
-        } else {
+    Route::get('/setup/getNewAppKey', [
+        'as' => 'getNewAppKey', 'uses' => 'SetupController@getNewAppKey',
+    ]);
 
-            Route::get('/{vue?}',
-            function () {
-                    return redirect('/setup');
-            })->where('vue', '^(?!setup).*$');
-    
-            
-            Route::get('/setup', [
-                'uses' => 'SetupController@viewCheck',
-            ])->name('setup');
+    Route::get('/setup/getPassport', [
+        'as' => 'getPassport', 'uses' => 'SetupController@getPassport',
+    ]);
 
-            Route::get('/setup/step-1', [
-                'uses' => 'SetupController@viewStep1',
-            ]);
+    Route::get('/setup/getMegrate', [
+        'as' => 'getMegrate', 'uses' => 'SetupController@getMegrate',
+    ]);
 
-            Route::post('/setup/step-2', [
-                'as' => 'setupStep1', 'uses' => 'SetupController@setupStep1',
-            ]);
+    Route::post('/setup/step-3', [
+        'as' => 'setupStep2', 'uses' => 'SetupController@setupStep2',
+    ]);
 
-            Route::post('/setup/testDB', [
-                'as' => 'testDB', 'uses' => 'TestDbController@testDB',
-            ]);
+    Route::post('/setup/step-4', [
+        'as' => 'setupStep3', 'uses' => 'SetupController@setupStep3',
+    ]);
 
-            Route::get('/setup/step-2', [
-                'uses' => 'SetupController@viewStep2',
-            ]);
+    Route::post('/setup/step-5', [
+        'as' => 'setupStep4', 'uses' => 'SetupController@setupStep4',
+    ]);
 
-            Route::get('/setup/step-3', [
-                'uses' => 'SetupController@viewStep3',
-            ]);
+    Route::post('/setup/lastStep', [
+        'as' => 'lastStep', 'uses' => 'SetupController@lastStep',
+    ]);
 
-            Route::get('/setup/finish', function () {
-
-                return view('setup.finishedSetup');
-            });
-
-            Route::get('/setup/getNewAppKey', [
-                'as' => 'getNewAppKey', 'uses' => 'SetupController@getNewAppKey',
-            ]);
-
-            Route::get('/setup/getPassport', [
-                'as' => 'getPassport', 'uses' => 'SetupController@getPassport',
-            ]);
-
-            Route::get('/setup/getMegrate', [
-                'as' => 'getMegrate', 'uses' => 'SetupController@getMegrate',
-            ]);
-
-            Route::post('/setup/step-3', [
-                'as' => 'setupStep2', 'uses' => 'SetupController@setupStep2',
-            ]);
-
-            Route::post('/setup/step-4', [
-                'as' => 'setupStep3', 'uses' => 'SetupController@setupStep3',
-            ]);
-
-            Route::post('/setup/step-5', [
-                'as' => 'setupStep4', 'uses' => 'SetupController@setupStep4',
-            ]);
-
-            Route::post('/setup/lastStep', [
-                'as' => 'lastStep', 'uses' => 'SetupController@lastStep',
-            ]);
-
-            Route::get('setup/lastStep', function () {
-                return redirect('/setup', 301);
-            });
-
-    } 
-    
-
-
-
+    Route::get('setup/lastStep', function () {
+        return redirect('/setup', 301);
+    });
+}

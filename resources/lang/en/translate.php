@@ -554,5 +554,6 @@ return [
     'System_Setup' => 'System Setup',
     'Business_settings' => 'Business Settings',
     "Primary color Settings" => "Primary color Settings",
-    "Theme Customizer" => "Theme Customizer"
+    "Theme Customizer" => "Theme Customizer",
+    "Users" => "Users"
 ];

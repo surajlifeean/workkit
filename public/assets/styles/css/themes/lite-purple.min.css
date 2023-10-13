@@ -22432,6 +22432,16 @@ html [type=button],
   border-color: #663399;
 }
 
+.sale_cont{
+  top: 8px;
+  left: -118px;
+  color: #fff;
+  transform: rotate(-42deg);
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem;
+}
+
 .btn-primary:focus,
 .btn-outline-primary:focus {
   box-shadow: none;
