@@ -47,24 +47,31 @@ class NotificationController extends Controller
 
     public function get_notifications()
     {
-        $get_all_notifications = null;
-        $comp_id = Employee::where('id', auth()->user()->id)->select('company_id')->first();
-
         $user_auth = auth()->user();
-        if ($user_auth->role_users_id == 4 || $user_auth->role_users_id == 1) {
-            $get_all_notifications = Notification::where('is_seen', 0)
-                ->where('user_id', '<>', $user_auth->id)
-                ->where('company_id', $comp_id->company_id)
-                ->orderBy('created_at', 'desc')
-                ->get();
-        } elseif ($user_auth->role_users_id == 2) {
-            $get_all_notifications = Notification::where('is_seen', 0)
-                ->where('user_id', '<>', $user_auth->id)
-                ->where('company_id', $comp_id->company_id)
-                ->orderBy('created_at', 'desc')
-                ->get();
+        if ($user_auth->role_users_id == 1) {
+            
+            // return response()->json(null);
+        }else{
+            $get_all_notifications = null;
+            $comp_id = Employee::where('id', auth()->user()->id)->select('company_id')->first();
+    
+            
+            if ($user_auth->role_users_id == 4 || $user_auth->role_users_id == 1) {
+                $get_all_notifications = Notification::where('is_seen', 0)
+                    ->where('user_id', '<>', $user_auth->id)
+                    ->where('company_id', $comp_id->company_id)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            } elseif ($user_auth->role_users_id == 2) {
+                $get_all_notifications = Notification::where('is_seen', 0)
+                    ->where('user_id', '<>', $user_auth->id)
+                    ->where('company_id', $comp_id->company_id)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            }
+            return response()->json($get_all_notifications);
         }
-        return response()->json($get_all_notifications);
+        
     }
 
     public function notifications_seen($id)
