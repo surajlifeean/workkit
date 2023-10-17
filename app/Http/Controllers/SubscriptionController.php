@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 class SubscriptionController extends Controller
 {
    public function index(){
-      $response = Http::get('http://localhost/Alsol/workkitsuperadmin/api/subscription-plans');
+      $response = Http::get(env('SUPERADMIN_URL'));
       // dd($response);
       $data = $response->json();
       // dd($data);

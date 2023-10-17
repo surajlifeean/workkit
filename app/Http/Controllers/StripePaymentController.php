@@ -36,7 +36,7 @@ class StripePaymentController extends Controller
                         'product_data' => [
                             'name' => $request->product,
                         ],
-                        'unit_amount' => 100 * $request->price,
+                        'unit_amount' => ( $request->currency == 'XAF' || $request->currency == 'XOF' ? $request->price : 100 * $request->price ),
                         'currency' => $request->currency,
                     ],
                     'quantity' => 1
@@ -58,7 +58,7 @@ class StripePaymentController extends Controller
 
         $response = $stripe->checkout->sessions->retrieve($request->session_id);
         // dd($response);
-        $post = Http::post('http://localhost/Alsol/workkitsuperadmin/api/subscription-plans', [
+        $post = Http::post(env('PLAN_REQUEST_POST'), [
             'company_id' => auth()->user()->client_id,
             'subscription_plan_data' => $response,
             'is_offer_price' => $checkoutParameters['is_offer_price'],

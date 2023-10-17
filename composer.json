@@ -18,7 +18,7 @@
         "macellan/laravel-zip": "^1.0",
         "nwidart/laravel-modules": "^8.3",
         "spatie/laravel-permission": "^3.8",
-        "stripe/stripe-php": "^12.7",
+        "stripe/stripe-php": "^13.0",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
