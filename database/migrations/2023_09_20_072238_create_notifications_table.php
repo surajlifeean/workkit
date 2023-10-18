@@ -18,12 +18,13 @@ class CreateNotificationsTable extends Migration
             $table->id();
             $table->string('title', 255)->nullable();
             $table->text('message')->nullable();
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
             $table->integer('receiver_role_user_id')->nullable();
             $table->integer('receiver_user_id')->nullable();
-            $table->integer('company_id');
+            $table->integer('company_id')->nullable();
             $table->integer('leave_id')->nullable();
             $table->string('is_seen', 1)->default('0');
+            $table->string('is_superadmin', 1)->default('0');
             $table->timestamps(6);
             $table->softDeletes();
         });

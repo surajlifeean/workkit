@@ -42,6 +42,17 @@
                     </a>
                 </li>
             @endif
+            {{----------------------------------------- Notification ----------------------------------------------}}
+            @if (auth()->user()->role_users_id == 1)
+                <li class="">
+                    <a class="link_btn {{ request()->is('employee/my_requests') ? 'active_link' : '' }}" href="/employee/my_requests">
+                        <div class="d-flex align-items-center justify-content-start">
+                        <i class="nav-icon i-Bell"></i>
+                        <span>{{ __('translate.Notifications') }}</span>
+                        </div>
+                    </a>
+                </li>
+            @endif
             {{---------------------------------------- My requests ------------------------------------------------}}
             @if (auth()->user()->role_users_id == 2 || auth()->user()->role_users_id == 4)
                 <li class="">
