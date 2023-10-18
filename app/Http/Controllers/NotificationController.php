@@ -13,20 +13,25 @@ class NotificationController extends Controller
 {
     public function index($id)
     {
-        try {
-            if (Auth::check()) {
-
-                $notifications = Notification::where('leave_id', $id)->get();
-
-                return response()->json($notifications);
-            } else {
-                return response()->json(['error' => 'User is not authenticated'], 401);
+        if ( auth()->user()->role_users_id == 1 ) {
+            $notifications = Notification::where('is_superadmin', 1)->get();
+            return response()->json($notifications);
+        } else {
+            try {
+                if (Auth::check()) {
+    
+                    $notifications = Notification::where('leave_id', $id)->get();
+    
+                    return response()->json($notifications);
+                } else {
+                    return response()->json(['error' => 'User is not authenticated'], 401);
+                }
+            } catch (ModelNotFoundException $e) {
+                return response()->json(['error' => 'Record not found'], 404);
+            } catch (\Exception $e) {
+                return response()->json(['error' => 'Internal Server Error'], 500);
             }
-        } catch (ModelNotFoundException $e) {
-            return response()->json(['error' => 'Record not found'], 404);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Internal Server Error'], 500);
-        }
+        }  
     }
 
     public function store(Request $request, $id)
@@ -49,8 +54,10 @@ class NotificationController extends Controller
     {
         $user_auth = auth()->user();
         if ($user_auth->role_users_id == 1) {
-            
-            // return response()->json(null);
+            $notifications = Notification::where('is_superadmin', 1)
+            ->where('is_seen', 0)
+            ->get();
+            return response()->json($notifications);
         }else{
             $get_all_notifications = null;
             $comp_id = Employee::where('id', auth()->user()->id)->select('company_id')->first();
