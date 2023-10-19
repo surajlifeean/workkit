@@ -15,6 +15,7 @@ class Notification extends Model
         'user_id',
         'receiver_role_user_id',
         'receiver_user_id',
+        'is_superadmin',
     ];
 
     protected $dates = ['deleted_at'];

@@ -212,10 +212,10 @@ if ($installed === true) {
             //------------------------------- Notifications ------------------\\
             Route::resource('notifications', 'NotificationController');
             Route::post('notifications/{id}', 'NotificationController@store');
-            Route::get("get_messages/{id}", "NotificationController@index");
+            Route::get("get_messages/{id}", "NotificationController@index")->name('notifications.get_messages');
             Route::get("get_notifications", "NotificationController@get_notifications");
             Route::post('notifications_seen/{id}', 'NotificationController@notifications_seen');
-
+            Route::post('send-notification-superadmin', 'NotificationController@send_notification');
             //------------------------------- Apps Management ----------------\\
             //--------------------------------------------------------------------\\
 
