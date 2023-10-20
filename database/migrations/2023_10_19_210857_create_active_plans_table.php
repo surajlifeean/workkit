@@ -19,8 +19,8 @@ class CreateActivePlansTable extends Migration
             $table->integer('plan_request_id');
             $table->integer('total_users');
             $table->enum('status', ['pending', 'active', 'rejected', 'expired', 'hold'])->default('pending');
-            $table->timestamp('start_date')->nullable();
-            $table->timestamp('end_date')->nullable();
+            $table->timestamp('start_date', 6)->nullable();
+            $table->timestamp('end_date', 6)->nullable();
             $table->timestamps(6);
             $table->softDeletes();
         });

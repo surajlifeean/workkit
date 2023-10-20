@@ -361,8 +361,14 @@
                     .post("/users", self.data)
                     .then(response => {
                         self.SubmitProcessing = false;
-                        window.location.href = '/users'; 
-                        toastr.success('{{ __('translate.Created_in_successfully') }}');
+                        console.log(response.data.status === 'reached limit');
+                         
+                        if(response.data.status === 'reached limit'){
+                            toastr.error(response.data.message);
+                        }else{
+                            toastr.success('{{ __('translate.Created_in_successfully') }}');
+                            window.location.href = '/users';
+                        }
                         self.errors = {};
                 })
                 .catch(error => {

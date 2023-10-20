@@ -381,9 +381,14 @@
 
             }).then(response => {
                     self.SubmitProcessing = false;
-                    // window.location.href = '/employees'; 
+                   
                     console.log(response)
-                    toastr.success('{{ __('translate.Created_in_successfully') }}');
+                    if(response.data.status === 'reached limit'){
+                        toastr.error(response.data.message);
+                    }else{
+                        window.location.href = '/employees'; 
+                        toastr.success('{{ __('translate.Created_in_successfully') }}');
+                    }
                     self.errors = {};
             })
             .catch(error => {

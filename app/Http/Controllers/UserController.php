@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivePlan;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -22,20 +23,18 @@ class UserController extends Controller
     public function index()
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('user_view')){
+        if ($user_auth->can('user_view')) {
 
-            $roles = Role::where('deleted_at', '=', null)->get(['id','name']);
+            $roles = Role::where('deleted_at', '=', null)->get(['id', 'name']);
             $users = User::with('RoleUser')->orderBy('id', 'desc')->get();
 
-            return view('user.user_list', compact('users','roles'));
-
+            return view('user.user_list', compact('users', 'roles'));
         }
         return abort('403', __('You are not authorized'));
-
     }
 
 
-     
+
     /**
      * Show the form for creating a new resource.
      *
@@ -44,11 +43,10 @@ class UserController extends Controller
     public function create()
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('user_add')){
+        if ($user_auth->can('user_add')) {
 
-            $roles = Role::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
+            $roles = Role::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id', 'name']);
             return response()->json($roles);
-
         }
         return abort('403', __('You are not authorized'));
     }
@@ -62,41 +60,53 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('user_add')){
+        if ($user_auth->can('user_add')) {
+            $active_plan = ActivePlan::where('status', 'active')
+            ->where('start_date', '<=', now()) 
+            ->where('end_date', '>=', now())  
+            ->select('total_users')
+            ->first();
+            // dd($active_plan);   
+            $userCount = User::count();
+            // dd($userCount);
+            if (  $active_plan->total_users > $userCount ) {
+             
+                $request->validate([
+                    'username'  => 'required|string|max:255',
+                    'email'     => 'required|string|email|max:255|unique:users',
+                    'password'  => 'required|string|min:6|confirmed',
+                    'password_confirmation' => 'required',
+                    'avatar'    => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
+                    'status'    => 'required',
+                ]);
 
-            $request->validate([
-                'username'  => 'required|string|max:255',
-                'email'     => 'required|string|email|max:255|unique:users',
-                'password'  => 'required|string|min:6|confirmed',
-                'password_confirmation' => 'required',
-                'avatar'    => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
-                'status'    => 'required',
-            ]);
+                if ($request->hasFile('avatar')) {
 
-            if ($request->hasFile('avatar')) {
+                    $image = $request->file('avatar');
+                    $filename = time() . '.' . $image->extension();
+                    $image->move(public_path('/assets/images/avatar'), $filename);
+                } else {
+                    $filename = 'no_avatar.png';
+                }
 
+                $user = User::create([
+                    'username'  => $request['username'],
+                    'email'     => $request['email'],
+                    'avatar'    => $filename,
+                    'password'  => Hash::make($request['password']),
+                    'role_users_id'   => 1,
+                    'status'    => $request['status'],
+                ]);
 
-                $image = $request->file('avatar');
-                $filename = time().'.'.$image->extension();  
-                $image->move(public_path('/assets/images/avatar'), $filename);
+                $user->assignRole(1);
 
-            } else {
-                $filename = 'no_avatar.png';
+                return response()->json(['success' => true]);
+            }else{
+                return response()->json([
+                    'status' => 'reached limit', 
+                    'message' => 'Plan Limit exceeded. Cannot create more users.'
+                ]);
             }
-
-            $user = User::create([
-                'username'  => $request['username'],
-                'email'     => $request['email'],
-                'avatar'    => $filename,
-                'password'  => Hash::make($request['password']),
-                'role_users_id'   => 1,
-                'status'    => $request['status'],
-            ]);
-
-            $user->assignRole(1);
-
-            return response()->json(['success' => true]);
-
         }
         return abort('403', __('You are not authorized'));
     }
@@ -121,11 +131,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('user_edit')){
+        if ($user_auth->can('user_edit')) {
 
-            $roles = Role::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
+            $roles = Role::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id', 'name']);
             return response()->json($roles);
-
         }
         return abort('403', __('You are not authorized'));
     }
@@ -141,20 +150,20 @@ class UserController extends Controller
     {
         $user_auth = auth()->user();
 
-		if ($user_auth->can('user_edit')){
-            
+        if ($user_auth->can('user_edit')) {
+
             $this->validate($request, [
                 'email' => 'required|string|email|max:255|unique:users',
                 'email' => Rule::unique('users')->ignore($id),
                 'username'  => 'required|string|max:255',
                 'avatar'    => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
-                'password'  =>  'sometimes|nullable|string|confirmed|min:6,'.$id,
+                'password'  =>  'sometimes|nullable|string|confirmed|min:6,' . $id,
                 'status'    => 'required',
             ], [
                 'email.unique' => 'This Email already taken.',
             ]);
 
-     
+
             $current = $user->password;
 
             if ($request->password != null) {
@@ -163,7 +172,6 @@ class UserController extends Controller
                 } else {
                     $pass = $user->password;
                 }
-
             } else {
                 $pass = $user->password;
             }
@@ -173,7 +181,7 @@ class UserController extends Controller
                 if ($request->avatar != $currentAvatar) {
 
                     $image = $request->file('avatar');
-                    $filename = time().'.'.$image->extension();  
+                    $filename = time() . '.' . $image->extension();
                     $image->move(public_path('/assets/images/avatar'), $filename);
                     $path = public_path() . '/assets/images/avatar';
                     $userPhoto = $path . '/' . $currentAvatar;
@@ -185,7 +193,7 @@ class UserController extends Controller
                 } else {
                     $filename = $currentAvatar;
                 }
-            }else{
+            } else {
                 $filename = $currentAvatar;
             }
 
@@ -199,7 +207,6 @@ class UserController extends Controller
             ]);
 
             return response()->json(['success' => true]);
-
         }
         return abort('403', __('You are not authorized'));
     }
@@ -213,14 +220,13 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('user_delete')){
+        if ($user_auth->can('user_delete')) {
 
             User::whereId($id)->update([
                 'status' => 0,
             ]);
 
             return response()->json(['success' => true]);
-
         }
         return abort('403', __('You are not authorized'));
     }
@@ -229,7 +235,7 @@ class UserController extends Controller
     public function assignRole(Request $request)
     {
         $user_auth = auth()->user();
-        if ($user_auth->can('group_permission') && $user_auth->role_users_id != 1 && $user_auth->role_users_id != 3){
+        if ($user_auth->can('group_permission') && $user_auth->role_users_id != 1 && $user_auth->role_users_id != 3) {
 
             User::whereId($request->user_id)->update([
                 'role_users_id' => $request->role_id,
@@ -239,27 +245,27 @@ class UserController extends Controller
             $user_updated->assignRole($request->role_id);
 
             return response()->json(['success' => true]);
-
         }
         return abort('403', __('You are not authorized'));
     }
 
-    function getAllUsers(){
+    function getAllUsers()
+    {
         $users = User::select('username', 'id')->get();
 
         return response()->json($users);
     }
 
 
-     // Factory data
+    // Factory data
     //  public function getAllPermissions()
     //  {
     //      $user_auth = auth()->user();
     //      $user_auth->assignRole(1);
- 
+
     //      $all_permissions  = Permission::pluck('name');
     //      $role = Role::find(1);
     //      $role->syncPermissions($all_permissions);
     //  }
- 
+
 }
