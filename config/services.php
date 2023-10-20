@@ -34,5 +34,7 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
     
-
+     "SUPERADMIN_URL" => [
+        'SUPERADMIN_URL' => env('SUPERADMIN_URL'),
+     ]
 ];

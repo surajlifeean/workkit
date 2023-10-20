@@ -13,6 +13,7 @@ class StripePaymentController extends Controller
 
     public function stripeCheckout(Request $request)
     {
+        
         // $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
         $stripe = new \Stripe\StripeClient(['api_key' => config('services.stripe.secret')]);
 
@@ -57,8 +58,10 @@ class StripePaymentController extends Controller
         $stripe = new \Stripe\StripeClient(['api_key' => config('services.stripe.secret')]);
 
         $response = $stripe->checkout->sessions->retrieve($request->session_id);
+        $url = config('app.superadmin_url') . '/api/subscription-plans';
+
         // dd($response);
-        $post = Http::post(env('PLAN_REQUEST_POST'), [
+        $post = Http::post($url, [
             'company_id' => auth()->user()->client_id,
             'subscription_plan_data' => $response,
             'is_offer_price' => $checkoutParameters['is_offer_price'],

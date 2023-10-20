@@ -45,7 +45,7 @@
             {{----------------------------------------- Notification ----------------------------------------------}}
             @if (auth()->user()->role_users_id == 1)
                 <li class="">
-                    <a class="link_btn {{ request()->is('employee/my_requests') ? 'active_link' : '' }}" href="/employee/my_requests">
+                    <a class="link_btn {{ request()->is('get_messages/*') ? 'active_link' : '' }}" href="/get_messages/0">
                         <div class="d-flex align-items-center justify-content-start">
                         <i class="nav-icon i-Bell"></i>
                         <span>{{ __('translate.Notifications') }}</span>

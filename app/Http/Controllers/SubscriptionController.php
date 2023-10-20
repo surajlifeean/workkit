@@ -8,7 +8,11 @@ use Illuminate\Support\Facades\Http;
 class SubscriptionController extends Controller
 {
    public function index(){
-      $response = Http::get(env('SUPERADMIN_URL'));
+      // $url = env('SUPERADMIN_URL') .'/api/subscription-plans';
+
+      $url = config('app.superadmin_url') . '/api/subscription-plans';
+
+      $response = Http::get($url);
       // dd($response);
       $data = $response->json();
       // dd($data);

@@ -167,7 +167,18 @@
                               hour12: true, 
                             }).replace(/,/g, '');
 
-                const url = user_auth.role_users_id === 4 ? `/leave?leave_id=${e.leave_id}` : `/employee/my_requests?leave_id=${e.leave_id}`;
+                // const url = user_auth.role_users_id === 4 ? `/leave?leave_id=${e.leave_id}` : `/employee/my_requests?leave_id=${e.leave_id}`;
+
+                let url;
+
+                if (user_auth.role_users_id === 4) {
+                    url = `/leave?leave_id=${e.leave_id}`;
+                } else if (user_auth.role_users_id === 1) {
+                    url = '/get_messages/0';
+                } else {
+                    url = `/employee/my_requests?leave_id=${e.leave_id}`;
+                }
+
                 notificationBox.append(`
                  <a href="${url}" class="my-2" style="border-bottom: 1px solid gray;">
                    <div class="d-flex flex-column ">
