@@ -23,6 +23,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post("receive_notification_superadmin", "NotificationController@store_from_superadmin");
 
-Route::resource('active-plans', 'ActivePlanController');
+Route::post('active_plan_update', 'ActivePlanController@store');
 
 // Route::get("users/get_users_data", "UserController@Get_users_data");
