@@ -35,14 +35,14 @@ $(document).ready(function() {
             $body.removeClass("dark-theme");
         }
     });
+    
+//     $("#moon").click(function() {
+//         $body.toggleClass("dark-theme");
+//     });
 
-    $("#moon").click(function() {
-        $body.toggleClass("dark-theme");
-    });
-
-   $("#sun").click(function() {
-        $body.toggleClass("dark-theme");
-    });
+//    $("#sun").click(function() {
+//         $body.toggleClass("dark-theme");
+//     });
 
     let $themeLink = $("#gull-theme");
   

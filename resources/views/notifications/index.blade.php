@@ -64,7 +64,7 @@
                         <span class="error" v-if="errors && errors.message">
                                         @{{ errors.message[0] }}
                         </span>
-                        <button type="submit" class="btn btn-primary text-white ml-2"
+                        <button type="submit" class="btn btn-{{$setting->theme_color}} text-white ml-2"
                             :disabled="Submit_Processing_message">
                             <i class="i-Pen"></i>
                         </button>
@@ -166,7 +166,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
@@ -197,7 +197,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {

@@ -22,7 +22,7 @@
         <div class="card text-left">
             <div class="card-header text-right bg-transparent">
 
-                <a class="btn btn-primary btn-md m-1" id="Show_Modal_Filter"><i class="i-Filter-2 text-white mr-2"></i>
+                <a class="btn btn-{{$setting->theme_color}} btn-md m-1" id="Show_Modal_Filter"><i class="i-Filter-2 text-white mr-2"></i>
                     {{ __('translate.Filter') }}</a>
             </div>
             <div class="card-body">

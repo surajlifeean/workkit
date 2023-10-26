@@ -1,3 +1,4 @@
+<?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
 @extends('layouts.master')
 @section('main-content')
 
@@ -42,7 +43,7 @@
                         <div class="row mt-3">
 
                             <div class="col-md-6">
-                                <button type="submit" class="btn btn-primary" :disabled="SubmitProcessing">
+                                <button type="submit" class="btn btn-{{$setting->theme_color}}" :disabled="SubmitProcessing">
                                     {{ __('translate.Submit') }}
                                 </button>
                                 <div v-once class="typo__p" v-if="SubmitProcessing">

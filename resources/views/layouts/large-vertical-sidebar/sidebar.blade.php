@@ -1,4 +1,6 @@
 <?php $plugins = \Nwidart\Modules\Facades\Module::allEnabled(); ?>
+<?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
+
 <div class="side-content-wrap">
     <div class="sidebar-left open rtl-ps-none" data-perfect-scrollbar data-suppress-scroll-x="true">
         <ul class="navigation-left accordion mt-3" id="accordionExample">
@@ -8,7 +10,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('dashboard/admin') ? 'active_link' : '' }}" href="/dashboard/admin">
                         <div class="d-flex align-items-center justify-content-start">
-                        <i class="nav-icon i-Bar-Chart"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Bar-Chart"></i>
                         <span class="">{{ __('translate.Dashboard') }}</span> 
                         </div>                  
                     </a>
@@ -18,7 +20,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('dashboard/client') ? 'active_link' : '' }}" href="/dashboard/client">
                         <div class="d-flex align-items-center justify-content-start">
-                        <i class="nav-icon i-Bar-Chart"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Bar-Chart"></i>
                         <span>{{ __('translate.Dashboard') }}</span>
                         </div>
                     </a>
@@ -27,7 +29,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('dashboard/employee') ? 'active_link' : '' }}" href="/dashboard/employee">
                         <div class="d-flex align-items-center justify-content-start">
-                        <i class="nav-icon i-Bar-Chart"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Bar-Chart"></i>
                         <span>{{ __('translate.Dashboard') }}</span>
                         </div>
                     </a>
@@ -36,7 +38,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('dashboard/hr') ? 'active_link' : '' }}" href="/dashboard/hr">
                         <div class="d-flex align-items-center justify-content-start">
-                        <i class="nav-icon i-Bar-Chart"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Bar-Chart"></i>
                         <span>{{ __('translate.Dashboard') }}</span>
                         </div>
                     </a>
@@ -47,7 +49,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('get_messages/*') ? 'active_link' : '' }}" href="/get_messages/0">
                         <div class="d-flex align-items-center justify-content-start">
-                        <i class="nav-icon i-Bell"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Bell"></i>
                         <span>{{ __('translate.Notifications') }}</span>
                         </div>
                     </a>
@@ -58,7 +60,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('employee/my_requests') ? 'active_link' : '' }}" href="/employee/my_requests">
                         <div class="d-flex align-items-center justify-content-start">
-                        <i class="nav-icon i-Bar-Chart"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Bar-Chart"></i>
                         <span>{{ __('translate.My_Request') }}</span>
                         </div>
                     </a>
@@ -68,14 +70,14 @@
             @if (auth()->user()->role_users_id == 3)
                  <li class="">
                      <a class="link_btn {{ request()->is('client_projects') ? 'active_link' : '' }}" href="/client_projects">
-                         <i class="nav-icon i-Dropbox"></i>
+                         <i class="nav-icon text-{{$setting->theme_color}} i-Dropbox"></i>
                          <span>{{ __('translate.Projects') }}</span>
                      </a>
                  </li>
      
                  <li class="">
                      <a class="link_btn {{ request()->is('client_tasks') ? 'active_link' : '' }}" href="/client_tasks">
-                         <i class="nav-icon i-Check"></i>
+                         <i class="nav-icon text-{{$setting->theme_color}} i-Check"></i>
                          <span>{{ __('translate.Tasks') }}</span>
                      </a>
                  </li>
@@ -87,9 +89,9 @@
                         aria-expanded="true" data-toggle="collapse" data-target="#collapse_hr"
                         aria-expanded="true" aria-controls="collapse_hr">
                         <div class="d-flex align-items-center justify-content-start">
-                            <i class="nav-icon i-Library"></i>
+                            <i class="nav-icon text-{{$setting->theme_color}} i-Library"></i>
                             <span class="">{{ __('translate.Hr_Management') }}</span>
-                            <i class="nav-icon i-Arrow-Right"></i>
+                            <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                         </div>
                         
                     </a>
@@ -100,7 +102,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'company.index' ? 'open' : '' }}"
                                     href="{{ route('company.index') }}">
-                                    <i class=" i-Management"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Management"></i>
                                     <span class="item-name">{{ __('translate.Company') }}</span>
                                 </a>
                             </li>
@@ -110,7 +112,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'departments.index' ? 'open' : '' }}"
                                     href="{{ route('departments.index') }}">
-                                    <i class="nav-icon i-Shop"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Shop"></i>
                                     <span class="item-name">{{ __('translate.Departments') }}</span>
                                 </a>
                             </li>
@@ -120,7 +122,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'designations.index' ? 'open' : '' }}"
                                     href="{{ route('designations.index') }}">
-                                    <i class="nav-icon i-Shutter"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Shutter"></i>
                                     <span class="item-name">{{ __('translate.Designations') }}</span>
                                 </a>
                             </li>
@@ -129,7 +131,7 @@
                         {{-- @can('user_view')
                            <li class="child_links">
                                <a class="" href="/users">
-                                   <i class="nav-icon i-Business-Mens"></i>
+                                   <i class="nav-icon text-{{$setting->theme_color}} i-Business-Mens"></i>
                                    <span class="item-name">{{ __('translate.User_Controller') }}</span>
                                </a>
                                
@@ -142,7 +144,7 @@
                             <li class="child_links">
                                 <a href="{{ route('office_shift.index') }}"
                                     class="{{ Route::currentRouteName() == 'office_shift.index' ? 'open' : '' }}">
-                                    <i class="nav-icon i-Clock"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Clock"></i>
                                     <span class="item-name">{{ __('translate.Office_Shift') }}</span>
                                 </a>
                             </li>
@@ -152,7 +154,7 @@
                             <li class="child_links">
                                 <a href="{{ route('event.index') }}"
                                     class="{{ Route::currentRouteName() == 'event.index' ? 'open' : '' }}">
-                                    <i class="nav-icon i-Clock-4"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Clock-4"></i>
                                     <span class="item-name">{{ __('translate.Events') }}</span>
                                 </a>
                             </li>
@@ -162,7 +164,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'holiday.index' ? 'open' : '' }}"
                                     href="{{ route('holiday.index') }}">
-                                    <i class="nav-icon i-Christmas-Bell"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Christmas-Bell"></i>
                                     <span class="item-name">{{ __('translate.Holidays') }}</span>
                                 </a>
                             </li>
@@ -173,7 +175,7 @@
                                 <a 
                                 aria-expanded="true" data-toggle="collapse" data-target="#collapse_awards"
                                 aria-expanded="true" aria-controls="collapse_awards">
-                                    <i class="nav-icon i-Gift-Box"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Gift-Box"></i>
                                     <span class="item-name">{{ __('translate.Awards') }}</span>
                                     <i class="ml-2 i-Arrow-Down"></i>
                                 </a>
@@ -201,13 +203,13 @@
                         aria-expanded="true" aria-controls="collapse_core"
                         >
                         <div class="d-flex align-items-center justify-content-start">
-                            <i class="nav-icon i-Management"></i>
+                            <i class="nav-icon text-{{$setting->theme_color}} i-Management"></i>
                             @if(auth()->user()->role_users_id == 2 || auth()->user()->role_users_id == 4)
                             <span class="">{{ __('translate.Communication') }}</span>
                             @else
                             <span class="">{{ __('translate.Company_Management') }}</span>
                             @endif
-                            <i class="nav-icon i-Arrow-Right"></i>
+                            <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                         </div>
                     </a>
                     <ul id="collapse_core" class="submenu list-unstyled collapse" 
@@ -217,7 +219,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'company.index' ? 'open' : '' }}"
                                     href="{{ route('company.index') }}">
-                                    <i class="nav-icon i-Management"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Management"></i>
                                     <span class="item-name">{{ __('translate.Company') }}</span>
                                 </a>
                             </li>
@@ -227,7 +229,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'departments.index' ? 'open' : '' }}"
                                     href="{{ route('departments.index') }}">
-                                    <i class="nav-icon i-Shop"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Shop"></i>
                                     <span class="item-name">{{ __('translate.Departments') }}</span>
                                 </a>
                             </li>
@@ -237,7 +239,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'designations.index' ? 'open' : '' }}"
                                     href="{{ route('designations.index') }}">
-                                    <i class="nav-icon i-Shutter"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Shutter"></i>
                                     <span class="item-name">{{ __('translate.Designations') }}</span>
                                 </a>
                             </li>
@@ -247,7 +249,7 @@
                             <li class="child_links">
                                 <a href="{{ route('policies.index') }}"
                                     class="{{ Route::currentRouteName() == 'policies.index' ? 'open' : '' }}">
-                                    <i class="nav-icon i-Danger"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Danger"></i>
                                     <span class="item-name">{{ __('translate.Policies') }}</span>
                                 </a>
                             </li>
@@ -257,7 +259,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'announcements.index' ? 'open' : '' }}"
                                     href="{{ route('announcements.index') }}">
-                                    <i class="nav-icon i-Letter-Open"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Letter-Open"></i>
                                     <span class="item-name">{{ __('translate.Announcements') }}</span>
                                 </a>
                             </li>
@@ -266,7 +268,7 @@
                              <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'comp_docs_links.index' ? 'open' : '' }}"
                                      href="{{ route('comp_docs_links.index') }}">
-                                     <i class="nav-icon i-Letter-Open"></i>
+                                     <i class="nav-icon text-{{$setting->theme_color}} i-Letter-Open"></i>
                                      <span class="item-name">{{ __('translate.Docs_&_Links') }}</span>
                                  </a>
                              </li>
@@ -282,7 +284,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('users') ? 'active_link' : '' }}" href="/users">
                       <div class="d-flex align-items-center justify-content-start">
-                        <i class="nav-icon i-Business-Mens"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Business-Mens"></i>
                         <span class="">{{ __('translate.User_Controller') }}</span>
                       </div>
                     </a>
@@ -298,9 +300,9 @@
                         aria-expanded="true" aria-controls="collapse_employees"
                         >
                         <div class="d-flex align-items-center justify-content-start">  
-                          <i class="nav-icon i-Engineering"></i>
+                          <i class="nav-icon text-{{$setting->theme_color}} i-Engineering"></i>
                           <span>{{ __('translate.Employees') }}</span>
-                          <i class="nav-icon i-Arrow-Right"></i>
+                          <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                         </div>
                     </a>
                     <ul id="collapse_employees"
@@ -311,7 +313,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'employees.create' ? 'open' : '' }}"
                                     href="{{ route('employees.create') }}">
-                                    <i class="nav-icon i-Add-User"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Add-User"></i>
                                     <span class="item-name">{{ __('translate.Create_Employee') }}</span>
                                 </a>
                             </li>
@@ -320,7 +322,7 @@
                             <li class="child_links">
                                 <a href="{{ route('employees.index') }}"
                                     class="{{ Route::currentRouteName() == 'employees.index' ? 'open' : '' }}">
-                                    <i class="nav-icon i-Business-Mens"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Business-Mens"></i>
                                     <span class="item-name">{{ __('translate.Employee_List') }}</span>
                                 </a>
                             </li>
@@ -335,7 +337,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('projects') ? 'active_link' : '' }}" href="/projects">
                       <div class="d-flex align-items-center justify-content-start">  
-                        <i class="nav-icon i-Box-Open"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Box-Open"></i>
                         <span class="">{{ __('translate.Projects') }}</span>
                       </div>
                     </a>
@@ -346,7 +348,7 @@
                 <li class=" ">
                     <a class="link_btn {{ request()->is('tasks') ? 'active_link' : '' }}" href="/tasks">
                         <div class="d-flex align-items-center justify-content-start">  
-                        <i class="nav-icon i-Dropbox"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Dropbox"></i>
                         <span>{{ __('translate.Team_Goal') }}</span></div>
                     </a>
                 </li>
@@ -359,9 +361,9 @@
                         aria-expanded="true" aria-controls="collapse_tasks"
                         >
                         <div class="d-flex align-items-center justify-content-start">  
-                        <i class="nav-icon i-Check"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Check"></i>
                         <span>{{ __('translate.Actions') }}</span>
-                        <i class="nav-icon i-Arrow-Right"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                         </div>
                     </a>
                     <ul id="collapse_tasks" class="submenu list-unstyled collapse" 
@@ -370,7 +372,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'leave.index' ? 'open' : '' }}"
                                     href="{{ route('leave.index') }}">
-                                    <i class="nav-icon i-Wallet"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
                                     <span class="item-name">{{ __('translate.Manage_leaves') }}</span>
                                 </a>
                             </li>
@@ -379,7 +381,7 @@
                             <li class="child_links">
                                 <a href="{{ route('expense.index') }}"
                                     class="{{ Route::currentRouteName() == 'expense.index' ? 'open' : '' }}">
-                                    <i class="nav-icon i-Money-Bag"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Money-Bag"></i>
                                     <span class="item-name">{{ __('translate.Manage_Expenses') }}</span>
                                 </a>
                             </li>
@@ -392,7 +394,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('clients') ? 'active_link' : '' }}" href="/clients">
                         <div class="d-flex align-items-center justify-content-start">  
-                        <i class="nav-icon i-Boy"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Boy"></i>
                         <span>{{ __('translate.Clients') }}</span></div>
                     </a>
                 </li>
@@ -406,9 +408,9 @@
                         aria-expanded="true" aria-controls="collapse_attendances"
                         >
                         <div class="d-flex align-items-center justify-content-start">   
-                          <i class="nav-icon i-Clock"></i>
+                          <i class="nav-icon text-{{$setting->theme_color}} i-Clock"></i>
                           <span>{{ __('translate.Attendance') }}</span>
-                          <i class="nav-icon i-Arrow-Right"></i>
+                          <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                         </div>
                     </a>
                     <ul id="collapse_attendances" 
@@ -419,14 +421,14 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'daily_attendance' ? 'open' : '' }}"
                                     href="{{ route('daily_attendance') }}">
-                                    <i class="nav-icon i-Clock"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Clock"></i>
                                     <span class="item-name">{{ __('translate.Daily_Attendance') }}</span>
                                 </a>
                             </li>
                             <li class="child_links">
                                 <a href="{{ route('attendances.index') }}"
                                     class="{{ Route::currentRouteName() == 'attendances.index' ? 'open' : '' }}">
-                                    <i class="nav-icon i-Clock-4"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Clock-4"></i>
                                     <span class="item-name">{{ __('translate.Attendances') }}</span>
                                 </a>
                             </li>
@@ -435,7 +437,7 @@
                         <li class="child_links">
                             <a href="{{ route('work_from.index') }}"
                                 class="{{ Route::currentRouteName() == 'work_from.index' ? 'open' : '' }}">
-                                <i class="nav-icon i-Home-4"></i>
+                                <i class="nav-icon text-{{$setting->theme_color}} i-Home-4"></i>
                                 <span class="item-name">{{ __('translate.Home_Office') }}</span>
                             </a>
                         </li>
@@ -452,9 +454,9 @@
                     aria-expanded="true" aria-controls="collapse_accounting"
                     >
                     <div class="d-flex align-items-center justify-content-start">   
-                         <i class="nav-icon i-Pen-6"></i>
+                         <i class="nav-icon text-{{$setting->theme_color}} i-Pen-6"></i>
                          <span class="nav-text">{{ __('translate.Accounting') }}</span>
-                         <i class="nav-icon i-Arrow-Right"></i>
+                         <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                     </div>
                     </a>
                     <ul id="collapse_accounting" 
@@ -465,7 +467,7 @@
                             <li class="child_links">
                                 <a href="{{ route('account.index') }}"
                                     class="{{ Route::currentRouteName() == 'account.index' ? 'open' : '' }}">
-                                    <i class="nav-icon i-Financial"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Financial"></i>
                                     <span class="item-name">{{ __('translate.Account') }}</span>
                                 </a>
                             </li>
@@ -475,7 +477,7 @@
                             <li class="child_links">
                                 <a href="{{ route('deposit.index') }}"
                                     class="{{ Route::currentRouteName() == 'deposit.index' ? 'open' : '' }}">
-                                    <i class="nav-icon i-Money-2"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Money-2"></i>
                                     <span class="item-name">{{ __('translate.Deposit') }}</span>
                                 </a>
                             </li>
@@ -485,7 +487,7 @@
                             <li class="child_links">
                                 <a href="{{ route('expense.index') }}"
                                     class="{{ Route::currentRouteName() == 'expense.index' ? 'open' : '' }}">
-                                    <i class="nav-icon i-Money-Bag"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Money-Bag"></i>
                                     <span class="item-name">{{ __('translate.Expense') }}</span>
                                 </a>
                             </li>
@@ -497,7 +499,7 @@
                                 aria-expanded="true" data-toggle="collapse" data-target="#collapse_accounting_settings"
                                 aria-controls="collapse_accounting_settings"
                                 >
-                                    <i class="nav-icon i-Gear"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Gear"></i>
                                     <span class="item-name">{{ __('translate.Account_Settings') }}</span>
                                     <i class="dd-arrow i-Arrow-Down"></i>
                                 </a>
@@ -537,9 +539,9 @@
                           aria-controls="collapse_leave"
                           >
                           <div class="d-flex align-items-center justify-content-start">   
-                            <i class="nav-icon i-Calendar"></i>
+                            <i class="nav-icon text-{{$setting->theme_color}} i-Calendar"></i>
                             <span class="nav-text">{{ __('translate.Leave_Request') }}</span>
-                            <i class="nav-icon i-Arrow-Right"></i>
+                            <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                           </div>
                         </a>
                             <ul id="collapse_leave" class="submenu list-unstyled collapse" 
@@ -549,7 +551,7 @@
                                     <li class="child_links">
                                         <a class="{{ Route::currentRouteName() == 'leave.index' ? 'open' : '' }}"
                                             href="{{ route('leave.index') }}">
-                                            <i class="nav-icon i-Wallet"></i>
+                                            <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
                                             <span class="item-name">{{ __('translate.Request_leave') }}</span>
                                         </a>
                                     </li>
@@ -559,7 +561,7 @@
                                     <li class="child_links">
                                         <a class="{{ Route::currentRouteName() == 'leave_type.index' ? 'open' : '' }}"
                                             href="{{ route('leave_type.index') }}">
-                                            <i class="nav-icon i-Wallet"></i>
+                                            <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
                                             <span class="item-name">{{ __('translate.Leave_Type') }}</span>
                                         </a>
                                     </li>
@@ -579,9 +581,9 @@
                           aria-controls="collapse_training"
                     >
                     <div class="d-flex align-items-center justify-content-start">   
-                        <i class="nav-icon i-Windows-Microsoft"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Windows-Microsoft"></i>
                         <span class="nav-text">{{ __('translate.Training') }}</span>
-                        <i class="nav-icon i-Arrow-Right"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                     </div>
                     </a>
                     <ul class="submenu list-unstyled collapse" id="collapse_training"
@@ -591,7 +593,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'trainings.index' ? 'open' : '' }}"
                                     href="{{ route('trainings.index') }}">
-                                    <i class="nav-icon i-Windows-Microsoft"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Windows-Microsoft"></i>
                                     <span class="item-name">{{ __('translate.Training_List') }}</span>
                                 </a>
                             </li>
@@ -601,7 +603,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'trainers.index' ? 'open' : '' }}"
                                     href="{{ route('trainers.index') }}">
-                                    <i class="nav-icon i-Business-Mens"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Business-Mens"></i>
                                     <span class="item-name">{{ __('translate.Trainers') }}</span>
                                 </a>
                             </li>
@@ -611,7 +613,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'training_skills.index' ? 'open' : '' }}"
                                     href="{{ route('training_skills.index') }}">
-                                    <i class="nav-icon i-Wallet"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
                                     <span class="item-name">{{ __('translate.Training_Skills') }}</span>
                                 </a>
                             </li>
@@ -633,9 +635,9 @@
                     aria-controls="collapse_settings"
                     >
                     <div class="d-flex align-items-center justify-content-start">   
-                        <i class="nav-icon i-Security-Settings"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Security-Settings"></i>
                         <span class="nav-text">{{ __('translate.Settings') }}</span>
-                        <i class="nav-icon i-Arrow-Right"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                     </div>
                     </a>
 
@@ -648,7 +650,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'update_settings.index' ? 'open' : '' }}"
                                     href="{{ route('update_settings.index') }}">
-                                    <i class="nav-icon i-Data"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Data"></i>
                                     <span class="item-name">{{ __('translate.Update_Log') }}</span>
                                 </a>
                             </li>
@@ -658,7 +660,7 @@
                         <li class="child_links ">
                             <a class="{{ Route::currentRouteName()=='module_settings.index' ? 'open' : '' }}"
                         href="{{route('module_settings.index')}}">
-                        <i class="nav-icon i-Clock-3"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Clock-3"></i>
                         <span class="item-name">{{ __('translate.Module_settings') }}</span>
                         </a>
                         </li>
@@ -668,7 +670,7 @@
                             <li class="child_links">
                                 <a href="{{ route('permissions.index') }}"
                                     class="{{ Route::currentRouteName() == 'permissions.index' ? 'open' : '' }}">
-                                    <i class="nav-icon i-Lock-2"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Lock-2"></i>
                                     <span class="item-name">{{ __('translate.Permissions') }}</span>
                                 </a>
                             </li>
@@ -678,7 +680,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'currency.index' ? 'open' : '' }}"
                                     href="{{ route('currency.index') }}">
-                                    <i class="nav-icon i-Dollar-Sign"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Dollar-Sign"></i>
                                     <span class="item-name">{{ __('translate.Currency') }}</span>
                                 </a>
                             </li>
@@ -688,7 +690,7 @@
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'backup.index' ? 'open' : '' }}"
                                     href="{{ route('backup.index') }}">
-                                    <i class="nav-icon i-Download"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Download"></i>
                                     <span class="item-name">{{ __('translate.Backup') }}</span>
                                 </a>
                             </li>
@@ -704,9 +706,9 @@
                     aria-expanded="true" data-toggle="collapse" data-target="#collapse_system_setup"
                     aria-controls="collapse_system_setup">
                     <div class="d-flex align-items-center justify-content-start">  
-                        <i class="nav-icon i-Data-Settings"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Data-Settings"></i>
                         <span>{{ __('translate.System_Setup') }}</span>
-                        <i class="nav-icon i-Arrow-Right"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                     </div>
                 </a>
                 <ul id="collapse_system_setup" class="submenu list-unstyled collapse"
@@ -714,14 +716,14 @@
                     <li class="child_links">
                         <a class="{{ Route::currentRouteName() == 'business_settings.index' ? 'open' : '' }}"
                             href="{{ route('business_settings') }}">
-                            <i class="nav-icon i-Data"></i>
+                            <i class="nav-icon text-{{$setting->theme_color}} i-Data"></i>
                             <span class="item-name">{{ __('translate.Business_settings') }}</span>
                         </a>
                     </li>
                     <li class="child_links ">
                         <a class="{{ Route::currentRouteName() == 'system_settings.index' ? 'open' : '' }}"
                             href="{{ route('system_settings.index') }}">
-                            <i class="nav-icon i-Gear"></i>
+                            <i class="nav-icon text-{{$setting->theme_color}} i-Gear"></i>
                             <span class="item-name">{{ __('translate.System_Settings') }}</span>
                         </a>
                     </li>
@@ -733,7 +735,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('subscription') ? 'active_link' : '' }}" href="/subscription">
                         <div class="d-flex align-items-center justify-content-start">  
-                            <i class="nav-icon i-Money-Bag"></i>
+                            <i class="nav-icon text-{{$setting->theme_color}} i-Money-Bag"></i>
                             <span>{{ __('translate.Subscription') }}</span>
                         </div>
                     </a>
@@ -747,9 +749,9 @@
                           aria-controls="collapse_report"
                     >
                     <div class="d-flex align-items-center justify-content-start"> 
-                        <i class="nav-icon i-Line-Chart"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Line-Chart"></i>
                         <span class="nav-text">{{ __('translate.Reports') }}</span>
-                        <i class="nav-icon i-Arrow-Right"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                     </div>
                     </a>
                     <ul 
@@ -760,7 +762,7 @@
                             <li class="child_links ">
                                 <a class="{{ Route::currentRouteName() == 'attendance_report_index' ? 'open' : '' }}"
                                     href="{{ route('attendance_report_index') }}">
-                                    <i class="nav-icon i-Wallet"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
                                     <span class="item-name">{{ __('translate.Attendance_Report') }}</span>
                                 </a>
                             </li>
@@ -770,7 +772,7 @@
                             <li class="child_links ">
                                 <a class="{{ Route::currentRouteName() == 'employee_report_index' ? 'open' : '' }}"
                                     href="{{ route('employee_report_index') }}">
-                                    <i class="nav-icon i-Wallet"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
                                     <span class="item-name">{{ __('translate.Employee_Report') }}</span>
                                 </a>
                             </li>
@@ -780,7 +782,7 @@
                             <li class="child_links ">
                                 <a class="{{ Route::currentRouteName() == 'project_report_index' ? 'open' : '' }}"
                                     href="{{ route('project_report_index') }}">
-                                    <i class="nav-icon i-Wallet"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
                                     <span class="item-name">{{ __('translate.Project_Report') }}</span>
                                 </a>
                             </li>
@@ -790,7 +792,7 @@
                             <li class="child_links ">
                                 <a class="{{ Route::currentRouteName() == 'task_report_index' ? 'open' : '' }}"
                                     href="{{ route('task_report_index') }}">
-                                    <i class="nav-icon i-Wallet"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
                                     <span class="item-name">{{ __('translate.Task_Report') }}</span>
                                 </a>
                             </li>
@@ -800,7 +802,7 @@
                             <li class="child_links ">
                                 <a class="{{ Route::currentRouteName() == 'expense_report_index' ? 'open' : '' }}"
                                     href="{{ route('expense_report_index') }}">
-                                    <i class="nav-icon i-Wallet"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
                                     <span class="item-name">{{ __('translate.Expense_Report') }}</span>
                                 </a>
                             </li>
@@ -810,7 +812,7 @@
                             <li class="child_links mb-5">
                                 <a class="{{ Route::currentRouteName() == 'deposit_report_index' ? 'open' : '' }}"
                                     href="{{ route('deposit_report_index') }}">
-                                    <i class="nav-icon i-Wallet"></i>
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
                                     <span class="item-name">{{ __('translate.Deposit_Report') }}</span>
                                 </a>
                             </li>

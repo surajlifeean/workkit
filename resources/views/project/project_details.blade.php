@@ -58,7 +58,7 @@
                                 <div class="col-md-12">
                                     <div class="text-left">
                                         <div class="text-left bg-transparent">
-                                            <a class="btn btn-primary btn-md m-2" @click="New_Discussion"><i
+                                            <a class="btn btn-{{$setting->theme_color}} btn-md m-2" @click="New_Discussion"><i
                                                     class="i-Add text-white mr-2"></i>{{ __('translate.Add_Discussion') }}</a>
                                         </div>
                                         <div class="table-responsive">
@@ -131,7 +131,7 @@
                                                         <div class="row mt-3">
 
                                                             <div class="col-md-6">
-                                                                <button type="submit" class="btn btn-primary"
+                                                                <button type="submit" class="btn btn-{{$setting->theme_color}}"
                                                                     :disabled="Submit_Processing_Discussion">
                                                                     {{ __('translate.Submit') }}
                                                                 </button>
@@ -161,7 +161,7 @@
                                 <div class="col-md-12">
                                     <div class="text-left">
                                         <div class="text-left bg-transparent">
-                                            <a class="btn btn-primary btn-md m-2" @click="New_Issue"><i
+                                            <a class="btn btn-{{$setting->theme_color}} btn-md m-2" @click="New_Issue"><i
                                                     class="i-Add text-white mr-2"></i>
                                                 {{ __('translate.New_Issue') }}</a>
                                         </div>
@@ -329,7 +329,7 @@
                                                         <div class="row mt-3">
 
                                                             <div class="col-md-6">
-                                                                <button type="submit" class="btn btn-primary"
+                                                                <button type="submit" class="btn btn-{{$setting->theme_color}}"
                                                                     :disabled="Submit_Processing_Issue">
                                                                     {{ __('translate.Submit') }}
                                                                 </button>
@@ -360,7 +360,7 @@
                                 <div class="col-md-12">
                                     <div class="text-left">
                                         <div class="text-left bg-transparent">
-                                            <a class="btn btn-primary btn-md m-2" @click="New_Document"><i
+                                            <a class="btn btn-{{$setting->theme_color}} btn-md m-2" @click="New_Document"><i
                                                     class="i-Add text-white mr-2"></i>
                                                 {{ __('translate.New_Document') }}</a>
                                         </div>
@@ -468,7 +468,7 @@
                                                         <div class="row mt-3">
 
                                                             <div class="col-md-6">
-                                                                <button type="submit" class="btn btn-primary"
+                                                                <button type="submit" class="btn btn-{{$setting->theme_color}}"
                                                                     :disabled="Submit_Processing_document">
                                                                     {{ __('translate.Submit') }}
                                                                 </button>
@@ -498,7 +498,7 @@
                                 <div class="col-md-12">
                                     <div class="text-left">
                                         <div class="text-left bg-transparent">
-                                            <a class="btn btn-primary btn-md m-2" @click="New_Task"><i
+                                            <a class="btn btn-{{$setting->theme_color}} btn-md m-2" @click="New_Task"><i
                                                     class="i-Add text-white mr-2"></i>
                                                 {{ __('translate.New_Task') }}</a>
                                         </div>
@@ -739,7 +739,7 @@
 
                                                             <div class="row mt-3">
                                                                 <div class="col-lg-6">
-                                                                    <button type="submit" class="btn btn-primary"
+                                                                    <button type="submit" class="btn btn-{{$setting->theme_color}}"
                                                                         :disabled="Submit_Processing_Task">
                                                                         {{ __('translate.Submit') }}
                                                                     </button>
@@ -902,7 +902,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
@@ -1044,7 +1044,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
@@ -1126,7 +1126,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
@@ -1248,7 +1248,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {

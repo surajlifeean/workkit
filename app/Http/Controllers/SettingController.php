@@ -189,6 +189,7 @@ class SettingController extends Controller
 
         return view('settings.business_settings.business_setting', compact('setting'));
     }
+    
 
     public function update_business_settings(Request $request, $id)
     {
@@ -244,6 +245,7 @@ class SettingController extends Controller
         }
         
         $setting->theme_color = $request->theme_color;
+        $setting->is_dark_mode = $request->is_dark_mode;
         $setting->save();
 
         return response()->json(['status' => 'success', 'code' => 200]);

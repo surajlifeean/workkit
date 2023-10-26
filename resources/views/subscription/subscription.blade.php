@@ -30,7 +30,7 @@
             <div class="col-lg-3 my-4">
                 <div class="card position-relative " style="height: 100%">
                     <div class="card-body d-flex  align-items-center justify-content-center flex-column overflow-hidden">
-                        <div class="position-absolute bg-primary plan_cont">{{$dt['plan']}}</div>
+                        <div class="position-absolute bg-{{$setting->theme_color}} plan_cont">{{$dt['plan']}}</div>
                         <div class="text-dark {{ $dt['is_offer_price'] == 1 ? 'mt-3 d-inline' : 'd-none'}}">Special offer</div>
                         <h2 class="{{ $dt['is_offer_price'] == 1 ? '' : 'mt-4'}}" style="font-size: 2rem; margin-bottom: 0;">{{ $dt['currency'] == 'USD' ? '$' : ($dt['currency'] == 'EUR' ? '€' : ($dt['currency'] == 'XOF' || $dt['currency'] == 'XAF' ? 'FCFA' : '')) }}
                         {{ $dt['is_offer_price'] == 1 ? $dt['offered_price'] : $dt['price'] }}
@@ -64,7 +64,7 @@
                            
                           </ul>
                         </div>
-                        <a href="{{ route('stripe.checkout', [ 'price' => ( $dt['is_offer_price'] == 1 ? $dt['offered_price'] : $dt['price'] ), 'product' => $dt['plan'], 'currency' => $dt['currency'] , 'plan_id' => $dt['id'] , 'is_offer_price' => $dt['is_offer_price'] ] ) }}" class="btn btn-primary">Buy Now</a>
+                        <a href="{{ route('stripe.checkout', [ 'price' => ( $dt['is_offer_price'] == 1 ? $dt['offered_price'] : $dt['price'] ), 'product' => $dt['plan'], 'currency' => $dt['currency'] , 'plan_id' => $dt['id'] , 'is_offer_price' => $dt['is_offer_price'] ] ) }}" class="btn btn-{{$setting->theme_color}}">Buy Now</a>
                     </div>
                 </div>
             </div>
@@ -200,7 +200,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
@@ -229,7 +229,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {

@@ -30,7 +30,7 @@
 
                             <div class="col-md-4 my-2">
                                 <div class="card" style="box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.06); height: 18rem;">
-                                    <div class="card-header {{$setting->theme_color}}">
+                                    <div class="card-header bg-{{$setting->theme_color}}">
                                         <h5 class="text-white">{{ __('Logo dark') }}</h5>
                                     </div>
                                     <div class="card-body pt-0 d-flex flex-column position-relative">
@@ -60,7 +60,7 @@
 
                             <div class="col-md-4 my-2">
                                 <div class="card" style="box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.06); height: 18rem;">
-                                    <div class="card-header {{$setting->theme_color}}">
+                                    <div class="card-header bg-{{$setting->theme_color}}">
                                         <h5 class="text-white">{{ __('Logo Light') }}</h5>
                                     </div>
 
@@ -99,7 +99,7 @@
 
                             <div class="col-md-4 my-2">
                                 <div class="card" style="box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.06); height: 18rem;">
-                                    <div class="card-header {{$setting->theme_color}}">
+                                    <div class="card-header bg-{{$setting->theme_color}}">
                                         <h5 class="text-white">{{ __('Favicon') }}</h5>
                                     </div>
                                     <div class="card-body pt-0 d-flex flex-column position-relative">
@@ -149,11 +149,22 @@
                                             </h6>
                                             <hr class="my-2" />
                                             <div class="theme-color themes-color d-flex flex-wrap" style="width: 100%;">
-                                                @foreach(['primary', 'blue', 'indigo', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'cyan', 'gray', 'gray-dark'] as $color)
-                                                    <a class="bg-{{ $color }} cursor-pointer color_themes m-1 {{ $setting->theme_color == 'bg-' . $color ? 'checked_theme_color' : '' }}" onclick="changeTheme(this)" style="height: 2rem; width: 2rem; border-radius: 0.5rem; display: inline-block;">
-                                                     <input type="radio" value="bg-{{ $color }}" name="theme_color" v-model="setting.theme_color" {{ $setting->theme_color == 'bg-' . $color ? 'checked' : '' }} hidden>
+                                                @foreach(['primary', 'indigo', 'pink', 'danger', 'orange', 'warning', 'success', 'teal', 'cyan', 'gray', 'dark', 'info', 'light'] as $color)
+                                                    <a class="bg-{{ $color }} cursor-pointer color_themes m-1 {{ $setting->theme_color ==  $color ? 'checked_theme_color' : '' }}" onclick="changeTheme(this)" style="height: 2rem; width: 2rem; border-radius: 0.5rem; display: inline-block;">
+                                                     <input type="radio" value="{{ $color }}" name="theme_color" v-model="setting.theme_color" {{ $setting->theme_color == 'bg-' . $color ? 'checked' : '' }} hidden>
                                                     </a>
                                                 @endforeach
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-12">
+                                            <h5 class="mt-3 mb-3">{{ __('translate.Theme Mode') }}</h5>
+                                            <h6 class="">
+                                                <i data-feather="credit-card"
+                                                    class="me-2"></i>
+                                            </h6>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="is_dark_mode" id="flexSwitchCheckDefault" :checked="setting.is_dark_mode == 1">
+                                                <label class="form-check-label" for="flexSwitchCheckDefault">{{ __('translate.Enable Dark Mode') }}</label>
                                             </div>
                                         </div>
                                     </div>
@@ -164,7 +175,7 @@
                         <div class="row mt-3">
 
                             <div class="col-md-6">
-                                <button type="submit" class="btn btn-primary" :disabled="SubmitProcessing">
+                                <button type="submit" class="btn btn-{{$setting->theme_color}}" :disabled="SubmitProcessing">
                                     {{ __('translate.Submit') }}
                                 </button>
                                 <div v-once class="typo__p" v-if="SubmitProcessing">
@@ -251,12 +262,14 @@
                 var self = this;
                 self.SubmitProcessing = true;
                 var selectedThemeColor = $('input[name="theme_color"]:checked').val();
-
+                let darkMode = $('input[name="is_dark_mode"]').is(':checked') ? 1 : 0;
+                
                 this.setting.theme_color = selectedThemeColor;
                 self.data.append("logo", self.setting.logo);
                 self.data.append("favicon", self.setting.favicon);
                 self.data.append("dark_logo", self.setting.dark_logo);
                 self.data.append("theme_color", self.setting.theme_color);
+                self.data.append("is_dark_mode", darkMode);
                 self.data.append("_method", "put");
                 console.log(this.setting)
                 axios

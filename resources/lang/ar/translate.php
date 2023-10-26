@@ -525,6 +525,7 @@ return [
     'Business_settings' => 'إعدادات الأعمال',
     "Primary color Settings" => "إعدادات اللون الأساسي",
     "Theme Customizer" => "أداة تخصيص الموضوع",
-    "Users" => "Users"
-
+    "Users" => "Users",
+    "Theme Mode" => "Theme Mode",
+    "Enable Dark Mode" => "Enable Dark Mode"
 ];

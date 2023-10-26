@@ -524,6 +524,7 @@ return [
     'Business_settings' => 'Paramètres professionnels',
     "Primary color Settings" => "Paramètres de couleur primaire",
     "Theme Customizer" => "Personnalisateur de thème",
-    "Users" => "Users"
-
+    "Users" => "Users",
+    "Theme Mode" => "Theme Mode",
+    "Enable Dark Mode" => "Enable Dark Mode"
 ];

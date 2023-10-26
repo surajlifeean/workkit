@@ -25,7 +25,7 @@
 
 
                 <a :disabled="SubmitProcessing" id="generate_backup" @click="generate_backup"
-                    class="btn btn-primary btn-md m-1"><i class="i-Add text-white mr-2"></i>
+                    class="btn btn-{{$setting->theme_color}} btn-md m-1"><i class="i-Add text-white mr-2"></i>
                     {{ __('translate.Generate_backup') }}</a>
                 <div v-once class="typo__p" v-if="SubmitProcessing">
                     <div class="spinner spinner-primary mt-3"></div>
