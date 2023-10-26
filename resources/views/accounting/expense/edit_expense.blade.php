@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('main-content')
-
+<?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
 
 <div class="breadcrumb">
     <h1>{{ __('translate.Edit_Expense') }}</h1>
@@ -115,7 +115,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-lg-6">
-                            <button type="submit" class="btn btn-primary" :disabled="SubmitProcessing">
+                            <button type="submit" class="btn btn-{{$setting->theme_color}}" :disabled="SubmitProcessing">
                                 {{ __('translate.Submit') }}
                             </button>
                             <div v-once class="typo__p" v-if="SubmitProcessing">

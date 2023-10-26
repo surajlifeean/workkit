@@ -11,7 +11,7 @@ class SubscriptionController extends Controller
       // $url = env('SUPERADMIN_URL') .'/api/subscription-plans';
 
       $url = config('app.superadmin_url') . '/api/subscription-plans';
-
+      //  dd($url);
       $response = Http::get($url);
       // dd($response);
       $data = $response->json();

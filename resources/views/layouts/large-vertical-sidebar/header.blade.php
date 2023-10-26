@@ -1,12 +1,41 @@
 @php
     $setting = App\Models\Setting::where('id', 1)->first();
 @endphp
+<style>
+    :root{
+        --blue: #003473;
+        --indigo: #3F51B5;
+        --purple: #663399;
+        --pink: #CB3066;
+        --red: #f44336;
+        --orange: #e97d23;
+        --yellow: #ffc107;
+        --green: #4caf50;
+        --teal: #20c997;
+        --cyan: #9c27b0;
+        --white: #fff;
+        --gray: #70657b;
+        --gray-dark: #52495a;
+        --primary: #663399;
+        --secondary: #52495a;
+        --success: #4caf50;
+        --info: #003473;
+        --warning: #ffc107;
+        --danger: #f44336;
+        --light: #bbb;
+        --dark: #47404f;
+    }
+    .child_links span:hover, .child_links i:hover{
+       color: var(--{{ $setting->theme_color }});
+    }
+    
+</style>
 <div class="d-flex position-fixed flex-column header-body" style="width: 100%;">
 
     <div class="main-header">
 
         <div class="logo">
-            <img src="{{ asset('assets/images/' . $setting->logo ) }}" alt="">
+            <img src="{{ asset('assets/images/' . ($setting->is_dark_mode == 0 ? $setting->logo : $setting->dark_logo)) }}" alt="">
         </div>
 
         <div class="margin_auto"></div>
@@ -37,7 +66,7 @@
                 </div>
             </div>
             <!-- sun -->
-            <svg id="sun" class="sun cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun light-mode">
+            <svg id="sun" class="sun cursor-pointer " xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun light-mode">
                 <circle cx="12" cy="12" r="5"></circle>
                 <line x1="12" y1="1" x2="12" y2="3"></line>
                 <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -49,7 +78,7 @@
                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
             </svg>
             <!-- moon -->
-            <svg id="moon" class="moon cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon dark-mode">
+            <svg id="moon" class="moon cursor-pointer " xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon dark-mode">
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
             </svg>
             
@@ -122,5 +151,18 @@
         <div class="mr-auto"></div>
     </div>
 </div>
+<script>
+    let isDark = {{  $setting->is_dark_mode }};
+    if (isDark == 1) {
+        document.body.classList.add('dark-theme');
+    }
 
+    document.getElementById('moon').addEventListener('click', function() {
+        document.body.classList.toggle('dark-theme');
+    });
+    
+    document.getElementById('sun').addEventListener('click', function() {
+        document.body.classList.toggle('dark-theme');
+    });
+</script>
 <!-- header top menu end -->

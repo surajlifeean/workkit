@@ -35,7 +35,7 @@
                                 <input type="hidden" value="" id="in_out" name="in_out_value">
                                 @if(!$employee_attendance || $employee_attendance->clock_in_out == 0)
                                 <button type="submit"
-                                    class="btn btn-primary btn-rounded btn-md m-1 text-right float-right"><i
+                                    class="btn btn-{{$setting->theme_color}} btn-rounded btn-md m-1 text-right float-right"><i
                                         class="i-Arrow-UpinCircle text-white mr-2"></i>
                                     {{ __('translate.Punch_In') }}</button>
                                 @else

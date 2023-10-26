@@ -2407,7 +2407,7 @@ pre code {
 
 .link_btn div i:first-child{
   font-size: 1.4rem;
-  color: #663399;
+  /* color: #663399; */
   /* margin-left: -25px; */
   margin-right: 10px;
   font-weight: 600;
@@ -2442,9 +2442,9 @@ pre code {
   text-align: left;
   cursor: pointer;
 }
-.child_links span:hover, .child_links i:hover{
+/* .child_links span:hover, .child_links i:hover{
  color: #663399;
-}
+} */
 
 .child_links a span{
     font-size: 14px;
@@ -3129,7 +3129,11 @@ fieldset:disabled a.btn {
   background-color: #9c27b0;
   border-color: #9c27b0;
 }
-
+.btn-gray{
+  background-color: #70657b;
+  color: #fff;
+  background-color: #70657be3;
+}
 
 /* Blue Button */
 .btn-blue:hover,
@@ -12677,9 +12681,32 @@ button.bg-gray-900:focus {
 
 .text-primary {
   /* color: #663399 !important; */
-  color: #8b5cf6!important;
+  color: #663399;
+}
+.text-indigo{
+  color: #3F51B5;
 }
 
+.text-pink{
+  color: #CB3066;
+}
+
+.text-orange{
+  color: #e97d23;
+}
+
+.text-teal{
+  color: #20c997;
+}
+.text-cyan{
+  color: #9c27b0;
+}
+.text-gray{
+  color: #70657b;
+}
+/* .text-dark{
+  color: ;
+} */
 a.text-primary:hover,
 a.text-primary:focus {
   color: #402060 !important;
@@ -12695,7 +12722,7 @@ a.text-secondary:focus {
 }
 
 .text-success {
-  color: #4caf50 !important;
+  color: #4caf50;
 }
 
 a.text-success:hover,
@@ -12704,7 +12731,7 @@ a.text-success:focus {
 }
 
 .text-info {
-  color: #003473 !important;
+  color: #003473 ;
 }
 
 a.text-info:hover,
@@ -12713,7 +12740,7 @@ a.text-info:focus {
 }
 
 .text-warning {
-  color: #ffc107 !important;
+  color: #ffc107 ;
 }
 
 a.text-warning:hover,
@@ -12722,7 +12749,7 @@ a.text-warning:focus {
 }
 
 .text-danger {
-  color: #f44336 !important;
+  color: #f44336 ;
 }
 
 a.text-danger:hover,
@@ -12731,7 +12758,7 @@ a.text-danger:focus {
 }
 
 .text-light {
-  color: #bbb !important;
+  color: #bbb ;
 }
 
 a.text-light:hover,
@@ -12740,7 +12767,7 @@ a.text-light:focus {
 }
 
 .text-dark {
-  color: #47404f !important;
+  color: #47404f ;
 }
 
 a.text-dark:hover,

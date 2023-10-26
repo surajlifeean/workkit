@@ -1,3 +1,4 @@
+<?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
 @extends('layouts.master')
 @section('main-content')
 
@@ -116,7 +117,7 @@
                         <div class="row mt-3">
 
                             <div class="col-md-6">
-                                <button type="submit" class="btn btn-primary" :disabled="SubmitProcessing">
+                                <button type="submit" class="btn btn-{{$setting->theme_color}}" :disabled="SubmitProcessing">
                                     {{ __('translate.Submit') }}
                                 </button>
                                 <div v-once class="typo__p" v-if="SubmitProcessing">
@@ -220,7 +221,7 @@
                         <div class="row mt-3">
 
                             <div class="col-md-6">
-                                <button type="submit" class="btn btn-primary"
+                                <button type="submit" class="btn btn-{{$setting->theme_color}}"
                                     :disabled="Submit_Processing_Email_Setting">
                                     {{ __('translate.Submit') }}
                                 </button>
@@ -248,7 +249,7 @@
                     <form @submit.prevent="Clear_Cache()">
                         <div class="row">
 
-                            <button type="submit" class="btn btn-primary" :disabled="Submit_Processing_Clear_Cache">
+                            <button type="submit" class="btn btn-{{$setting->theme_color}}" :disabled="Submit_Processing_Clear_Cache">
                                 {{ __('translate.Clear_Cache') }}
                             </button>
                             <div v-once class="typo__p" v-if="Submit_Processing_Clear_Cache">

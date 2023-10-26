@@ -20,7 +20,7 @@
     <div class="col-md-12">
         <div class="card text-left">
             <div class="card-header text-right bg-transparent">
-                <a class="btn btn-primary btn-md m-1" @click="New_Project"><i class="i-Add text-white mr-2"></i>
+                <a class="btn btn-{{$setting->theme_color}} btn-md m-1" @click="New_Project"><i class="i-Add text-white mr-2"></i>
                     {{ __('translate.Create') }}</a>
             </div>
             <div class="card-body">
@@ -186,7 +186,7 @@
 
                             <div class="row mt-3">
                                 <div class="col-lg-6">
-                                    <button type="submit" class="btn btn-primary" :disabled="SubmitProcessing">
+                                    <button type="submit" class="btn btn-{{$setting->theme_color}}" :disabled="SubmitProcessing">
                                         {{ __('translate.Submit') }}
                                     </button>
                                     <div v-once class="typo__p" v-if="SubmitProcessing">

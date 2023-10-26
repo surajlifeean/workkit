@@ -73,7 +73,7 @@
         <div class="card text-left">
             <div class="card-header text-right bg-transparent">
                 @can('project_add')
-                <a class="btn btn-primary btn-md m-1" href="{{route('projects.create')}}"><i
+                <a class="btn btn-{{$setting->theme_color}} btn-md m-1" href="{{route('projects.create')}}"><i
                         class="i-Add text-white mr-2"></i> {{ __('translate.Create') }}</a>
                 @endcan
                 @can('project_delete')
@@ -196,7 +196,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
@@ -225,7 +225,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {

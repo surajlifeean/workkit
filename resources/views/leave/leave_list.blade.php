@@ -23,7 +23,7 @@
         <div class="card text-left">
             <div class="card-header text-right bg-transparent">
                 @can('leave_add')
-                <a class="btn btn-primary btn-md m-1" @click="New_Leave"><i class="i-Add text-white mr-2"></i>
+                <a class="btn btn-{{$setting->theme_color}} btn-md m-1" @click="New_Leave"><i class="i-Add text-white mr-2"></i>
                     {{ __('translate.Create') }}
                 </a>
                 @endcan
@@ -244,7 +244,7 @@
                             <div class="row mt-3">
 
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary" :disabled="SubmitProcessing">
+                                    <button type="submit" class="btn btn-{{$setting->theme_color}}" :disabled="SubmitProcessing">
                                         {{ __('translate.Submit') }}
                                     </button>
                                     <div v-once class="typo__p" v-if="SubmitProcessing">
@@ -294,7 +294,7 @@
                                                                 class="form-control" name="message" id="message"
                                                                 placeholder="{{ __('translate.Send_Message') }}"></textarea>
 
-                                                                <button type="submit" class="btn btn-primary text-white ml-2"
+                                                                <button type="submit" class="btn btn-{{$setting->theme_color}} text-white ml-2"
                                                                     :disabled="Submit_Processing_message">
                                                                     <i class="i-Pen"></i>
                                                                 </button>
@@ -308,7 +308,7 @@
                                                     {{-- <div class="row mt-3">
 
                                                         <div class="col-md-6">
-                                                            <button type="submit" class="btn btn-primary"
+                                                            <button type="submit" class="btn btn-{{$setting->theme_color}}"
                                                                 :disabled="Submit_Processing_message">
                                                                 {{ __('translate.Submit') }}
                                                             </button>
@@ -732,7 +732,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
@@ -761,7 +761,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {

@@ -24,7 +24,7 @@
         <div class="card text-left">
             <div class="card-header text-right bg-transparent">
                 @can('attendance_add')
-                <a class="btn btn-primary btn-md m-1" @click="New_Attendance"><i
+                <a class="btn btn-{{$setting->theme_color}} btn-md m-1" @click="New_Attendance"><i
                         class="i-Add text-white mr-2"></i>{{ __('translate.Create') }}</a>
                 @endcan
                 @can('attendance_delete')
@@ -177,7 +177,7 @@
                             <div class="row mt-3">
 
                                 <div class="col-md-6">
-                                    <button type="submit" class="btn btn-primary" :disabled="SubmitProcessing">
+                                    <button type="submit" class="btn btn-{{$setting->theme_color}}" :disabled="SubmitProcessing">
                                         {{ __('translate.Submit') }}
                                     </button>
                                     <div v-once class="typo__p" v-if="SubmitProcessing">
@@ -385,7 +385,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {
@@ -413,7 +413,7 @@
                     cancelButtonColor: '#FF586B',
                     confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
                     cancelButtonText: '{{ __('translate.No_cancel') }}',
-                    confirmButtonClass: 'btn btn-primary mr-5',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
                     cancelButtonClass: 'btn btn-danger',
                     buttonsStyling: false
                 }).then(function () {

@@ -555,5 +555,7 @@ return [
     'Business_settings' => 'Business Settings',
     "Primary color Settings" => "Primary color Settings",
     "Theme Customizer" => "Theme Customizer",
-    "Users" => "Users"
+    "Users" => "Users",
+    "Theme Mode" => "Theme Mode",
+    "Enable Dark Mode" => "Enable Dark Mode"
 ];
