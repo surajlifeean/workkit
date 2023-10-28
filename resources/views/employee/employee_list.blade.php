@@ -16,9 +16,37 @@
 </div>
 
 <div class="separator-breadcrumb border-top"></div>
-
+<div class="col-md-12 mb-3">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+        <select name="view_style" class="form-control" id="view_style" onchange="changeView(event)">
+           <option value="table">Table View</option>
+           <option value="icons_view">Icons View</option>
+        </select>
+    </div>
+    
+</div>
 <div class="row" id="section_Employee_list">
-    <div class="col-md-12">
+    
+    <div class="col-md-12 mb-3" id="icon_view">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                <input type="text" id="searchInput" placeholder="Search by name" class="form-control">
+            </div>
+        </div>
+        <div class="row flex-wrap mt-3">
+                @foreach($employees as $employee)
+                    <div data-employee="{{ json_encode($employee) }}" data-name="{{ $employee->firstname . ' ' . $employee->lastname }}" class="employee-modal-trigger cursor-pointer mx-3 d-flex align-items-center justify-content-center flex-column" style="width: fit-content">
+                        @if ($employee->user->avatar)
+                            <img style="height: 80px; width: 100px;" src="{{ asset('assets/images/avatar/'. $employee->user->avatar) }}" alt="user avatar">
+                        @else
+                            No avatar
+                        @endif
+                        <p class="mt-1">{{$employee->firstname}} {{$employee->lastname}}</p>
+                    </div>
+                @endforeach              
+        </div>
+    </div>
+    <div class="col-md-12" id="table_view">
         <div class="card text-left">
             <div class="card-header text-right bg-transparent">
                 @can('employee_add')
@@ -38,14 +66,18 @@
                             <tr>
                                 <th></th>
                                 <th>#</th>
+                                <th>{{ __('translate.Avatar')}}</th>
                                 <th>{{ __('translate.Firstname') }}</th>
+                                
                                 <th>{{ __('translate.Lastname') }}</th>
                                 <th>{{ __('translate.Phone') }}</th>
                                 <th>{{ __('translate.Company') }}</th>
                                 <th>{{ __('translate.Department') }}</th>
                                 <th>{{ __('translate.Designation') }}</th>
                                 <th>{{ __('translate.Office_Shift') }}</th>
+                                @if( auth()->check() && auth()->user()->can('employee_details') || auth()->user()->can('employee_edit') || auth()->user()->can('employee_delete'))
                                 <th>{{ __('translate.Action') }}</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -53,6 +85,15 @@
                             <tr>
                                 <td></td>
                                 <td @click="selected_row( {{ $employee->id}})"></td>
+                                @if ($employee->user->avatar)
+                                <td>
+                                    <a href="{{ asset('assets/images/avatar/'. $employee->user->avatar) }}" target="_blank" onclick="openImageWindow(event)">
+                                        <img style="height: 40px; width: 40px; border-radius: 100%;" src="{{ asset('assets/images/avatar/'. $employee->user->avatar) }}" alt="user avatar">
+                                    </a>
+                                </td>
+                                @else
+                                   No avatar
+                                @endif
                                 <td>{{$employee->firstname}}</td>
                                 <td>{{$employee->lastname}}</td>
                                 <td>{{$employee->phone}}</td>
@@ -93,6 +134,24 @@
         </div>
     </div>
 </div>
+{{-- model --}}
+<div class="modal" id="employeeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Employee Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="employeeDetails" class="d-flex flex-column align-items-center">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
@@ -125,7 +184,7 @@
 
             //--------------------------------- Remove Employee ---------------------------\\
             Remove_Employee(id) {
-
+             console.log(id);
                 swal({
                     title: '{{ __('translate.Are_you_sure') }}',
                     text: '{{ __('translate.You_wont_be_able_to_revert_this') }}',
@@ -184,13 +243,7 @@
                             });
                     });
             },
-
-
-
-
-
-
-           
+  
         },
         //-----------------------------Autoload function-------------------
         created() {
@@ -201,6 +254,7 @@
 </script>
 
 <script type="text/javascript">
+    $('#icon_view').hide();
     $(function () {
       "use strict";
 
@@ -249,5 +303,126 @@
         });
 
     });
+    var isEmployee = true;
+    @if( auth()->check() && auth()->user()->can('employee_details') || auth()->user()->can('employee_edit') || auth()->user()->can('employee_delete'))
+       isEmployee = false;
+    @endif
+
+    function openImageWindow(event) {
+        event.preventDefault();
+        window.open(event.currentTarget.href, '_blank', 'width=600,height=500');
+    }
+
+    $('.employee-modal-trigger').on('click', function(event) {
+        event.preventDefault();
+
+        var employeeData = JSON.parse($(this).attr('data-employee'));
+        displayEmployeeDetails(employeeData);
+    });
+
+    function displayEmployeeDetails(employee) {
+        var modalBody = $('#employeeDetails');
+        var modalTitle = $('#employeeModal .modal-title');
+
+        modalTitle.text(employee.firstname + ' ' + employee.lastname);
+
+        // Customize the display of employee details in the modal body
+        var baseUrl = "{{ url('/') }}";
+        var avatarUrl = employee.user.avatar ? baseUrl + '/assets/images/avatar/' + employee.user.avatar : '#';
+        
+        var modalContent = `
+            <a href="${avatarUrl}" target="_blank" onclick="openImageWindow(event)">
+                <img style="height: 200px; width: 200px; border-radius: 100%;" src="${avatarUrl}" alt="user avatar">
+            </a>
+            <p class="my-1 mt-2">{{ __('translate.Phone') }}: ${employee.phone}</p>
+            <p class="my-1">{{ __('translate.Company') }}: ${employee.company.name}</p>
+            <p class="my-1">{{ __('translate.Department') }}: ${employee.department.department}</p>
+            <p class="my-1">{{ __('translate.Designation') }}: ${employee.designation.designation}</p>
+            <p class="my-1">{{ __('translate.Office_Shift') }}: ${employee.office_shift.name}</p>
+            <div>
+                ${ isEmployee ? '' : `
+                    <a href="/employees/${employee.id}" class="ul-link-action text-info"
+                       data-toggle="tooltip" data-placement="top" title="Show">
+                      <i class="i-Eye"></i>
+                    </a>
+                    <a href="/employees/${employee.id}/edit" class="ul-link-action text-success"
+                        data-toggle="tooltip" data-placement="top" title="Edit">
+                        <i class="i-Edit"></i>
+                    </a>
+                    <a onclick="removeEmployee( ${employee.id} )"
+                        class="ul-link-action text-danger mr-1 cursor-pointer" data-toggle="tooltip"
+                        data-placement="top" title="Delete">
+                        <i class="i-Close-Window"></i>
+                    </a>
+                `}
+            </div>
+
+        `;
+
+
+
+        modalBody.html(modalContent);
+
+        $('#employeeModal').modal('show');
+    }
+
+    function removeEmployee(id) {
+        console.log(id);
+        swal({
+            title: 'Are you sure?',
+            text: 'You won\'t be able to revert this!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0CC27E',
+            cancelButtonColor: '#FF586B',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            confirmButtonClass: 'btn btn-success mr-5',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false
+        }).then(async function (result) {
+            try {
+                    await axios.delete("/employees/" + id);
+                    window.location.href = '/employees';
+                    toastr.success('Deleted successfully');
+                } catch (error) {
+                    toastr.error('There was something wrong.');
+                }
+        });
+    }
+
+    function changeView(e){
+       if (e.target.value == 'table') {
+         $('#icon_view').hide();
+         $('#table_view').show();
+       } else {
+         $('#icon_view').show();
+         $('#table_view').hide();
+       }
+    }
+
+    function filterEmployees() {
+     
+        var input, filter, employees, employee, name, i;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        employees = document.querySelectorAll('.employee-modal-trigger'); 
+    
+        employees.forEach(function(employee) {
+            var name = employee.getAttribute('data-name').toUpperCase();
+            console.log(input.value);
+            if (name.includes(filter)) {
+                // console.log('remove');
+                employee.classList.remove('d-none');
+            } else {
+                // console.log('hit');
+                employee.classList.add('d-none');
+            }
+        });
+    
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterEmployees);
+
 </script>
 @endsection

@@ -557,5 +557,10 @@ return [
     "Theme Customizer" => "Theme Customizer",
     "Users" => "Users",
     "Theme Mode" => "Theme Mode",
-    "Enable Dark Mode" => "Enable Dark Mode"
+    "Enable Dark Mode" => "Enable Dark Mode",
+    "Absent" => "Absent", 
+    "Work from home" => "Work from home",
+    "Expenses" => "Expenses",
+    "Team Attendance" => "Team Attendance",
+    "Personal Attendance" => "Personal Attendance"
 ];

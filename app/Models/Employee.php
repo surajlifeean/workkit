@@ -70,4 +70,8 @@ class Employee extends Model
         ->where('status' , 'approved');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
 }

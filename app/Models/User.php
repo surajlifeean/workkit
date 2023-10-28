@@ -48,4 +48,9 @@ class User extends Authenticatable
 	{
         return $this->hasone('Spatie\Permission\Models\Role','id',"role_users_id");
 	}
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class, 'id');
+    }
 }

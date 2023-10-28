@@ -422,14 +422,14 @@
                                 <a class="{{ Route::currentRouteName() == 'daily_attendance' ? 'open' : '' }}"
                                     href="{{ route('daily_attendance') }}">
                                     <i class="nav-icon text-{{$setting->theme_color}} i-Clock"></i>
-                                    <span class="item-name">{{ __('translate.Daily_Attendance') }}</span>
+                                    <span class="item-name">{{ __('translate.Team Attendance') }}</span>
                                 </a>
                             </li>
                             <li class="child_links">
                                 <a href="{{ route('attendances.index') }}"
                                     class="{{ Route::currentRouteName() == 'attendances.index' ? 'open' : '' }}">
                                     <i class="nav-icon text-{{$setting->theme_color}} i-Clock-4"></i>
-                                    <span class="item-name">{{ __('translate.Attendances') }}</span>
+                                    <span class="item-name">{{ __('translate.Personal Attendance') }}</span>
                                 </a>
                             </li>
                         @endcan

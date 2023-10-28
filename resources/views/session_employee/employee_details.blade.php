@@ -53,7 +53,7 @@
                 <div class="card-body">
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active show" id="nav-basic-tab" data-toggle="tab"
+                            {{-- <a class="nav-item nav-link active show" id="nav-basic-tab" data-toggle="tab"
                                 href="#nav-basic" role="tab" aria-controls="nav-home"
                                 aria-selected="true">{{ __('translate.Basic_Information') }}</a>
 
@@ -68,19 +68,19 @@
                                 href="#nav-experience" role="tab" aria-controls="nav-experience"
                                 aria-selected="false">{{ __('translate.Experience') }}</a>
                             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab"
-                                aria-controls="nav-bank" aria-selected="false">{{ __('translate.Bank_Account') }}</a>
-                            <a class="nav-item nav-link" id="nav-leave-tab" data-toggle="tab" href="#nav-leave"
+                                aria-controls="nav-bank" aria-selected="false">{{ __('translate.Bank_Account') }}</a> --}}
+                            <a class="nav-item nav-link active show" id="nav-leave-tab" data-toggle="tab" href="#nav-leave"
                                 role="tab" aria-controls="nav-leave"
                                 aria-selected="false">{{ __('translate.Leave') }}</a>
-                            <a class="nav-item nav-link" id="nav-award-tab" data-toggle="tab" href="#nav-award"
+                            {{-- <a class="nav-item nav-link" id="nav-award-tab" data-toggle="tab" href="#nav-award"
                                 role="tab" aria-controls="nav-award"
-                                aria-selected="false">{{ __('translate.Award') }}</a>
+                                aria-selected="false">{{ __('translate.Award') }}</a> --}}
                             <a class="nav-item nav-link" id="nav-complaint-tab" data-toggle="tab" href="#nav-complaint"
                                 role="tab" aria-controls="nav-complaint"
                                 aria-selected="false">{{ __('translate.Complaint') }}</a>
                             <a class="nav-item nav-link" id="nav-travel-tab" data-toggle="tab" href="#nav-travel"
                                 role="tab" aria-controls="nav-travel"
-                                aria-selected="false">{{ __('translate.Travel') }}</a>
+                                aria-selected="false">{{ __('translate.Expenses') }}</a>
                             <a class="nav-item nav-link" id="nav-training-tab" data-toggle="tab" href="#nav-training"
                                 role="tab" aria-controls="nav-training"
                                 aria-selected="false">{{ __('translate.Training') }} </a>
@@ -94,7 +94,7 @@
                     </nav>
                     <div class="tab-content ul-tab__content p-3" id="nav-tabContent">
                         {{-- Basic Information --}}
-                        <div class="tab-pane fade active show" id="nav-basic" role="tabpanel"
+                        {{-- <div class="tab-pane fade active show" id="nav-basic" role="tabpanel"
                             aria-labelledby="nav-basic-tab">
 
                             <div class="row">
@@ -253,10 +253,10 @@
                                 </form>
                                 <!-- end::form -->
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- Document --}}
-                        <div class="tab-pane fade" id="nav-document" role="tabpanel" aria-labelledby="nav-document-tab">
+                        {{-- <div class="tab-pane fade" id="nav-document" role="tabpanel" aria-labelledby="nav-document-tab">
 
                             <div class="row" id="section_document_list">
                                 <div class="col-md-12">
@@ -392,10 +392,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- Social media --}}
-                        <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
+                        {{-- <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
 
                             <div class="row">
                                 <!--begin::form-->
@@ -459,10 +459,10 @@
                                 <!-- end::form -->
                             </div>
 
-                        </div>
+                        </div> --}}
 
                         {{-- Work Experience --}}
-                        <div class="tab-pane fade" id="nav-experience" role="tabpanel"
+                        {{--<div class="tab-pane fade" id="nav-experience" role="tabpanel"
                             aria-labelledby="nav-experience-tab">
 
                             <div class="row" id="section_Experience_list">
@@ -667,10 +667,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- Bank Account --}}
-                        <div class="tab-pane fade" id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
+                        {{-- <div class="tab-pane fade" id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -815,10 +815,10 @@
                                 </div>
                             </div>
 
-                        </div>
+                        </div> --}}
 
                         {{-- Request Leave --}}
-                        <div class="tab-pane fade" id="nav-leave" role="tabpanel" aria-labelledby="nav-leave-tab">
+                        <div class="tab-pane fade active show" id="nav-leave" role="tabpanel" aria-labelledby="nav-leave-tab">
 
                             <div class="row">
 
@@ -826,7 +826,7 @@
                                     <div class="text-left">
                                         <div class="text-left bg-transparent">
                                             <a class="btn btn-{{$setting->theme_color}} btn-md m-2" @click="Request_Leave"><i
-                                                    class="i-Add text-white mr-2"></i>{{ __('translate.Request_Leave') }}</a>
+                                                    class="i-Add text-white mr-2"></i>{{ __('translate.Request_leave') }}</a>
                                         </div>
                                         <div class="table-responsive">
                                             <table id="ul-contact-list" class="display table data_datatable"
@@ -1061,7 +1061,7 @@
                         </div>
 
                         {{-- Award --}}
-                        <div class="tab-pane fade" id="nav-award" role="tabpanel" aria-labelledby="nav-award-tab">
+                        {{-- <div class="tab-pane fade" id="nav-award" role="tabpanel" aria-labelledby="nav-award-tab">
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -1092,7 +1092,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- Complaint --}}
                         <div class="tab-pane fade" id="nav-complaint" role="tabpanel"
