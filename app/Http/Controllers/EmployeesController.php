@@ -44,7 +44,7 @@ class EmployeesController extends Controller
         $user_auth = auth()->user();
         if ($user_auth->can('employee_view')) {
 
-            $employees = Employee::with('company:id,name', 'office_shift:id,name', 'department:id,department', 'designation:id,designation')
+            $employees = Employee::with('company:id,name', 'office_shift:id,name', 'department:id,department', 'designation:id,designation', 'user:id,avatar')
                 ->where('deleted_at', '=', null)
                 ->where('leaving_date', NULL)
                 ->get();

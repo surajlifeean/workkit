@@ -527,5 +527,11 @@ return [
     "Theme Customizer" => "أداة تخصيص الموضوع",
     "Users" => "Users",
     "Theme Mode" => "Theme Mode",
-    "Enable Dark Mode" => "Enable Dark Mode"
+    "Enable Dark Mode" => "Enable Dark Mode",
+    "Absent" => "غائب",
+    "Work from home" => "العمل من المنزل",
+    "Expenses" => "نفقات",
+    "Team Attendance" => "حضور الفريق",
+    "Personal Attendance" => "الحضور الشخصي"
+
 ];

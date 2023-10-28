@@ -8,7 +8,7 @@
 </div>
 <div class="breadcrumb">
      <div class="d-flex align-items-center w-100">
-     <img src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}" alt="employee avatar" class="h-100px w-100px mr-4" style="border-radius: 10.5rem; width: 100px;">
+     <img src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}" alt="employee avatar" class=" mr-4" style="border-radius: 10.5rem; width: 120px; height: 120px;">
        <h1 class="text-secondary">Hi, {{ Auth::user()->username }}</h1>
        {{-- @dump(auth()->user());  --}}
      </div>
@@ -99,9 +99,9 @@
               <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-12">
-                        <h4 class="h4">Today is not clock in</h4>
+                        <h4 class="h4">{{__('translate.Absent')}}</h4>
                         <div class="d-flex mx-1 py-3" style="overflow-x: scroll; display: flex;">
-                            @foreach($not_clock_in as $notpresent)
+                        @foreach($not_clock_in as $notpresent)
                             <div class="mr-4" style="border-radius: 100%; overflow: hidden; min-height: 49px; min-width: 49px; max-width: 50px; max-height: 50px;">
                                 <img src="{{ asset('assets/images/avatar/'. $notpresent['avatar'] ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $notpresent['username'] }}">
                             </div>

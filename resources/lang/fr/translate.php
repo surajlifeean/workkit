@@ -526,5 +526,11 @@ return [
     "Theme Customizer" => "Personnalisateur de thème",
     "Users" => "Users",
     "Theme Mode" => "Theme Mode",
-    "Enable Dark Mode" => "Enable Dark Mode"
+    "Enable Dark Mode" => "Enable Dark Mode",
+    "Absent" => "Absent",
+    "Work from home" => "Travail à domicile",
+    "Expenses" => "Expenses",
+    "Team Attendance" => "Présence de l'équipe",
+    "Personal Attendance" => "Présence personnelle"
+
 ];
