@@ -656,6 +656,22 @@ class PermissionRoleSeeder extends Seeder
 					'permission_id' => 70,
 					'role_id' => 4
 				],
+				[
+					'permission_id' => 51,
+					'role_id' => 2
+				],
+				[
+					'permission_id' => 50,
+					'role_id' => 2
+				],
+				[
+					'permission_id' => 51,
+					'role_id' => 4
+				],
+				[
+					'permission_id' => 50,
+					'role_id' => 4
+				],
 			)
 		);
 	}

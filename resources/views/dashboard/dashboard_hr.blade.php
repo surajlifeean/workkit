@@ -18,7 +18,15 @@
                 @if(!$punch_in)
                 <span class="float-left card-title m-0">{{ __('translate.No_Shift_Today') }}</span>
                 @else
-                <span class="clock_in float-left card-title m-0">{{$punch_in}} - {{$punch_out}}</span>
+                <span class="clock_in float-left card-title m-0">{{$punch_in}} - {{$punch_out}}
+                @isset($employee_attendance->clock_in_out)
+                    @if($employee_attendance->clock_in_out != 0)
+                        ({{ __('translate.Punch_In') }}: {{ date('h:i A', strtotime($employee_attendance->clock_in)) }})
+                    {{-- @else
+                     ({{ __('translate.Punch_Out') }}: {{ date('h:i A', strtotime($employee_attendance->clock_out)) }}) --}}
+                    @endif
+                @endisset
+                </span>
                 @endif
 
                 <form method="post" action="{{route('attendance_by_employee.post',$employee->id)}}"

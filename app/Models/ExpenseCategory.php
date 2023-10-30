@@ -14,4 +14,11 @@ class ExpenseCategory extends Model
     protected $fillable = [
         'title'
     ];
+
+    public function travel()
+    {
+        return $this->belongsTo(Travel::class, 'expense_category_id');
+    }
+
+
 }

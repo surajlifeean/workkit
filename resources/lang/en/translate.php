@@ -562,5 +562,6 @@ return [
     "Work from home" => "Work from home",
     "Expenses" => "Expenses",
     "Team Attendance" => "Team Attendance",
-    "Personal Attendance" => "Personal Attendance"
+    "Personal Attendance" => "Personal Attendance",
+    "Today Clock In" => "Today Clock In"
 ];

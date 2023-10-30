@@ -28,16 +28,7 @@
 <div class="row" id="section_attendance_list">
     <div class="col-md-12">
         <div class="card text-left">
-            {{-- <div class="card-header text-right bg-transparent">
-                @can('attendance_add')
-                <a class="btn btn-{{$setting->theme_color}} btn-md m-1" @click="New_Attendance"><i
-                        class="i-Add text-white mr-2"></i>{{ __('translate.Create') }}</a>
-                @endcan
-                @can('attendance_delete')
-                <a v-if="selectedIds.length > 0" class="btn btn-danger btn-md m-1" @click="delete_selected()"><i
-                        class="i-Close-Window text-white mr-2"></i> {{ __('translate.Delete') }}</a>
-                @endcan
-            </div> --}}
+           
             <div class="card-body">
                 <div class="table-responsive">
                     <div class="row mb-3">
@@ -214,6 +205,35 @@
 
     </div>
 </div>
+<!-- Bootstrap Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Set Work From Home</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="wfhType">Select Type:</label>
+                <select id="wfhType" class="form-control">
+                    <option value="fullDay">Full Day</option>
+                    <option value="halfDay">Half Day</option>
+                </select>
+
+                <label for="wfhTime">Select Time:</label>
+                <select id="wfhTime" class="form-control">
+                
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="modalOKBtn">OK</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
@@ -228,7 +248,7 @@
     var wfhDates = @json($work_from_home);
     var shifts = @json($officeShift);
     var otherEmployees = @json($otherEmployees);
-    
+    var currentShiftTime;
     function getCurrentWeekDates() {
         var currentDate = new Date();
         var dayOfWeek = currentDate.getDay(); 
@@ -276,7 +296,7 @@
         if (data[dayName + "_in"] && data[dayName + "_out"]) {
             const inTime = data[dayName + "_in"];
             const outTime = data[dayName + "_out"];
-            
+            currentShiftTime = inTime;
             return inTime + " - " + outTime;
         } else {
             return "No schedule available for " + dayName;
@@ -317,14 +337,70 @@
     }
 
     function Wfh(date, type){
-                axios.post('/work_from_home', {
+        if (type === 'From Office') {
+            console.log(currentShiftTime);
+            
+            const currentHour = parseInt(currentShiftTime.split(':')[0], 10);
+            const currentMinute = parseInt(currentShiftTime.split(':')[1], 10);
+            
+            const options = [];
+            
+            for (let i = 0; i < 5; i++) {
+                let hour = currentHour;
+                let minute = currentMinute + i * 60;
+            
+                if (minute >= 60) {
+                    hour += Math.floor(minute / 60);
+                    minute %= 60;
+                }
+            
+                const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
+                const formattedMinute = minute < 10 ? `0${minute}` : `${minute}`;
+            
+                const optionText = `${formattedHour}:${formattedMinute}`;
+                options.push(`<option value="${optionText}">${optionText}</option>`);
+            }
+            
+            $('#wfhTime').empty().append(options.join('\n'));
+
+
+            $('#myModal').modal('show');
+            
+            $('#modalOKBtn').on('click', function() {
+                const dayType = $('#wfhType').val();
+                const time = $('#wfhTime').val();
+                $('#myModal').modal('hide');
+            
+                fromHomeRequest(date, type, dayType, time)
+            });
+        } else {
+            fromHomeRequest(date, type, null, null);
+        }
+    }
+    
+    function fromHomeRequest(date, type, dayType, time){
+        axios.post('/work_from_home', {
                     work_from_home_date: date,
                     type: type,
-                })
+                    day_type: dayType,
+                    time: time
+                    })
                      .then(response => {
                        console.log(response.data);
                        toastr.success('{{ __('translate.Created_in_successfully') }}');
-                       let shiftTime = getWorkScheduleForDate(date, shifts);
+                       let shifts1 = [];
+                       if (dayType === 'halfDay') {
+                        window.location.reload();
+                        // const dateTime = new Date(date);
+                        // const dayOfWeek = dateTime.getDay();
+                        // const dayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+                        // const dayName = dayNames[dayOfWeek];
+                        // console.log(dayName)
+                        // shifts1[dayName + '_in'] = time;
+                        // let outTime = addHoursToTime(time, 4)
+                        // shifts1[dayName + '_out'] = outTime;
+                       }
+                       let shiftTime = getWorkScheduleForDate(date, dayType === 'fullDay'? shifts : shifts1);
 
                        if(type === 'From Office'){
                         $(`.${date}`).empty().append(`
@@ -347,7 +423,29 @@
                        toastr.error('{{ __('translate.There_was_something_wronge') }}');
                      });
     }
-     
+    function addHoursToTime(inputTime, hoursToAdd) {
+        var parts = inputTime.split(':');
+        var hours = parseInt(parts[0], 10);
+        var minutes = parseInt(parts[1], 10);
+    
+        var date = new Date();
+        date.setHours(hours);
+        date.setMinutes(minutes);
+    
+        // Add specified hours
+        date.setHours(date.getHours() + hoursToAdd);
+    
+        // Format the result
+        var newTime =
+            ('0' + date.getHours()).slice(-2) +
+            ':' +
+            ('0' + date.getMinutes()).slice(-2);
+    
+        return newTime;
+    }
+
+
+
     
     otherEmployees?.forEach(element => {
         console.log(element)

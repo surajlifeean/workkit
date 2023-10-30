@@ -29,7 +29,7 @@
     
     <div class="col-md-12 mb-3" id="icon_view">
         <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12 ml-auto">
                 <input type="text" id="searchInput" placeholder="Search by name" class="form-control">
             </div>
         </div>
@@ -410,12 +410,14 @@
     
         employees.forEach(function(employee) {
             var name = employee.getAttribute('data-name').toUpperCase();
-            console.log(input.value);
+            // console.log(name);
             if (name.includes(filter)) {
-                // console.log('remove');
+                console.log('yes');
+                employee.classList.add('d-flex');
                 employee.classList.remove('d-none');
             } else {
-                // console.log('hit');
+                console.log('no');
+                employee.classList.remove('d-flex');
                 employee.classList.add('d-none');
             }
         });

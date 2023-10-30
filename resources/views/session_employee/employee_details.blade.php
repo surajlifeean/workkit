@@ -1131,11 +1131,13 @@
                             </div>
                         </div>
 
-                        {{-- Travel --}}
+                        {{-- Travel / expences --}}
                         <div class="tab-pane fade" id="nav-travel" role="tabpanel" aria-labelledby="nav-travel-tab">
 
                             <div class="row">
                                 <div class="col-md-12">
+                                  <a class="btn btn-{{$setting->theme_color}} btn-md m-1" @click="New_Travel"><i class="i-Add text-white mr-2"></i>
+                                  {{ __('translate.Create') }}</a>
                                     <div class="text-left">
                                         <div class="table-responsive">
                                             <table id="ul-contact-list" class="display table data_datatable"
@@ -1148,21 +1150,245 @@
                                                         <th>{{ __('translate.Purpose_of_visit') }}</th>
                                                         <th>{{ __('translate.Expected_Budget') }}</th>
                                                         <th>{{ __('translate.Actual_Budget') }}</th>
+                                                        <th>{{ __('translate.Attachment') }}</th>
+                                                        <th>{{ __('translate.Action') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach($travels as $travel)
                                                     <tr>
-                                                        <td>{{$travel->arrangement_type->title}}</td>
+                                                        <td>{{ ucwords($travel->expenseCategory->title) }}</td>
                                                         <td>{{$travel->start_date}}</td>
                                                         <td>{{$travel->end_date}}</td>
                                                         <td>{{$travel->visit_purpose}}</td>
                                                         <td>{{$travel->expected_budget}}</td>
                                                         <td>{{$travel->actual_budget}}</td>
+                                                        <td>
+                                                        <a href="{{ asset('/assets/images/expenses/' . $travel->attachment) }}" target="_blank" onclick="openImageWindow(event)">
+                                                            <img src="{{ asset('/assets/images/expenses/' . $travel->attachment) }}" style="height: 2rem; width: 2rem;" alt="">
+                                                        </a>                                                        
+                                                        </td>
+                                                        <td>
+                                                      
+                                                         <a @click="Edit_Travel( {{ $travel}})" class="ul-link-action text-success"
+                                                             data-toggle="tooltip" data-placement="top" title="Edit">
+                                                             <i class="i-Edit"></i>
+                                                         </a>
+                                                       
+                                                         <a @click="Remove_Travel( {{ $travel->id}})" class="ul-link-action text-danger mr-1"
+                                                             data-toggle="tooltip" data-placement="top" title="Delete">
+                                                             <i class="i-Close-Window"></i>
+                                                         </a>
+                                                   
+                                                        </td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal fade" id="Travel_Modal" tabindex="-1" role="dialog" aria-labelledby="Travel_Modal"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 v-if="edit_mode_expence" class="modal-title">{{ __('translate.Edit') }}</h5>
+                                                <h5 v-else class="modal-title">{{ __('translate.Create') }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                        
+                                                <form @submit.prevent="edit_mode_expence?Update_Travel():Create_Travel()">
+                                                    <div class="row">
+                        
+                                                        <div class="col-md-6">
+                                                            <label class="ul-form__label">{{ __('translate.Expense_Category') }} <span
+                                                                    class="field_required">*</span></label>
+                                                            <select name="expense_type" id="expense_category_id" class="form-control">
+                                                                @foreach($exp_types as $exp)
+                                                                   <option value="{{ $exp->id }}">{{ $exp->title }}</option>
+                                                                @endforeach
+                                                            </select>
+                         
+                                                        </div>
+                                                        
+                        
+                                                        <div class="col-md-6">
+                                                            <label for="start_date" class="ul-form__label">{{ __('translate.Start_Date') }}
+                                                                <span class="field_required">*</span></label>
+                        
+                                                            <vuejs-datepicker id="start_date" name="start_date"
+                                                                placeholder="{{ __('translate.Enter_Start_date') }}" v-model="travel.start_date"
+                                                                input-class="form-control" format="yyyy-MM-dd"
+                                                                @closed="travel.start_date=formatDate(travel.start_date)">
+                                                            </vuejs-datepicker>
+                        
+                                                            <span class="error" v-if="errors && errors.start_date">
+                                                                @{{ errors.start_date[0] }}
+                                                            </span>
+                                                        </div>
+                        
+                                                        <div class="col-md-6">
+                                                            <label for="end_date" class="ul-form__label">{{ __('translate.Finish_Date') }} <span
+                                                                    class="field_required">*</span></label>
+                        
+                                                            <vuejs-datepicker id="end_date" name="end_date"
+                                                                placeholder="{{ __('translate.Enter_Finish_date') }}" v-model="travel.end_date"
+                                                                input-class="form-control" format="yyyy-MM-dd"
+                                                                @closed="travel.end_date=formatDate(travel.end_date)">
+                                                            </vuejs-datepicker>
+                        
+                                                            <span class="error" v-if="errors && errors.end_date">
+                                                                @{{ errors.end_date[0] }}
+                                                            </span>
+                                                        </div>
+                        
+                                                        <div class="col-md-6">
+                                                            <label for="visit_purpose"
+                                                                class="ul-form__label">{{ __('translate.Purpose_of_visit') }} <span
+                                                                    class="field_required">*</span></label>
+                                                            <input type="text" v-model="travel.visit_purpose" class="form-control"
+                                                                name="visit_purpose" placeholder="{{ __('translate.Enter_Purpose_of_visit') }}"
+                                                                id="visit_purpose">
+                                                            <span class="error" v-if="errors && errors.visit_purpose">
+                                                                @{{ errors.visit_purpose[0] }}
+                                                            </span>
+                                                        </div>
+                        
+                                                        <div class="col-md-6">
+                                                            <label for="visit_place" class="ul-form__label">{{ __('translate.Place_of_visit') }}
+                                                                <span class="field_required">*</span></label>
+                                                            <input type="text" v-model="travel.visit_place" class="form-control"
+                                                                name="visit_place" placeholder="{{ __('translate.Enter_Place_of_visit') }}"
+                                                                id="visit_place">
+                                                            <span class="error" v-if="errors && errors.visit_place">
+                                                                @{{ errors.visit_place[0] }}
+                                                            </span>
+                                                        </div>
+                        
+                                                        <div class="col-md-6">
+                                                            <label class="ul-form__label">{{ __('translate.Modes_of_Travel') }} <span
+                                                                    class="field_required">*</span></label>
+                                                            <v-select @input="Selected_travel_mode"
+                                                                placeholder="{{ __('translate.Choose_Modes_of_Travel') }}"
+                                                                v-model="travel.travel_mode" :reduce="(option) => option.value" :options="
+                                                                    [
+                                                                        {label: 'Bus', value: 'bus'},
+                                                                        {label: 'Train', value: 'train'},
+                                                                        {label: 'Car', value: 'car'},
+                                                                        {label: 'Taxi', value: 'taxi'},
+                                                                        {label: 'Air', value: 'air'},
+                                                                        {label: 'Other', value: 'other'},
+                                                                    ]">
+                                                            </v-select>
+                        
+                                                            <span class="error" v-if="errors && errors.travel_mode">
+                                                                @{{ errors.travel_mode[0] }}
+                                                            </span>
+                                                        </div>
+                        
+                                                        {{-- <div class="col-md-6">
+                                                            <label class="ul-form__label">{{ __('translate.Arrangement_Type') }} <span
+                                                                    class="field_required">*</span></label>
+                                                            <v-select @input="Selected_Arrangement_Type"
+                                                                placeholder="{{ __('translate.Choose_Arrangement_Type') }}"
+                                                                v-model="travel.arrangement_type_id" :reduce="label => label.value"
+                                                                :options="arrangement_types.map(arrangement_types => ({label: arrangement_types.title, value: arrangement_types.id}))">
+                        
+                                                            </v-select>
+                        
+                                                            <span class="error" v-if="errors && errors.arrangement_type_id">
+                                                                @{{ errors.arrangement_type_id[0] }}
+                                                            </span>
+                                                        </div> --}}
+                        
+                        
+                        
+                        
+                                                        <div class="col-md-6">
+                                                            <label for="expected_budget"
+                                                                class="ul-form__label">{{ __('translate.Expected_Budget') }} <span
+                                                                    class="field_required">*</span></label>
+                                                            <input type="text" v-model="travel.expected_budget" class="form-control"
+                                                                name="expected_budget" placeholder="{{ __('translate.Enter_Expected_Budget') }}"
+                                                                id="expected_budget">
+                                                            <span class="error" v-if="errors && errors.expected_budget">
+                                                                @{{ errors.expected_budget[0] }}
+                                                            </span>
+                                                        </div>
+                        
+                                                        <div class="col-md-6">
+                                                            <label for="actual_budget"
+                                                                class="ul-form__label">{{ __('translate.Actual_Budget') }} <span
+                                                                    class="field_required">*</span></label>
+                                                            <input type="text" v-model="travel.actual_budget" class="form-control"
+                                                                name="actual_budget" placeholder="{{ __('translate.Enter_Actual_Budget') }}"
+                                                                id="actual_budget">
+                                                            <span class="error" v-if="errors && errors.actual_budget">
+                                                                @{{ errors.actual_budget[0] }}
+                                                            </span>
+                                                        </div>
+                        
+                                                      {{--  @if(auth()->user()->role_users_id == 4 || auth()->user()->role_users_id == 1)
+                                                        <div class="col-md-6">
+                                                            <label class="ul-form__label">{{ __('translate.Status') }} <span
+                                                                    class="field_required">*</span></label>
+                                                            <v-select @input="Selected_Status" placeholder="{{ __('translate.Choose_status') }}"
+                                                                v-model="travel.status" :reduce="(option) => option.value" :options="
+                                                                    [
+                                                                        {label: 'Approved', value: 'approved'},
+                                                                        {label: 'Pending', value: 'pending'},
+                                                                        {label: 'Rejected', value: 'rejected'},
+                                                                    ]">
+                                                            </v-select>
+                        
+                                                            <span class="error" v-if="errors && errors.status">
+                                                                @{{ errors.status[0] }}
+                                                            </span>
+                                                        </div>
+                                                        @endif --}}
+                                                        <div class="col-md-6">
+                                                            <label for="attachment" class="ul-form__label">{{ __('translate.Attachment') }}</label>
+                                                            <input name="attachment" @change="changeAttachement" type="file" class="form-control"
+                                                                id="attachment">
+                                                            <span class="error" v-if="errors && errors.attachment">
+                                                                @{{ errors.attachment[0] }}
+                                                            </span>
+                                                        </div>
+
+                                                     
+                                                        <div class="col-md-12">
+                                                            <label for="description"
+                                                                class="ul-form__label">{{ __('translate.Please_provide_any_details') }}</label>
+                                                            <textarea type="text" v-model="travel.description" class="form-control"
+                                                                name="description" id="description"
+                                                                placeholder="{{ __('translate.Please_provide_any_details') }}"></textarea>
+                                                        </div>
+                        
+                                                    </div>
+                        
+                        
+                                                    <div class="row mt-3">
+                        
+                                                        <div class="col-md-6">
+                                                            <button type="submit" class="btn btn-{{$setting->theme_color}}" :disabled="SubmitProcessing">
+                                                                {{ __('translate.Submit') }}
+                                                            </button>
+                                                            <div v-once class="typo__p" v-if="SubmitProcessing_expences">
+                                                                <div class="spinner spinner-primary mt-3"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                        
+                        
+                                                </form>
+                        
+                                            </div>
+                        
                                         </div>
                                     </div>
                                 </div>
@@ -1345,6 +1571,7 @@
 <script src="{{asset('assets/js/vendor/echarts.min.js')}}"></script>
 <script src="{{asset('assets/js/echart.options.min.js')}}"></script>
 <script>
+
     Vue.component('v-select', VueSelect.VueSelect)
     var app = new Vue({
     el: '#section_details_employee',
@@ -1377,6 +1604,9 @@
         errors_leave:[],
         leave_types :[],
 
+        SubmitProcessing_expences:false,
+        edit_mode_expence:false,
+
         Submit_Processing_message:false,
         messages:[],
         
@@ -1394,6 +1624,7 @@
         employee: @json($employee),
         user_id: @json(auth()->user()),
         leave_id: null,
+        companies: [],
 
         experience: {
                 title: "",
@@ -1431,6 +1662,23 @@
             message: '',
             title: 'Leave Request Follow Up',
         },
+
+            travel: {
+                company_id: "",
+                employee_id: "",
+                arrangement_type_id:"",
+                expected_budget:"",
+                actual_budget:"",
+                start_date:"",
+                end_date:"",
+                visit_purpose:"",
+                visit_place:"",
+                travel_mode:"",
+                description:"",
+                status:"",
+                attachment: "",
+            }, 
+
     },
     mounted() {
         window.onload = () => {
@@ -1454,6 +1702,216 @@
         };
     },
     methods: {
+        //----------------------------------- travel expence--------------------------\\
+            changeAttachement (e){
+                let file = e.target.files[0];
+                this.travel.attachment = file;
+            },
+        //------------------------------ Show Modal (Create Travel) -------------------------------\\
+            New_Travel() {
+                this.reset_Form();
+                this.edit_mode_expence = false;
+                this.Get_Data_Create();
+                $('#Travel_Modal').modal('show');
+            },
+
+            //------------------------------ Show Modal (Update Travel) -------------------------------\\
+            Edit_Travel(travel) {
+                this.edit_mode_expence = true;
+                this.reset_Form();
+                this.Get_Data_Edit(travel.id);
+                this.Get_employees_by_company(travel.company_id);
+                this.travel = travel;
+                $('#Travel_Modal').modal('show');
+            },
+            
+
+            Selected_travel_mode(value) {
+                if (value === null) {
+                    this.travel.employee_id = "";
+                }
+            }, 
+
+            Selected_Company(value) {
+                if (value === null) {
+                    this.travel.company_id = "";
+                }
+                this.employees = [];
+                this.travel.employee_id = "";
+                this.Get_employees_by_company(value);
+            },
+
+            Selected_Employee(value) {
+                if (value === null) {
+                    this.travel.travel_mode = "";
+                }
+            },
+
+            Selected_Arrangement_Type(value) {
+                if (value === null) {
+                    this.travel.arrangement_type_id = "";
+                }
+            },
+            //----------------------------- Reset Form ---------------------------\\
+            reset_Form() {
+                this.travel = {
+                    id: "",
+                    employee_id: "",
+                    arrangement_type_id:"",
+                    expected_budget:"",
+                    actual_budget:"",
+                    start_date:"",
+                    end_date:"",
+                    visit_purpose:"",
+                    visit_place:"",
+                    travel_mode:"",
+                    description:"",
+                    status:"",
+                };
+                this.errors = {};
+            },
+
+             //---------------------- Get_employees_by_company ------------------------------\\
+            
+             Get_employees_by_company(value) {
+                axios
+                .get("/Get_employees_by_company?id=" + value)
+                .then(({ data }) => (this.employees = data));
+            },
+
+
+             //---------------------- Get_Data_Create  ------------------------------\\
+             Get_Data_Create() {
+                axios
+                    .get("/hr/travel/create")
+                    .then(response => {
+                        this.companies   = response.data.companies;
+                        // this.arrangement_types   = response.data.arrangement_types;
+                    })
+                    .catch(error => {
+                       
+                    });
+            },
+
+              //---------------------- Get_Data_Edit  ------------------------------\\
+              Get_Data_Edit(id) {
+                axios
+                    .get("/hr/travel/"+id+"/edit")
+                    .then(response => {
+                        this.companies   = response.data.companies;
+                        // this.arrangement_types   = response.data.arrangement_types;
+                    })
+                    .catch(error => {
+                       
+                    });
+            },
+
+
+              //------------------------ Create Travel ---------------------------\\
+              Create_Travel() {
+                var self = this;
+                self.SubmitProcessing_expences = true;
+                let exp_data = new FormData();
+
+                    exp_data.append("company_id", self.employee.company_id);
+                    exp_data.append("employee_id", self.employee.id);
+                    exp_data.append("arrangement_type_id", self.travel.arrangement_type_id);
+                    exp_data.append("description", self.travel.description);
+                    exp_data.append("expected_budget", self.travel.expected_budget);
+                    exp_data.append("actual_budget", self.travel.actual_budget);
+                    exp_data.append("start_date", self.travel.start_date);
+                    exp_data.append("end_date", self.travel.end_date);
+                    exp_data.append("visit_purpose", self.travel.visit_purpose)
+                    exp_data.append("visit_place", self.travel.visit_place);
+                    exp_data.append("travel_mode", self.travel.travel_mode);
+                    exp_data.append("status", 'pending');
+                    exp_data.append("attachment", self.travel.attachment);
+                    exp_data.append("expense_category_id", $('#expense_category_id').val());
+
+                axios.post("/hr/travel", exp_data).then(response => {
+                        self.SubmitProcessing_expences = false;
+                        window.location.reload(); 
+                        toastr.success('{{ __('translate.Created_in_successfully') }}');
+                        self.errors = {};
+                })
+                .catch(error => {
+                    self.SubmitProcessing_expences = false;
+                    if (error.response.status == 422) {
+                        self.errors = error.response.data.errors;
+                    }
+                    toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                });
+            },
+
+           //----------------------- Update Travel ---------------------------\\
+            Update_Travel() {
+                var self = this;
+                self.SubmitProcessing_expences = true;
+                let exp_data_update = new FormData();
+
+                    exp_data_update.append("company_id", self.employee.company_id);
+                    exp_data_update.append("employee_id", self.employee.id);
+                    exp_data_update.append("arrangement_type_id", self.travel.arrangement_type_id);
+                    exp_data_update.append("description", self.travel.description);
+                    exp_data_update.append("expected_budget", self.travel.expected_budget);
+                    exp_data_update.append("actual_budget", self.travel.actual_budget);
+                    exp_data_update.append("start_date", self.travel.start_date);
+                    exp_data_update.append("end_date", self.travel.end_date);
+                    exp_data_update.append("visit_purpose", self.travel.visit_purpose)
+                    exp_data_update.append("visit_place", self.travel.visit_place);
+                    exp_data_update.append("travel_mode", self.travel.travel_mode);
+                    exp_data_update.append("status", 'pending');
+                    exp_data_update.append("attachment", self.travel.attachment);
+                    exp_data_update.append("expense_category_id", $('#expense_category_id').val());
+                    exp_data_update.append("_method", "put");
+
+
+                axios.post("/hr/travel/" + self.travel.id, exp_data_update).then(response => {
+                        self.SubmitProcessing = false;
+                        window.location.reload(); 
+                        toastr.success('{{ __('translate.Updated_in_successfully') }}');
+                        self.errors = {};
+                    })
+                    .catch(error => {
+                        self.SubmitProcessing_expences = false;
+                        if (error.response.status == 422) {
+                            self.errors = error.response.data.errors;
+                        }
+                        toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                    });
+            },
+
+          
+
+             //--------------------------------- Remove Travel ---------------------------\\
+            Remove_Travel(id) {
+
+                swal({
+                    title: '{{ __('translate.Are_you_sure') }}',
+                    text: '{{ __('translate.You_wont_be_able_to_revert_this') }}',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0CC27E',
+                    cancelButtonColor: '#FF586B',
+                    confirmButtonText: '{{ __('translate.Yes_delete_it') }}',
+                    cancelButtonText: '{{ __('translate.No_cancel') }}',
+                    confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
+                    cancelButtonClass: 'btn btn-danger',
+                    buttonsStyling: false
+                }).then(function () {
+                        axios
+                            .delete("/hr/travel/" + id)
+                            .then(() => {
+                                window.location.href = '/hr/travel'; 
+                                toastr.success('{{ __('translate.Deleted_in_successfully') }}');
+
+                            })
+                            .catch(() => {
+                                toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                            });
+                    });
+                },
+
         //----------------------------------- request leaves -------------------------\\
         Request_Leave() {
             this.reset_Form_leave();
@@ -2254,7 +2712,14 @@ if (echartElemleave) {
     }
 
 
+    function openImageWindow(event) {
+        event.preventDefault();
 
+        const imageUrl = event.currentTarget.href;
+        
+        // You can customize the window features as needed
+        window.open(imageUrl, 'Image Window', 'width=800, height=600, resizable=yes');
+    }
 
 </script>
 

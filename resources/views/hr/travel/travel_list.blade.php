@@ -22,10 +22,10 @@
     <div class="col-md-12">
         <div class="card text-left">
             <div class="card-header text-right bg-transparent">
-                @can('travel_add')
+               
                 <a class="btn btn-{{$setting->theme_color}} btn-md m-1" @click="New_Travel"><i class="i-Add text-white mr-2"></i>
                     {{ __('translate.Create') }}</a>
-                @endcan
+          
                 @can('travel_delete')
                 <a v-if="selectedIds.length > 0" class="btn btn-danger btn-md m-1" @click="delete_selected()"><i
                         class="i-Close-Window text-white mr-2"></i> {{ __('translate.Delete') }}</a>
@@ -132,6 +132,19 @@
                                     </span>
                                 </div>
 
+                                @if(auth()->user()->role_users_id == 4 || auth()->user()->role_users_id == 1)
+
+                                <div class="col-md-6">
+                                    <label class="ul-form__label">{{ __('translate.Expense_Category') }} <span
+                                            class="field_required">*</span></label>
+                                    <select name="expense_type" id="" class="form-control">
+                                        @foreach($exp_types as $exp)
+                                           <option value="{{ $exp->title }}">{{ $exp->title }}</option>
+                                        @endforeach
+                                    </select>
+ 
+                                </div>
+                                @endif
 
                                 <div class="col-md-6">
                                     <label for="start_date" class="ul-form__label">{{ __('translate.Start_Date') }}
@@ -207,7 +220,7 @@
                                     </span>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <label class="ul-form__label">{{ __('translate.Arrangement_Type') }} <span
                                             class="field_required">*</span></label>
                                     <v-select @input="Selected_Arrangement_Type"
@@ -220,7 +233,7 @@
                                     <span class="error" v-if="errors && errors.arrangement_type_id">
                                         @{{ errors.arrangement_type_id[0] }}
                                     </span>
-                                </div>
+                                </div> --}}
 
 
 
@@ -249,6 +262,7 @@
                                     </span>
                                 </div>
 
+                                @if(auth()->user()->role_users_id == 4 || auth()->user()->role_users_id == 1)
                                 <div class="col-md-6">
                                     <label class="ul-form__label">{{ __('translate.Status') }} <span
                                             class="field_required">*</span></label>
@@ -265,6 +279,16 @@
                                         @{{ errors.status[0] }}
                                     </span>
                                 </div>
+                                @endif
+
+                                <div class="col-md-6">
+                                    <label for="attachment" class="ul-form__label">{{ __('translate.Attachment') }}</label>
+                                    <input name="attachment" @change="changeAttachement" type="file" class="form-control"
+                                        id="attachment">
+                                    <span class="error" v-if="errors && errors.attachment">
+                                        @{{ errors.attachment[0] }}
+                                    </span>
+                                </div>
 
                                 <div class="col-md-12">
                                     <label for="description"
@@ -273,6 +297,8 @@
                                         name="description" id="description"
                                         placeholder="{{ __('translate.Please_provide_any_details') }}"></textarea>
                                 </div>
+
+
 
                             </div>
 
