@@ -7,6 +7,7 @@ use App\Models\Travel;
 use App\Models\ArrangementType;
 use App\Models\Company;
 use App\Models\Employee;
+use App\Models\ExpenseCategory;
 use Carbon\Carbon;
 
 class TravelController extends Controller
@@ -19,11 +20,15 @@ class TravelController extends Controller
     public function index()
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('travel_view')){
+        // dd('gh');
+		if ($user_auth->can('travel_view') || $user_auth->role_users_id == 4){
 
                 $travels = Travel::with('company:id,name','employee:id,username','arrangement_type:id,title')
                 ->where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
-                return view('hr.travel.travel_list', compact('travels'));
+                $exp_types = ExpenseCategory::get();
+
+                return view('hr.travel.travel_list', compact('travels', 'exp_types'));
+
         }
         return abort('403', __('You are not authorized'));
     }
@@ -36,7 +41,7 @@ class TravelController extends Controller
     public function create()
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('travel_add')){
+		// if ($user_auth->can('travel_add')){
 
             $companies   = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
             $arrangement_types = ArrangementType::where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
@@ -46,7 +51,7 @@ class TravelController extends Controller
                 'arrangement_types' => $arrangement_types,
             ]);
 
-        }
+        // }
         return abort('403', __('You are not authorized'));
     }
 
@@ -58,13 +63,14 @@ class TravelController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         $user_auth = auth()->user();
-		if ($user_auth->can('travel_add')){
+		if ($user_auth->can('travel_add') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2){
 
             $this->validate($request, [
                 'company_id'         => 'required',
                 'employee_id'         => 'required',
-                'arrangement_type_id' => 'required',
+                'arrangement_type_id' => 'nullable',
                 'expected_budget'     => 'required|numeric',
                 'actual_budget'       => 'required|numeric',
                 'start_date'          => 'required',
@@ -74,11 +80,20 @@ class TravelController extends Controller
                 'travel_mode'         => 'required|string|max:255',
                 'status'            => 'required',
             ]);
+            $filename = null;
+            if ($request->hasFile('attachment')) {
 
+                $image = $request->file('attachment');
+                $filename = time().'.'.$image->extension();  
+                $image->move(public_path('/assets/images/expenses'), $filename);
+
+            } 
+          
             Travel::create([
                 'company_id'         => $request['company_id'],
                 'employee_id'         => $request['employee_id'],
-                'arrangement_type_id' => $request['arrangement_type_id'],
+                // 'expense_category_id' => $request['expense_category_id'],
+                // 'arrangement_type_id' => $request['arrangement_type_id'],
                 'expected_budget'     => $request['expected_budget'],
                 'actual_budget'       => $request['actual_budget'],
                 'start_date'          => $request['start_date'],
@@ -88,10 +103,12 @@ class TravelController extends Controller
                 'travel_mode'         => $request['travel_mode'],
                 'description'         => $request['description'],
                 'status'            => $request['status'],
+                'attachment' => $filename,
+                'expense_category_id' => $request['expense_category_id']
             ]);
-
+    
             return response()->json(['success' => true]);
-
+            // dd('hit');
         }
         return abort('403', __('You are not authorized'));
     }
@@ -123,7 +140,7 @@ class TravelController extends Controller
 
             return response()->json([
                 'companies'         => $companies,
-                'arrangement_types' => $arrangement_types,
+                // 'arrangement_types' => $arrangement_types,
             ]);
 
         }
@@ -139,13 +156,14 @@ class TravelController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request);
         $user_auth = auth()->user();
-		if ($user_auth->can('travel_edit')){
+		if ($user_auth->can('travel_edit') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2){
 
             $this->validate($request, [
                 'company_id'         => 'required',
                 'employee_id'         => 'required',
-                'arrangement_type_id' => 'required',
+                // 'arrangement_type_id' => 'required',
                 'expected_budget'     => 'required|numeric',
                 'actual_budget'       => 'required|numeric',
                 'start_date'          => 'required',
@@ -154,7 +172,29 @@ class TravelController extends Controller
                 'visit_place'         => 'required|string|max:255',
                 'travel_mode'         => 'required|string|max:255',
                 'status'              => 'required',
+             
             ]);
+            $travel = Travel::findOrFail($id);
+
+            $Current_attachment = $travel->attachment;
+            $filename = null;
+                if ($request->attachment != 'null') {
+                    if ($request->attachment != $Current_attachment) {
+
+                        $image = $request->file('attachment');
+                        $filename = time().'.'.$image->extension();  
+                        $image->move(public_path('/assets/images/expenses'), $filename);
+                        $path = public_path() . '/assets/images/expenses';
+                        $attachment = $path . '/' . $Current_attachment;
+                        if (file_exists($attachment)) {
+                            @unlink($attachment);
+                        }
+                    } else {
+                        $filename = $Current_attachment;
+                    }
+                }else{
+                    $filename = $Current_attachment;
+                }
 
             Travel::whereId($id)->update([
                 'company_id'         => $request['company_id'],
@@ -169,6 +209,8 @@ class TravelController extends Controller
                 'travel_mode'         => $request['travel_mode'],
                 'description'         => $request['description'],
                 'status'            => $request['status'],
+                'attachment' => $filename,
+                'expense_category_id' => $request['expense_category_id']
             ]);
 
             return response()->json(['success' => true]);
@@ -186,7 +228,7 @@ class TravelController extends Controller
     public function destroy($id)
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('travel_delete')){
+        if($user_auth->can('travel_delete') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2){
 
             Travel::whereId($id)->update([
                 'deleted_at' => Carbon::now(),
@@ -203,7 +245,7 @@ class TravelController extends Controller
       public function delete_by_selection(Request $request)
       {
          $user_auth = auth()->user();
-         if($user_auth->can('travel_delete')){
+         if($user_auth->can('travel_delete') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2){
              $selectedIds = $request->selectedIds;
      
              foreach ($selectedIds as $travel_id) {

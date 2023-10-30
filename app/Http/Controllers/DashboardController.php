@@ -313,7 +313,7 @@ class DashboardController extends Controller
             $today = Carbon::now()->format('Y-m-d');
 
             $employee = Employee::with('company:id,name', 'department:id,department', 'office_shift')->findOrFail($user_auth->id);
-
+           
             $punch_in = $employee->office_shift->$day_in_now;
             $punch_out = $employee->office_shift->$day_out_now;
             $punch_name = $employee->office_shift->name;

@@ -18,6 +18,7 @@ class CreateWorkFromTable extends Migration
             $table->id();
             $table->integer('employee_id');
             $table->date('work_from_home_date');
+            $table->time('work_from_home_time')->nullable();
             $table->timestamps(6);
             $table->softDeletes();
         });
