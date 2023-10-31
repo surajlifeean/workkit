@@ -231,7 +231,7 @@ class EmployeeSessionController extends Controller
         $user_auth = auth()->user();
 
         $employee = Employee::where('deleted_at', '=', null)->findOrFail($user_auth->id);
-        // dd($employee);s
+        // dd($employee);
         $total_leave_taken =  $employee->total_leave - $employee->remaining_leave;
         $total_leave_remaining = $employee->remaining_leave;
 
@@ -305,7 +305,7 @@ class EmployeeSessionController extends Controller
         $travels = Travel::where('employee_id', $user_auth->id)
             // ->with('company:id,name','employee:id,username','arrangement_type:id,title')
             ->with('company:id,name', 'employee:id,username', 'expenseCategory:id,title')
-            ->where('deleted_at', '<>', null)
+            ->where('deleted_at', '=', null)
             ->orderBy('id', 'desc')
             ->get();
         // dd($travels);

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use Illuminate\Http\Request;
 use App\Models\Travel;
 use App\Models\ArrangementType;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\ExpenseCategory;
+use App\Models\Notification;
 use Carbon\Carbon;
 
 class TravelController extends Controller
@@ -21,14 +23,17 @@ class TravelController extends Controller
     {
         $user_auth = auth()->user();
         // dd('gh');
-		if ($user_auth->can('travel_view') || $user_auth->role_users_id == 4){
+        if ($user_auth->can('travel_view') || $user_auth->role_users_id == 4) {
 
-                $travels = Travel::with('company:id,name','employee:id,username','arrangement_type:id,title')
-                ->where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
-                $exp_types = ExpenseCategory::get();
+            $travels = Travel::with('company:id,name', 'employee:id,username', 'expenseCategory:id,title')
+                ->where('deleted_at', '=', null)
+                ->orderBy('id', 'desc')
+                ->get();
+            $accounts = Account::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','account_name']);
 
-                return view('hr.travel.travel_list', compact('travels', 'exp_types'));
-
+            $exp_types = ExpenseCategory::get();
+            // dd($travels);
+            return view('hr.travel.travel_list', compact('travels', 'exp_types', 'accounts'));
         }
         return abort('403', __('You are not authorized'));
     }
@@ -41,15 +46,15 @@ class TravelController extends Controller
     public function create()
     {
         $user_auth = auth()->user();
-		// if ($user_auth->can('travel_add')){
+        // if ($user_auth->can('travel_add')){
 
-            $companies   = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
-            $arrangement_types = ArrangementType::where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
+        $companies   = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id', 'name']);
+        $arrangement_types = ArrangementType::where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
 
-            return response()->json([
-                'companies'         => $companies,
-                'arrangement_types' => $arrangement_types,
-            ]);
+        return response()->json([
+            'companies'         => $companies,
+            'arrangement_types' => $arrangement_types,
+        ]);
 
         // }
         return abort('403', __('You are not authorized'));
@@ -65,7 +70,7 @@ class TravelController extends Controller
     {
         // dd($request);
         $user_auth = auth()->user();
-		if ($user_auth->can('travel_add') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2){
+        if ($user_auth->can('travel_add') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2) {
 
             $this->validate($request, [
                 'company_id'         => 'required',
@@ -84,11 +89,10 @@ class TravelController extends Controller
             if ($request->hasFile('attachment')) {
 
                 $image = $request->file('attachment');
-                $filename = time().'.'.$image->extension();  
+                $filename = time() . '.' . $image->extension();
                 $image->move(public_path('/assets/images/expenses'), $filename);
-
-            } 
-          
+            }
+            
             Travel::create([
                 'company_id'         => $request['company_id'],
                 'employee_id'         => $request['employee_id'],
@@ -106,7 +110,16 @@ class TravelController extends Controller
                 'attachment' => $filename,
                 'expense_category_id' => $request['expense_category_id']
             ]);
-    
+            $comp_id = Employee::where('id', $user_auth->id)->pluck('company_id');
+            $new_notification = new Notification();
+            $new_notification->title = 'New employee expense';
+            $new_notification->message = 'New employee expense request available';
+            $new_notification->user_id = $user_auth->id;
+            $new_notification->is_seen = 0;
+            $new_notification->company_id = $comp_id[0];
+            $new_notification->save();
+            // dd($new_notification);
+
             return response()->json(['success' => true]);
             // dd('hit');
         }
@@ -133,16 +146,15 @@ class TravelController extends Controller
     public function edit($id)
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('travel_edit')){
+        if ($user_auth->can('travel_edit')) {
 
-            $companies   = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','name']);
+            $companies   = Company::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id', 'name']);
             $arrangement_types = ArrangementType::where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
 
             return response()->json([
                 'companies'         => $companies,
                 // 'arrangement_types' => $arrangement_types,
             ]);
-
         }
         return abort('403', __('You are not authorized'));
     }
@@ -158,7 +170,7 @@ class TravelController extends Controller
     {
         // dd($request);
         $user_auth = auth()->user();
-		if ($user_auth->can('travel_edit') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2){
+        if ($user_auth->can('travel_edit') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2) {
 
             $this->validate($request, [
                 'company_id'         => 'required',
@@ -172,29 +184,29 @@ class TravelController extends Controller
                 'visit_place'         => 'required|string|max:255',
                 'travel_mode'         => 'required|string|max:255',
                 'status'              => 'required',
-             
+
             ]);
             $travel = Travel::findOrFail($id);
 
             $Current_attachment = $travel->attachment;
             $filename = null;
-                if ($request->attachment != 'null') {
-                    if ($request->attachment != $Current_attachment) {
+            if ($request->attachment != 'null') {
+                if ($request->attachment != $Current_attachment) {
 
-                        $image = $request->file('attachment');
-                        $filename = time().'.'.$image->extension();  
-                        $image->move(public_path('/assets/images/expenses'), $filename);
-                        $path = public_path() . '/assets/images/expenses';
-                        $attachment = $path . '/' . $Current_attachment;
-                        if (file_exists($attachment)) {
-                            @unlink($attachment);
-                        }
-                    } else {
-                        $filename = $Current_attachment;
+                    $image = $request->file('attachment');
+                    $filename = time() . '.' . $image->extension();
+                    $image->move(public_path('/assets/images/expenses'), $filename);
+                    $path = public_path() . '/assets/images/expenses';
+                    $attachment = $path . '/' . $Current_attachment;
+                    if (file_exists($attachment)) {
+                        @unlink($attachment);
                     }
-                }else{
+                } else {
                     $filename = $Current_attachment;
                 }
+            } else {
+                $filename = $Current_attachment;
+            }
 
             Travel::whereId($id)->update([
                 'company_id'         => $request['company_id'],
@@ -214,7 +226,6 @@ class TravelController extends Controller
             ]);
 
             return response()->json(['success' => true]);
-
         }
         return abort('403', __('You are not authorized'));
     }
@@ -228,33 +239,32 @@ class TravelController extends Controller
     public function destroy($id)
     {
         $user_auth = auth()->user();
-        if($user_auth->can('travel_delete') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2){
+        if ($user_auth->can('travel_delete') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2) {
 
             Travel::whereId($id)->update([
                 'deleted_at' => Carbon::now(),
             ]);
 
             return response()->json(['success' => true]);
-
         }
         return abort('403', __('You are not authorized'));
     }
 
-      //-------------- Delete by selection  ---------------\\
+    //-------------- Delete by selection  ---------------\\
 
-      public function delete_by_selection(Request $request)
-      {
-         $user_auth = auth()->user();
-         if($user_auth->can('travel_delete') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2){
-             $selectedIds = $request->selectedIds;
-     
-             foreach ($selectedIds as $travel_id) {
+    public function delete_by_selection(Request $request)
+    {
+        $user_auth = auth()->user();
+        if ($user_auth->can('travel_delete') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2) {
+            $selectedIds = $request->selectedIds;
+
+            foreach ($selectedIds as $travel_id) {
                 Travel::whereId($travel_id)->update([
                     'deleted_at' => Carbon::now(),
                 ]);
-             }
-             return response()->json(['success' => true]);
-         }
-         return abort('403', __('You are not authorized'));
-      }
+            }
+            return response()->json(['success' => true]);
+        }
+        return abort('403', __('You are not authorized'));
+    }
 }

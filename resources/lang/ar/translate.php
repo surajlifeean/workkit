@@ -532,6 +532,8 @@ return [
     "Work from home" => "العمل من المنزل",
     "Expenses" => "نفقات",
     "Team Attendance" => "حضور الفريق",
-    "Personal Attendance" => "الحضور الشخصي"
+    "Personal Attendance" => "الحضور الشخصي",
+    "Employee Expenses" => "نفقات الموظفين",
+    "Employee Expense List" => "قائمة نفقات الموظف"
 
 ];

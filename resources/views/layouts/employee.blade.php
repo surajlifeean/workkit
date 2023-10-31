@@ -176,6 +176,9 @@
                 } else {
                     url = `/employee/my_requests?leave_id=${e.leave_id}`;
                 }
+                if (user_auth.role_users_id === 4 && e.leave_id == null) {
+                    url = '/hr/travel'
+                }
                 notificationBox.append(`
                  <a href="${url}" class="my-2" style="border-bottom: 1px solid gray;">
                    <div class="d-flex flex-column ">
