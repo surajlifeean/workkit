@@ -13,7 +13,7 @@ class CreateTravelTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('travel', function(Blueprint $table)
+		Schema::create('travels', function(Blueprint $table)
 		{
 			$table->engine = 'InnoDB';
 			$table->integer('id', true);

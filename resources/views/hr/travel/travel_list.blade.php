@@ -1,4 +1,12 @@
 <?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
+<?php 
+DB::table('notifications')
+    ->where('is_seen', 0)
+    ->where('is_superadmin', 0)
+    ->whereNull('leave_id')
+    ->update(['is_seen' => 1]);
+
+?>
 @extends('layouts.master')
 @section('main-content')
 @section('page-css')
@@ -9,10 +17,10 @@
 @endsection
 
 <div class="breadcrumb">
-    <h1>{{ __('translate.Travel_List') }}</h1>
+    <h1>{{ __('translate.Employee Expense List') }}</h1>
     <ul>
-        <li><a href="/hr/travel">{{ __('translate.Travels') }}</a></li>
-        <li>{{ __('translate.Travel_List') }}</li>
+        <li><a href="/       /travel">{{ __('translate.Employee Expenses') }}</a></li>
+        <li>{{ __('translate.Employee Expense List') }}</li>
     </ul>
 </div>
 
@@ -46,6 +54,7 @@
                                 <th>{{ __('translate.Expected_Budget') }}</th>
                                 <th>{{ __('translate.Actual_Budget') }}</th>
                                 <th>{{ __('translate.Status') }}</th>
+                                <th>{{ __('translate.Attachment') }}</th>
                                 <th>{{ __('translate.Action') }}</th>
                             </tr>
                         </thead>
@@ -55,7 +64,7 @@
                                 <td @click="selected_row( {{ $travel->id}})"></td>
                                 <td>{{$travel->employee->username}}</td>
                                 <td>{{$travel->company->name}}</td>
-                                <td>{{$travel->arrangement_type->title}}</td>
+                                <td>{{ $travel->expenseCategory->title ?? 'N/A' }}</td>
                                 <td>{{$travel->start_date}}</td>
                                 <td>{{$travel->end_date}}</td>
                                 <td>{{$travel->visit_purpose}}</td>
@@ -63,18 +72,23 @@
                                 <td>{{$travel->actual_budget}}</td>
                                 <td>{{$travel->status}}</td>
                                 <td>
-                                    @can('travel_edit')
+                                    <a href="{{ asset('/assets/images/expenses/' . $travel->attachment) }}" target="_blank" onclick="openImageWindow(event)">
+                                        <img src="{{ asset('/assets/images/expenses/' . $travel->attachment) }}" style="height: 2rem; width: 2rem;" alt="">
+                                    </a>                                                        
+                                </td>
+                                <td>
+                                   
                                     <a @click="Edit_Travel( {{ $travel}})" class="ul-link-action text-success"
                                         data-toggle="tooltip" data-placement="top" title="Edit">
                                         <i class="i-Edit"></i>
                                     </a>
-                                    @endcan
-                                    @can('travel_delete')
+                                 
+                              
                                     <a @click="Remove_Travel( {{ $travel->id}})" class="ul-link-action text-danger mr-1"
                                         data-toggle="tooltip" data-placement="top" title="Delete">
                                         <i class="i-Close-Window"></i>
                                     </a>
-                                    @endcan
+                          
                                 </td>
                             </tr>
                             @endforeach
@@ -130,6 +144,17 @@
                                     <span class="error" v-if="errors && errors.employee_id">
                                         @{{ errors.employee_id[0] }}
                                     </span>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label class="ul-form__label">{{ __('translate.Expense_Category') }} <span
+                                            class="field_required">*</span></label>
+                                    <select name="expense_type" id="expense_category_id" class="form-control">
+                                        @foreach($exp_types as $exp)
+                                           <option value="{{ $exp->id }}">{{ $exp->title }}</option>
+                                        @endforeach
+                                    </select>
+ 
                                 </div>
 
                                 @if(auth()->user()->role_users_id == 4 || auth()->user()->role_users_id == 1)
@@ -269,8 +294,8 @@
                                     <v-select @input="Selected_Status" placeholder="{{ __('translate.Choose_status') }}"
                                         v-model="travel.status" :reduce="(option) => option.value" :options="
                                             [
-                                                {label: 'Approved', value: 'approved'},
                                                 {label: 'Pending', value: 'pending'},
+                                                {label: 'Approved', value: 'approved'},                                               
                                                 {label: 'Rejected', value: 'rejected'},
                                             ]">
                                     </v-select>
@@ -297,11 +322,103 @@
                                         name="description" id="description"
                                         placeholder="{{ __('translate.Please_provide_any_details') }}"></textarea>
                                 </div>
-
+                                
 
 
                             </div>
-
+                            <div  v-if=" travel.status === 'approved' " class="row">
+                                <div class="col-md-4">
+                                    <label class="ul-form__label">{{ __('translate.Account') }} <span
+                                            class="field_required">*</span></label>
+                                    <v-select @input="Selected_Account" placeholder="{{ __('translate.Choose_Account') }}"
+                                        v-model="expense.account_id" :reduce="label => label.value"
+                                        :options="accounts.map(accounts => ({label: accounts.account_name, value: accounts.id}))">
+                                    </v-select>
+        
+                                    <span class="error" v-if="errors && errors.account_id">
+                                        @{{ errors.account_id[0] }}
+                                    </span>
+                                </div>
+        
+                                <div class="col-md-4">
+                                    <label class="ul-form__label">{{ __('translate.Category') }} <span
+                                            class="field_required">*</span></label>
+                                    <v-select @input="Selected_Category" placeholder="{{ __('translate.Choose_Category') }}"
+                                        v-model="expense.expense_category_id" :reduce="label => label.value"
+                                        :options="categories.map(categories => ({label: categories.title, value: categories.id}))">
+                                    </v-select>
+        
+                                    <span class="error" v-if="errors && errors.expense_category_id">
+                                        @{{ errors.expense_category_id[0] }}
+                                    </span>
+                                </div>
+        
+                                <div class="col-md-4">
+                                    <label for="expense_ref" class="ul-form__label">{{ __('translate.Expense_Ref') }} <span
+                                            class="field_required">*</span></label>
+                                    <input type="text" class="form-control" id="expense_ref"
+                                        placeholder="{{ __('translate.Enter_Expense_Ref') }}" v-model="expense.expense_ref">
+                                    <span class="error" v-if="errors && errors.expense_ref">
+                                        @{{ errors.expense_ref[0] }}
+                                    </span>
+                                </div>
+        
+        
+                                <div class="col-md-4">
+                                    <label for="date" class="ul-form__label">{{ __('translate.Date') }} <span
+                                            class="field_required">*</span></label>
+                                    <vuejs-datepicker id="expense_date" placeholder="{{ __('translate.Enter_expense_date') }}"
+                                        v-model="expense.date" input-class="form-control" name="expense_date"
+                                        format="yyyy-MM-dd" @closed="expense.date=formatDate(expense.date)">
+                                    </vuejs-datepicker>
+                                    <span class="error" v-if="errors && errors.date">
+                                        @{{ errors.date[0] }}
+                                    </span>
+                                </div>
+        
+        
+                                <div class="col-md-4">
+                                    <label for="amount" class="ul-form__label">{{ __('translate.Amount') }} <span
+                                            class="field_required">*</span></label>
+                                    <input type="text" v-model="expense.amount" class="form-control" name="amount"
+                                        placeholder="{{ __('translate.Enter_Amount') }}" id="amount">
+                                    <span class="error" v-if="errors && errors.amount">
+                                        @{{ errors.amount[0] }}
+                                    </span>
+                                </div>
+        
+                                <div class="col-md-4">
+                                    <label class="ul-form__label">{{ __('translate.Payment_method') }} <span
+                                            class="field_required">*</span></label>
+                                    <v-select @input="Selected_Payment_Method"
+                                        placeholder="{{ __('translate.Choose_Payment_method') }}"
+                                        v-model="expense.payment_method_id" :reduce="label => label.value"
+                                        :options="payment_methods.map(payment_methods => ({label: payment_methods.title, value: payment_methods.id}))">
+                                    </v-select>
+        
+                                    <span class="error" v-if="errors && errors.payment_method_id">
+                                        @{{ errors.payment_method_id[0] }}
+                                    </span>
+                                </div>
+        
+                                <div class="col-md-4">
+                                    <label for="attachment" class="ul-form__label">{{ __('translate.Attachment') }}</label>
+                                    <input name="attachment" @change="changeAttachement" type="file" class="form-control"
+                                        id="attachment">
+                                    <span class="error" v-if="errors && errors.attachment">
+                                        @{{ errors.attachment[0] }}
+                                    </span>
+                                </div>
+        
+                                <div class="col-md-12">
+                                    <label for="description"
+                                        class="ul-form__label">{{ __('translate.Please_provide_any_details') }}</label>
+                                    <textarea type="text" v-model="expense.description" class="form-control" name="description"
+                                        id="description"
+                                        placeholder="{{ __('translate.Please_provide_any_details') }}"></textarea>
+                                </div>
+        
+                            </div>
 
                             <div class="row mt-3">
 
@@ -350,6 +467,7 @@
             companies:[],
             employees:[],
             arrangement_types:[],
+            accounts: @json($accounts),
             errors:[],
             travels: [], 
             travel: {
@@ -365,11 +483,27 @@
                 travel_mode:"",
                 description:"",
                 status:"",
+                attachment:"",
+                expense_category_id:""
+            },
+            expense: {
+            account_id: "",
+            expense_category_id:"",
+            amount:"",
+            payment_method_id:"",
+            date:"",
+            expense_ref:"",
+            description:"",
+            attachment:"",
             }, 
         },
        
         methods: {
 
+            changeAttachement (e){
+                let file = e.target.files[0];
+                this.travel.attachment = file;
+            },
             //---- Event selected_row
             selected_row(id) {
                 //in here you can check what ever condition  before append to array.
@@ -393,6 +527,7 @@
                 if (value === null) {
                     this.travel.status = "";
                 }
+                console.log(this.travel.status);
             },
 
 
@@ -500,20 +635,24 @@
               Create_Travel() {
                 var self = this;
                 self.SubmitProcessing = true;
-                axios.post("/hr/travel", {
-                    company_id: self.travel.company_id,
-                    employee_id: self.travel.employee_id,
-                    arrangement_type_id: self.travel.arrangement_type_id,
-                    description: self.travel.description,
-                    expected_budget: self.travel.expected_budget,
-                    actual_budget: self.travel.actual_budget,
-                    start_date: self.travel.start_date,
-                    end_date: self.travel.end_date,
-                    visit_purpose: self.travel.visit_purpose,
-                    visit_place: self.travel.visit_place,
-                    travel_mode: self.travel.travel_mode,
-                    status: self.travel.status,
-                }).then(response => {
+                let exp_data = new FormData();
+
+                    exp_data.append("company_id", self.travel.company_id);
+                    exp_data.append("employee_id", self.travel.employee_id);
+                    exp_data.append("arrangement_type_id", self.travel.arrangement_type_id);
+                    exp_data.append("description", self.travel.description);
+                    exp_data.append("expected_budget", self.travel.expected_budget);
+                    exp_data.append("actual_budget", self.travel.actual_budget);
+                    exp_data.append("start_date", self.travel.start_date);
+                    exp_data.append("end_date", self.travel.end_date);
+                    exp_data.append("visit_purpose", self.travel.visit_purpose)
+                    exp_data.append("visit_place", self.travel.visit_place);
+                    exp_data.append("travel_mode", self.travel.travel_mode);
+                    exp_data.append("status", 'pending');
+                    exp_data.append("attachment", self.travel.attachment);
+                    exp_data.append("expense_category_id", $('#expense_category_id').val());
+
+                axios.post("/hr/travel", exp_data).then(response => {
                         self.SubmitProcessing = false;
                         window.location.href = '/hr/travel'; 
                         toastr.success('{{ __('translate.Created_in_successfully') }}');
@@ -532,20 +671,26 @@
             Update_Travel() {
                 var self = this;
                 self.SubmitProcessing = true;
-                axios.put("/hr/travel/" + self.travel.id, {
-                    company_id: self.travel.company_id,
-                    employee_id: self.travel.employee_id,
-                    arrangement_type_id: self.travel.arrangement_type_id,
-                    description: self.travel.description,
-                    expected_budget: self.travel.expected_budget,
-                    actual_budget: self.travel.actual_budget,
-                    start_date: self.travel.start_date,
-                    end_date: self.travel.end_date,
-                    visit_purpose: self.travel.visit_purpose,
-                    visit_place: self.travel.visit_place,
-                    travel_mode: self.travel.travel_mode,
-                    status: self.travel.status,
-                }).then(response => {
+
+                let exp_data_update = new FormData();
+
+                exp_data_update.append("company_id", self.travel.company_id);
+                exp_data_update.append("employee_id", self.travel.id);
+                exp_data_update.append("arrangement_type_id", self.travel.arrangement_type_id);
+                exp_data_update.append("description", self.travel.description);
+                exp_data_update.append("expected_budget", self.travel.expected_budget);
+                exp_data_update.append("actual_budget", self.travel.actual_budget);
+                exp_data_update.append("start_date", self.travel.start_date);
+                exp_data_update.append("end_date", self.travel.end_date);
+                exp_data_update.append("visit_purpose", self.travel.visit_purpose)
+                exp_data_update.append("visit_place", self.travel.visit_place);
+                exp_data_update.append("travel_mode", self.travel.travel_mode);
+                exp_data_update.append("status", 'pending');
+                exp_data_update.append("attachment", self.travel.attachment);
+                exp_data_update.append("expense_category_id", $('#expense_category_id').val());
+                exp_data_update.append("_method", "put");
+
+                axios.post("/hr/travel/" + self.travel.id, exp_data_update).then(response => {
                         self.SubmitProcessing = false;
                         window.location.href = '/hr/travel'; 
                         toastr.success('{{ __('translate.Updated_in_successfully') }}');
@@ -622,7 +767,61 @@
                     });
             },
 
-           
+            Selected_Account(value) {
+            if (value === null) {
+                this.expense.account_id = "";
+            }
+            },
+    
+            Selected_Category(value) {
+                if (value === null) {
+                    this.expense.expense_category_id = "";
+                }
+            },
+    
+    
+            Selected_Payment_Method(value) {
+                if (value === null) {
+                    this.expense.payment_method_id = "";
+                }
+            },
+    
+    
+    
+            changeAttachement (e){
+                    let file = e.target.files[0];
+                    this.expense.attachment = file;
+                },
+    
+            //------------------------ Create Expense ---------------------------\\
+            Create_Expense() {
+                var self = this;
+                self.SubmitProcessing = true;
+    
+                self.data.append("account_id", self.expense.account_id);
+                self.data.append("expense_category_id", self.expense.expense_category_id);
+                self.data.append("amount", self.expense.amount);
+                self.data.append("payment_method_id", self.expense.payment_method_id);
+                self.data.append("date", self.expense.date);
+                self.data.append("expense_ref", self.expense.expense_ref);
+                self.data.append("description", self.expense.description);
+                self.data.append("attachment", self.expense.attachment);
+               
+                axios.post("/accounting/expense", self.data)
+                    .then(response => {
+                        self.SubmitProcessing = false;
+                        window.location.href = '/accounting/expense'; 
+                        toastr.success('{{ __('translate.Created_in_successfully') }}');
+                        self.errors = {};
+                })
+                .catch(error => {
+                    self.SubmitProcessing = false;
+                    if (error.response.status == 422) {
+                        self.errors = error.response.data.errors;
+                    }
+                    toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                });
+            },
         },
         //-----------------------------Autoload function-------------------
         created() {
@@ -672,5 +871,14 @@
         });
 
     });
+
+    function openImageWindow(event) {
+        event.preventDefault();
+
+        const imageUrl = event.currentTarget.href;
+        
+        // You can customize the window features as needed
+        window.open(imageUrl, 'Image Window', 'width=800, height=600, resizable=yes');
+    }
 </script>
 @endsection

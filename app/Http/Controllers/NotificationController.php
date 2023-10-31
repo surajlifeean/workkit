@@ -93,6 +93,8 @@ class NotificationController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->get();
             }
+
+            // dd($get_all_notifications);
             return response()->json($get_all_notifications);
         }
         

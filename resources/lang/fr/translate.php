@@ -531,6 +531,7 @@ return [
     "Work from home" => "Travail à domicile",
     "Expenses" => "Expenses",
     "Team Attendance" => "Présence de l'équipe",
-    "Personal Attendance" => "Présence personnelle"
-
+    "Personal Attendance" => "Présence personnelle",
+    "Employee Expenses" => "Dépenses des employés",    
+    "Employee Expense List" => "Liste des dépenses des employés"
 ];

@@ -563,5 +563,7 @@ return [
     "Expenses" => "Expenses",
     "Team Attendance" => "Team Attendance",
     "Personal Attendance" => "Personal Attendance",
-    "Today Clock In" => "Today Clock In"
+    "Today Clock In" => "Today Clock In",
+    "Employee Expenses" => "Employee Expenses",
+    "Employee Expense List" => "Employee Expense List"
 ];

@@ -23,6 +23,10 @@
         <div class="card text-left">
             <div class="card-header text-right bg-transparent">
                 @can('expense_add')
+                <a class="btn btn-{{$setting->theme_color}} btn-md m-1" href="{{route('travel.index')}}"><i
+                        class="i-Add text-white mr-2"></i> {{ __('translate.Employee Expenses') }}</a>
+                @endcan
+                @can('expense_add')
                 <a class="btn btn-{{$setting->theme_color}} btn-md m-1" href="{{route('expense.create')}}"><i
                         class="i-Add text-white mr-2"></i> {{ __('translate.Create') }}</a>
                 @endcan
