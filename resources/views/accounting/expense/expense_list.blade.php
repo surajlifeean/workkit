@@ -60,7 +60,13 @@
                                 <td>{{$expense->expense_ref}}</td>
                                 <td>{{$expense->date}}</td>
                                 <td>{{$expense->amount}}</td>
-                                <td>{{$expense->expense_category->title}}</td>
+                                <td>
+                                 @if($expense->expenseCategory->title) 
+                                  {{$expense->expenseCategory->title}}
+                                 @else
+                                  N/A
+                                 @endif
+                                 </td>
                                 <td>{{$expense->payment_method->title}}</td>
                                 <td>
                                     @can('expense_edit')

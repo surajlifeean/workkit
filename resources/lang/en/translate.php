@@ -565,5 +565,6 @@ return [
     "Personal Attendance" => "Personal Attendance",
     "Today Clock In" => "Today Clock In",
     "Employee Expenses" => "Employee Expenses",
-    "Employee Expense List" => "Employee Expense List"
+    "Employee Expense List" => "Employee Expense List",
+    "This Week Expense" => "This Week Expense"
 ];

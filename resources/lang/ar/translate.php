@@ -534,6 +534,6 @@ return [
     "Team Attendance" => "حضور الفريق",
     "Personal Attendance" => "الحضور الشخصي",
     "Employee Expenses" => "نفقات الموظفين",
-    "Employee Expense List" => "قائمة نفقات الموظف"
-
+    "Employee Expense List" => "قائمة نفقات الموظف",
+    "This Week Expense" => "نفقات هذا الأسبوع"
 ];

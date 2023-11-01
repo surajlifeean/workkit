@@ -22,9 +22,12 @@ class ExpenseController extends Controller
         $user_auth = auth()->user();
 		if ($user_auth->can('expense_view')){
 
-            $expenses = Expense::where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
+            $expenses = Expense::where('deleted_at', '=', null)
+            ->with('expenseCategory:id,title')
+            ->orderBy('id', 'desc')->get();
+            // dd($expenses);
             return view('accounting.expense.expense_list',compact('expenses'));
-
+            
         }
         return abort('403', __('You are not authorized'));
     }

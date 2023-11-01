@@ -20,5 +20,8 @@ class ExpenseCategory extends Model
         return $this->belongsTo(Travel::class, 'expense_category_id');
     }
 
-
+    public function expense()
+    {
+        return $this->belongsTo('App\Models\Expense', 'expense_category_id');
+    }
 }

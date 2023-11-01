@@ -69,7 +69,7 @@
     <div class="col-lg-8 col-md-12">
         <div class="card mb-4">
             <div class="card-body">
-                <div class="card-title">{{ __('translate.This_Week_Expense_Deposit') }}</div>
+                <div class="card-title">{{ __('translate.This Week Expense') }}</div>
                 <div id="echart_Bar_Expense"></div>
             </div>
         </div>
@@ -155,7 +155,7 @@
     <div class="col-lg-4 col-sm-12">
         <div class="card mb-4">
             <div class="card-body">
-                <div class="card-title">{{ __('translate.Expense_vs_Deposit') }}</div>
+                <div class="card-title">{{ __('translate.Expense') }}</div>
                 <div id="echartPie"></div>
             </div>
         </div>
@@ -285,10 +285,10 @@
                         value: @json($expense_amount),
                         name: 'Expense'
                     },
-                    {
-                        value: @json($deposit_amount),
-                        name: 'Deposit'
-                    },
+                    // {
+                    //     value: @json($deposit_amount),
+                    //     name: 'Deposit'
+                    // },
                 ],
                 itemStyle: {
                     emphasis: {
@@ -377,7 +377,8 @@
                 }
             }],
 
-            series: [{
+            series: [
+                {
                     name: 'Expenses',
                     data: @json($expenses_data),
                     label: {
@@ -398,7 +399,7 @@
                     }
                 },
 
-                {
+                 {
                     name: 'Deposits',
                     data: @json($deposits_data),
                     label: {
@@ -419,7 +420,6 @@
                     }
                 },
 
-
             ]
         });
         $(window).on('resize', function() {
@@ -428,6 +428,7 @@
             }, 500);
         });
     }
+   
 
 
     // Chart Project by status

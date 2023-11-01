@@ -37,4 +37,9 @@ class Expense extends Model
     {
         return $this->hasOne('App\Models\DepositCategory', 'id', 'expense_category_id');
     }
+
+    public function expenseCategory()
+    {
+        return $this->hasOne('App\Models\ExpenseCategory', 'id', 'expense_category_id');
+    }
 }
