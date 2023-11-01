@@ -1,3 +1,5 @@
+<?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
+
 @extends('layouts.master')
 @section('main-content')
 
