@@ -534,6 +534,8 @@ return [
     "Personal Attendance" => "Présence personnelle",
     "Employee Expenses" => "Dépenses des employés",    
     "Employee Expense List" => "Liste des dépenses des employés",
-    "This Week Expense" => "Dépense de cette semaine"
+    "This Week Expense" => "Dépense de cette semaine",
+    "Payment successful Package will be active within 2 days." => "Le paiement réussi Le forfait sera actif dans les 2 jours."
+
 
 ];

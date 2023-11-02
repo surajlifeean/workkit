@@ -1,4 +1,16 @@
-<?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
+<?php
+
+use App\Models\ActivePlan;
+
+$setting = DB::table('settings')->where('deleted_at', '=', null)->first(); 
+
+$active_plan = ActivePlan::whereIn('status', ['active', 'hold'])
+->where('start_date', '<=', now()) 
+->where('end_date', '>=', now())  
+->select('subs_plan_id', 'end_date', 'status')
+->first();
+
+?>
 @extends('layouts.master')
 @section('main-content')
 @section('page-css')
@@ -17,7 +29,7 @@
 </div>
 @if (session('success'))
     <div class="alert alert-success">
-        {{ session('status') }}
+        {{session('success')}}
     </div>
 @endif
 <div class="separator-breadcrumb border-top"></div>
@@ -64,7 +76,17 @@
                            
                           </ul>
                         </div>
+                        
+                        @if($active_plan && $active_plan->subs_plan_id == $dt['id'])
+                        <span>
+                             {{ ucwords($active_plan->status) }}
+                           </span>
+                           <span>
+                             Exp Date: {{ $active_plan->end_date }}
+                           </span>
+                        @elseif(!$active_plan)
                         <a href="{{ route('stripe.checkout', [ 'price' => ( $dt['is_offer_price'] == 1 ? $dt['offered_price'] : $dt['price'] ), 'product' => $dt['plan'], 'currency' => $dt['currency'] , 'plan_id' => $dt['id'] , 'is_offer_price' => $dt['is_offer_price'] ] ) }}" class="btn btn-{{$setting->theme_color}}">Buy Now</a>
+                        @endif
                     </div>
                 </div>
             </div>

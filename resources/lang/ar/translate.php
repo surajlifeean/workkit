@@ -535,5 +535,7 @@ return [
     "Personal Attendance" => "الحضور الشخصي",
     "Employee Expenses" => "نفقات الموظفين",
     "Employee Expense List" => "قائمة نفقات الموظف",
-    "This Week Expense" => "نفقات هذا الأسبوع"
+    "This Week Expense" => "نفقات هذا الأسبوع",
+    "Payment successful Package will be active within 2 days." => "سيتم تفعيل الحزمة بنجاح خلال يومين."
+
 ];

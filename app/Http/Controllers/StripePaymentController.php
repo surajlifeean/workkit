@@ -72,8 +72,9 @@ class StripePaymentController extends Controller
             $request->session()->forget('checkout_parameters');
         }
 
+        // dd(session('success'));
         return redirect()->route('subscription.index')
-            ->with('success', 'Payment successful.');
+            ->with('success', __('translate.Payment successful Package will be active within 2 days.'));
     }
 
     public function stripeCheckoutCancel()
