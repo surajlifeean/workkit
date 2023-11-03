@@ -1157,7 +1157,7 @@
                                                 <tbody>
                                                     @foreach($travels as $travel)
                                                     <tr>
-                                                        <td>{{ ucwords($travel->expenseCategory->title) }}</td>
+                                                    <td>{{ $travel->expenseCategory ? ucwords($travel->expenseCategory->title) : 'N/A' }}</td>
                                                         <td>{{$travel->start_date}}</td>
                                                         <td>{{$travel->end_date}}</td>
                                                         <td>{{$travel->visit_purpose}}</td>

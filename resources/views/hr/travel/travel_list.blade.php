@@ -62,7 +62,7 @@ DB::table('notifications')
                             @foreach($travels as $travel)
                             <tr>
                                 <td @click="selected_row( {{ $travel->id}})"></td>
-                                <td>{{$travel->employee->username}}</td>
+                                <td>{{$travel->employee->username ?? 'N/A'}}</td>
                                 <td>{{$travel->company->name}}</td>
                                 <td>{{ $travel->expenseCategory->title ?? 'N/A' }}</td>
                                 <td>{{$travel->start_date}}</td>
@@ -70,7 +70,7 @@ DB::table('notifications')
                                 <td>{{$travel->visit_purpose}}</td>
                                 <td>{{$travel->expected_budget}}</td>
                                 <td>{{$travel->actual_budget}}</td>
-                                <td>{{$travel->status}}</td>
+                                <td>{{ ucwords($travel->status)}}</td>
                                 <td>
                                     <a href="{{ asset('/assets/images/expenses/' . $travel->attachment) }}" target="_blank" onclick="openImageWindow(event)">
                                         <img src="{{ asset('/assets/images/expenses/' . $travel->attachment) }}" style="height: 2rem; width: 2rem;" alt="">
@@ -156,21 +156,7 @@ DB::table('notifications')
                                     </select>
  
                                 </div>
-
-                                @if(auth()->user()->role_users_id == 4 || auth()->user()->role_users_id == 1)
-
-                                <div class="col-md-6">
-                                    <label class="ul-form__label">{{ __('translate.Expense_Category') }} <span
-                                            class="field_required">*</span></label>
-                                    <select name="expense_type" id="" class="form-control">
-                                        @foreach($exp_types as $exp)
-                                           <option value="{{ $exp->title }}">{{ $exp->title }}</option>
-                                        @endforeach
-                                    </select>
- 
-                                </div>
-                                @endif
-
+                            
                                 <div class="col-md-6">
                                     <label for="start_date" class="ul-form__label">{{ __('translate.Start_Date') }}
                                         <span class="field_required">*</span></label>
@@ -245,24 +231,6 @@ DB::table('notifications')
                                     </span>
                                 </div>
 
-                                {{-- <div class="col-md-6">
-                                    <label class="ul-form__label">{{ __('translate.Arrangement_Type') }} <span
-                                            class="field_required">*</span></label>
-                                    <v-select @input="Selected_Arrangement_Type"
-                                        placeholder="{{ __('translate.Choose_Arrangement_Type') }}"
-                                        v-model="travel.arrangement_type_id" :reduce="label => label.value"
-                                        :options="arrangement_types.map(arrangement_types => ({label: arrangement_types.title, value: arrangement_types.id}))">
-
-                                    </v-select>
-
-                                    <span class="error" v-if="errors && errors.arrangement_type_id">
-                                        @{{ errors.arrangement_type_id[0] }}
-                                    </span>
-                                </div> --}}
-
-
-
-
                                 <div class="col-md-6">
                                     <label for="expected_budget"
                                         class="ul-form__label">{{ __('translate.Expected_Budget') }} <span
@@ -291,15 +259,12 @@ DB::table('notifications')
                                 <div class="col-md-6">
                                     <label class="ul-form__label">{{ __('translate.Status') }} <span
                                             class="field_required">*</span></label>
-                                    <v-select @input="Selected_Status" placeholder="{{ __('translate.Choose_status') }}"
-                                        v-model="travel.status" :reduce="(option) => option.value" :options="
-                                            [
-                                                {label: 'Pending', value: 'pending'},
-                                                {label: 'Approved', value: 'approved'},                                               
-                                                {label: 'Rejected', value: 'rejected'},
-                                            ]">
-                                    </v-select>
-
+                                    
+                                    <select name="travel_status" id="travel_status" class="form-control">
+                                        <option value="pending">Pending</option>
+                                        <option value="approved">Approved</option>
+                                        <option value="rejected">Rejected</option>
+                                    </select>
                                     <span class="error" v-if="errors && errors.status">
                                         @{{ errors.status[0] }}
                                     </span>
@@ -326,99 +291,7 @@ DB::table('notifications')
 
 
                             </div>
-                            <div  v-if=" travel.status === 'approved' " class="row">
-                                <div class="col-md-4">
-                                    <label class="ul-form__label">{{ __('translate.Account') }} <span
-                                            class="field_required">*</span></label>
-                                    <v-select @input="Selected_Account" placeholder="{{ __('translate.Choose_Account') }}"
-                                        v-model="expense.account_id" :reduce="label => label.value"
-                                        :options="accounts.map(accounts => ({label: accounts.account_name, value: accounts.id}))">
-                                    </v-select>
-        
-                                    <span class="error" v-if="errors && errors.account_id">
-                                        @{{ errors.account_id[0] }}
-                                    </span>
-                                </div>
-        
-                                <div class="col-md-4">
-                                    <label class="ul-form__label">{{ __('translate.Category') }} <span
-                                            class="field_required">*</span></label>
-                                    <v-select @input="Selected_Category" placeholder="{{ __('translate.Choose_Category') }}"
-                                        v-model="expense.expense_category_id" :reduce="label => label.value"
-                                        :options="categories.map(categories => ({label: categories.title, value: categories.id}))">
-                                    </v-select>
-        
-                                    <span class="error" v-if="errors && errors.expense_category_id">
-                                        @{{ errors.expense_category_id[0] }}
-                                    </span>
-                                </div>
-        
-                                <div class="col-md-4">
-                                    <label for="expense_ref" class="ul-form__label">{{ __('translate.Expense_Ref') }} <span
-                                            class="field_required">*</span></label>
-                                    <input type="text" class="form-control" id="expense_ref"
-                                        placeholder="{{ __('translate.Enter_Expense_Ref') }}" v-model="expense.expense_ref">
-                                    <span class="error" v-if="errors && errors.expense_ref">
-                                        @{{ errors.expense_ref[0] }}
-                                    </span>
-                                </div>
-        
-        
-                                <div class="col-md-4">
-                                    <label for="date" class="ul-form__label">{{ __('translate.Date') }} <span
-                                            class="field_required">*</span></label>
-                                    <vuejs-datepicker id="expense_date" placeholder="{{ __('translate.Enter_expense_date') }}"
-                                        v-model="expense.date" input-class="form-control" name="expense_date"
-                                        format="yyyy-MM-dd" @closed="expense.date=formatDate(expense.date)">
-                                    </vuejs-datepicker>
-                                    <span class="error" v-if="errors && errors.date">
-                                        @{{ errors.date[0] }}
-                                    </span>
-                                </div>
-        
-        
-                                <div class="col-md-4">
-                                    <label for="amount" class="ul-form__label">{{ __('translate.Amount') }} <span
-                                            class="field_required">*</span></label>
-                                    <input type="text" v-model="expense.amount" class="form-control" name="amount"
-                                        placeholder="{{ __('translate.Enter_Amount') }}" id="amount">
-                                    <span class="error" v-if="errors && errors.amount">
-                                        @{{ errors.amount[0] }}
-                                    </span>
-                                </div>
-        
-                                <div class="col-md-4">
-                                    <label class="ul-form__label">{{ __('translate.Payment_method') }} <span
-                                            class="field_required">*</span></label>
-                                    <v-select @input="Selected_Payment_Method"
-                                        placeholder="{{ __('translate.Choose_Payment_method') }}"
-                                        v-model="expense.payment_method_id" :reduce="label => label.value"
-                                        :options="payment_methods.map(payment_methods => ({label: payment_methods.title, value: payment_methods.id}))">
-                                    </v-select>
-        
-                                    <span class="error" v-if="errors && errors.payment_method_id">
-                                        @{{ errors.payment_method_id[0] }}
-                                    </span>
-                                </div>
-        
-                                <div class="col-md-4">
-                                    <label for="attachment" class="ul-form__label">{{ __('translate.Attachment') }}</label>
-                                    <input name="attachment" @change="changeAttachement" type="file" class="form-control"
-                                        id="attachment">
-                                    <span class="error" v-if="errors && errors.attachment">
-                                        @{{ errors.attachment[0] }}
-                                    </span>
-                                </div>
-        
-                                <div class="col-md-12">
-                                    <label for="description"
-                                        class="ul-form__label">{{ __('translate.Please_provide_any_details') }}</label>
-                                    <textarea type="text" v-model="expense.description" class="form-control" name="description"
-                                        id="description"
-                                        placeholder="{{ __('translate.Please_provide_any_details') }}"></textarea>
-                                </div>
-        
-                            </div>
+                          
 
                             <div class="row mt-3">
 
@@ -470,6 +343,7 @@ DB::table('notifications')
             accounts: @json($accounts),
             errors:[],
             travels: [], 
+
             travel: {
                 company_id: "",
                 employee_id: "",
@@ -486,21 +360,12 @@ DB::table('notifications')
                 attachment:"",
                 expense_category_id:""
             },
-            expense: {
-            account_id: "",
-            expense_category_id:"",
-            amount:"",
-            payment_method_id:"",
-            date:"",
-            expense_ref:"",
-            description:"",
-            attachment:"",
-            }, 
+         
         },
        
         methods: {
 
-            changeAttachement (e){
+            changeAttachement(e){
                 let file = e.target.files[0];
                 this.travel.attachment = file;
             },
@@ -546,6 +411,7 @@ DB::table('notifications')
                 this.Get_Data_Edit(travel.id);
                 this.Get_employees_by_company(travel.company_id);
                 this.travel = travel;
+                this.travel.attachment = '';
                 $('#Travel_Modal').modal('show');
             },
             
@@ -636,7 +502,7 @@ DB::table('notifications')
                 var self = this;
                 self.SubmitProcessing = true;
                 let exp_data = new FormData();
-
+                    // console.log($('#travel_status').val())
                     exp_data.append("company_id", self.travel.company_id);
                     exp_data.append("employee_id", self.travel.employee_id);
                     exp_data.append("arrangement_type_id", self.travel.arrangement_type_id);
@@ -648,7 +514,7 @@ DB::table('notifications')
                     exp_data.append("visit_purpose", self.travel.visit_purpose)
                     exp_data.append("visit_place", self.travel.visit_place);
                     exp_data.append("travel_mode", self.travel.travel_mode);
-                    exp_data.append("status", 'pending');
+                    exp_data.append("status", $('#travel_status').val());
                     exp_data.append("attachment", self.travel.attachment);
                     exp_data.append("expense_category_id", $('#expense_category_id').val());
 
@@ -685,7 +551,7 @@ DB::table('notifications')
                 exp_data_update.append("visit_purpose", self.travel.visit_purpose)
                 exp_data_update.append("visit_place", self.travel.visit_place);
                 exp_data_update.append("travel_mode", self.travel.travel_mode);
-                exp_data_update.append("status", 'pending');
+                exp_data_update.append("status",  $('#travel_status').val());
                 exp_data_update.append("attachment", self.travel.attachment);
                 exp_data_update.append("expense_category_id", $('#expense_category_id').val());
                 exp_data_update.append("_method", "put");
@@ -786,12 +652,6 @@ DB::table('notifications')
                 }
             },
     
-    
-    
-            changeAttachement (e){
-                    let file = e.target.files[0];
-                    this.expense.attachment = file;
-                },
     
             //------------------------ Create Expense ---------------------------\\
             Create_Expense() {
