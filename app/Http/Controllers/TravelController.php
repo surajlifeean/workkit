@@ -29,6 +29,7 @@ class TravelController extends Controller
                 ->where('deleted_at', '=', null)
                 ->orderBy('id', 'desc')
                 ->get();
+            // dd($travels);
             $accounts = Account::where('deleted_at', '=', null)->orderBy('id', 'desc')->get(['id','account_name']);
 
             $exp_types = ExpenseCategory::get();
@@ -71,7 +72,7 @@ class TravelController extends Controller
         // dd($request);
         $user_auth = auth()->user();
         if ($user_auth->can('travel_add') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2) {
-
+            // dd($request);
             $this->validate($request, [
                 'company_id'         => 'required',
                 'employee_id'         => 'required',
@@ -111,13 +112,18 @@ class TravelController extends Controller
                 'expense_category_id' => $request['expense_category_id']
             ]);
             $comp_id = Employee::where('id', $user_auth->id)->pluck('company_id');
-            $new_notification = new Notification();
-            $new_notification->title = 'New employee expense';
-            $new_notification->message = 'New employee expense request available';
-            $new_notification->user_id = $user_auth->id;
-            $new_notification->is_seen = 0;
-            $new_notification->company_id = $comp_id[0];
-            $new_notification->save();
+
+            if($user_auth->role_users_id != 1){
+                $new_notification = new Notification();
+                $new_notification->title = 'New employee expense';
+                $new_notification->message = 'New employee expense request available';
+                $new_notification->user_id = $user_auth->id;
+                $new_notification->is_seen = 0;
+    
+                $new_notification->company_id = $comp_id;
+                $new_notification->save();
+            }
+         
             // dd($new_notification);
 
             return response()->json(['success' => true]);
@@ -171,7 +177,7 @@ class TravelController extends Controller
         // dd($request);
         $user_auth = auth()->user();
         if ($user_auth->can('travel_edit') || $user_auth->role_users_id == 4 || $user_auth->role_users_id == 2) {
-
+         
             $this->validate($request, [
                 'company_id'         => 'required',
                 'employee_id'         => 'required',
@@ -186,11 +192,12 @@ class TravelController extends Controller
                 'status'              => 'required',
 
             ]);
+            //    dd($request);
             $travel = Travel::findOrFail($id);
 
             $Current_attachment = $travel->attachment;
             $filename = null;
-            if ($request->attachment != 'null') {
+            if ($request->attachment != 'null' && $request->hasFile('attachment')) {
                 if ($request->attachment != $Current_attachment) {
 
                     $image = $request->file('attachment');

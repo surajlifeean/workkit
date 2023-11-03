@@ -12,10 +12,10 @@ class Employee extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'id','firstname','lastname','username','email','gender','phone','role_users_id','remaining_leave','total_leave',
-        'birth_date','department_id','designation_id','office_shift_id','joining_date',
-        'leaving_date','marital_status','employment_type','city','province','zipcode','address','resume','avatar','document',
-        'country','company_id','facebook','skype','whatsapp','twitter','linkedin','hourly_rate','basic_salary', 'direct_manager_user_id'
+        'id', 'firstname', 'lastname', 'username', 'email', 'gender', 'phone', 'role_users_id', 'remaining_leave', 'total_leave',
+        'birth_date', 'department_id', 'designation_id', 'office_shift_id', 'joining_date',
+        'leaving_date', 'marital_status', 'employment_type', 'city', 'province', 'zipcode', 'address', 'resume', 'avatar', 'document',
+        'country', 'company_id', 'facebook', 'skype', 'whatsapp', 'twitter', 'linkedin', 'hourly_rate', 'basic_salary', 'direct_manager_user_id'
     ];
 
     protected $casts = [
@@ -32,10 +32,10 @@ class Employee extends Model
     ];
 
     public function RoleUser()
-	{
-        return $this->hasone('Spatie\Permission\Models\Role','id',"role_users_id");
+    {
+        return $this->hasone('Spatie\Permission\Models\Role', 'id', "role_users_id");
     }
-    
+
 
     public function company()
     {
@@ -57,7 +57,12 @@ class Employee extends Model
         return $this->hasOne('App\Models\OfficeShift', 'id', 'office_shift_id');
     }
 
-    
+    public function travel()
+    {
+        return $this->belongsTo('App\Models\Travel', 'employee_id', 'id');
+    }
+
+
     public function attendance()
     {
         return $this->hasMany(Attendance::class);
@@ -66,8 +71,8 @@ class Employee extends Model
     public function leave()
     {
         return $this->hasMany(Leave::class)
-        ->select('id','employee_id','start_date','end_date','status')
-        ->where('status' , 'approved');
+            ->select('id', 'employee_id', 'start_date', 'end_date', 'status')
+            ->where('status', 'approved');
     }
 
     public function user()
