@@ -83,6 +83,7 @@
                  </li>
             @endif
             {{----------------------------------------------------------- core -----------------------------------------}}
+            @if(auth()->user()->role_users_id != 4)
             @if (auth()->user()->can('office_shift_view') || auth()->user()->can('event_view') || auth()->user()->can('holiday_view') || auth()->user()->can('award_view') || auth()->user()->can('complaint_view') || auth()->user()->can('travel_view'))
                 <li class="" data-item="hr">
                     <a class="link_btn {{  ( request()->is('hr/*') || request()->is('core/*') || request()->is('users')) ? 'active_link' : '' }}" href="#"
@@ -193,6 +194,7 @@
                         @endif
                     </ul>
                 </li>
+            @endif
             @endif
             {{------------------------------------------------ Department -------------------------------------------}}
             @if (auth()->user()->can('company_view') || auth()->user()->can('department_view') || auth()->user()->can('designation_view') || auth()->user()->can('policy_view') || auth()->user()->can('announcement_view'))
