@@ -76,7 +76,7 @@
                     </div>
                 </div>
                {{-- <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                    <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                         <div class="card-body text-center">
                             <i class="i-Dropbox"></i>
                             <div class="content">
@@ -90,7 +90,7 @@
                
 
                {{-- <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                    <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                         <div class="card-body text-center">
                             <i class="i-Gift-Box"></i>
                             <div class="content">
@@ -142,7 +142,7 @@
 
     <div class="row">
                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                    <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                         <div class="card-body text-center">
                             <i class="i-Check"></i>
                             <div class="content">
@@ -154,7 +154,7 @@
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                    <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                         <div class="card-body text-center">
                             <i class="i-Letter-Open"></i>
                             <div class="content">

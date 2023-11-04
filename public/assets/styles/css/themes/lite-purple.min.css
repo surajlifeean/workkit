@@ -2509,7 +2509,7 @@ pre code {
   background-color: #fff;
   border-color: #a679d2;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(102, 51, 153, 0.25);
+  box-shadow: 0 0 0 0.1rem rgba(0, 0, 0, 0.1);
 }
 
 .form-control::-moz-placeholder {

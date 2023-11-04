@@ -56,12 +56,12 @@
     <!-- ICON BG -->
     <div class="col-lg-3 col-md-6 col-sm-6">
         <a href="/employees">
-            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+            <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
                     <i class="i-Engineering"></i>
                     <div class="content">
                         <p class="text-muted mt-2 mb-0">{{ __('translate.Employees') }}</p>
-                        <p class="text-primary text-24 line-height-1 mb-2">{{ $count_employee }}</p>
+                        <p class="text-{{  $setting->theme_color  }} text-24 line-height-1 mb-2">{{ $count_employee }}</p>
                     </div>
                 </div>
             </div>
@@ -70,12 +70,12 @@
 
     <div class="col-lg-3 col-md-6 col-sm-6">
         <a href="/employee/my_requests">
-            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+            <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
                     <i class="i-Boy"></i>
                     <div class="content">
                         <p class="text-muted mt-2 mb-0">{{ __('translate.My_Request') }}</p>
-                        {{-- <p class="text-primary text-24 line-height-1 mb-2">{{ $count_clients }}</p> --}}
+                        {{-- <p class="text-{{  $setting->theme_color  }} text-24 line-height-1 mb-2">{{ $count_clients }}</p> --}}
                     </div>
                 </div>
             </div>
@@ -84,12 +84,12 @@
 
     <div class="col-lg-3 col-md-6 col-sm-6">
         <a href="/tasks">
-            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+            <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">    
                     <i class="i-Dropbox"></i>
                     <div class="content">
                         <p class="text-muted mt-2 mb-0">{{ __('translate.Team_Goal') }}</p>
-                        <p class="text-primary text-24 line-height-1 mb-2">{{ $count_task }}</p>
+                        <p class="text-{{  $setting->theme_color  }} text-24 line-height-1 mb-2">{{ $count_task }}</p>
                     </div>
                 </div>
             </div>
@@ -98,12 +98,12 @@
 
     <div class="col-lg-3 col-md-6 col-sm-6">
         <a href="/projects">
-            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+            <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
                     <i class="i-Check"></i>
                     <div class="content">
                         <p class="text-muted mt-2 mb-0">{{ __('translate.Actions') }}</p>
-                        <p class="text-primary text-24 line-height-1 mb-2">{{ $count_project }}</p>
+                        <p class="text-{{  $setting->theme_color  }} text-24 line-height-1 mb-2">{{ $count_project }}</p>
                     </div>
                 </div>
             </div>

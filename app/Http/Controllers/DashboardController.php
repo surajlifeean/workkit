@@ -19,6 +19,7 @@ use App\Models\EmployeeTask;
 use App\Models\WorkFrom;
 use Carbon\Carbon;
 use DB;
+use Illuminate\Support\Facades\App;
 
 class DashboardController extends Controller
 {
@@ -29,6 +30,13 @@ class DashboardController extends Controller
      */
     public function dashboard_admin()
     {
+        if (isset($_COOKIE['language'])) {
+            App::setLocale($_COOKIE['language']);
+        } else {
+            setcookie('language', 'fr', time() + (86400 * 365), "/");
+            App::setLocale('fr'); 
+        }
+
         $user_auth = auth()->user();
         if ($user_auth->role_users_id === 1) {
 
@@ -174,6 +182,13 @@ class DashboardController extends Controller
 
     public function dashboard_employee()
     {
+        if (isset($_COOKIE['language'])) {
+            App::setLocale($_COOKIE['language']);
+        } else {
+            setcookie('language', 'fr', time() + (86400 * 365), "/");
+            App::setLocale('fr'); 
+        }
+
         $user_auth = auth()->user();
         $employee = Employee::with('company:id,name', 'department:id,department', 'office_shift')->findOrFail($user_auth->id);
 
@@ -263,6 +278,12 @@ class DashboardController extends Controller
 
     public function dashboard_client()
     {
+        if (isset($_COOKIE['language'])) {
+            App::setLocale($_COOKIE['language']);
+        } else {
+            setcookie('language', 'fr', time() + (86400 * 365), "/");
+            App::setLocale('fr'); 
+        }
         $user_auth = auth()->user();
 
 
@@ -306,6 +327,12 @@ class DashboardController extends Controller
 
     public function dashboard_hr()
     {
+        if (isset($_COOKIE['language'])) {
+            App::setLocale($_COOKIE['language']);
+        } else {
+            setcookie('language', 'fr', time() + (86400 * 365), "/");
+            App::setLocale('fr'); 
+        }
         $user_auth = auth()->user();
         if ($user_auth->role_users_id === 4) {
             $day_in_now = strtolower(Carbon::now()->format('l')) . '_in';
