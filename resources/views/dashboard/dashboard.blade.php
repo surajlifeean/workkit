@@ -4,17 +4,17 @@
 @section('page-css')
     <link rel="stylesheet" href="{{ asset('assets/styles/vendor/datatables.min.css') }}">
 @endsection
- 
+
 <div class="row" id="section_Dashboard">
     <!-- ICON BG -->
     <div class="col-lg-3 col-md-6 col-sm-6">
         <a href="/employees">
-            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+            <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
                     <i class="i-Engineering"></i>
                     <div class="content">
                         <p class="text-muted mt-2 mb-0">{{ __('translate.Employees') }}</p>
-                        <p class="text-primary text-24 line-height-1 mb-2">{{ $count_employee }}</p>
+                        <p class="text-{{  $setting->theme_color  }} text-24 line-height-1 mb-2">{{ $count_employee }}</p>
                     </div>
                 </div>
             </div>
@@ -23,12 +23,12 @@
 
     <div class="col-lg-3 col-md-6 col-sm-6">
         <a href="/clients">
-            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+            <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
                     <i class="i-Boy"></i>
                     <div class="content">
                         <p class="text-muted mt-2 mb-0">{{ __('translate.Clients') }}</p>
-                        <p class="text-primary text-24 line-height-1 mb-2">{{ $count_clients }}</p>
+                        <p class="text-{{  $setting->theme_color  }} text-24 line-height-1 mb-2">{{ $count_clients }}</p>
                     </div>
                 </div>
             </div>
@@ -37,12 +37,12 @@
 
     <div class="col-lg-3 col-md-6 col-sm-6">
         <a href="/projects">
-            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+            <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
                     <i class="i-Dropbox"></i>
                     <div class="content">
                         <p class="text-muted mt-2 mb-0">{{ __('translate.Projects') }}</p>
-                        <p class="text-primary text-24 line-height-1 mb-2">{{ $count_project }}</p>
+                        <p class="text-{{  $setting->theme_color  }} text-24 line-height-1 mb-2">{{ $count_project }}</p>
                     </div>
                 </div>
             </div>
@@ -51,12 +51,12 @@
 
     <div class="col-lg-3 col-md-6 col-sm-6">
         <a href="/tasks">
-            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+            <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
                     <i class="i-Check"></i>
                     <div class="content">
                         <p class="text-muted mt-2 mb-0">{{ __('translate.Tasks') }}</p>
-                        <p class="text-primary text-24 line-height-1 mb-2">{{ $count_task }}</p>
+                        <p class="text-{{  $setting->theme_color  }} text-24 line-height-1 mb-2">{{ $count_task }}</p>
                     </div>
                 </div>
             </div>
@@ -163,7 +163,6 @@
 
     
 </div>
-
 @endsection
 
 @section('page-js')
@@ -173,11 +172,20 @@
 <script src="{{ asset('assets/js/datatables.script.js') }}"></script>
 <script>
     // Chart Employee count by department
+    // bg-primary
+ 
+
+    // Get the element by ID
+   
+
+
 
     let echartElemBar = document.getElementById('echartBar');
     if (echartElemBar) {
         let echartBar = echarts.init(echartElemBar);
         var dark_heading = "#c2c6dc";
+        const barColors = ['#6633d1', '#f7b84a'];
+        
         echartBar.setOption({
 
             formatter: function(params) {
@@ -203,14 +211,21 @@
                 axisLabel: {
                     color: dark_heading,
                     interval: 0,
-                    rotate: 30
+                    rotate: 30,
+                    itemStyle: {
+                        color: function(params) {
+                        return barColors[params.dataIndex % barColors.length];
+                        },
+                    }
                 },
                 axisLine: {
                     show: true,
                     color: dark_heading,
 
                     lineStyle: {
-                        color: dark_heading,
+                        color: function(params) {
+                        return barColors[params.dataIndex % barColors.length];
+                        },
                     }
                 },
 
@@ -245,10 +260,12 @@
                         color: '#639'
                     },
                     type: 'bar',
-                    color: '#7569b3',
                     barGap: 0,
                     smooth: true,
                     itemStyle: {
+                        color: function(params) {
+                        return barColors[params.dataIndex % barColors.length];
+                        },
                         emphasis: {
                             shadowBlur: 10,
                             shadowOffsetX: 0,
@@ -383,10 +400,10 @@
                     data: @json($expenses_data),
                     label: {
                         show: false,
-                        color: "#8B5CF6"
+                        color: '#f44336',
                     },
                     type: 'bar',
-                    color: "#A78BFA",
+                    color: '#f44336',
                     barGap: 0,
                     smooth: true,
                     itemStyle: {
@@ -399,26 +416,7 @@
                     }
                 },
 
-                 {
-                    name: 'Deposits',
-                    data: @json($deposits_data),
-                    label: {
-                        show: false,
-                        color: "#0168c1"
-                    },
-                    type: 'bar',
-                    color: "#DDD6FE",
-                    barGap: 0,
-                    smooth: true,
-                    itemStyle: {
-                        emphasis: {
-                            shadowBlur: 10,
-                            shadowOffsetX: 0,
-                            shadowOffsetY: -2,
-                            shadowColor: 'rgba(0, 0, 0, 0.3)'
-                        }
-                    }
-                },
+                //           
 
             ]
         });

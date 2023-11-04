@@ -165,4 +165,46 @@
         document.body.classList.toggle('dark-theme');
     });
 </script>
+<input type="text" hidden id="p_color" class="text-{{ $setting->theme_color }}">
+
+<script>
+       function rgbToHex(rgb) {
+    // Convert RGB to hex
+    var hex = Number(rgb).toString(16);
+    if (hex.length < 2) {
+        hex = "0" + hex;
+    }
+    return hex;
+}
+     var pColorElement = document.getElementById('p_color');
+    
+    // Get the computed styles of the element
+    var computedStyles = window.getComputedStyle(pColorElement);
+    
+    // Get the color property in RGB format
+    var rgbColor = computedStyles.color;
+    
+    // Convert RGB to hexadecimal
+    var hexColor = rgbColor.match(/\d+/g).map(rgbToHex).join('');
+
+    console.log('Color in Hex:', '#' + hexColor);
+    var dynamicStyle = document.createElement('style');
+    dynamicStyle.innerHTML = '.page-item.active .page-link {' +
+                             '    background-color: #' + hexColor + ' !important;' +
+                             '    border-color: #' + hexColor + ' !important;;' +
+                             '}';
+    document.head.appendChild(dynamicStyle);
+    var dynamicStyleFocusInp = document.createElement('style');
+    dynamicStyleFocusInp.innerHTML = '.form-control:focus {' +
+                             '    border-color: #' + hexColor + ' !important;;' +
+                             '}';
+    document.head.appendChild(dynamicStyleFocusInp);
+</script>
+<style>
+    .page-item.active .page-link {
+      z-index: 3;
+      color: #fff;
+     
+    }
+</style>
 <!-- header top menu end -->
