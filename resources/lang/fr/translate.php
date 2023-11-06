@@ -308,7 +308,7 @@ return [
     'On_Hold' => 'En attente',
     'Out' => 'à',
     'Overview' => 'Aperçu',
-    'My_Request' => 'Ma demande',
+    'My_Request' => ' Mes demandes',
     'Communication' => 'Communication',
     'Password' => 'Mot de passe',
     'Payment' => 'Paiement',
@@ -535,7 +535,6 @@ return [
     "Employee Expenses" => "Dépenses des employés",    
     "Employee Expense List" => "Liste des dépenses des employés",
     "This Week Expense" => "Dépense de cette semaine",
-    "Payment successful Package will be active within 2 days." => "Le paiement réussi Le forfait sera actif dans les 2 jours."
-
-
+    "Payment successful Package will be active within 2 days." => "Le paiement réussi Le forfait sera actif dans les 2 jours.",
+    "Male" => "Masculin", "Female" => "Féminin"
 ];

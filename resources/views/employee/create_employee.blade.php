@@ -44,13 +44,13 @@
                         <div class="col-md-6">
                             <label class="ul-form__label">{{ __('translate.Gender') }} <span
                                     class="field_required">*</span></label>
-                            <v-select @input="Selected_Gender" placeholder="{{ __('translate.Choose_Gender') }}"
-                                v-model="employee.gender" :reduce="(option) => option.value" :options="
-                                    [
-                                        {label: 'Male', value: 'male'},
-                                        {label: 'Female', value: 'female'},
-                                    ]">
-                            </v-select>
+                                    <v-select @input="Selected_Gender" placeholder="@lang('translate.Choose_Gender')"
+                                        v-model="employee.gender" :reduce="(option) => option.value" :options="[
+                                            { label: '@lang('translate.Male')', value: 'male' },
+                                            { label: '@lang('translate.Female')', value: 'female' },
+                                        ]">
+                                    </v-select>
+
 
                             <span class="error" v-if="errors && errors.gender">
                                 @{{ errors.gender[0] }}
@@ -62,7 +62,7 @@
 
                             <vuejs-datepicker id="birth_date" name="birth_date"
                                 placeholder="{{ __('translate.Enter_Birth_date') }}" v-model="employee.birth_date"
-                                input-class="form-control" format="yyyy-MM-dd"
+                                input-class="form-control" format="dd-MM-yyyy"
                                 @closed="employee.birth_date=formatDate(employee.birth_date)">
                             </vuejs-datepicker>
 
@@ -137,7 +137,7 @@
 
                             <vuejs-datepicker id="joining_date" name="joining_date"
                                 placeholder="{{ __('translate.Enter_Joining_Date') }}" v-model="employee.joining_date"
-                                input-class="form-control" format="yyyy-MM-dd"
+                                input-class="form-control" format="dd-MM-yyyy"
                                 @closed="employee.joining_date=formatDate(employee.joining_date)">
                             </vuejs-datepicker>
 

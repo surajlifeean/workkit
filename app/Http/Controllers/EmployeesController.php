@@ -91,7 +91,7 @@ class EmployeesController extends Controller
         if ($user_auth->can('employee_add')) {
 
             if ( ( $active_plan->total_users - 1 ) > $userCount) {
-                dd('hitts');
+             
                 $this->validate($request, [
                     'firstname'      => 'required|string|max:255',
                     'lastname'       => 'required|string|max:255',

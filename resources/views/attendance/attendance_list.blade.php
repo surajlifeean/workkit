@@ -138,7 +138,7 @@
 
                                     <vuejs-datepicker id="date" name="date"
                                         placeholder="{{ __('translate.Enter_Attendance_date') }}"
-                                        v-model="attendance.date" input-class="form-control" format="yyyy-MM-dd"
+                                        v-model="attendance.date" input-class="form-control" format="dd-MM-yyyy"
                                         @closed="attendance.date=formatDate(attendance.date)">
                                     </vuejs-datepicker>
 

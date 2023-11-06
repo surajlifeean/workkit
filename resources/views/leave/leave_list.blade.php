@@ -173,7 +173,7 @@
 
                                     <vuejs-datepicker id="start_date" name="start_date"
                                         placeholder="{{ __('translate.Enter_Start_date') }}" v-model="leave.start_date"
-                                        input-class="form-control" format="yyyy-MM-dd"
+                                        input-class="form-control" format="dd-MM-yyyy"
                                         @closed="leave.start_date=formatDate(leave.start_date)">
                                     </vuejs-datepicker>
 
@@ -188,7 +188,7 @@
 
                                     <vuejs-datepicker id="end_date" name="end_date"
                                         placeholder="{{ __('translate.Enter_Finish_date') }}" v-model="leave.end_date"
-                                        input-class="form-control" format="yyyy-MM-dd"
+                                        input-class="form-control" format="dd-MM-yyyy"
                                         @closed="leave.end_date=formatDate(leave.end_date)">
                                     </vuejs-datepicker>
 

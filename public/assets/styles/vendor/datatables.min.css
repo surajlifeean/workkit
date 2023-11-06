@@ -19,11 +19,13 @@ table.dataTable {
 }
 
 table.dataTable thead{
-    font-size: 13px;
+    font-size: 11px;
     background: #e3eced;
     color: #8590a7;
 }
-
+table.dataTable tbody tr td{
+ font-size: 11px;
+}
 table.dataTable td,
 table.dataTable th {
     -webkit-box-sizing: content-box;

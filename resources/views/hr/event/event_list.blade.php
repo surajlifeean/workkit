@@ -111,7 +111,7 @@
                                             class="field_required">*</span></label>
                                     <vuejs-datepicker v-model="event.date"
                                         placeholder="{{ __('translate.Enter_Event_date') }}" input-class="form-control"
-                                        name="date" id="date" format="yyyy-MM-dd"
+                                        name="date" id="date" format="dd-MM-yyyy"
                                         @closed="event.date=formatDate(event.date)">
                                     </vuejs-datepicker>
                                     <span class="error" v-if="errors && errors.date">

@@ -8,7 +8,7 @@
             @if (auth()->user()->role_users_id == 1)
             {{-- @can('Dashboard_view') --}}
                 <li class="">
-                    <a class="link_btn {{ request()->is('dashboard/admin') ? 'active_link' : '' }}" href="/dashboard/admin">
+                    <a class="link_btn {{ request()->is('dashboard/*') ? 'active_link' : '' }}" href="/dashboard/admin">
                         <div class="d-flex align-items-center justify-content-start">
                         <i class="nav-icon text-{{$setting->theme_color}} i-Bar-Chart"></i>
                         <span class="">{{ __('translate.Dashboard') }}</span> 
@@ -18,7 +18,7 @@
             {{-- @endcan --}}
             @elseif(auth()->user()->role_users_id == 3)
                 <li class="">
-                    <a class="link_btn {{ request()->is('dashboard/client') ? 'active_link' : '' }}" href="/dashboard/client">
+                    <a class="link_btn {{ request()->is('dashboard/*') ? 'active_link' : '' }}" href="/dashboard/client">
                         <div class="d-flex align-items-center justify-content-start">
                         <i class="nav-icon text-{{$setting->theme_color}} i-Bar-Chart"></i>
                         <span>{{ __('translate.Dashboard') }}</span>
@@ -27,7 +27,7 @@
                 </li>
             @elseif(auth()->user()->role_users_id == 2)
                 <li class="">
-                    <a class="link_btn {{ request()->is('dashboard/employee') ? 'active_link' : '' }}" href="/dashboard/employee">
+                    <a class="link_btn {{ request()->is('dashboard/*') ? 'active_link' : '' }}" href="/dashboard/employee">
                         <div class="d-flex align-items-center justify-content-start">
                         <i class="nav-icon text-{{$setting->theme_color}} i-Bar-Chart"></i>
                         <span>{{ __('translate.Dashboard') }}</span>
@@ -36,7 +36,7 @@
                 </li>
             @elseif(auth()->user()->role_users_id == 4)
                 <li class="">
-                    <a class="link_btn {{ request()->is('dashboard/hr') ? 'active_link' : '' }}" href="/dashboard/hr">
+                    <a class="link_btn {{ request()->is('dashboard/*') ? 'active_link' : '' }}" href="/dashboard/hr">
                         <div class="d-flex align-items-center justify-content-start">
                         <i class="nav-icon text-{{$setting->theme_color}} i-Bar-Chart"></i>
                         <span>{{ __('translate.Dashboard') }}</span>
@@ -351,7 +351,7 @@
                     <a class="link_btn {{ request()->is('tasks') ? 'active_link' : '' }}" href="/tasks">
                         <div class="d-flex align-items-center justify-content-start">  
                         <i class="nav-icon text-{{$setting->theme_color}} i-Dropbox"></i>
-                        <span>{{ __('translate.Team_Goal') }}</span></div>
+                        <span>{{ __('translate.Tasks') }}</span></div>
                     </a>
                 </li>
             @endcan

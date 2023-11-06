@@ -1,3 +1,8 @@
+<?php
+
+use Illuminate\Support\Facades\DB;
+
+ $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,9 +10,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel=icon href={{ asset('assets/images/logo.png') }}>
+    <link rel=icon href={{ asset('assets/images/' .  $setting->favicon) }}>
 
-    <title>WorkTick - Ultimate HRM & Project Management</title>
+    <title>Kenarh - The Best HRM & Project Management</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/styles/css/themes/lite-purple.min.css')}}">
 </head>
@@ -20,7 +25,7 @@
                     <div class="col-md-12">
                         <div class="p-4">
                             <div class="auth-logo text-center mb-4">
-                                <img src="{{asset('assets/images/LOGO1.png')}}" alt="">
+                                <img src="{{asset('assets/images/' . $setting->logo)}}" alt="">
                             </div>
                             <h1 class="mb-3 text-18">Sign In</h1>
                             <form method="POST" action="{{ route('login') }}">

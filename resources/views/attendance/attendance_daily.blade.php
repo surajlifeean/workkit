@@ -77,8 +77,8 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <div class="col-12 col-md-6 d-flex">
-                        <h5 class="mr-auto">{{ $currentYear }}, {{ $monthName}}</h5>
+                    <div class="col-12 col-md-3 d-flex my-1 my-sm-0">
+                        <h5 class="mr-auto">{{ $monthName}}, {{ $currentYear }} </h5>
                         <select id="recordsPerPage" class="form-control" style="width: 80px;">
                             <option value="10">10</option>
                             <option value="1">1</option>
@@ -88,11 +88,11 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
                             <option value="all">All</option>
                         </select>
                     </div>
-                    <div class="col-12 col-sm-3">
+                    <div class="col-12 col-sm-3 my-sm-0 my-1">
                         <input type="text" class="form-control" placeholder="Search Employee.." id="employeeSearch">
                     </div>
 
-                    <div class="col-12 col-sm-3 d-flex ">
+                    <div class="col-12 col-sm-6 d-flex col-lg-3 my-1 my-sm-0">
                         <form action="{{ route('daily_attendance') }}" class="d-flex" method="GET">
                             @csrf
                             @method('GET')
