@@ -62,7 +62,7 @@
 
                             <vuejs-datepicker id="birth_date" name="birth_date"
                                 placeholder="{{ __('translate.Enter_Birth_date') }}" v-model="employee.birth_date"
-                                input-class="form-control" format="yyyy-MM-dd"
+                                input-class="form-control" format="dd-MM-yyyy"
                                 @closed="employee.birth_date=formatDate(employee.birth_date)">
                             </vuejs-datepicker>
 
@@ -118,7 +118,7 @@
 
                             <vuejs-datepicker id="joining_date" name="joining_date"
                                 placeholder="{{ __('translate.Enter_Joining_Date') }}" v-model="employee.joining_date"
-                                input-class="form-control" format="yyyy-MM-dd"
+                                input-class="form-control" format="dd-MM-yyyy"
                                 @closed="employee.joining_date=formatDate(employee.joining_date)">
                             </vuejs-datepicker>
 
@@ -129,7 +129,7 @@
 
                             <vuejs-datepicker id="leaving_date" name="leaving_date"
                                 placeholder="{{ __('translate.Enter_Leaving_Date') }}" v-model="employee.leaving_date"
-                                input-class="form-control" format="yyyy-MM-dd"
+                                input-class="form-control" format="dd-MM-yyyy"
                                 @closed="employee.leaving_date=formatDate(employee.leaving_date)">
                             </vuejs-datepicker>
 

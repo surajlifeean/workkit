@@ -157,7 +157,7 @@
                             <div class="form-group col-md-4">
                                 <label class="ul-form__label" for="picker3">{{ __('translate.Birth_date') }}</label>
 
-                                <vuejs-datepicker id="birth_date" name="birth_date" placeholder="{{ __('translate.Enter_Birth_date') }}" v-model="employee.birth_date" input-class="form-control" format="yyyy-MM-dd" @closed="employee.birth_date=formatDate(employee.birth_date)">
+                                <vuejs-datepicker id="birth_date" name="birth_date" placeholder="{{ __('translate.Enter_Birth_date') }}" v-model="employee.birth_date" input-class="form-control" format="dd-MM-yyyy" @closed="employee.birth_date=formatDate(employee.birth_date)">
                                 </vuejs-datepicker>
 
                             </div>

@@ -33,8 +33,8 @@ class WorkFromController extends Controller
         foreach ($get_halfdays_times as $get_halfdays_time) {
             if ($get_halfdays_time->work_from_home_time != null) {
                 $dayOfWeekString = strtolower(date('l', strtotime($get_halfdays_time->work_from_home_date)));
-                $officeShift[$dayOfWeekString . "_in"] = date('H:iA', strtotime($get_halfdays_time->work_from_home_time));
-                $officeShift[$dayOfWeekString . "_out"] = date('H:iA', strtotime($get_halfdays_time->work_from_home_time . ' +4 hours'));                        
+                $officeShift[$dayOfWeekString . "_in"] = date('H:i', strtotime($get_halfdays_time->work_from_home_time));
+                $officeShift[$dayOfWeekString . "_out"] = date('H:i', strtotime($get_halfdays_time->work_from_home_time . ' +4 hours'));                        
             }
         }
 
@@ -63,8 +63,8 @@ class WorkFromController extends Controller
                     $value['shifts'] = $shift;
                     if ($wfhome->work_from_home_time != null) {
                         $dayOfWeekString = strtolower(date('l', strtotime($wfhome->work_from_home_date)));
-                        $value['shifts'][$dayOfWeekString . "_in"] = date('H:iA', strtotime($wfhome->work_from_home_time));
-                        $value['shifts'][$dayOfWeekString . "_out"] = date('H:iA', strtotime($wfhome->work_from_home_time . ' +4 hours'));                        
+                        $value['shifts'][$dayOfWeekString . "_in"] = date('H:i', strtotime($wfhome->work_from_home_time));
+                        $value['shifts'][$dayOfWeekString . "_out"] = date('H:i', strtotime($wfhome->work_from_home_time . ' +4 hours'));                        
                     }
                 } else {
                     $value['shifts'] = null;

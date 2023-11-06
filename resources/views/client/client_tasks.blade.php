@@ -100,7 +100,7 @@
 
                                     <vuejs-datepicker id="start_date" name="start_date"
                                         placeholder="{{ __('translate.Enter_Start_Date') }}" v-model="task.start_date"
-                                        input-class="form-control" format="yyyy-MM-dd"
+                                        input-class="form-control" format="dd-MM-yyyy"
                                         @closed="task.start_date=formatDate(task.start_date)">
                                     </vuejs-datepicker>
 
@@ -115,7 +115,7 @@
 
                                     <vuejs-datepicker id="end_date" name="end_date"
                                         placeholder="{{ __('translate.Enter_Finish_date') }}" v-model="task.end_date"
-                                        input-class="form-control" format="yyyy-MM-dd"
+                                        input-class="form-control" format="dd-MM-yyyy"
                                         @closed="task.end_date=formatDate(task.end_date)">
                                     </vuejs-datepicker>
 

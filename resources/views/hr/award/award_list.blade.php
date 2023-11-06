@@ -169,7 +169,7 @@
 
                                     <vuejs-datepicker id="date" name="date"
                                         placeholder="{{ __('translate.Enter_award_date') }}" v-model="award.date"
-                                        input-class="form-control" format="yyyy-MM-dd"
+                                        input-class="form-control" format="dd-MM-yyyy"
                                         @closed="award.date=formatDate(award.date)">
                                     </vuejs-datepicker>
 

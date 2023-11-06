@@ -163,7 +163,7 @@ DB::table('notifications')
 
                                     <vuejs-datepicker id="start_date" name="start_date"
                                         placeholder="{{ __('translate.Enter_Start_date') }}" v-model="travel.start_date"
-                                        input-class="form-control" format="yyyy-MM-dd"
+                                        input-class="form-control" format="dd-MM-yyyy"
                                         @closed="travel.start_date=formatDate(travel.start_date)">
                                     </vuejs-datepicker>
 
@@ -178,7 +178,7 @@ DB::table('notifications')
 
                                     <vuejs-datepicker id="end_date" name="end_date"
                                         placeholder="{{ __('translate.Enter_Finish_date') }}" v-model="travel.end_date"
-                                        input-class="form-control" format="yyyy-MM-dd"
+                                        input-class="form-control" format="dd-MM-yyyy"
                                         @closed="travel.end_date=formatDate(travel.end_date)">
                                     </vuejs-datepicker>
 

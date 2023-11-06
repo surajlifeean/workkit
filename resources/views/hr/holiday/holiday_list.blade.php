@@ -123,7 +123,7 @@
 
                                     <vuejs-datepicker id="start_date" name="start_date"
                                         placeholder="{{ __('translate.Enter_Start_date') }}"
-                                        v-model="holiday.start_date" input-class="form-control" format="yyyy-MM-dd"
+                                        v-model="holiday.start_date" input-class="form-control" format="dd-MM-yyyy"
                                         @closed="holiday.start_date=formatDate(holiday.start_date)">
                                     </vuejs-datepicker>
 
@@ -138,7 +138,7 @@
 
                                     <vuejs-datepicker id="end_date" name="end_date"
                                         placeholder="{{ __('translate.Enter_Finish_date') }}" v-model="holiday.end_date"
-                                        input-class="form-control" format="yyyy-MM-dd"
+                                        input-class="form-control" format="dd-MM-yyyy"
                                         @closed="holiday.end_date=formatDate(holiday.end_date)">
                                     </vuejs-datepicker>
 

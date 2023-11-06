@@ -63,7 +63,7 @@
                                     class="field_required">*</span></label>
                             <vuejs-datepicker id="expense_date" placeholder="{{ __('translate.Enter_expense_date') }}"
                                 v-model="expense.date" input-class="form-control" name="expense_date"
-                                format="yyyy-MM-dd" @closed="expense.date=formatDate(expense.date)">
+                                format="dd-MM-yyyy" @closed="expense.date=formatDate(expense.date)">
                             </vuejs-datepicker>
                             <span class="error" v-if="errors && errors.date">
                                 @{{ errors.date[0] }}

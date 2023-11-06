@@ -62,7 +62,7 @@
                             <label for="date" class="ul-form__label">{{ __('translate.Date') }} <span
                                     class="field_required">*</span></label>
                             <vuejs-datepicker id="deposit_date" placeholder="{{ __('translate.Enter_deposit_date') }}"
-                                v-model="deposit.date" input-class="form-control" format="yyyy-MM-dd"
+                                v-model="deposit.date" input-class="form-control" format="dd-MM-yyyy"
                                 name="deposit_date" @closed="deposit.date=formatDate(deposit.date)">
 
                             </vuejs-datepicker>

@@ -309,7 +309,7 @@ return [
     'On_Hold' => 'On hold',
     'Out' => 'Out',
     'Overview' => 'Overview',
-    'My_Request' => 'My Request',
+    'My_Request' => 'My Requests',
     'Password' => 'Password',
     'Payment' => 'Payment',
     'Payment_Method' => 'Payment method',
@@ -567,5 +567,6 @@ return [
     "Employee Expenses" => "Employee Expenses",
     "Employee Expense List" => "Employee Expense List",
     "This Week Expense" => "This Week Expense",
-    "Payment successful Package will be active within 2 days." => "Payment successful Package will be active within 2 days."
+    "Payment successful Package will be active within 2 days." => "Payment successful Package will be active within 2 days.",
+    "Male" => "Male", "Female" => "Female",
 ];

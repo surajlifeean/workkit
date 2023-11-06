@@ -154,7 +154,7 @@
 
                                     <vuejs-datepicker id="date" name="date"
                                         placeholder="{{ __('translate.Enter_Date_of_Complaint') }}"
-                                        v-model="complaint.date" input-class="form-control" format="yyyy-MM-dd"
+                                        v-model="complaint.date" input-class="form-control" format="dd-MM-yyyy"
                                         @closed="complaint.date=formatDate(complaint.date)">
                                     </vuejs-datepicker>
 

@@ -91,117 +91,7 @@
         </div>
 
         <!-- Modal Add & Edit Attendance -->
-        <div class="modal fade" id="Attendance_Modal" tabindex="-1" role="dialog" aria-labelledby="Attendance_Modal"
-            aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 v-if="editmode" class="modal-title">
-                            <th>{{ __('translate.Edit') }}</th>
-                        </h5>
-                        <h5 v-else class="modal-title">
-                            <th>{{ __('translate.Create') }}</th>
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form @submit.prevent="editmode?Update_Attendance():Create_Attendance()">
-                            <div class="row">
-
-                                <div class="col-md-6">
-                                    <label class="ul-form__label">{{ __('translate.Company') }} <span
-                                            class="field_required">*</span></label>
-                                    <v-select @input="Selected_Company"
-                                        placeholder="{{ __('translate.Choose_Company') }}"
-                                        v-model="attendance.company_id" :reduce="label => label.value"
-                                        :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
-
-                                    <span class="error" v-if="errors && errors.company_id">
-                                        @{{ errors.company_id[0] }}
-                                    </span>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label class="ul-form__label">{{ __('translate.Employee') }} <span
-                                            class="field_required">*</span></label>
-                                    <v-select @input="Selected_Employee"
-                                        placeholder="{{ __('translate.Choose_Employee') }}"
-                                        v-model="attendance.employee_id" :reduce="label => label.value"
-                                        :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
-
-                                    </v-select>
-
-                                    <span class="error" v-if="errors && errors.employee_id">
-                                        @{{ errors.employee_id[0] }}
-                                    </span>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="date" class="ul-form__label">{{ __('translate.Date') }} <span
-                                            class="field_required">*</span></label>
-
-                                    <vuejs-datepicker id="date" name="date"
-                                        placeholder="{{ __('translate.Enter_Attendance_date') }}"
-                                        v-model="attendance.date" input-class="form-control" format="yyyy-MM-dd"
-                                        @closed="attendance.date=formatDate(attendance.date)">
-                                    </vuejs-datepicker>
-
-                                    <span class="error" v-if="errors && errors.date">
-                                        @{{ errors.date[0] }}
-                                    </span>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="clock_in" class="ul-form__label">{{ __('translate.Time_In') }} <span
-                                            class="field_required">*</span></label>
-
-                                    <vue-clock-picker v-model="attendance.clock_in"
-                                        placeholder="{{ __('translate.Time_In') }}" name="clock_in" id="clock_in">
-                                    </vue-clock-picker>
-                                    <span class="error" v-if="errors && errors.clock_in">
-                                        @{{ errors.clock_in[0] }}
-                                    </span>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="clock_out" class="ul-form__label">{{ __('translate.Time_Out') }} <span
-                                            class="field_required">*</span></label>
-
-                                    <vue-clock-picker v-model="attendance.clock_out"
-                                        placeholder="{{ __('translate.Time_Out') }}" name="clock_out" id="clock_out">
-                                    </vue-clock-picker>
-                                    <span class="error" v-if="errors && errors.clock_out">
-                                        @{{ errors.clock_out[0] }}
-                                    </span>
-                                </div>
-
-                            </div>
-
-
-                            <div class="row mt-3">
-
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-{{$setting->theme_color}}" :disabled="SubmitProcessing">
-                                        {{ __('translate.Submit') }}
-                                    </button>
-                                    <div v-once class="typo__p" v-if="SubmitProcessing">
-                                        <div class="spinner spinner-primary mt-3"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </form>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
+        
 
     </div>
 </div>
@@ -274,17 +164,21 @@
     var headerCells = headerRow.find('th');
 
     for (var i = 2; i < headerCells.length; i++) {
-        var formattedDate = formatDate(weekDates[i - 2]);
-        $(headerCells[i]).append('<br>' + formattedDate);
-        
+        var formattedDateHead = formatDate(weekDates[i - 2], 0);
+        $(headerCells[i]).append(", "+ formattedDateHead);
+        var formattedDate = formatDate(weekDates[i - 2], 1);
         checkWorkFromHome(formattedDate);
     }
  
-    function formatDate(date) {
+    function formatDate(date, is_head) {
         var day = date.getDate().toString().padStart(2, '0');
         var month = (date.getMonth() + 1).toString().padStart(2, '0');
         var year = date.getFullYear();
-        return  year + '-' + month + '-' + day ;
+        if (is_head === 1) {
+            return  year + '-' + month + '-' + day ;
+        } else {
+            return  day + '-' + month + '-' + year ;
+        }
     }
 
     function getWorkScheduleForDate(date, data) {
@@ -313,6 +207,7 @@
 
     function checkWorkFromHome(date){
         let shiftTime = getWorkScheduleForDate(date, shifts);
+        shiftTime = shiftTime.replace(/PM|AM/ig, '');
         if (wfhDates.includes(date)) {
             $('#self_row').append(`
                <td class="align-middle ${formattedDate}">
@@ -401,6 +296,7 @@
                         // shifts1[dayName + '_out'] = outTime;
                        }
                        let shiftTime = getWorkScheduleForDate(date, dayType === 'fullDay'? shifts : shifts1);
+                       shiftTime = shiftTime.replace(/PM|AM/ig, '');
 
                        if(type === 'From Office'){
                         $(`.${date}`).empty().append(`
@@ -451,6 +347,8 @@
         console.log(element)
         element.from_home.forEach(e => {
            let shiftsTime = getWorkScheduleForDate(e, element.shifts);
+           shiftsTime = shiftsTime.replace(/PM|AM/ig, '');
+
            let day = getDayName(e);
            $(`#em${element.employee_id} .${day}-cell`).append(`
                 <a  class="from-home d-flex align-items-center flex-column justify-content-center d-none  w-100px py-1 px-1" style="border: 2px solid #ff000040;border-radius: 0.5rem;box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.1);">

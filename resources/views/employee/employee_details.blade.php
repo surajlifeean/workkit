@@ -135,7 +135,7 @@
                                             <vuejs-datepicker id="birth_date" name="birth_date"
                                                 placeholder="{{ __('translate.Enter_Birth_date') }}"
                                                 v-model="employee.birth_date" input-class="form-control"
-                                                format="yyyy-MM-dd"
+                                                format="dd-MM-yyyy"
                                                 @closed="employee.birth_date=formatDate(employee.birth_date)">
                                             </vuejs-datepicker>
 
@@ -253,7 +253,7 @@
                                             <vuejs-datepicker id="joining_date" name="joining_date"
                                                 placeholder="{{ __('translate.Enter_Joining_Date') }}"
                                                 v-model="employee.joining_date" input-class="form-control"
-                                                format="yyyy-MM-dd"
+                                                format="dd-MM-yyyy"
                                                 @closed="employee.joining_date=formatDate(employee.joining_date)">
                                             </vuejs-datepicker>
 
@@ -266,7 +266,7 @@
                                             <vuejs-datepicker id="leaving_date" name="leaving_date"
                                                 placeholder="{{ __('translate.Enter_Leaving_Date') }}"
                                                 v-model="employee.leaving_date" input-class="form-control"
-                                                format="yyyy-MM-dd"
+                                                format="dd-MM-yyyy"
                                                 @closed="employee.leaving_date=formatDate(employee.leaving_date)">
                                             </vuejs-datepicker>
 
@@ -739,7 +739,7 @@
                                                                 <vuejs-datepicker id="start_date" name="start_date"
                                                                     placeholder="{{ __('translate.Enter_Start_date') }}"
                                                                     v-model="experience.start_date"
-                                                                    input-class="form-control" format="yyyy-MM-dd"
+                                                                    input-class="form-control" format="dd-MM-yyyy"
                                                                     @closed="experience.start_date=formatDate(experience.start_date)">
                                                                 </vuejs-datepicker>
 
@@ -757,7 +757,7 @@
                                                                 <vuejs-datepicker id="end_date" name="end_date"
                                                                     placeholder="{{ __('translate.Enter_Finish_Date') }}"
                                                                     v-model="experience.end_date"
-                                                                    input-class="form-control" format="yyyy-MM-dd"
+                                                                    input-class="form-control" format="dd-MM-yyyy"
                                                                     @closed="experience.end_date=formatDate(experience.end_date)">
                                                                 </vuejs-datepicker>
 
