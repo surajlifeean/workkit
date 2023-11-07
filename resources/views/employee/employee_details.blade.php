@@ -1097,8 +1097,8 @@
                                                 <tbody>
                                                     @foreach($travels as $travel)
                                                     <tr>
-                                                        <td>{{$travel->company->name}}</td>
-                                                        <td>{{$travel->arrangement_type->title}}</td>
+                                                        <td>{{$travel->company->name ?? 'N/A'}}</td>
+                                                        <td>{{$travel->arrangement_type->title ?? 'N/A'}}</td>
                                                         <td>{{$travel->start_date}}</td>
                                                         <td>{{$travel->end_date}}</td>
                                                         <td>{{$travel->visit_purpose}}</td>

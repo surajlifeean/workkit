@@ -29,6 +29,8 @@ use App\Models\ExpenseCategory;
 use App\Models\Travel;
 use App\Models\Project;
 use App\Models\Task;
+use App\Models\TaskDiscussion;
+use App\Models\TaskDocument;
 use App\Models\Training;
 use Carbon\Carbon;
 use DateTime;
@@ -325,11 +327,21 @@ class EmployeeSessionController extends Controller
         $tasks = Task::where('deleted_at', '=', null)
             ->with('project:id,title', 'assignedEmployees')
             ->join('employee_task', 'tasks.id', '=', 'employee_task.task_id')
+            // ->leftjoin('task_documents', 'tasks.id', '=' , 'task_documents.task_id')
+            // ->leftjoin('task_discussions', 'tasks.id', '=' , 'task_discussions.task_id')
             ->where('employee_id', $user_auth->id)
             ->orderBy('id', 'desc')
             ->get();
+        
+        foreach ($tasks as $task) {
+        //   dd($task);
+          $taskDocs = TaskDocument::where('task_id', $task->task_id)->get();
+          $task['taskDocs'] = $taskDocs;
+          $taskMessage = TaskDiscussion::where('task_id', $task->task_id)->get();
+          $task['taskMessage'] = $taskMessage;
+        }
 
-
+        // dd($tasks);
         $trainings = Training::where('deleted_at', '=', null)
             ->with('company:id,name', 'trainer:id,name', 'TrainingSkill:id,training_skill', 'assignedEmployees')
             ->join('employee_training', 'trainings.id', '=', 'employee_training.training_id')

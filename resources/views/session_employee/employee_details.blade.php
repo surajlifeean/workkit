@@ -1516,6 +1516,7 @@
                                                         <th>{{ __('translate.Status') }}</th>
                                                         <th>{{ __('translate.Priority') }}</th>
                                                         <th>{{ __('translate.Progress') }}</th>
+                                                        <th>{{ __('translate.Action') }}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1545,6 +1546,19 @@
                                                         </td>
                                                         <td>{{$task->priority}}</td>
                                                         <td>{{$task->task_progress}} %</td>
+                                                        <td>
+                                                      
+                                                        <a @click="Task_Msg({{ $task->taskMessage }})"
+                                                            class="ul-link-action text-primary mr-1" data-toggle="tooltip"
+                                                            data-placement="top" title="{{ __('translate.Message')}}">
+                                                            <i class="i-Pen-6"></i>
+                                                        </a>
+                                                        <a @click="Task_Docs({{ $task->taskDocs }})"
+                                                            class="ul-link-action text-primary mr-1" data-toggle="tooltip"
+                                                            data-placement="top" title="{{ __('translate.Document') }}">
+                                                            <i class="i-Data-Download"></i>
+                                                        </a>
+                                                        </td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>
@@ -1553,6 +1567,59 @@
                                     </div>
                                 </div>
                             </div>
+
+                                <div class="modal fade" id="Task_Msg" tabindex="-1" role="dialog"
+                                    aria-labelledby="send_msg_Modal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">{{ __('translate.Message') }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 h-400px overflow-auto" id="msg-box">
+                                                        <div class="d-flex flex-column" id="task_msg_box">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                            
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <div class="modal fade" id="Task_Docs" tabindex="-1" role="dialog"
+                                    aria-labelledby="send_msg_Modal" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">{{ __('translate.Document') }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 h-400px overflow-auto" id="docs_msg-box">
+                                                        <div class="d-flex flex-column" id="task_docs_box">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                            
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
                         </div>
 
                     </div>
@@ -1702,6 +1769,44 @@
         };
     },
     methods: {
+
+            Task_Msg(e){
+                $('#task_msg_box').empty();
+                e.forEach(data => {
+                    const date = new Date(data.created_at);
+                    const formattedDate = date.toLocaleString();
+                    
+                    $('#task_msg_box').append(`
+                        <div class="mt-4  p-2 text-dark font-weight-bold ml-auto" style="background: #D9FDD3; width: fit-content; max-width: 90%; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);  border-radius: 0.6rem;">
+                              <p class="m-0 text-right">${data.message}</p>
+                              <p class="mt-2 m-0 text-right" style="font-size: 10px">${formattedDate}</p>
+                        </div>
+                    `);
+                });
+               
+                $('#Task_Msg').modal('show');
+            },
+            Task_Docs(e){
+    $('#task_docs_box').empty();
+        e.forEach(data => {
+            if (data) {
+                const date = new Date(data.created_at);
+                const formattedDate = date.toLocaleString();
+    
+                $('#task_docs_box').append(`
+                    <a href="/assets/images/tasks/documents/${data && data.attachment}" download="${data && data.attachment}" class="mt-4 p-2 text-dark font-weight-bold ml-auto" style="background: #D9FDD3; width: fit-content; max-width: 90%; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);  border-radius: 0.6rem;"
+                    data-toggle="tooltip" data-placement="top" title="Download">
+                        <h6 class="m-0">${data.title}</h6>
+                        <p class="m-0 text-right">${data.description}</p>
+                        <p class="mt-2 m-0 text-right" style="font-size: 10px">${formattedDate}</p>
+                    </a>
+                `);
+            }
+        });
+
+    $('#Task_Docs').modal('show');
+},
+
         //----------------------------------- travel expence--------------------------\\
             changeAttachement (e){
                 let file = e.target.files[0];

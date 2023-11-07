@@ -183,11 +183,7 @@ $setting = App\Models\Setting::where('id', 1)->first();
     </div>
 </div>
 <script>
-    let isDark = {
-        {
-            $setting - > is_dark_mode
-        }
-    };
+    let isDark = {{ $setting->is_dark_mode}};
     if (isDark == 1) {
         document.body.classList.add('dark-theme');
     }
