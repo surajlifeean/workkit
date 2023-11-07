@@ -49,7 +49,12 @@
                                 <td @click="selected_row( {{ $policy->id}})"></td>
                                 <td>{{$policy->title}}</td>
                                 <td>{{$policy->company->name}}</td>
-                                <td>{{$policy->description}}</td>
+                                <td>
+                                {{ Illuminate\Support\Str::limit($policy->description, $limit = 25) }}
+                                    <a @click="Open_Text( {{ $policy }})" class="ul-link-action text-success"
+                                        data-toggle="tooltip" data-placement="top" title="Read more" style="font-size: 11px;">
+                                        Read more...
+                                    </a>
                                 <td>
                                     @can('policy_edit')
                                     <a @click="Edit_Policy( {{ $policy}})" class="ul-link-action text-success"
@@ -150,14 +155,27 @@
     </div>
 </div>
 
+<div class="modal fade" id="policyModal" tabindex="-1" role="dialog" aria-labelledby="policyModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="fullPolicyText">
+        <!-- Full policy text will be displayed here -->
+      </div>
+    
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('page-js')
 
 <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
 <script src="{{asset('assets/js/datatables.script.js')}}"></script>
-
-
 
 <script>
     Vue.component('v-select', VueSelect.VueSelect)
@@ -179,7 +197,15 @@
         },
        
         methods: {
-
+            Open_Text(des){
+                console.log(des);
+                // Assuming you're using Vue to manage the state
+                $('#fullPolicyText').empty();
+                $('#fullPolicyText').append(des.description); // Use html() instead of append()
+                // // Open the modal
+                $('#policyModal').modal('show');
+            },
+           
              //---- Event selected_row
              selected_row(id) {
                 //in here you can check what ever condition  before append to array.
@@ -365,9 +391,9 @@
         },
         //-----------------------------Autoload function-------------------
         created() {
-        }
+        },
 
-    })
+    });
 
 </script>
 
@@ -411,5 +437,7 @@
         });
 
     });
+
+
 </script>
 @endsection

@@ -569,4 +569,5 @@ return [
     "This Week Expense" => "This Week Expense",
     "Payment successful Package will be active within 2 days." => "Payment successful Package will be active within 2 days.",
     "Male" => "Male", "Female" => "Female",
+    "Read_more" => "Read more"
 ];
