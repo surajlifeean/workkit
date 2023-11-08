@@ -558,4 +558,7 @@ return [
     "EXPORT" => "يصدّر",
     "Showing 0 to 0 of 0 entries" => "عرض 0 ل 0 ل 0 إدخالات",
     "From home" => "من المنزل",
+    "Chose department" => "اختار القسم",
+    "Chose designation" => "اختار التسمية",
+
 ];

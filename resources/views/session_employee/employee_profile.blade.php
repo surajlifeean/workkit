@@ -1,6 +1,11 @@
 <?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
 @extends('layouts.master')
 @section('page-css')
+<style>
+        .user-profile .header-cover {
+        background-image: url("{{ asset('/assets/images/'. $setting->background_image)}}");
+}
+</style>
 @endsection
 
 @section('main-content')

@@ -28,11 +28,7 @@ $setting = App\Models\Setting::where('id', 1)->first();
 
     .child_links span:hover,
     .child_links i:hover {
-        color: var(-- {
-                    {
-                    $setting->theme_color
-                }
-            });
+        color: var(-- {{$setting->theme_color}});
     }
 </style>
 <div class="d-flex position-fixed flex-column header-body" style="width: 100%;">

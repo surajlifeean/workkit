@@ -1,4 +1,7 @@
-<?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
+<?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); 
+$currentLanguage = app()->getLocale();
+$lang = ($currentLanguage ?? '') === 'en' ? 'en' : (($currentLanguage === 'fr') ? 'fr' : 'ar');
+?>
 @extends('layouts.master')
 @section('main-content')
 @section('page-css')
@@ -34,7 +37,7 @@
                     <div class="row mb-3">
                         <div class="col-md-3 mb-2">
                             <select id="customFilterDep" class="form-select form-control">
-                                 <option value="">Chose department</option>
+                                 <option value="">{{ __('translate.Chose department')}}</option>
                                  @foreach($otherEmployees as $item)
                                   <option value="{{$item->department}}">{{$item->department}}</option>
                                  @endforeach
@@ -42,7 +45,7 @@
                         </div>
                         <div class="col-md-3 ">
                             <select id="customFilterDesignation" class="form-select form-control">
-                                <option value="">Chose designation</option>
+                                <option value="">{{__('translate.Chose designation')}}</option>
                                  @foreach($otherEmployees as $item)
                                   <option value="{{$item->designation}}">{{$item->designation}}</option>
                                  @endforeach                            
@@ -135,11 +138,9 @@
 <script src="{{asset('assets/js/vendor/vuejs-datepicker/vuejs-datepicker.min.js')}}"></script>
 
 <script>
-    
+    let lang = @json($lang);
 
-
-
-
+    console.log(lang)
     var wfhDates = @json($work_from_home);
     var shifts = @json($officeShift);
     var otherEmployees = @json($otherEmployees);
@@ -218,7 +219,7 @@
                <td class="align-middle ${formattedDate}">
                    <a onclick="Wfh('${formattedDate}', 'From Home')" class="from-home d-flex align-items-center flex-column justify-content-center d-none  w-100px py-1 px-1" style="border: 2px solid #ff000040;border-radius: 0.5rem;box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.1);">
                     <p class="text-dark m-0 mb-1 " style="font-size: 10px;">${shiftTime}</p>
-                    <p class="text-dark font-weight-bold m-0">From Home</p>
+                    <p class="text-dark font-weight-bold m-0">${ lang === 'en' ? 'From Home' : (lang === 'fr' ? 'Télétravail' : 'من المنزل')}</p>
                     <input class="border-0 d-none" value="${formattedDate}">
                   </a>
               </td>
@@ -308,7 +309,7 @@
                         $(`.${date}`).empty().append(`
                         <a onclick="Wfh('${date}', 'From Home')" class="from-home d-flex align-items-center flex-column justify-content-center d-none  w-100px py-1 px-1" style="border: 2px solid #ff000040;border-radius: 0.5rem;box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.1);">
                           <p class="text-dark m-0 mb-1 " style="font-size: 10px;">${shiftTime}</p>
-                          <p class="text-dark font-weight-bold m-0">From Home</p>
+                          <p class="text-dark font-weight-bold m-0">${ lang === 'en' ? 'From Home' : (lang === 'fr' ? 'Télétravail' : 'من المنزل')}</p>
                           <input class="border-0 d-none" value="${date}">
                         </a>
                         `);
@@ -356,11 +357,10 @@
            shiftsTime = shiftsTime.replace(/PM|AM/ig, '');
 
            let day = getDayName(e);
-           var translatedFromHome = "{{ __('translate.From Home') }}";
            $(`#em${element.employee_id} .${day}-cell`).append(`
                 <a  class="from-home d-flex align-items-center flex-column justify-content-center d-none  w-100px py-1 px-1" style="border: 2px solid #ff000040;border-radius: 0.5rem;box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.1);">
                   <p class="text-dark m-0 mb-1 " style="font-size: 10px;">${shiftsTime}</p>
-                  <p class="text-dark font-weight-bold m-0 from_home">${translatedFromHome}</p>
+                  <p class="text-dark font-weight-bold m-0 from_home">${ lang === 'en' ? 'From Home' : (lang === 'fr' ? 'Télétravail' : 'من المنزل')}</p>
                 </a>
            `);
         })

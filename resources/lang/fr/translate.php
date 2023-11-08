@@ -558,4 +558,6 @@ return [
     "Last" => "Dernier",
     "EXPORT" => "EXPORTER",
     "Showing 0 to 0 of 0 entries" => "Affichage 0 à 0 de 0 entrées",
+    "Chose department" => "Département",
+    "Chose designation" => "Choisir le titre",
 ];

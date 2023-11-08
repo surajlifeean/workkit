@@ -27,6 +27,8 @@ class CreateSettingsTable extends Migration
 			$table->string('logo', 191)->nullable();
 			$table->string('dark_logo', 191)->nullable();
 			$table->string('theme_color', 50)->default('primary');
+			$table->string('background_image', 50)->nullable();
+
 			$table->string('favicon', 50)->nullable();
 			$table->string('default_language', 192)->default('en');
 			$table->string('is_dark_mode', 1)->nullable();
