@@ -504,7 +504,16 @@
                 { 
                 sLengthMenu: "_MENU_", 
                 sSearch: '',
-                sSearchPlaceholder: "Search..."
+                sSearchPlaceholder: "{{ __('translate.Search...') }}",
+                "oPaginate": {
+                    "sNext": "{{ __('translate.Next') }}",
+                    "sPrevious": "{{ __('translate.Previous') }}",
+                    "sLast": "{{ __('translate.Last') }}",
+                },
+                "sZeroRecords": "{{__('translate.No matching records found')}}",
+                "sInfo": "{{__('translate.Showing _START_ to _END_ of _TOTAL_ entries')}}",
+                "sInfoFiltered": "{{ __('translate.filtered from _MAX_ total entries') }}",
+                "sInfoEmpty": "{{ __('translate.Showing 0 to 0 of 0 entries')}}",
             },
             buttons: [
                 {
