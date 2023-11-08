@@ -110,7 +110,7 @@ class SettingController extends Controller
                 'CompanyAdress'    => 'required|string',
                 'developed_by'     => 'required|string|max:255',
                 'footer'           => 'required|string|max:255',
-                'logo'             => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
+                // 'logo'             => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
                 'currency_id'      => 'required',
             ]);
 

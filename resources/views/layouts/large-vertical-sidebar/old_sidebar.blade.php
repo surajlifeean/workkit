@@ -131,7 +131,7 @@
                 <li class="nav-item {{ request()->is('tasks') ? 'active' : '' }}">
                     <a class="nav-item-hold" href="/tasks">
                         <i class="nav-icon i-Dropbox"></i>
-                        <span class="nav-text">{{ __('translate.Team_Goal') }}</span>
+                        <span class="nav-text">{{ __('translate.Tasks') }}</span>
                     </a>
                     <div class="triangle"></div>
                 </li>

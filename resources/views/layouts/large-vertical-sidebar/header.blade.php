@@ -61,7 +61,7 @@ $setting = App\Models\Setting::where('id', 1)->first();
                             <img class="flag-icon" src="{{asset('assets/flags/gb.svg')}}">English
                         </a>
                         <a href="{{route('language.switch','fr')}}">
-                            <img class="flag-icon" src="{{asset('assets/flags/fr.svg')}}">Frensh
+                            <img class="flag-icon" src="{{asset('assets/flags/fr.svg')}}">French
                         </a>
                         <a href="{{route('language.switch','ar')}}">
                             <img class="flag-icon" src="{{asset('assets/flags/sa.svg')}}">Arabic
@@ -122,7 +122,7 @@ $setting = App\Models\Setting::where('id', 1)->first();
 
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                             document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            {{ __('translate.Logout') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

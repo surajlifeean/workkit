@@ -7,7 +7,7 @@
 <div class="breadcrumb">
     <div class="d-flex align-items-center w-100">
     <img src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}" alt="employee avatar" class="h-100px w-100px mr-4" style="border-radius: 6.5rem; width: 100px;">
-      <h1 class="">Hi, {{ Auth::user()->username }}</h1>
+      <h1 class="">{{ __('translate.Hi')}}, {{ Auth::user()->username }}</h1>
       {{-- @dump(auth()->user());  --}}
     </div>
 </div>
@@ -88,7 +88,7 @@
                 <div class="card-body text-center">    
                     <i class="i-Dropbox"></i>
                     <div class="content">
-                        <p class="text-muted mt-2 mb-0">{{ __('translate.Team_Goal') }}</p>
+                        <p class="text-muted mt-2 mb-0">{{ __('translate.Tasks') }}</p>
                         <p class="text-{{  $setting->theme_color  }} text-24 line-height-1 mb-2">{{ $count_task }}</p>
                     </div>
                 </div>
@@ -158,7 +158,7 @@
     <div class="col-lg-4 col-sm-12">
         <div class="card mb-4">
             <div class="card-body">
-                <div class="card-title">{{ __('translate.Team_Goal') }}</div>
+                <div class="card-title">{{ __('translate.Tasks') }}</div>
                 <div id="echartTask"></div>
             </div>
         </div>

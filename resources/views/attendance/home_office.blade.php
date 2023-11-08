@@ -135,6 +135,11 @@
 <script src="{{asset('assets/js/vendor/vuejs-datepicker/vuejs-datepicker.min.js')}}"></script>
 
 <script>
+    
+
+
+
+
     var wfhDates = @json($work_from_home);
     var shifts = @json($officeShift);
     var otherEmployees = @json($otherEmployees);
@@ -284,6 +289,7 @@
                        console.log(response.data);
                        toastr.success('{{ __('translate.Created_in_successfully') }}');
                        let shifts1 = [];
+                       window.location.reload();
                        if (dayType === 'halfDay') {
                         window.location.reload();
                         // const dateTime = new Date(date);
@@ -350,17 +356,41 @@
            shiftsTime = shiftsTime.replace(/PM|AM/ig, '');
 
            let day = getDayName(e);
+           var translatedFromHome = "{{ __('translate.From Home') }}";
            $(`#em${element.employee_id} .${day}-cell`).append(`
                 <a  class="from-home d-flex align-items-center flex-column justify-content-center d-none  w-100px py-1 px-1" style="border: 2px solid #ff000040;border-radius: 0.5rem;box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.1);">
                   <p class="text-dark m-0 mb-1 " style="font-size: 10px;">${shiftsTime}</p>
-                  <p class="text-dark font-weight-bold m-0">From Home</p>
+                  <p class="text-dark font-weight-bold m-0 from_home">${translatedFromHome}</p>
                 </a>
            `);
         })
         // let dataNdate = getWorkScheduleForDate(element.);
         
     });
-    
+    document.addEventListener('DOMContentLoaded', function() {
+    // Select the target node
+    var targetNode = document.querySelector('.from_home');
+
+    // Options for the observer (all mutations)
+    var config = { childList: true };
+
+    // Callback function to execute when mutations are observed
+    var callback = function(mutationsList, observer) {
+        for (var mutation of mutationsList) {
+            if (mutation.type === 'childList' && mutation.target.nodeName === 'P') {
+                // Replace the content when the childList changes (e.g., text change)
+                var translatedContent = "{{ __('translate.From Home') }}";
+                mutation.target.innerHTML = translatedContent;
+            }
+        }
+    };
+
+    // Create an observer instance linked to the callback function
+    var observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
+});
     
 </script>
 
@@ -630,7 +660,16 @@
                 { 
                 sLengthMenu: "_MENU_", 
                 sSearch: '',
-                sSearchPlaceholder: "Search..."
+                sSearchPlaceholder: "{{ __('translate.Search...') }}",
+                "oPaginate": {
+                    "sNext": "{{ __('translate.Next') }}",
+                    "sPrevious": "{{ __('translate.Previous') }}",
+                    "sLast": "{{ __('translate.Last') }}",
+                },
+                "sZeroRecords": "{{__('translate.No matching records found')}}",
+                "sInfo": "{{__('translate.Showing _START_ to _END_ of _TOTAL_ entries')}}",
+                "sInfoFiltered": "{{ __('translate.filtered from _MAX_ total entries') }}",
+                "sInfoEmpty": "{{ __('translate.Showing 0 to 0 of 0 entries')}}",
             },
             buttons: [
                 {

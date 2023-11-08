@@ -9,7 +9,7 @@
 <div class="breadcrumb">
      <div class="d-flex align-items-center w-100">
      <img src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}" alt="employee avatar" class=" mr-4" style="border-radius: 10.5rem; width: 120px; height: 120px;">
-       <h1 class="text-secondary">Hi, {{ Auth::user()->username }}</h1>
+       <h1 class="text-secondary">{{ __('translate.Hi')}}, {{ Auth::user()->username }}</h1>
        {{-- @dump(auth()->user());  --}}
      </div>
 </div>
@@ -122,7 +122,7 @@
                 </div>
                 <div class="row">
                      <div class="col-12">
-                         <h4 class="h4">Work from home</h4>
+                         <h4 class="h4">{{ __('translate.Work from home')}}</h4>
                          <div class="d-flex mx-1 py-3" style="overflow-x: scroll; display: flex;">
                             @foreach($work_from_home as $wfh)
                                 <div class="mr-4" style="border-radius: 100%; overflow: hidden; min-height: 49px;min-width: 49px;max-width: 50px;max-height: 50px;">
@@ -146,7 +146,7 @@
                         <div class="card-body text-center">
                             <i class="i-Check"></i>
                             <div class="content">
-                                <p class="text-muted mt-2 mb-0">{{ __('translate.Team_Goal') }}</p>
+                                <p class="text-muted mt-2 mb-0">{{ __('translate.Tasks') }}</p>
                                 <p class="text-primary text-24 line-height-1 mb-2">{{$count_tasks}}</p>
                             </div>
                         </div>
@@ -286,13 +286,13 @@
         
                         label: echartOptions.pieLabelCenterHover,
                         data: [{
-                            name: 'Taken',
+                            name: "{{ __('translate.Taken') }}",
                             value: @json($total_leave_taken),
                             itemStyle: {
                                 color: '#663399',
                             }
                         }, {
-                            name: 'remaining',
+                            name: "{{ __('translate.Remaining') }}",
                             value: @json($total_leave_remaining),
                             itemStyle: {
                                 color: '#ced4da',

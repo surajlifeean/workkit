@@ -131,11 +131,12 @@
 
                             <div class="form-group col-md-4">
                                 <label class="ul-form__label">{{ __('translate.Gender') }} <span class="field_required">*</span></label>
-                                <v-select @input="Selected_Gender" placeholder="{{ __('translate.Choose_Gender') }}" v-model="employee.gender" :reduce="(option) => option.value" :options="
-                                                                    [
-                                                                        {label: 'Male', value: 'male'},
-                                                                        {label: 'Female', value: 'female'},
-                                                                    ]">
+                                <v-select @input="Selected_Gender" placeholder="{{ __('translate.Choose_Gender') }}"
+                                v-model="employee.gender" :reduce="(option) => option.value" :options="
+                                    [
+                                        {label: 'Male', value: 'male'},
+                                        {label: 'Female', value: 'female'},
+                                    ]">
                                 </v-select>
 
                                 <span class="error" v-if="errors && errors.gender">

@@ -127,13 +127,12 @@
                                         <div class="form-group col-md-4">
                                             <label class="ul-form__label">{{ __('translate.Gender') }} <span
                                                     class="field_required">*</span></label>
-                                            <v-select @input="Selected_Gender"
-                                                placeholder="{{ __('translate.Choose_Gender') }}"
+                                            <v-select @input="Selected_Gender" placeholder="{{ __('translate.Choose_Gender') }}"
                                                 v-model="employee.gender" :reduce="(option) => option.value" :options="
-                                                                    [
-                                                                        {label: 'Male', value: 'male'},
-                                                                        {label: 'Female', value: 'female'},
-                                                                    ]">
+                                                    [
+                                                        {label: 'Male', value: 'male'},
+                                                        {label: 'Female', value: 'female'},
+                                                    ]">
                                             </v-select>
 
                                             <span class="error" v-if="errors && errors.gender">
@@ -848,7 +847,7 @@
                                                         <td>{{$leave->start_date}}</td>
                                                         <td>{{$leave->end_date}}</td>
                                                         <td>{{$leave->days}}</td>
-                                                        <td>{{$leave->status}}</td>
+                                                        <td>{{ __('translate.'. $leave->status) }}</td>
                                                         <td>
                                                             <a @click="Cancel_leave( {{auth()->user()->id}}, {{$leave->id}})"
                                                                 class="ul-link-action text-danger mr-1" data-toggle="tooltip"
@@ -2678,7 +2677,16 @@
                 { 
                 sLengthMenu: "_MENU_", 
                 sSearch: '',
-                sSearchPlaceholder: "Search..."
+                sSearchPlaceholder: "{{ __('translate.Search...') }}",
+                "oPaginate": {
+                    "sNext": "{{ __('translate.Next') }}",
+                    "sPrevious": "{{ __('translate.Previous') }}",
+                    "sLast": "{{ __('translate.Last') }}",
+                },
+                "sZeroRecords": "{{__('translate.No matching records found')}}",
+                "sInfo": "{{__('translate.Showing _START_ to _END_ of _TOTAL_ entries')}}",
+                "sInfoFiltered": "{{ __('translate.filtered from _MAX_ total entries') }}",
+                "sInfoEmpty": "{{ __('translate.Showing 0 to 0 of 0 entries')}}",
             },
             buttons: [
                 {
@@ -2711,13 +2719,13 @@ if (echartElemleave) {
 
                 label: echartOptions.pieLabelCenterHover,
                 data: [{
-                    name: 'Taken',
+                    name: "{{ __('translate.Taken') }}",
                     value: @json($total_leave_taken),
                     itemStyle: {
                         color: '#663399',
                     }
                 }, {
-                    name: 'remaining',
+                    name: "{{ __('translate.Remaining') }}",
                     value: @json($total_leave_remaining),
                     itemStyle: {
                         color: '#ced4da',
