@@ -151,26 +151,35 @@ $setting = App\Models\Setting::where('id', 1)->first();
         @else
         <a class="m-0">{{ __('translate.Communication') }}</a>
         @endif
-        @elseif(request()->is('users/*'))
+        @elseif(request()->is('users'))
         <a class="m-0">{{ __('translate.User_Controller') }}</a>
         @elseif(request()->is('employees') || request()->is('employees/*'))
         <a class="m-0">{{ __('translate.Employees') }}</a>
         @elseif(request()->is('projects/*'))
         <a class="m-0">{{ __('translate.Projects') }}</a>
-        @elseif(request()->is('tasks/*'))
+        @elseif(request()->is('tasks/*') || request()->is('tasks'))
         <a class="m-0">{{ __('translate.Tasks') }}</a>
         @elseif(request()->is('leave/*'))
         <a class="m-0">{{ __('translate.Leave') }}</a>
+        @elseif( request()->is('accounting/expense') && auth()->user()->role_users_id === 4)
+        <a class="m-0">{{ __('translate.Actions') }}</a>
         @elseif(request()->is('accounting/*'))
         <a class="m-0">{{ __('translate.Accounting') }}</a>
-        @elseif(request()->is('daily_attendance') || request()->is('attendances/*'))
+        @elseif( request()->is('daily_attendance') || request()->is('attendances') || request()->is('work_from'))
         <a class="m-0">{{ __('translate.Attendance') }}</a>
+        @elseif( request()->is('training_skills') || request()->is('trainings') || request()->is('trainers'))
+        <a class="m-0">{{ __('translate.Training') }}</a>
+
+        @elseif( request()->is('settings/*') && !request()->is('settings/business_settings') && !request()->is('settings/system_settings'))
+        <a class="m-0">{{ __('translate.Settings') }}</a>
+        @elseif( request()->is('settings/business_settings') || request()->is('settings/system_settings') )
+        <a class="m-0">{{ __('translate.System_Setup') }}</a>
+        @elseif( request()->is('subscription') )
+        <a class="m-0">{{ __('translate.Subscription') }}</a>
+        @elseif( request()->is('report/*') )
+        <a class="m-0">{{ __('translate.Reports') }}</a>
         @elseif(request()->is('leave_type'))
         <a class="m-0">{{ __('translate.Leave_Request') }}</a>
-        @elseif(auth()->user()->role_users_id == 2 || auth()->user()->role_users_id == 4)
-        <a class="m-0">{{ __('translate.Communication') }}</a>
-        @elseif(auth()->user()->role_users_id != 2 || auth()->user()->role_users_id != 4)
-        <a class="m-0">{{ __('translate.Company_Management') }}</a>
         @endif
 
 

@@ -42,7 +42,9 @@
                                 <th>{{ __('translate.Department') }}</th>
                                 <th>{{ __('translate.Start_Date') }}</th>
                                 <th>{{ __('translate.Finish_Date') }}</th>
+                                @if(auth()->user()->role_users_id != 2)
                                 <th>{{ __('translate.Action') }}</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -55,6 +57,7 @@
                                 </td>
                                 <td>{{$announcement->start_date}}</td>
                                 <td>{{$announcement->end_date}}</td>
+                                @if(auth()->user()->role_users_id != 2)
                                 <td>
                                     @can('announcement_edit')
                                     <a  @click="Edit_Announcement( {{ $announcement}})"
@@ -71,6 +74,7 @@
                                     </a>
                                     @endcan
                                 </td>
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

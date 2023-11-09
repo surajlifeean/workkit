@@ -2768,7 +2768,7 @@ if (echartElemleave) {
                     center: ['50%', '50%'],
                     data:[
                         @foreach($employee_project as $key => $value) {
-                            value:@json($value) , name:@json($key),
+                            value:@json($value) , name:@json( __('translate.'. $key) ),
                         },
                         @endforeach
                       
@@ -2809,7 +2809,7 @@ if (echartElemleave) {
                     center: ['50%', '50%'],
                     data:[
                         @foreach($employee_task as $key => $value) {
-                            value:@json($value) , name:@json($key),
+                            value:@json($value) , name:@json(__('translate.'. $key)),
                         },
                         @endforeach
                       

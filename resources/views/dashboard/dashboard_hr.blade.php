@@ -97,10 +97,10 @@
     </div>
 
     <div class="col-lg-3 col-md-6 col-sm-6">
-        <a href="/projects">
+        <a href="/leave">
             <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
-                    <i class="i-Check"></i>
+                    <i class="i-Check-2"></i>
                     <div class="content">
                         <p class="text-muted mt-2 mb-0">{{ __('translate.Actions') }}</p>
                         <p class="text-{{  $setting->theme_color  }} text-24 line-height-1 mb-2">{{ $count_project }}</p>
@@ -575,7 +575,7 @@
                     data: [
                         @foreach ($task_status as $key => $value)
                             {
-                            value:@json($value) , name:@json($key),
+                            value:@json($value) , name:@json(__('translate.'. $key)),
                             },
                         @endforeach
 

@@ -142,7 +142,7 @@
 
     <div class="row">
                <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
+                    <a href="/employee/my_requests" class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                         <div class="card-body text-center">
                             <i class="i-Check"></i>
                             <div class="content">
@@ -150,11 +150,11 @@
                                 <p class="text-primary text-24 line-height-1 mb-2">{{$count_tasks}}</p>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="col-lg-6 col-md-6 col-sm-6">
-                    <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
+                    <a href="/core/announcements" class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                         <div class="card-body text-center">
                             <i class="i-Letter-Open"></i>
                             <div class="content">
@@ -162,7 +162,7 @@
                                 <p class="text-primary text-24 line-height-1 mb-2">{{$count_announcement}}</p>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
     </div>
