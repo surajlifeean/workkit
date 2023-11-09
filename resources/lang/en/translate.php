@@ -591,4 +591,6 @@ return [
     "EXPORT" => "EXPORT",
     "Showing 0 to 0 of 0 entries" => "Showing 0 to 0 of 0 entries",
     "From home" => "From home",
+    "Chose department" => "Chose department",
+    "Chose designation" => "Chose designation",
 ];

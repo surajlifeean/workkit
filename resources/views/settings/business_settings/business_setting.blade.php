@@ -137,6 +137,47 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="col-md-4 my-2">
+                                <div class="card" style="box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.06); height: 18rem;">
+                                    <div class="card-header bg-{{$setting->theme_color}}">
+                                        <h5 class="text-white">{{ __('Background Image') }}</h5>
+                                    </div>
+                                    <div class="card-body pt-0 d-flex flex-column position-relative">
+                                        <div class=" setting-card">
+                                            <div class="logo-content mt-4 setting-logo ">
+                                             
+                                                <a href="{{ asset('/assets/images/' . $setting->background_image ) }}"
+                                                    target="_blank">
+                                                    <img id="image2" alt="your image"
+                                                        src="{{ asset('/assets/images/' . $setting->background_image ) }}"
+                                                        width="100px"
+                                                        height="100px"
+                                                        class="big-logo">
+                                                </a>
+                                            </div>
+                                            <div class="choose-files input_cont_images">
+
+                                                <label for="company_favicon">
+                                                    <label for="background_image" class="ul-form__label">{{ __('translate.Change_Logo') }} </label>
+                                                    <input name="background_image" @change="Change_background_image" type="file" class="form-control" id="background_image">
+                                                    <span class="error" v-if="errors_settings && errors_settings.background_image">
+                                                        @{{ errors_settings.logo[0] }}
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            @error('company_favicon')
+                                                <div class="row">
+                                                    <span class="invalid-logo" role="alert">
+                                                        <strong
+                                                            class="text-danger">{{ $message }}</strong>
+                                                    </span>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <div class="col-12 mt-4">
                                 <div class="pct-body">
@@ -228,6 +269,10 @@
                 this.setting.favicon = file;
             },
 
+            Change_background_image(e){
+                let file = e.target.files[0];
+                this.setting.background_image = file;
+            },
             Selected_Currency(value) {
                 if (value === null) {
                     this.setting.currency_id = "";
@@ -269,6 +314,7 @@
                 self.data.append("favicon", self.setting.favicon);
                 self.data.append("dark_logo", self.setting.dark_logo);
                 self.data.append("theme_color", self.setting.theme_color);
+                self.data.append("background_image", self.setting.background_image);
                 self.data.append("is_dark_mode", darkMode);
                 self.data.append("_method", "put");
                 console.log(this.setting)

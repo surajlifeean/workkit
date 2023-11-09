@@ -243,6 +243,21 @@ class SettingController extends Controller
                 $setting->favicon = $filename;
             }
         }
+
+        if ($request->hasFile('background_image') && $request->file('background_image')->isValid()) {
+            if ($request->file('background_image')->getClientOriginalName() != $setting->background_image) {
+                $image = $request->file('background_image');
+                $filename = time() . '.' . $image->extension();
+                $image->move(public_path('/assets/images/'), $filename);
+                $path = public_path() . '/assets/images/';
+        
+                $userPhoto = $path . '/' . $setting->background_image;
+                if (file_exists($userPhoto)) {
+                    @unlink($userPhoto);
+                }
+                $setting->background_image = $filename;
+            }
+        }
         
         $setting->theme_color = $request->theme_color;
         $setting->is_dark_mode = $request->is_dark_mode;
