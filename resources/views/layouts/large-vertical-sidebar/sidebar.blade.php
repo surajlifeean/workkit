@@ -348,7 +348,7 @@
             {{------------------------------------------- Team Goal ------------------------------------------------}}
             @can('task_view')
                 <li class=" ">
-                    <a class="link_btn {{ request()->is('tasks') ? 'active_link' : '' }}" href="/tasks">
+                    <a class="link_btn {{ request()->is('tasks') || request()->is('tasks/*') ? 'active_link' : '' }}" href="/tasks">
                         <div class="d-flex align-items-center justify-content-start">  
                         <i class="nav-icon text-{{$setting->theme_color}} i-Check"></i>
                         <span>{{ __('translate.Tasks') }}</span></div>
@@ -363,7 +363,7 @@
                         aria-expanded="true" aria-controls="collapse_tasks"
                         >
                         <div class="d-flex align-items-center justify-content-start">  
-                        <i class="nav-icon text-{{$setting->theme_color}} i-Check"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Check-2"></i>
                         <span>{{ __('translate.Actions') }}</span>
                         <i class="nav-icon text-{{$setting->theme_color}} i-Arrow-Right"></i>
                         </div>
@@ -405,7 +405,7 @@
             @can('attendance_view')
                 <li class=" "
                     data-item="attendances">
-                    <a class="link_btn {{ request()->is('daily_attendance') || request()->is('attendances/*') ? 'active' : '' }}" href="#"
+                    <a class="link_btn {{ request()->is('daily_attendance') || request()->is('attendances') || request()->is('work_from') ? 'active_link' : '' }}" href="#"
                         aria-expanded="true" data-toggle="collapse" data-target="#collapse_attendances"
                         aria-expanded="true" aria-controls="collapse_attendances"
                         >
@@ -632,7 +632,7 @@
             <!------------------------------------------------------ Settings ------------------------------------------------------>
             @if (auth()->user()->can('settings') || auth()->user()->can('group_permission') || auth()->user()->can('currency') || auth()->user()->can('backup') || auth()->user()->can('module_settings'))
                 <li class="" data-item="settings">
-                    <a class="link_btn {{ request()->is('settings/*') ? 'active_link' : '' }}" href="#"
+                    <a class="link_btn {{ request()->is('settings/*') && !request()->is('settings/business_settings') && !request()->is('settings/system_settings') ? 'active_link' : '' }}" href="#"
                     aria-expanded="true" data-toggle="collapse" data-target="#collapse_settings"
                     aria-controls="collapse_settings"
                     >
@@ -704,7 +704,7 @@
             {{------------------------------------------------------System setup-----------------------------------------}}
             @if (auth()->user()->role_users_id == 1)
             <li class="">
-                <a class="link_btn {{ request()->is('business_settings') || request()->is('system_settings') ? 'active_link' : '' }}" href="/business_settings"
+                <a class="link_btn {{ request()->is('settings/business_settings') || request()->is('settings/system_settings') ? 'active_link' : '' }}" href="/business_settings"
                     aria-expanded="true" data-toggle="collapse" data-target="#collapse_system_setup"
                     aria-controls="collapse_system_setup">
                     <div class="d-flex align-items-center justify-content-start">  
