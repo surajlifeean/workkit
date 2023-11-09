@@ -151,7 +151,7 @@
                             </li>
                         @endcan
 
-                        @can('event_view')
+                        {{-- @can('event_view')
                             <li class="child_links">
                                 <a href="{{ route('event.index') }}"
                                     class="{{ Route::currentRouteName() == 'event.index' ? 'open' : '' }}">
@@ -159,7 +159,7 @@
                                     <span class="item-name">{{ __('translate.Events') }}</span>
                                 </a>
                             </li>
-                        @endcan
+                        @endcan --}}
             
                         @can('holiday_view')
                             <li class="child_links">
@@ -339,7 +339,7 @@
                 <li class="">
                     <a class="link_btn {{ request()->is('projects') ? 'active_link' : '' }}" href="/projects">
                       <div class="d-flex align-items-center justify-content-start">  
-                        <i class="nav-icon text-{{$setting->theme_color}} i-Box-Open"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Dropbox"></i>
                         <span class="">{{ __('translate.Projects') }}</span>
                       </div>
                     </a>
@@ -350,7 +350,7 @@
                 <li class=" ">
                     <a class="link_btn {{ request()->is('tasks') ? 'active_link' : '' }}" href="/tasks">
                         <div class="d-flex align-items-center justify-content-start">  
-                        <i class="nav-icon text-{{$setting->theme_color}} i-Dropbox"></i>
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Check"></i>
                         <span>{{ __('translate.Tasks') }}</span></div>
                     </a>
                 </li>

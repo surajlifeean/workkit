@@ -43,17 +43,17 @@ $active_plan = ActivePlan::whereIn('status', ['active', 'hold'])
                 <div class="card position-relative " style="height: 100%">
                     <div class="card-body d-flex  align-items-center justify-content-center flex-column overflow-hidden">
                         <div class="position-absolute bg-{{$setting->theme_color}} plan_cont">{{$dt['plan']}}</div>
-                        <div class="text-dark {{ $dt['is_offer_price'] == 1 ? 'mt-3 d-inline' : 'd-none'}}">Special offer</div>
+                        <div class="text-dark {{ $dt['is_offer_price'] == 1 ? 'mt-3 d-inline' : 'd-none'}}">{{ __('translate.Special Offer') }}</div>
                         <h2 class="{{ $dt['is_offer_price'] == 1 ? '' : 'mt-4'}}" style="font-size: 2rem; margin-bottom: 0;">{{ $dt['currency'] == 'USD' ? '$' : ($dt['currency'] == 'EUR' ? '€' : ($dt['currency'] == 'XOF' || $dt['currency'] == 'XAF' ? 'FCFA' : '')) }}
                         {{ $dt['is_offer_price'] == 1 ? $dt['offered_price'] : $dt['price'] }}
                         <span style="font-size: 13px;font-weight: 600">
                         / {{
                                    
                                    $dt['duration'] > 1 && $dt['duration'] < 12 ?
-                                       ($dt['duration'] == 1 ? $dt['duration'] . ' month' :  $dt['duration'] . ' months'):
+                                       ($dt['duration'] == 1 ? $dt['duration'] . ' '. __('translate.month') :  $dt['duration'] . ' ' .  __('translate.months')):
                                        ($dt['duration'] >= 12 ?
-                                           number_format($dt['duration'] / 12, 1) . ' year' :
-                                           $dt['duration'] . ' months')
+                                           number_format($dt['duration'] / 12, 1) . ' ' .  __('translate.year'):
+                                           $dt['duration'] . ' ' .  __('translate.months'))
                                }}
                         </span></h2>
                         @if($dt['is_offer_price'] == 1)
@@ -82,7 +82,7 @@ $active_plan = ActivePlan::whereIn('status', ['active', 'hold'])
                              {{ ucwords($active_plan->status) }}
                            </span>
                            <span>
-                             Exp Date: {{ $active_plan->end_date }}
+                            {{ __('translate.Exp Date:') }} {{ \Carbon\Carbon::parse($active_plan->end_date)->format('d/m/Y H:i:s') }}    
                            </span>
                         @else
                         <a href="{{ route('stripe.checkout', [ 'price' => ( $dt['is_offer_price'] == 1 ? $dt['offered_price'] : $dt['price'] ), 'product' => $dt['plan'], 'currency' => $dt['currency'] , 'plan_id' => $dt['id'] , 'is_offer_price' => $dt['is_offer_price'] ] ) }}" class="btn btn-{{$setting->theme_color}}">Buy Now</a>
@@ -322,7 +322,13 @@ $active_plan = ActivePlan::whereIn('status', ['active', 'hold'])
                     extend: 'collection',
                     text: 'EXPORT',
                     buttons: [
-                        'csv','excel', 'pdf', 'print'
+                        'csv',
+                        'excel', 
+                        'pdf', 
+                        {
+                            extend: 'print',
+                            text: "{{ __('translate.print') }}",
+                        },  
                     ]
                 }]
         });

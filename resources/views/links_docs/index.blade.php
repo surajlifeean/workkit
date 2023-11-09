@@ -756,7 +756,13 @@
                     extend: 'collection',
                     text: 'EXPORT',
                     buttons: [
-                        'csv','excel', 'pdf', 'print'
+                        'csv',
+                        'excel', 
+                        'pdf', 
+                        {
+                            extend: 'print',
+                            text: "{{ __('translate.print') }}",
+                        },  
                     ]
                 }]
         });

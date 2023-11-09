@@ -1,4 +1,8 @@
-<?php $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); ?>
+<?php 
+ $setting = DB::table('settings')->where('deleted_at', '=', null)->first(); 
+ $currentLanguage = app()->getLocale();
+ $lang = ($currentLanguage ?? '') === 'en' ? 'en' : (($currentLanguage === 'fr') ? 'fr' : 'ar'); 
+?>
 @extends('layouts.master')
 @section('main-content')
 @section('page-css')
@@ -101,6 +105,7 @@
                     <table id="ul-contact-list" class="table text-center">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th scope="col">{{ __('translate.Firstname') }}</th>
                                 <th scope="col">{{ __('translate.Lastname') }}</th>
                                 <th scope="col">{{ __('translate.Phone') }}</th>
@@ -113,6 +118,7 @@
                         <tbody>
                             @foreach ($latest_employees as $latest_employee)
                                 <tr>
+                                    <th></th>
                                     <td>{{ $latest_employee->firstname }}</td>
                                     <td>{{ $latest_employee->lastname }}</td>
                                     <td>{{ $latest_employee->phone }}</td>
@@ -173,13 +179,10 @@
 <script>
     // Chart Employee count by department
     // bg-primary
- 
-
+    let lang = @json($lang);
+    let expenses = lang === 'en' ? 'Expenses' : (lang === 'fr' ? 'Dépenses' : 'مصروف')
     // Get the element by ID
    
-
-
-
     let echartElemBar = document.getElementById('echartBar');
     if (echartElemBar) {
         let echartBar = echarts.init(echartElemBar);
@@ -300,7 +303,7 @@
                 center: ['50%', '50%'],
                 data: [{
                         value: @json($expense_amount),
-                        name: 'Expense'
+                        name: expenses
                     },
                     // {
                     //     value: @json($deposit_amount),
@@ -335,7 +338,7 @@
                 borderRadius: 0,
                 orient: "horizontal",
                 x: "right",
-                data: ["Expenses", "Deposits"]
+                data: [expenses, "Deposits"]
             },
             grid: {
                 left: '8px',
@@ -396,7 +399,7 @@
 
             series: [
                 {
-                    name: 'Expenses',
+                    name: expenses,
                     data: @json($expenses_data),
                     label: {
                         show: false,
@@ -449,7 +452,7 @@
                     data: [
                         @foreach ($project_status as $key => $value)
                             {
-                            value:@json($value) , name:@json($key),
+                            value:@json($value) , name:@json( __('translate.'. $key) ),
                             },
                         @endforeach
 
@@ -493,7 +496,7 @@
                     data: [
                         @foreach ($task_status as $key => $value)
                             {
-                            value:@json($value) , name:@json($key),
+                            value:@json($value) , name:@json( __('translate.'. $key) ),
                             },
                         @endforeach
 
@@ -520,6 +523,55 @@
 
 
 <script>
-    $('#ul-contact-list').DataTable();
+    $('#ul-contact-list').DataTable( {
+            "processing": true, // for show progress bar
+            select: {
+                style: 'multi',
+                selector: '.select-checkbox',
+                items: 'row',
+            },
+            columnDefs: [
+                {
+                    targets: 0,
+                    className: 'select-checkbox'
+                },
+                {
+                    targets: [0],
+                    orderable: false
+                }
+            ],
+        
+            dom: "<'row'<'col-sm-12 col-md-7'lB><'col-sm-12 col-md-5 p-0'f>>rtip",
+            oLanguage:
+                { 
+                sLengthMenu: "_MENU_", 
+                sSearch: '',
+                sSearchPlaceholder: "{{ __('translate.Search...') }}",
+                "oPaginate": {
+                    "sNext": "{{ __('translate.Next') }}",
+                    "sPrevious": "{{ __('translate.Previous') }}",
+                    "sLast": "{{ __('translate.Last') }}",
+                },
+                "sZeroRecords": "{{__('translate.No matching records found')}}",
+                "sInfo": "{{__('translate.Showing _START_ to _END_ of _TOTAL_ entries')}}",
+                "sInfoFiltered": "{{ __('translate.filtered from _MAX_ total entries') }}",
+                "sInfoEmpty": "{{ __('translate.Showing 0 to 0 of 0 entries')}}",
+            },
+            buttons: [
+                {
+                    extend: 'collection',
+                    text: 'EXPORT',
+                    buttons: [
+                        'csv',
+                        'excel', 
+                        'pdf', 
+                        {
+                            extend: 'print',
+                            text: "{{ __('translate.print') }}",
+                        },  
+                    ]
+                }]
+        });
+
 </script>
 @endsection
