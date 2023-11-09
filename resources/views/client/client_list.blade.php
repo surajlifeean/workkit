@@ -38,11 +38,11 @@
                             <tr>
                                 <th>#</th>
                                 <th>{{ __('translate.Code') }}</th>
-                                <th>{{ __('translate.Firstname') }}</th>
-                                <th>{{ __('translate.Lastname') }}</th>
+                                <th>{{ __('translate.Name') }}</th>
+                                {{-- <th>{{ __('translate.Lastname') }}</th> --}}
                                 <th>{{ __('translate.Email') }}</th>
                                 <th>{{ __('translate.City') }}</th>
-                                <th>{{ __('translate.Country') }}</th>
+                                {{-- <th>{{ __('translate.Country') }}</th> --}}
                                 <th>{{ __('translate.Phone') }}</th>
                                 <th>{{ __('translate.Action') }}</th>
                             </tr>
@@ -53,10 +53,10 @@
                                 <td @click="selected_row( {{ $client->id}})"></td>
                                 <td>{{$client->code}}</td>
                                 <td>{{$client->firstname}}</td>
-                                <td>{{$client->lastname}}</td>
+                                {{-- <td>{{$client->lastname}}</td> --}}
                                 <td>{{$client->email}}</td>
                                 <td>{{$client->city}}</td>
-                                <td>{{$client->country}}</td>
+                                {{-- <td>{{$client->country}}</td> --}}
                                 <td>{{$client->phone}}</td>
                                 <td>
                                     @can('client_edit')
@@ -98,7 +98,7 @@
                         <form @submit.prevent="editmode?Update_Client():Create_Client()">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="firstname" class="ul-form__label">{{ __('translate.Firstname') }} <span
+                                    <label for="firstname" class="ul-form__label">{{ __('translate.Name') }} <span
                                             class="field_required">*</span></label>
                                     <input type="text" v-model="client.firstname" class="form-control" name="firstname"
                                         id="firstname" placeholder="{{ __('translate.Enter_Client_Firstname') }}">
@@ -107,7 +107,7 @@
                                     </span>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <label for="lastname" class="ul-form__label">{{ __('translate.Lastname') }} <span
                                             class="field_required">*</span></label>
                                     <input type="text" v-model="client.lastname" class="form-control" name="lastname"
@@ -115,7 +115,7 @@
                                     <span class="error" v-if="errors && errors.lastname">
                                         @{{ errors.lastname[0] }}
                                     </span>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <label for="email" class="ul-form__label">{{ __('translate.Email') }} <span
@@ -450,7 +450,13 @@
                     extend: 'collection',
                     text: 'EXPORT',
                     buttons: [
-                        'csv','excel', 'pdf', 'print'
+                        'csv',
+                        'excel', 
+                        'pdf', 
+                        {
+                            extend: 'print',
+                            text: "{{ __('translate.print') }}",
+                        },  
                     ]
                 }]
         });

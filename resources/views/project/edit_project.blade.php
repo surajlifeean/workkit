@@ -121,10 +121,10 @@
                             <v-select @input="Selected_Priority" placeholder="{{ __('translate.Select_priority') }}"
                                 v-model="project.priority" :reduce="(option) => option.value" :options="
                                                 [
-                                                    {label: 'Urgent', value: 'urgent'},
-                                                    {label: 'High', value: 'high'},
-                                                    {label: 'Medium', value: 'medium'},
-                                                    {label: 'Low', value: 'low'},
+                                                    {label: '{{ __('translate.Urgent') }}', value: 'urgent'},
+                                                    {label: '{{ __('translate.High') }}', value: 'high'},
+                                                    {label: '{{ __('translate.Medium') }}', value: 'medium'},
+                                                    {label: '{{ __('translate.Low') }}', value: 'low'},
                                                 ]">
                             </v-select>
 
@@ -139,11 +139,11 @@
                             <v-select @input="Selected_Status" placeholder="{{ __('translate.Select_status') }}"
                                 v-model="project.status" :reduce="(option) => option.value" :options="
                                                     [
-                                                        {label: 'Not Started', value: 'not_started'},
-                                                        {label: 'In Progress', value: 'progress'},
-                                                        {label: 'Cancelled', value: 'cancelled'},
-                                                        {label: 'On Hold', value: 'hold'},
-                                                        {label: 'Completed', value: 'completed'},
+                                                        {label: '{{ __('translate.Not_Started') }}', value: 'not_started'},
+                                                        {label: '{{ __('translate.In_Progress') }}', value: 'progress'},
+                                                        {label: '{{ __('translate.Cancelled') }}', value: 'cancelled'},
+                                                        {label: '{{ __('translate.On_Hold') }}', value: 'hold'},
+                                                        {label: '{{ __('translate.Completed') }}', value: 'completed'},
                                                     ]">
                             </v-select>
 

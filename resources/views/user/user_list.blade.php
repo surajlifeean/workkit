@@ -475,7 +475,18 @@
                 "sInfoEmpty": "{{ __('translate.Showing 0 to 0 of 0 entries')}}",
             },
             buttons: [
-                'csv', 'excel', 'pdf', 'print','colvis'
+                'csv',
+                'excel', 
+                'pdf', 
+                {
+                    extend: 'print',
+                    text: "{{ __('translate.print') }}",
+                },
+                {
+                    extend: 'colvis',
+                    text: "{{ __('translate.Column Visibility') }}",
+                },
+               
             ]
         });
     });

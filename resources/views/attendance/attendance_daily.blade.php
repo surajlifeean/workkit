@@ -72,13 +72,13 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 text-right">
-                        <button class="btn btn-{{ $setting->theme_color}} mb-2 ml-auto" data-toggle="modal" data-target="#myModal">Customize</button>
+                        <button class="btn btn-{{ $setting->theme_color}} mb-2 ml-auto" data-toggle="modal" data-target="#myModal">{{ __('translate.Customize') }}</button>
 
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-12 col-md-3 d-flex my-1 my-sm-0">
-                        <h5 class="mr-auto">{{ $monthName}}, {{ $currentYear }} </h5>
+                        <h5 class="mr-auto">{{ __('translate.'. $monthName ) }}, {{ $currentYear }} </h5>
                         <select id="recordsPerPage" class="form-control" style="width: 80px;">
                             <option value="10">10</option>
                             <option value="1">1</option>
@@ -89,7 +89,7 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
                         </select>
                     </div>
                     <div class="col-12 col-sm-3 my-sm-0 my-1">
-                        <input type="text" class="form-control" placeholder="Search Employee.." id="employeeSearch">
+                        <input type="text" class="form-control" placeholder="{{ __('translate.Search Employee..')}}" id="employeeSearch">
                     </div>
 
                     <div class="col-12 col-sm-6 d-flex col-lg-3 my-1 my-sm-0">
@@ -98,7 +98,7 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
                             @method('GET')
                             <input type="month" class="form-control mr-2" name="year_month">
                             <button class="btn btn-{{ $setting->theme_color}} mx-2">{{__('translate.Submit')}}</button>
-
+      
                         </form>
 
 
@@ -214,15 +214,15 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
                                         @if($wfh)
                                         <td class="border border-light p-1 px-auto text-center bg-blue wfh position-relative" style="color: transparent;">
                                             <div class="position-absolute hidden_divs">
-                                                <span>{{ $dayOfWeek }}</span>
+                                                <span>{{ __('translate.' .$dayOfWeek) }}</span>
                                                 <span>{{ __('translate.Work from home')}}</span>
                                             </div>
                                         </td>
                                         @else
                                         <td class="border border-light p-1 px-auto text-center bg-success present position-relative">
                                             <div class="position-absolute hidden_divs">
-                                                <span>{{ $dayOfWeek }}</span>
-                                                <span>Present</span>
+                                                <span>{{ __('translate.' .$dayOfWeek) }}</span>
+                                                <span>{{__('translate.Present')}}</span>
 
                                             </div>
                                         </td>
@@ -230,22 +230,22 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
                                         @elseif($non_working_day)
                                         <td class="border border-light p-1 px-auto text-center bg-secondary non_working_day position-relative" style="color: transparent;">
                                             <div class="position-absolute hidden_divs">
-                                                <span>{{ $dayOfWeek }}</span>
-                                                <span>Week ends</span>
+                                                <span>{{ __('translate.' .$dayOfWeek) }}</span>
+                                                <span>{{ __('translate.Week ends')}}</span>
 
                                             </div>
                                         </td>
                                         @elseif ($wfh && $graterThenNow)
                                         <td class="border border-light p-1 px-auto text-center bg-blue wfh position-relative" style="color: transparent;">-
                                             <div class="position-absolute hidden_divs">
-                                                <span>{{ $dayOfWeek }}</span>
+                                                <span>{{ __('translate.' .$dayOfWeek) }}</span>
                                                 <span>{{ __('translate.Work from home')}}</span>
                                             </div>
                                         </td>
                                         @elseif($holiday)
                                         <td class="border border-light p-1 px-auto text-center bg-teal holiday position-relative" style="color: transparent;">
                                             <div class="position-absolute hidden_divs">
-                                                <span>{{ $dayOfWeek }}</span>
+                                                <span>{{ __('translate.' .$dayOfWeek) }}</span>
                                                 <span>{{ __('translate.Holiday') }}</span>
 
                                             </div>
@@ -253,7 +253,7 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
                                         @elseif($is_leave)
                                         <td class="border border-light p-1 px-auto text-center bg-warning leave position-relative {{ $leave_title }}" style="color: transparent;">
                                             <div class="position-absolute hidden_divs">
-                                                <span>{{ $dayOfWeek }}</span>
+                                                <span>{{ __('translate.' .$dayOfWeek) }}</span>
                                                 <span>{{ __('translate.Leave') }}</span>
                                                 <span>{{ $leave_title }}</span>
                                             </div>
@@ -285,7 +285,7 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Customize</h4>
+                <h4 class="modal-title">{{ __('translate.Customize') }}</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -297,14 +297,14 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
                             All
                         </lebel><br>
                         <select name="all_inp" id="all_inp" class="form-control">
-                            <option value="present">Present</option>
-                            <option value="absent">Absent</option>
-                            <option value="wfh">Work from home</option>
-                            <option value="holiday">Holiday</option>
-                            <option value="non_working_day">Week ends</option>
+                            <option value="present">{{ __('translate.Present')}}</option>
+                            <option value="absent">{{ __('translate.Absent')}}</option>
+                            <option value="wfh">{{ __('translate.Work from home')}}</option>
+                            <option value="holiday">{{ __('translate.Holiday')}}</option>
+                            <option value="non_working_day">{{ __('translate.Week ends')}}</option>
                         </select>
                         <input type="color" id="colorPicker_allinp" name="colorPicker" class="" style="width: 25px;">
-                        <button class="btn btn-{{ $setting->theme_color}} mx-2" id="all_input">{{__('translate.Submit')}}</button>
+                        <button class="btn btn-{{ $setting->theme_color }} mx-2" id="all_input">{{__('translate.Submit')}}</button>
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -372,7 +372,7 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
                 tableRows2.hide().slice(0, selectedValue).show();
             }
         });
-        $('#recordsPerPage').val('1').change();
+        $('#recordsPerPage').val('25').change();
 
         $('#all_input').on('click', function() {
             let selectedColor = $('#colorPicker_allinp').val();

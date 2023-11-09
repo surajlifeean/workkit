@@ -60,7 +60,7 @@ class ClientController extends Controller
 
             request()->validate([
                 'firstname' => 'required|string|max:255',
-                'lastname'  => 'required|string|max:255',
+                // 'lastname'  => 'required|string|max:255',
                 'email'     => 'required|string|email|max:255|unique:users',
                 'password'  => 'required|string|min:6',
                 'phone'     => 'nullable',
@@ -73,7 +73,7 @@ class ClientController extends Controller
             $data = [];
             $data['code'] = $this->getNumberOrder();
             $data['firstname'] = $request['firstname'];
-            $data['lastname'] = $request['lastname'];
+            // $data['lastname'] = $request['lastname'];
             $data['username'] = $request['firstname'] .' '.$request['lastname'];
             $data['country'] = $request['country'];
             $data['city'] = $request['city'];
@@ -144,7 +144,7 @@ class ClientController extends Controller
 
             $this->validate($request, [
                 'firstname' => 'required|string|max:255',
-                'lastname'  => 'required|string|max:255',
+                // 'lastname'  => 'required|string|max:255',
                 'email'     => 'required|string|email|max:255|unique:users',
                 'email'     => Rule::unique('users')->ignore($id),
                 'phone'     => 'nullable',
@@ -157,7 +157,7 @@ class ClientController extends Controller
 
             $data = [];
             $data['firstname'] = $request['firstname'];
-            $data['lastname'] = $request['lastname'];
+            // $data['lastname'] = $request['lastname'];
             $data['username'] = $request['firstname'] .' '.$request['lastname'];
             $data['country'] = $request['country'];
             $data['city'] = $request['city'];

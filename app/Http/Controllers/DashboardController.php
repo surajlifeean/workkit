@@ -153,7 +153,7 @@ class DashboardController extends Controller
                     DB::raw("count(*) As count"),
                 ])
                 ->pluck('count', 'status_task');
-
+            // dd($project_status);
 
             return view('dashboard.dashboard', ([
                 'project_status' => $project_status,
