@@ -60,7 +60,7 @@
                                 <td>{{$leave->start_date}}</td>
                                 <td>{{$leave->end_date}}</td>
                                 <td>{{$leave->days}}</td>
-                                <td>{{$leave->status}}</td>
+                                <td>{{ __('translate.' . $leave->status) }}</td>
                                 <td>
                                     @can('leave_edit')
                                     <a @click="Edit_Leave( {{ $leave->id}})" class="ul-link-action text-success"
@@ -203,9 +203,9 @@
                                     <v-select @input="Selected_Status" placeholder="{{ __('translate.Choose_status') }}"
                                         v-model="leave.status" :reduce="(option) => option.value" :options="
                                                             [
-                                                                {label: 'Approved', value: 'approved'},
-                                                                {label: 'Pending', value: 'pending'},
-                                                                {label: 'Rejected', value: 'rejected'},
+                                                                {label: '@lang('translate.approved')', value: 'approved'},
+                                                                {label: '@lang('translate.pending')', value: 'pending'},
+                                                                {label: '@lang('translate.rejected')', value: 'rejected'},
                                                             ]">
                                     </v-select>
 

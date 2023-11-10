@@ -70,7 +70,7 @@ DB::table('notifications')
                                 <td>{{$travel->visit_purpose}}</td>
                                 <td>{{$travel->expected_budget}}</td>
                                 <td>{{$travel->actual_budget}}</td>
-                                <td>{{ ucwords($travel->status)}}</td>
+                                <td>{{ __('translate.'.$travel->status)}}</td>
                                 <td>
                                     <a href="{{ asset('/assets/images/expenses/' . $travel->attachment) }}" target="_blank" onclick="openImageWindow(event)">
                                         <img src="{{ asset('/assets/images/expenses/' . $travel->attachment) }}" style="height: 2rem; width: 2rem;" alt="">

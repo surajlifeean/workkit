@@ -985,7 +985,7 @@
                                                         <td>{{$leave->start_date}}</td>
                                                         <td>{{$leave->end_date}}</td>
                                                         <td>{{$leave->days}}</td>
-                                                        <td>{{$leave->status}}</td>
+                                                        <td>{{ __('translate.' .$leave->status) }}</td>
                                                     </tr>
                                                     @endforeach
                                                 </tbody>

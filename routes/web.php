@@ -65,6 +65,8 @@ if ($installed === true) {
             Route::put("update_social_profile/{id}", "EmployeesController@update_social_profile");
             Route::put("update_employee_document/{id}", "EmployeesController@update_employee_document");
             Route::post("employees/delete/by_selection", "EmployeesController@delete_by_selection");
+            Route::post("employees_claims/{id}", "EmployeesController@employees_claims");
+            Route::get("get_employees_claims", "EmployeesController@get_employees_claims");
 
 
             //------------------------------- Employee Experience ----------------\\
@@ -197,8 +199,11 @@ if ($installed === true) {
             Route::post("leave/delete/by_selection", "LeaveController@delete_by_selection");
             Route::post("leave_type/delete/by_selection", "LeaveTypeController@delete_by_selection");
             Route::post("cancel_leave_by_employee/{id}/{leave_id}", "LeaveController@cancelLeave");
+            //------------------------------- claims -------------------------\\
 
-            //------------------------------- training ----------------------\\
+            Route::resource("claims", "ClaimController");
+            
+            //-------------------------------  training ----------------------\\
             //----------------------------------------------------------------\\
             Route::resource('trainings', 'TrainingController');
             Route::post("trainings/delete/by_selection", "TrainingController@delete_by_selection");

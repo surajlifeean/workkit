@@ -25,6 +25,7 @@ use App\Models\OfficeShift;
 use App\Models\Leave;
 use App\Models\LeaveType;
 use App\Models\Award;
+use App\Models\Claim;
 use App\Models\ExpenseCategory;
 use App\Models\Travel;
 use App\Models\Project;
@@ -347,12 +348,18 @@ class EmployeeSessionController extends Controller
             ->join('employee_training', 'trainings.id', '=', 'employee_training.training_id')
             ->where('employee_id', $user_auth->id)
             ->orderBy('id', 'desc')
-            ->get();
+            ->get();   
         $exp_types = ExpenseCategory::get();
 
+        $claims = Claim::where('employee_id', $user_auth->id)
+        ->where('deleted_at', '=' , null)
+        ->select('claims.title', 'claims.description', 'claims.created_at', 'claims.status', 'claims.id', 'claims.attachment')
+        ->get();
+        // dd($claims, $user_auth->id);
         return view(
             'session_employee.employee_details',
             compact(
+                'claims',
                 'employee_project',
                 'employee_task',
                 'employee',
