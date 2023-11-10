@@ -590,5 +590,6 @@ return [
     'High' => 'Haute',
     'Medium' => 'Moyenne',
     'Low' => 'Faible',
-
+    'claims' => 'Réclamations',
+    'request' => 'Demande',
 ];

@@ -623,4 +623,6 @@ return [
     'High' => 'High',
     'Medium' => 'Medium',
     'Low' => 'Low',
+    'claims' => 'Claims',
+    'request' => 'Request',
 ];

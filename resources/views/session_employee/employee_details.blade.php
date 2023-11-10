@@ -90,6 +90,9 @@
                             <a class="nav-item nav-link" id="nav-tasks-tab" data-toggle="tab" href="#nav-tasks"
                                 role="tab" aria-controls="nav-tasks"
                                 aria-selected="false">{{ __('translate.Tasks') }}</a>
+                            <a class="nav-item nav-link" id="nav-claims-tab" data-toggle="tab" href="#nav-claims"
+                                role="tab" aria-controls="nav-claims"
+                                aria-selected="false">{{ __('translate.claims') }}</a>
                         </div>
                     </nav>
                     <div class="tab-content ul-tab__content p-3" id="nav-tabContent">
@@ -873,7 +876,7 @@
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title">{{ __('translate.Request_Leave') }}</h5>
+                                                <h5 class="modal-title">{{ __('translate.Request_leave') }}</h5>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -1150,6 +1153,7 @@
                                                         <th>{{ __('translate.Expected_Budget') }}</th>
                                                         <th>{{ __('translate.Actual_Budget') }}</th>
                                                         <th>{{ __('translate.Attachment') }}</th>
+                                                        <th>{{ __('translate.Status') }}</th>
                                                         <th>{{ __('translate.Action') }}</th>
                                                     </tr>
                                                 </thead>
@@ -1167,6 +1171,7 @@
                                                             <img src="{{ asset('/assets/images/expenses/' . $travel->attachment) }}" style="height: 2rem; width: 2rem;" alt="">
                                                         </a>                                                        
                                                         </td>
+                                                        <td>{{ __('translate.'.$travel->status) }}</td>
                                                         <td>
                                                       
                                                          <a @click="Edit_Travel( {{ $travel}})" class="ul-link-action text-success"
@@ -1487,7 +1492,7 @@
                                                                 class="badge badge-secondary m-2">{{ __('translate.On_Hold') }}</span>
                                                             @endif
                                                         </td>
-                                                        <td>{{$project->priority}}</td>
+                                                        <td>{{ __('translate.' . ucwords($project->priority)) }}</td>
                                                         <td>{{$project->project_progress}} %</td>
                                                     </tr>
                                                     @endforeach
@@ -1545,7 +1550,7 @@
                                                                 class="badge badge-secondary m-2">{{ __('translate.On_Hold') }}</span>
                                                             @endif
                                                         </td>
-                                                        <td>{{$task->priority}}</td>
+                                                        <td>{{ __('translate.'. ucwords($task->priority))}}</td>
                                                         <td>{{$task->task_progress}} %</td>
                                                         <td>
                                                       
@@ -1622,6 +1627,133 @@
                                 </div>
 
                         </div>
+                        
+                        {{-- Claims --}}
+                        <div class="tab-pane fade" id="nav-claims" role="tabpanel" aria-labelledby="nav-claims-tab">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="text-left">
+                                        <div class="text-left bg-transparent">
+                                            <a class="btn btn-{{$setting->theme_color}} btn-md m-2" @click="Request_Claim"><i
+                                                    class="i-Add text-white mr-2"></i>{{ __('translate.request') }} {{ __('translate.claims') }}</a>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table id="ul-contact-list" class="display table data_datatable"
+                                                >
+                                                <thead>
+                                                    <tr>
+                                                        <th>{{ __('translate.Title') }}</th>
+                                                        <th>{{ __('translate.Description') }}</th>
+                                                        <th>{{ __('translate.Date') }}</th>
+                                                        <th>{{ __('translate.Status') }}</th>
+                                                        <th>{{ __('translate.Attachment')}}</th>
+                                                        <th>{{ __('translate.Action') }}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach($claims as $claim)
+                                                        <tr>
+                                                    
+                                                           <td>{{ $claim->title }}</td>
+                                                           <td>{{ $claim->description }}</td>
+                                                           <td>{{ $claim->created_at }}</td>
+                                                           <td>{{ __('translate.' . $claim->status) }}</td>
+                                                           <td>
+                                                            <a href="{{ asset('assets/images/claims/'. $claim->attachment) }}" target="_blank" onclick="openImageWindow(event)">
+                                                                <img style="height: 40px; width: 40px; border-radius: 100%;" src="{{ asset('assets/images/claims/'. $claim->attachment) }}" alt="user avatar">
+                                                            </a>
+                                                           </td>
+                                                           <td>
+                                                            <a @click="Cancel_claim( {{$claim->id}} )"
+                                                                class="ul-link-action text-danger mr-1" data-toggle="tooltip"
+                                                                data-placement="top" title="Cancel Leave Request">
+                                                                <i class="i-Close-Window"></i>
+                                                            </a>
+                                                            
+                                                           </td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="Claim_Modal" tabindex="-1" role="dialog"
+                                aria-labelledby="Claim_Modal" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">{{ __('translate.request') }} {{ __('translate.claims') }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+    
+                                            <form @submit.prevent="Create_claim()" enctype="multipart/form-data">
+    
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <label for="title" class="ul-form__label">{{ __('translate.Title') }}<span class="text-danger">*</span></label>
+                                                        <input name="title" placeholder="{{ __('translate.Title') }}" type="text" class="form-control" id="title" v-model="claim.title">
+                                                        <span class="error" v-if="errors_claim && errors_claim.title">
+                                                            @{{ errors_claim.title[0] }}
+                                                        </span>
+                                                    </div>
+                                                    
+                                                    
+    
+                                                    <div class="col-md-6">
+                                                        <label for="attachment"
+                                                            class="ul-form__label">{{ __('translate.Attachment') }}</label>
+                                                        <input name="attachment" @change="change_Attachement_claim"
+                                                            type="file" class="form-control" id="attachment" v-model="claim.attachment">
+                                                        <span class="error"
+                                                            v-if="errors_claim && errors_claim.attachment">
+                                                            @{{ errors_claim.attachment[0] }}
+                                                        </span>
+                                                    </div>
+    
+                                                    <div class="col-md-12">
+                                                        <label for="reason"
+                                                            class="ul-form__label">{{ __('translate.Description') }}<span class="text-danger">*</span>
+                                                        </label>
+                                                        <textarea type="text" v-model="claim.description"
+                                                            class="form-control" name="reason" id="reason"
+                                                            placeholder="{{ __('translate.Description') }}"></textarea>
+                                                    </div>
+    
+                                                </div>
+    
+                                                <div class="row mt-3">
+    
+                                                    <div class="col-md-6">
+                                                        <button type="submit" class="btn btn-{{$setting->theme_color}}"
+                                                            :disabled="Submit_Processing_claim">
+                                                            {{ __('translate.Submit') }}
+                                                        </button>
+                                                        <div v-once class="typo__p" v-if="Submit_Processing_claim">
+                                                            <div class="spinner spinner-primary mt-3"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+    
+    
+                                            </form>
+    
+                                        </div>
+    
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
 
                     </div>
                 </div>
@@ -1671,9 +1803,11 @@
         Submit_Processing_leave:false,
         errors_leave:[],
         leave_types :[],
-
         SubmitProcessing_expences:false,
         edit_mode_expence:false,
+
+        Submit_Processing_claim:false,
+        errors_claim: [],
 
         Submit_Processing_message:false,
         messages:[],
@@ -1746,6 +1880,12 @@
                 status:"",
                 attachment: "",
             }, 
+            claim: {
+                title: "",
+                description:"",
+                status:"",
+                attachment: "",
+            },
 
     },
     mounted() {
@@ -2024,6 +2164,8 @@
             this.Get_leave_types();
             $('#Leave_Modal').modal('show');
         },
+
+
         //-------------------------------- Follow up messages ------------------------\\
         Follow_up_msg(id){
             this.Get_messages(id);
@@ -2653,10 +2795,77 @@
                                 toastr.danger('There was something wronge');
                             });
                     });
-                },
+             },
 
+             //---------------------------------- Request Claims -----------------------------------\\
+             Request_Claim() {
+            //    this.reset_Form_leave();
+            //    this.Get_leave_types();
+               $('#Claim_Modal').modal('show');
+             },
 
+             change_Attachement_claim(e){
+                let file = e.target.files[0];
+                this.claim.attachment = file;
+             },
 
+             Cancel_claim(id) {
+
+               swal({
+                   title: '{{ __('translate.Are_you_sure') }}',
+                   text: '{{ __('translate.You_wont_be_able_to_revert_this') }}',
+                   type: 'warning',
+                   showCancelButton: true,
+                   confirmButtonColor: '#0CC27E',
+                   cancelButtonColor: '#FF586B',
+                   confirmButtonText: '{{ __('translate.Yes') }}',
+                   cancelButtonText: '{{ __('translate.No_cancel') }}',
+                   confirmButtonClass: 'btn btn-{{$setting->theme_color}} mr-5',
+                   cancelButtonClass: 'btn btn-danger',
+                   buttonsStyling: false
+               }).then(function () {
+                       
+                       axios
+                           .delete("/claims/" + id)
+                           .then((res) => {
+                               console.log(res.data);
+                               location.reload();
+                               toastr.success(res.data.success);
+                           })
+                           .catch(() => {
+                            toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                           });
+                   });
+             },
+             
+             Create_claim() {
+                var self = this;
+                self.Submit_Processing_claim = true;
+               
+
+                self.data.append("title", self.claim.title);
+                self.data.append("description", self.claim.description);
+                self.data.append("attachment", self.claim.attachment);
+                self.data.append("status", "");
+
+                axios
+                    .post("/claims", self.data)
+                    .then(response => {
+                       
+                            self.Submit_Processing_claim = false;
+                            window.location.href = '/employee/my_requests'; 
+                            toastr.success('{{ __('translate.Created_in_successfully') }}');
+                            self.errors_claim = {};
+  
+                })
+                .catch(error => {
+                    self.Submit_Processing_claim = false;
+                    if (error.response.status == 422) {
+                        self.errors_claim = error.response.data.errors;
+                    }
+                    toastr.error('{{ __('translate.There_was_something_wronge') }}');
+                });
+             },
     },
     //-----------------------------Autoload function-------------------
     created () {
@@ -2841,6 +3050,11 @@ if (echartElemleave) {
         // You can customize the window features as needed
         window.open(imageUrl, 'Image Window', 'width=800, height=600, resizable=yes');
     }
+
+    // function openImageWindow(event) {
+    //     event.preventDefault();
+    //     window.open(event.currentTarget.href, '_blank', 'width=600,height=500');
+    // }
 
 </script>
 

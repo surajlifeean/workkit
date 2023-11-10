@@ -16,6 +16,7 @@ use App\Models\OfficeShift;
 use App\Models\Leave;
 use App\Models\LeaveType;
 use App\Models\Award;
+use App\Models\Claim;
 use App\Models\Travel;
 use App\Models\Complaint;
 use App\Models\Project;
@@ -481,6 +482,24 @@ class EmployeesController extends Controller
         return response()->json($employees);
     }
 
+    public function get_employees_claims(){
+
+        $claims = Claim::leftJoin('employees', 'claims.employee_id', '=', 'employees.id')
+        ->leftJoin('users', 'employees.id', '=', 'users.id')
+        ->whereNull('claims.deleted_at')
+        ->select('claims.title', 'claims.description', 'claims.created_at', 'claims.status', 'claims.id', 'claims.attachment', 'employees.username', 'users.avatar')
+        ->get();
+
+        // dd($claims); 
+        return view('employee.employee_claims', compact('claims'));
+    }
+    public function employees_claims(Request $request, $id){
+
+        $claim = Claim::findOrFail($id);
+        $claim->status = $request->input('status');
+        $claim->save();
+        return response()->json($claim);
+    }
 
     public function Get_office_shift_by_company(Request $request)
     {

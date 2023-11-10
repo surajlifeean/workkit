@@ -271,7 +271,7 @@ class LeaveController extends Controller
         
             Leave::find($id)->update($leave_data);
 
-            return response()->json(['success' => true ,'isvalid' => true]);
+            return response()->json(['success' => true ,'isvalid' => false]);
 
         }
         return abort('403', __('You are not authorized'));

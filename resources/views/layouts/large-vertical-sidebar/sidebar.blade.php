@@ -297,7 +297,7 @@
             {{---------------------------------------------- Employees -------------------------------------------}}
             @if (auth()->user()->can('employee_view') || auth()->user()->can('employee_add') )
                 <li class="" data-item="employees">
-                    <a class="link_btn {{ request()->is('employees') || request()->is('employees/*') ? 'active_link' : '' }}" href="#"
+                    <a class="link_btn {{ request()->is('employees') || request()->is('employees/*') || request()->is('get_employees_claims') ? 'active_link' : '' }}" href="#"
                         aria-expanded="true" data-toggle="collapse" data-target="#collapse_employees"
                         aria-expanded="true" aria-controls="collapse_employees"
                         >
@@ -329,7 +329,15 @@
                                 </a>
                             </li>
                         @endcan
-            
+                        @if(auth()->user()->role_users_id === 1)
+                        <li class="child_links">
+                            <a href="/get_employees_claims"
+                                class="{{ Route::currentRouteName() == 'employees.index' ? 'open' : '' }}">
+                                <i class="nav-icon text-{{$setting->theme_color}} i-Business-Mens"></i>
+                                <span class="item-name">{{ __('translate.Employee') }} {{ __('translate.claims') }}</span>
+                            </a>
+                        </li>
+                        @endif
                     </ul>
                 </li>
 

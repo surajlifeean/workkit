@@ -177,8 +177,8 @@
                                     <v-select @input="Selected_Status" placeholder="{{ __('translate.Choose_status') }}"
                                         v-model="user.status" :reduce="(option) => option.value" :options="
                                                 [
-                                                    {label: 'Active', value: 1},
-                                                    {label: 'Inactive', value: 0},
+                                                    {label: '@lang('translate.Active')', value: 1},
+                                                    {label: '@lang('translate.Inactive')', value: 0},
                                                 ]">
                                     </v-select>
 

@@ -170,7 +170,7 @@
 
 <div class="row">
 
-    <div class="col-lg-8 col-sm-12">
+    <div class="col-12">
         <div class="card o-hidden mb-4">
             <div class="card-header d-flex align-items-center border-0">
                 <h3 class="w-50 float-left card-title m-0">{{ __('translate.Latest_Employees') }}</h3>
