@@ -47,7 +47,7 @@ class ClaimController extends Controller
             return response()->json(['success' => true, 'isvalid' => true]);
         // }
     }
-
+    
     public function destroy($id)
     {
 
