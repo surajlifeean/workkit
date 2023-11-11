@@ -50,11 +50,12 @@
                                 <td>{{$policy->title}}</td>
                                 <td>{{$policy->company->name}}</td>
                                 <td>
-                                {{ Illuminate\Support\Str::limit($policy->description, $limit = 25) }}
-                                    <a @click="Open_Text( {{ $policy }})" class="ul-link-action text-success"
+                                {{ Illuminate\Support\Str::limit($policy->description, $limit = 35) }}
+                                    <a @click="Open_Text( {{ $policy }})" class="ul-link-action text-{{ $setting->theme_color }} cursor-pointer"
                                         data-toggle="tooltip" data-placement="top" title="Read more" style="font-size: 11px;">
                                         Read more...
                                     </a>
+                                </td>
                                 <td>
                                     @can('policy_edit')
                                     <a @click="Edit_Policy( {{ $policy}})" class="ul-link-action text-success"

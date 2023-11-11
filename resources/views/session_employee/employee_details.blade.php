@@ -1656,7 +1656,13 @@
                                                         <tr>
                                                     
                                                            <td>{{ $claim->title }}</td>
-                                                           <td>{{ $claim->description }}</td>
+                                                           <td>
+                                                            {{ Illuminate\Support\Str::limit($claim->description, $limit = 35) }}
+                                                                <a @click="Open_Text( {{ $claim }})" class="ul-link-action text-{{ $setting->theme_color }} cursor-pointer"
+                                                                    data-toggle="tooltip" data-placement="top" title="Read more" style="font-size: 11px;">
+                                                                    Read more...
+                                                                </a>
+                                                            </td>
                                                            <td>{{ $claim->created_at }}</td>
                                                            <td>{{ __('translate.' . $claim->status) }}</td>
                                                            <td>
@@ -1761,7 +1767,21 @@
         </div>
 </section>
 
-
+<div class="modal fade" id="policyModal" tabindex="-1" role="dialog" aria-labelledby="policyModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="fullPolicyText">
+        <!-- Full policy text will be displayed here -->
+      </div>
+    
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('page-js')
@@ -1910,7 +1930,14 @@
         };
     },
     methods: {
-
+        Open_Text(des){
+                console.log(des);
+                // Assuming you're using Vue to manage the state
+                $('#fullPolicyText').empty();
+                $('#fullPolicyText').append(des.description); // Use html() instead of append()
+                // // Open the modal
+                $('#policyModal').modal('show');
+            },
             Task_Msg(e){
                 $('#task_msg_box').empty();
                 e.forEach(data => {

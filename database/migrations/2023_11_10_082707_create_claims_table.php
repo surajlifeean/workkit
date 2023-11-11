@@ -19,7 +19,7 @@ class CreateClaimsTable extends Migration
             $table->string('title', 255);
             $table->text('description')->nullable();
             $table->string('attachment', 200)->nullable();
-            $table->string('claims', 15)->default('pending');
+            $table->string('status', 15)->default('pending');
             $table->timestamps(6);
             $table->softDeletes();
         });

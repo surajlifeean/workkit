@@ -55,7 +55,13 @@
                                 <td>{{ $ld->username }}</td>
                                 <td>{{ $ld->phone }}</td>
                                 <td>{{ $ld->name }}</td>
-                                <td>{{ $ld->description }}</td>
+                                <td>
+                                {{ Illuminate\Support\Str::limit($id->description, $limit = 25) }}
+                                    <a @click="Open_Text( {{ $id }})" class="ul-link-action text-{{ $setting->theme_color }} cursor-pointer"
+                                        data-toggle="tooltip" data-placement="top" title="Read more" style="font-size: 11px;">
+                                        Read more...
+                                    </a>
+                                </td>
                                 <td>
                                     @if ($ld->type == 'doc')
                                       Document
@@ -356,6 +362,21 @@
     </div>
 </div>
 
+<div class="modal fade" id="policyModal" tabindex="-1" role="dialog" aria-labelledby="policyModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="fullPolicyText">
+        <!-- Full policy text will be displayed here -->
+      </div>
+    
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('page-js')
@@ -408,7 +429,14 @@
        
         methods: {
 
-            
+            Open_Text(des){
+                console.log(des);
+                // Assuming you're using Vue to manage the state
+                $('#fullPolicyText').empty();
+                $('#fullPolicyText').append(des.description); // Use html() instead of append()
+                // // Open the modal
+                $('#policyModal').modal('show');
+            },
               //---- Event selected_row
               selected_row(id) {
                 //in here you can check what ever condition  before append to array.
