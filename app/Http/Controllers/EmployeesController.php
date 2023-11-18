@@ -494,7 +494,7 @@ class EmployeesController extends Controller
         return view('employee.employee_claims', compact('claims'));
     }
     public function employees_claims(Request $request, $id){
-
+    //    dd($request);
         $claim = Claim::findOrFail($id);
         $claim->status = $request->input('status');
         $claim->save();

@@ -48,12 +48,20 @@
                                     </a>
                                    </td>
                                    <td>{{ $claim->title }}</td>
-                                   <td>{{ $claim->description }}</td>
+
+                                   <td>
+                                   {{ Illuminate\Support\Str::limit($claim->description, $limit = 35) }}
+                                    <a @click="Open_Text( {{ $claim }})" class="ul-link-action text-{{ $setting->theme_color }} cursor-pointer"
+                                        data-toggle="tooltip" data-placement="top" title="Read more" style="font-size: 11px;">
+                                        Read more...
+                                    </a>
+                                   </td>
                                    <td>{{ $claim->created_at ? \Carbon\Carbon::parse($claim->created_at)->format('d/m/Y H:i') : '' }}</td>
+
                                    <td>{{ __('translate.' . $claim->status) }}</td>
                                    <td>
                                     <a href="{{ asset('assets/images/claims/'. $claim->attachment) }}" target="_blank" onclick="openImageWindow(event)">
-                                        <img style="height: 40px; width: 40px; border-radius: 100%;" src="{{ asset('assets/images/claims/'. $claim->attachment) }}" alt="user avatar">
+                                        <img style="height: 40px; width: 40px; border-radius: 100%;" src="{{ asset('assets/images/claims/'. $claim->attachment) }}" alt="{{__('translate.Attachment')}}">
                                     </a>
                                    </td>
                                    <td>
@@ -82,7 +90,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 v-if="editmode" class="modal-title">{{ __('translate.Edit') }}</h5>
+                        <h5  class="modal-title">{{ __('translate.Edit') }}</h5>
                         
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -95,14 +103,11 @@
                                 <div class="col-md-6">
                                     <label class="ul-form__label">{{ __('translate.Status') }} <span
                                             class="field_required">*</span></label>
-                                    <v-select @input="Selected_Status" placeholder="{{ __('translate.Choose_status') }}"
-                                        v-model="claim.status" :reduce="(option) => option.value" :options="
-                                                            [
-                                                                {label: '@lang('translate.approved')', value: 'approved'},
-                                                                {label: '@lang('translate.pending')', value: 'pending'},
-                                                                {label: '@lang('translate.rejected')', value: 'rejected'},
-                                                            ]">
-                                    </v-select>
+                                            <select class="form-control" id="statusSelect" v-model="claim.status" @change="Selected_Status" placehol>
+                                              <option value="approved">{{ ucwords(__('translate.approved')) }}</option>
+                                              <option value="pending">{{ ucwords(__('translate.pending')) }}</option>
+                                              <option value="rejected">{{ ucwords(__('translate.rejected')) }}</option>
+                                            </select>
 
                                     <span class="error" v-if="errors && errors.status">
                                         @{{ errors.status[0] }}
@@ -133,6 +138,21 @@
     </div>
 </div>
 
+<div class="modal fade" id="policyModal" tabindex="-1" role="dialog" aria-labelledby="policyModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="fullPolicyText">
+        
+      </div>
+    
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('page-js')
@@ -164,12 +184,20 @@
        
         methods: {
 
-             
+            Open_Text(des){
+                console.log(des);
+                // Assuming you're using Vue to manage the state
+                $('#fullPolicyText').empty();
+                $('#fullPolicyText').append(des.description); // Use html() instead of append()
+                // // Open the modal
+                $('#policyModal').modal('show');
+            },
 
             //----------------------------------------- Claims ----------------------------------\\
             Edit_claim(claim){
                 this.claim.id = claim;
-                $('#Claim_Modal').show();
+                console.log(claim)
+                $('#Claim_Modal').modal('show');
             },
 
             Update_Claims() {
@@ -197,6 +225,7 @@
                 if (value === null) {
                     this.claim.status = value;
                 }
+                // console.log(this.claim)
             },
             Cancel_claim(id) {
 
