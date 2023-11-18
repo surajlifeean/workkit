@@ -49,7 +49,7 @@
                                    </td>
                                    <td>{{ $claim->title }}</td>
                                    <td>{{ $claim->description }}</td>
-                                   <td>{{ $claim->created_at }}</td>
+                                   <td>{{ $claim->created_at ? \Carbon\Carbon::parse($claim->created_at)->format('d/m/Y H:i') : '' }}</td>
                                    <td>{{ __('translate.' . $claim->status) }}</td>
                                    <td>
                                     <a href="{{ asset('assets/images/claims/'. $claim->attachment) }}" target="_blank" onclick="openImageWindow(event)">

@@ -7,7 +7,7 @@
 <div class="breadcrumb">
     <div class="d-flex align-items-center w-100">
     <img src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}" alt="employee avatar" class="h-100px w-100px mr-4" style="border-radius: 6.5rem; width: 100px;">
-      <h1 class="">{{ __('translate.Hi')}}, {{ Auth::user()->username }}</h1>
+      <h1 class="">{{ __('translate.Hi')}} {{ Auth::user()->username }}</h1>
       {{-- @dump(auth()->user());  --}}
     </div>
 </div>
@@ -18,7 +18,7 @@
                 @if(!$punch_in)
                 <span class="float-left card-title m-0">{{ __('translate.No_Shift_Today') }}</span>
                 @else
-                <span class="clock_in float-left card-title m-0">{{$punch_in}} - {{$punch_out}}
+                <span class="clock_in float-left card-title m-0">{{str_replace(['AM', 'PM', 'am', 'pm'], '', $punch_in)}} - {{str_replace(['AM', 'PM', 'am', 'pm'], '', $punch_out)}}
                 @isset($employee_attendance->clock_in_out)
                     @if($employee_attendance->clock_in_out != 0)
                         ({{ __('translate.Punch_In') }}: {{ date('h:i A', strtotime($employee_attendance->clock_in)) }})

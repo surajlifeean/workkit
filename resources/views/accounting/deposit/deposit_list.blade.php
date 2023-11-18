@@ -54,7 +54,7 @@
                                 <td @click="selected_row( {{ $deposit->id}})"></td>
                                 <td>{{$deposit->account->account_name}}</td>
                                 <td>{{$deposit->deposit_ref}}</td>
-                                <td>{{$deposit->date}}</td>
+                                <td>{{ $deposit->date ? \Carbon\Carbon::parse($deposit->date)->format('d/m/Y') : '' }}</td>
                                 <td>{{$deposit->amount}}</td>
                                 <td>{{$deposit->deposit_category->title}}</td>
                                 <td>{{$deposit->payment_method->title}}</td>

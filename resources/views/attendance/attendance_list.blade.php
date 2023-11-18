@@ -53,7 +53,7 @@
                                 <td @click="selected_row( {{ $attendance->id}})"></td>
                                 <td>{{$attendance->employee->username}}</td>
                                 <td>{{$attendance->company->name}}</td>
-                                <td>{{$attendance->date}}</td>
+                                <td>{{ $attendance->date ? \Carbon\Carbon::parse($attendance->date)->format('d/m/Y') : '' }}</td>
                                 <td>{{$attendance->clock_in}}</td>
                                 <td>{{$attendance->clock_out}}</td>
                                 <td>{{$attendance->total_work}}</td>

@@ -95,7 +95,7 @@
                                     <label for="status" class="ul-form__label">{{ __('translate.Status') }} </label>
                                     <select name="status" id="status" class="form-control">
                                         <option value="0">{{ __('translate.All') }}</option>
-                                        <option value="not_started">{{ __('translate.Not_Started ') }}</option>
+                                        <option value="not_started">{{ __('translate.Not_Started') }}</option>
                                         <option value="progress">{{ __('translate.In_Progress') }}</option>
                                         <option value="cancelled">{{ __('translate.Cancelled') }}</option>
                                         <option value="hold">{{ __('translate.On_Hold') }}</option>

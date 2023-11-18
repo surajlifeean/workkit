@@ -54,7 +54,7 @@
                                 <td>{{$complaint->company->name}}</td>
                                 <td>{{$complaint->EmployeeFrom->username}}</td>
                                 <td>{{$complaint->EmployeeAgainst->username}}</td>
-                                <td>{{$complaint->date}}</td>
+                                <td>{{ $complaint->date ? \Carbon\Carbon::parse($complaint->date)->format('d/m/Y') : '' }}</td>
                                 <td>
                                     @can('complaint_edit')
                                     <a @click="Edit_Complaint( {{ $complaint}})" class="ul-link-action text-success"

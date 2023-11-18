@@ -134,7 +134,7 @@
       $(document).ready(function () {
 
             $("#start_date,#end_date").datepicker({
-                format: 'yyyy-mm-dd',
+                format: 'dd/mm/yyyy',
                 changeMonth: true,
                 changeYear: true,
                 autoclose: true,
@@ -169,6 +169,7 @@
                     },
                 },
 
+                
                 columns: [
                     {data: 'employee.username', name: 'Employee'},
                     {data: 'company.name', name: 'Company'},

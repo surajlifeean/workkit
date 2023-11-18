@@ -75,9 +75,9 @@
                             {{-- <a class="nav-item nav-link" id="nav-award-tab" data-toggle="tab" href="#nav-award"
                                 role="tab" aria-controls="nav-award"
                                 aria-selected="false">{{ __('translate.Award') }}</a> --}}
-                            <a class="nav-item nav-link" id="nav-complaint-tab" data-toggle="tab" href="#nav-complaint"
+                            {{-- <a class="nav-item nav-link" id="nav-complaint-tab" data-toggle="tab" href="#nav-complaint"
                                 role="tab" aria-controls="nav-complaint"
-                                aria-selected="false">{{ __('translate.Complaint') }}</a>
+                                aria-selected="false">{{ __('translate.Complaint') }}</a> --}}
                             <a class="nav-item nav-link" id="nav-travel-tab" data-toggle="tab" href="#nav-travel"
                                 role="tab" aria-controls="nav-travel"
                                 aria-selected="false">{{ __('translate.Expenses') }}</a>
@@ -130,13 +130,12 @@
                                         <div class="form-group col-md-4">
                                             <label class="ul-form__label">{{ __('translate.Gender') }} <span
                                                     class="field_required">*</span></label>
-                                            <v-select @input="Selected_Gender" placeholder="{{ __('translate.Choose_Gender') }}"
-                                                v-model="employee.gender" :reduce="(option) => option.value" :options="
-                                                    [
-                                                        {label: 'Male', value: 'male'},
-                                                        {label: 'Female', value: 'female'},
-                                                    ]">
-                                            </v-select>
+                                                    <v-select @input="Selected_Gender" placeholder="@lang('translate.Choose_Gender')"
+                                                        v-model="employee.gender" :reduce="(option) => option.value" :options="[
+                                                            { label: '@lang('translate.Male')', value: 'male' },
+                                                            { label: '@lang('translate.Female')', value: 'female' },
+                                                        ]">
+                                                    </v-select>
 
                                             <span class="error" v-if="errors && errors.gender">
                                                 @{{ errors.gender[0] }}
@@ -847,8 +846,9 @@
                                                     @foreach($leaves as $leave)
                                                     <tr>
                                                         <td>{{$leave->leave_type_title}}</td>
-                                                        <td>{{$leave->start_date}}</td>
-                                                        <td>{{$leave->end_date}}</td>
+                                                        <td>{{ $leave->start_date ? \Carbon\Carbon::parse($leave->start_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $leave->end_date ? \Carbon\Carbon::parse($leave->end_date)->format('d/m/Y') : '' }}</td>
+
                                                         <td>{{$leave->days}}</td>
                                                         <td>{{ __('translate.'. $leave->status) }}</td>
                                                         <td>
@@ -1097,7 +1097,7 @@
                         </div> --}}
 
                         {{-- Complaint --}}
-                        <div class="tab-pane fade" id="nav-complaint" role="tabpanel"
+                        {{-- <div class="tab-pane fade" id="nav-complaint" role="tabpanel"
                             aria-labelledby="nav-complaint-tab">
 
                             <div class="row">
@@ -1131,7 +1131,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- Travel / expences --}}
                         <div class="tab-pane fade" id="nav-travel" role="tabpanel" aria-labelledby="nav-travel-tab">
@@ -1161,8 +1161,9 @@
                                                     @foreach($travels as $travel)
                                                     <tr>
                                                     <td>{{ $travel->expenseCategory ? ucwords($travel->expenseCategory->title) : 'N/A' }}</td>
-                                                        <td>{{$travel->start_date}}</td>
-                                                        <td>{{$travel->end_date}}</td>
+                                                    <td>{{ $travel->start_date ? \Carbon\Carbon::parse($travel->start_date)->format('d/m/Y') : '' }}</td>
+                                                    <td>{{ $travel->end_date ? \Carbon\Carbon::parse($travel->end_date)->format('d/m/Y') : '' }}</td>
+
                                                         <td>{{$travel->visit_purpose}}</td>
                                                         <td>{{$travel->expected_budget}}</td>
                                                         <td>{{$travel->actual_budget}}</td>
@@ -1423,8 +1424,9 @@
                                                     <tr>
                                                         <td>{{$training->trainer->name}}</td>
                                                         <td>{{$training->TrainingSkill->training_skill}}</td>
-                                                        <td>{{$training->start_date}}</td>
-                                                        <td>{{$training->end_date}}</td>
+                                                        <td>{{ $training->start_date ? \Carbon\Carbon::parse($training->start_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $training->end_date ? \Carbon\Carbon::parse($training->end_date)->format('d/m/Y') : '' }}</td>
+
                                                         <td>{{$training->training_cost}}</td>
                                                         <td>
                                                             @if($training->status)
@@ -1472,8 +1474,9 @@
                                                     <tr>
                                                         <td>{{$project->title}}</td>
                                                         <td>{{$project->client->username}}</td>
-                                                        <td>{{$project->start_date}}</td>
-                                                        <td>{{$project->end_date}}</td>
+                                                        <td>{{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d/m/Y') : '' }}</td>
+
                                                         <td>
                                                             @if($project->status == 'completed')
                                                             <span
@@ -1530,8 +1533,9 @@
                                                     <tr>
                                                         <td>{{$task->title}}</td>
                                                         <td>{{$task->project->title}}</td>
-                                                        <td>{{$task->start_date}}</td>
-                                                        <td>{{$task->end_date}}</td>
+                                                        <td>{{ $task->start_date ? \Carbon\Carbon::parse($task->start_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $task->end_date ? \Carbon\Carbon::parse($task->end_date)->format('d/m/Y') : '' }}</td>
+
                                                         <td>
                                                             @if($task->status == 'completed')
                                                             <span
@@ -1657,7 +1661,8 @@
                                                     
                                                            <td>{{ $claim->title }}</td>
                                                            <td>{{ $claim->description }}</td>
-                                                           <td>{{ $claim->created_at }}</td>
+                                                           <td>{{ $claim->created_at ? \Carbon\Carbon::parse($claim->created_at)->format('d/m/Y H:i') : '' }}</td>
+
                                                            <td>{{ __('translate.' . $claim->status) }}</td>
                                                            <td>
                                                             <a href="{{ asset('assets/images/claims/'. $claim->attachment) }}" target="_blank" onclick="openImageWindow(event)">

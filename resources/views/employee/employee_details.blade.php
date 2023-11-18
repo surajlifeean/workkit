@@ -48,9 +48,9 @@
                             <a class="nav-item nav-link" id="nav-award-tab" data-toggle="tab" href="#nav-award"
                                 role="tab" aria-controls="nav-award"
                                 aria-selected="false">{{ __('translate.Award') }}</a>
-                            <a class="nav-item nav-link" id="nav-complaint-tab" data-toggle="tab" href="#nav-complaint"
+                            {{--<a class="nav-item nav-link" id="nav-complaint-tab" data-toggle="tab" href="#nav-complaint"
                                 role="tab" aria-controls="nav-complaint"
-                                aria-selected="false">{{ __('translate.Complaint') }}</a>
+                                aria-selected="false">{{ __('translate.Complaint') }}</a> --}}
                             <a class="nav-item nav-link" id="nav-travel-tab" data-toggle="tab" href="#nav-travel"
                                 role="tab" aria-controls="nav-travel"
                                 aria-selected="false">{{ __('translate.Travel') }}</a>
@@ -624,8 +624,9 @@
                                                     <tr>
                                                         <td>{{$experience->title}}</td>
                                                         <td>{{$experience->company_name}}</td>
-                                                        <td>{{$experience->start_date}}</td>
-                                                        <td>{{$experience->end_date}}</td>
+                                                        <td>{{ $experience->start_date ? \Carbon\Carbon::parse($experience->start_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $experience->end_date ? \Carbon\Carbon::parse($experience->end_date)->format('d/m/Y') : '' }}</td>
+
                                                         <td>
                                                             <a @click="Edit_Experience( {{ $experience}})"
                                                                 class="ul-link-action text-success"
@@ -982,8 +983,9 @@
                                                         <td>{{$leave->company_name}}</td>
                                                         <td>{{$leave->department_name}}</td>
                                                         <td>{{$leave->leave_type_title}}</td>
-                                                        <td>{{$leave->start_date}}</td>
-                                                        <td>{{$leave->end_date}}</td>
+                                                        <td>{{ $leave->start_date ? \Carbon\Carbon::parse($leave->start_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $leave->end_date ? \Carbon\Carbon::parse($leave->end_date)->format('d/m/Y') : '' }}</td>
+
                                                         <td>{{$leave->days}}</td>
                                                         <td>{{ __('translate.' .$leave->status) }}</td>
                                                     </tr>
@@ -1023,7 +1025,7 @@
                                                         <td>{{$award->department_name}}</td>
                                                         <td>{{$award->employee_name}}</td>
                                                         <td>{{$award->award_type_title}}</td>
-                                                        <td>{{$award->date}}</td>
+                                                        <td>{{ $award->date ? \Carbon\Carbon::parse($award->date)->format('d/m/Y') : '' }}</td>
                                                         <td>{{$award->gift}}</td>
                                                         <td>{{$award->cash}}</td>
                                                     </tr>
@@ -1037,7 +1039,7 @@
                         </div>
 
                         {{-- Complaint --}}
-                        <div class="tab-pane fade" id="nav-complaint" role="tabpanel"
+                        {{-- <div class="tab-pane fade" id="nav-complaint" role="tabpanel"
                             aria-labelledby="nav-complaint-tab">
 
                             <div class="row">
@@ -1071,7 +1073,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- Travel --}}
                         <div class="tab-pane fade" id="nav-travel" role="tabpanel" aria-labelledby="nav-travel-tab">
@@ -1098,8 +1100,9 @@
                                                     <tr>
                                                         <td>{{$travel->company->name ?? 'N/A'}}</td>
                                                         <td>{{$travel->arrangement_type->title ?? 'N/A'}}</td>
-                                                        <td>{{$travel->start_date}}</td>
-                                                        <td>{{$travel->end_date}}</td>
+                                                        <td>{{ $travel->start_date ? \Carbon\Carbon::parse($travel->start_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $travel->end_date ? \Carbon\Carbon::parse($travel->end_date)->format('d/m/Y') : '' }}</td>
+
                                                         <td>{{$travel->visit_purpose}}</td>
                                                         <td>{{$travel->expected_budget}}</td>
                                                         <td>{{$travel->actual_budget}}</td>
@@ -1139,8 +1142,9 @@
                                                         <td>{{$training->company->name}}</td>
                                                         <td>{{$training->trainer->name}}</td>
                                                         <td>{{$training->TrainingSkill->training_skill}}</td>
-                                                        <td>{{$training->start_date}}</td>
-                                                        <td>{{$training->end_date}}</td>
+                                                        <td>{{ $training->start_date ? \Carbon\Carbon::parse($training->start_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $training->end_date ? \Carbon\Carbon::parse($training->end_date)->format('d/m/Y') : '' }}</td>
+
                                                         <td>{{$training->training_cost}}</td>
                                                         <td>
                                                             @if($training->status)
@@ -1187,8 +1191,9 @@
                                                         <td>{{$project->title}}</td>
                                                         <td>{{$project->company->name}}</td>
                                                         <td>{{$project->client->username}}</td>
-                                                        <td>{{$project->start_date}}</td>
-                                                        <td>{{$project->end_date}}</td>
+                                                        <td>{{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d/m/Y') : '' }}</td>
+
                                                         <td>{{$project->priority}}</td>
                                                         <td>
                                                             @if($project->status == 'completed')
@@ -1243,8 +1248,9 @@
                                                         <td>{{$task->title}}</td>
                                                         <td>{{$task->company->name}}</td>
                                                         <td>{{$task->project->title}}</td>
-                                                        <td>{{$task->start_date}}</td>
-                                                        <td>{{$task->end_date}}</td>
+                                                        <td>{{ $task->start_date ? \Carbon\Carbon::parse($task->start_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $task->end_date ? \Carbon\Carbon::parse($task->end_date)->format('d/m/Y') : '' }}</td>
+
                                                         <td>
                                                             @if($task->status == 'completed')
                                                             <span
