@@ -77,7 +77,7 @@
                                                     <tr>
                                                         <td>{{$discussion->User->username}}</td>
                                                         <td>{{$discussion->message}}</td>
-                                                        <td>{{$discussion->created_at}}</td>
+                                                        <td>{{ $discussion->created_at ? \Carbon\Carbon::parse($discussion->created_at)->format('d/m/Y') : '' }}</td>
                                                         <td>
                                                             <a @click="Remove_Discussion( {{ $discussion->id}})"
                                                                 class="ul-link-action text-danger mr-1"
@@ -183,7 +183,7 @@
                                                     @foreach($issues as $issue)
                                                     <tr>
                                                         <td>{{$issue->title}}</td>
-                                                        <td>{{$issue->created_at}}</td>
+                                                        <td>{{ $issue->created_at ? \Carbon\Carbon::parse($issue->created_at)->format('d/m/Y') : '' }}</td>
                                                         <td>
                                                             @if($issue->attachment)
                                                             <span><a href="{{ asset('assets/images/projetcs/issues/'.$issue->attachment) }}"

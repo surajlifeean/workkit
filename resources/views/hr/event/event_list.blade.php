@@ -54,7 +54,7 @@
                                 <td>{{$event->title}}</td>
                                 <td>{{$event->company->name}}</td>
                                 <td>{{$event->department->department}}</td>
-                                <td>{{$event->date}}</td>
+                                <td>{{ $event->date ? \Carbon\Carbon::parse($event->date)->format('d/m/Y') : '' }}</td>
                                 <td>{{$event->time}}</td>
                                 <td>{{$event->status}}</td>
                                 <td>

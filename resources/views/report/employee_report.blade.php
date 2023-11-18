@@ -145,7 +145,7 @@
 
             let date = $('.date');
             date.datepicker({
-                format: 'yyyy-mm-dd',
+                format: 'dd/mm/yyyy',
                 autoclose: true,
                 todayHighlight: true,
             });

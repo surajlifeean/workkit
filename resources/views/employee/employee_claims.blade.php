@@ -48,6 +48,7 @@
                                     </a>
                                    </td>
                                    <td>{{ $claim->title }}</td>
+
                                    <td>
                                    {{ Illuminate\Support\Str::limit($claim->description, $limit = 35) }}
                                     <a @click="Open_Text( {{ $claim }})" class="ul-link-action text-{{ $setting->theme_color }} cursor-pointer"
@@ -55,7 +56,8 @@
                                         Read more...
                                     </a>
                                    </td>
-                                   <td>{{ \Carbon\Carbon::parse($claim->created_at)->format('d/m/y H:i:s') }}</td>
+                                   <td>{{ $claim->created_at ? \Carbon\Carbon::parse($claim->created_at)->format('d/m/Y H:i') : '' }}</td>
+
                                    <td>{{ __('translate.' . $claim->status) }}</td>
                                    <td>
                                     <a href="{{ asset('assets/images/claims/'. $claim->attachment) }}" target="_blank" onclick="openImageWindow(event)">

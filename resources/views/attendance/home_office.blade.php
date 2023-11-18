@@ -103,30 +103,31 @@ $lang = ($currentLanguage ?? '') === 'en' ? 'en' : (($currentLanguage === 'fr') 
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Set Work From Home</h5>
+                <h5 class="modal-title">{{ __('translate.Set Work From Home') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <label for="wfhType">Select Type:</label>
+                <label for="wfhType">{{ __('translate.Select Type') }}</label>
                 <select id="wfhType" class="form-control">
-                    <option value="fullDay">Full Day</option>
-                    <option value="halfDay">Half Day</option>
+                    <option value="fullDay">{{ __('translate.Full Day') }}</option>
+                    <option value="halfDay">{{ __('translate.Half Day') }}</option>
                 </select>
 
-                <label for="wfhTime">Select Time:</label>
+                <label for="wfhTime">{{ __('translate.Select Time') }}:</label>
                 <select id="wfhTime" class="form-control">
-                
+                    <!-- Add translated options if needed -->
                 </select>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="modalOKBtn">OK</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="modalOKBtn">{{ __('translate.OK') }}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('translate.Cancel') }}</button>
             </div>
         </div>
     </div>
 </div>
+
 
 @endsection
 

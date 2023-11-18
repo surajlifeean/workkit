@@ -19,8 +19,8 @@
 <div class="col-md-12 mb-3">
     <div class="col-lg-4 col-md-4 col-sm-6 col-12">
         <select name="view_style" class="form-control" id="view_style" onchange="changeView(event)">
-           <option value="table">Table View</option>
-           <option value="icons_view">Icons View</option>
+           <option value="table">{{ __('translate.Table view') }}</option>
+           <option value="icons_view">{{ __('translate.Icons view') }}</option>
         </select>
     </div>
     
@@ -30,7 +30,7 @@
     <div class="col-md-12 mb-3" id="icon_view">
         <div class="row">
             <div class="col-lg-3 col-md-4 col-sm-6 col-12 ml-auto">
-                <input type="text" id="searchInput" placeholder="Search by name" class="form-control">
+                <input type="text" id="searchInput" placeholder="{{ __('translate.Search...') }}" class="form-control">
             </div>
         </div>
         <div class="row flex-wrap mt-3">

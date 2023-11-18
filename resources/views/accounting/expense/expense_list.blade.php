@@ -58,7 +58,7 @@
                                 <td @click="selected_row( {{ $expense->id}})"></td>
                                 <td>{{$expense->account->account_name}}</td>
                                 <td>{{$expense->expense_ref}}</td>
-                                <td>{{$expense->date}}</td>
+                                <td>{{ $expense->date ? \Carbon\Carbon::parse($expense->date)->format('d/m/Y') : '' }}</td>
                                 <td>{{$expense->amount}}</td>
                                 <td>
                                  @if($expense->expenseCategory->title) 

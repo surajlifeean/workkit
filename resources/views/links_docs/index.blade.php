@@ -71,7 +71,8 @@
                                 </td>
                                 <td>
                                     {{ $ld->upload }}</td>
-                                <td>{{ $ld->created_at }}</td>
+                                    <td>{{ $ld->created_at ? \Carbon\Carbon::parse($ld->created_at)->format('d/m/Y') : '' }}</td>
+
                                 <td>
                                     
                                    

@@ -590,4 +590,13 @@ return [
     'Low' => 'منخفض',
     'claims' => 'المطالبات',
     'request' => 'طلب',
+    'Table view' => 'عرض جدول',
+    'Icons view' => 'عرض الأيقونات',
+    'Set Work From Home' => 'تعيين العمل من المنزل',
+    'Select Type' => 'اختر النوع :',
+    'Full Day' => 'يوم كامل',
+    'Half Day' => 'نصف اليوم',
+    'Select Time' => 'اختر الوقت :',
+    'OK' => 'موافق',
+    'Cancel' => 'إلغاء',
 ];
