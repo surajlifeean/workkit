@@ -598,7 +598,7 @@ return [
     'On_hold' => 'En attente',
     'Table view' => 'Liste',
     'Icons view' => 'Icônes',
-    'Set Work From Home' => 'sélectionnez un jour de télétravail ',
+    'Set Work From Home' => 'Sélectionnez un jour de télétravails',
     'Select Type' => 'Sélectionner le type :',
     'Full Day' => 'Journée complète',
     'Half Day' => 'Demi-journée',
