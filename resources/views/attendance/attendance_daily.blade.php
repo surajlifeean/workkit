@@ -70,15 +70,10 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
 
         <div class="card text-left p-2">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-12 text-right">
-                        <button class="btn btn-{{ $setting->theme_color}} mb-2 ml-auto" data-toggle="modal" data-target="#myModal">{{ __('translate.Customize') }}</button>
 
-                    </div>
-                </div>
                 <div class="row mb-3">
-                    <div class="col-12 col-md-3 d-flex my-1 my-sm-0">
-                        <h5 class="mr-auto">{{ __('translate.'. $monthName ) }}, {{ $currentYear }} </h5>
+                    <div class="d-flex align-items-center justify-content-center m-2">
+                        <h5 class="mr-2">{{ __('translate.'. $monthName ) }}, {{ $currentYear }} </h5>
                         <select id="recordsPerPage" class="form-control" style="width: 80px;">
                             <option value="10">10</option>
                             <option value="1">1</option>
@@ -88,12 +83,11 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
                             <option value="all">All</option>
                         </select>
                     </div>
-                    <div class="col-12 col-sm-3 my-sm-0 my-1">
-                        <input type="text" class="form-control" placeholder="{{ __('translate.Search Employee..')}}" id="employeeSearch">
-                    </div>
+                    
+                        <input type="text" class="form-control m-2" style="max-width: 300px;" placeholder="{{ __('translate.Search Employee..')}}" id="employeeSearch">
+                 
 
-                    <div class="col-12 col-sm-6 d-flex col-lg-3 my-1 my-sm-0">
-                        <form action="{{ route('daily_attendance') }}" class="d-flex" method="GET">
+                        <form action="{{ route('daily_attendance') }}" class="d-flex align-items-center justify-content-center" style="max-width: 400px;" method="GET">
                             @csrf
                             @method('GET')
                             <input type="month" class="form-control mr-2" name="year_month">
@@ -101,8 +95,8 @@ $leave_type = DB::table('leave_types')->where('deleted_at', '=', null)->get();
       
                         </form>
 
+                        <button class="btn btn-{{ $setting->theme_color}} m-2" data-toggle="modal" data-target="#myModal">{{ __('translate.Customize') }}</button>
 
-                    </div>
 
                 </div>
                 <div class="row my-2">
