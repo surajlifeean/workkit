@@ -82,7 +82,7 @@
                                                             <a @click="Remove_Discussion( {{ $discussion->id}})"
                                                                 class="ul-link-action text-danger mr-1"
                                                                 data-toggle="tooltip" data-placement="top"
-                                                                title="Delete">
+                                                                title="{{ __('translate.Delete') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                         </td>
@@ -210,13 +210,13 @@
 
                                                             <a @click="Edit_Issue( {{ $issue}})"
                                                                 class="ul-link-action text-success"
-                                                                data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                                                 <i class="i-Edit"></i>
                                                             </a>
                                                             <a @click="Remove_Issue( {{ $issue->id}})"
                                                                 class="ul-link-action text-danger mr-1"
                                                                 data-toggle="tooltip" data-placement="top"
-                                                                title="Delete">
+                                                                title="{{ __('translate.Delete') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                         </td>
@@ -279,7 +279,10 @@
                                                                                     {label: 'Apprenticeship', value: 'apprenticeship'},
                                                                                     {label: 'Seasonal', value: 'seasonal'},
                                                                                 ]">
-                                                                </v-select>
+                                                                <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                                             </div>
 
                                                             <div class="col-md-12">
@@ -320,7 +323,10 @@
                                                                                     {label: 'Pending', value: 'pending'},
                                                                                     {label: 'Solved', value: 'solved'},
                                                                                 ]">
-                                                                </v-select>
+                                                                <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                                             </div>
 
                                                         </div>
@@ -404,7 +410,7 @@
                                                             <a @click="Remove_Document( {{ $document->id}})"
                                                                 class="ul-link-action text-danger mr-1"
                                                                 data-toggle="tooltip" data-placement="top"
-                                                                title="Delete">
+                                                                title="{{ __('translate.Delete') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                         </td>
@@ -553,13 +559,13 @@
                                                         <td>
                                                             <a href="/tasks/{{$task->id}}/edit"
                                                                 class="ul-link-action text-success"
-                                                                data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                                                 <i class="i-Edit"></i>
                                                             </a>
                                                             <a @click="Remove_Task( {{ $task->id}})"
                                                                 class="ul-link-action text-danger mr-1"
                                                                 data-toggle="tooltip" data-placement="top"
-                                                                title="Delete">
+                                                                title="{{ __('translate.Delete') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                         </td>
@@ -646,7 +652,10 @@
                                                                         v-model="task.company_id"
                                                                         :reduce="label => label.value"
                                                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                                                    </v-select>
+                                                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                                                     <span class="error"
                                                                         v-if="errors_Task && errors_Task.company_id">
@@ -663,7 +672,10 @@
                                                                         v-model="task.assigned_to"
                                                                         :reduce="label => label.value"
                                                                         :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
-                                                                    </v-select>
+                                                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                                                 </div>
 
                                                                 <div class="col-md-4">
@@ -694,7 +706,10 @@
                                                                                 {label: 'Medium', value: 'medium'},
                                                                                 {label: 'Low', value: 'low'},
                                                                             ]">
-                                                                    </v-select>
+                                                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                                                     <span class="error"
                                                                         v-if="errors_Task && errors_Task.priority">
@@ -717,7 +732,10 @@
                                                                             {label: 'On Hold', value: 'hold'},
                                                                             {label: 'Completed', value: 'completed'},
                                                                         ]">
-                                                                    </v-select>
+                                                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                                                     <span class="error"
                                                                         v-if="errors_Task && errors_Task.status">

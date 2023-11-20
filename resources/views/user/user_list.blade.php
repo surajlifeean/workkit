@@ -87,7 +87,7 @@
                                     @can('user_edit')
                                      @if( auth()->user()->role_users_id == 1 || $user->id != 1)
                                       <a @click="Edit_User( {{ $user}})" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                       </a>
                                      @endif
@@ -98,7 +98,7 @@
                                     
                                     @can('user_delete')
                                     <a @click="Remove_User( {{ $user->id}})" class="ul-link-action text-danger mr-1"
-                                        data-toggle="tooltip" data-placement="top" title="Delete">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
@@ -180,7 +180,10 @@
                                                     {label: '@lang('translate.Active')', value: 1},
                                                     {label: '@lang('translate.Inactive')', value: 0},
                                                 ]">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.status">
                                         @{{ errors.status[0] }}

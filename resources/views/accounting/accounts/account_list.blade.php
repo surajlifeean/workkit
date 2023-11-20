@@ -56,14 +56,14 @@
                                     @can('account_edit')
                                     <a href="/accounting/account/{{$account->id}}/edit"
                                         class="ul-link-action text-success" data-toggle="tooltip" data-placement="top"
-                                        title="Edit">
+                                        title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('account_delete')
                                     <a @click="Remove_Account( {{ $account->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan

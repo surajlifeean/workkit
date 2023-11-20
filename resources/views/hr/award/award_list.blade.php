@@ -68,13 +68,13 @@
                                 <td>
                                     @can('award_edit')
                                     <a @click="Edit_Award( {{ $award}})" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('award_delete')
                                     <a @click="Remove_Award( {{ $award->id}})" class="ul-link-action text-danger mr-1"
-                                        data-toggle="tooltip" data-placement="top" title="Delete">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
@@ -112,7 +112,10 @@
                                         placeholder="{{ __('translate.Choose_Company') }}" v-model="award.company_id"
                                         :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}
@@ -126,7 +129,10 @@
                                         placeholder="{{ __('translate.Choose_Department') }}"
                                         v-model="award.department_id" :reduce="label => label.value"
                                         :options="departments.map(departments => ({label: departments.department, value: departments.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                     <span class="error" v-if="errors && errors.department_id">
                                         @{{ errors.department_id[0] }}
                                     </span>
@@ -140,7 +146,10 @@
                                         :reduce="label => label.value"
                                         :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
 
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.employee_id">
                                         @{{ errors.employee_id[0] }}
@@ -155,7 +164,10 @@
                                         v-model="award.award_type_id" :reduce="label => label.value"
                                         :options="award_types.map(award_types => ({label: award_types.title, value: award_types.id}))">
 
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.award_type_id">
                                         @{{ errors.award_type_id[0] }}

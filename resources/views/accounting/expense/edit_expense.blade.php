@@ -27,6 +27,9 @@
                             <v-select @input="Selected_Account" placeholder="{{ __('translate.Choose_Account') }}"
                                 v-model="expense.account_id" :reduce="label => label.value"
                                 :options="accounts.map(accounts => ({label: accounts.account_name, value: accounts.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.account_id">
@@ -40,6 +43,9 @@
                             <v-select @input="Selected_Category" placeholder="{{ __('translate.Choose_Category') }}"
                                 v-model="expense.expense_category_id" :reduce="label => label.value"
                                 :options="categories.map(categories => ({label: categories.title, value: categories.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.expense_category_id">
@@ -88,6 +94,9 @@
                                 placeholder="{{ __('translate.Choose_Payment_method') }}"
                                 v-model="expense.payment_method_id" :reduce="label => label.value"
                                 :options="payment_methods.map(payment_methods => ({label: payment_methods.title, value: payment_methods.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.payment_method_id">

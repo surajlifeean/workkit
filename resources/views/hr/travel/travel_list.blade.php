@@ -65,8 +65,9 @@ DB::table('notifications')
                                 <td>{{$travel->employee->username ?? 'N/A'}}</td>
                                 <td>{{$travel->company->name}}</td>
                                 <td>{{ $travel->expenseCategory->title ?? 'N/A' }}</td>
-                                <td>{{$travel->start_date}}</td>
-                                <td>{{$travel->end_date}}</td>
+                                <td>{{ $travel->start_date ? \Carbon\Carbon::parse($travel->start_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $travel->end_date ? \Carbon\Carbon::parse($travel->end_date)->format('d/m/Y') : '' }}</td>
+
                                 <td>{{$travel->visit_purpose}}</td>
                                 <td>{{$travel->expected_budget}}</td>
                                 <td>{{$travel->actual_budget}}</td>
@@ -79,13 +80,13 @@ DB::table('notifications')
                                 <td>
                                    
                                     <a @click="Edit_Travel( {{ $travel}})" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                  
                               
                                     <a @click="Remove_Travel( {{ $travel->id}})" class="ul-link-action text-danger mr-1"
-                                        data-toggle="tooltip" data-placement="top" title="Delete">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                           
@@ -124,7 +125,10 @@ DB::table('notifications')
                                         placeholder="{{ __('translate.Choose_Company') }}" v-model="travel.company_id"
                                         :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}
@@ -139,7 +143,10 @@ DB::table('notifications')
                                         :reduce="label => label.value"
                                         :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
 
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.employee_id">
                                         @{{ errors.employee_id[0] }}
@@ -224,7 +231,10 @@ DB::table('notifications')
                                                 {label: 'Air', value: 'air'},
                                                 {label: 'Other', value: 'other'},
                                             ]">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.travel_mode">
                                         @{{ errors.travel_mode[0] }}

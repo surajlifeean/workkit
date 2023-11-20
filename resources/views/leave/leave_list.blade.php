@@ -57,20 +57,20 @@
                                 <td>{{$leave->company_name}}</td>
                                 <td>{{$leave->department_name}}</td>
                                 <td>{{$leave->leave_type_title}}</td>
-                                <td>{{$leave->start_date}}</td>
-                                <td>{{$leave->end_date}}</td>
+                                <td>{{ $leave->start_date ? \Carbon\Carbon::parse($leave->start_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $leave->end_date ? \Carbon\Carbon::parse($leave->end_date)->format('d/m/Y') : '' }}</td>
                                 <td>{{$leave->days}}</td>
                                 <td>{{ __('translate.' . $leave->status) }}</td>
                                 <td>
                                     @can('leave_edit')
                                     <a @click="Edit_Leave( {{ $leave->id}})" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('leave_delete')
                                     <a @click="Remove_Leave( {{ $leave->id}})" class="ul-link-action text-danger mr-1"
-                                        data-toggle="tooltip" data-placement="top" title="Delete">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
@@ -116,7 +116,10 @@
                                         placeholder="{{ __('translate.Choose_Company') }}" v-model="leave.company_id"
                                         :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}
@@ -131,7 +134,10 @@
                                         placeholder="{{ __('translate.Choose_Department') }}"
                                         v-model="leave.department_id" :reduce="label => label.value"
                                         :options="departments.map(departments => ({label: departments.department, value: departments.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.department_id">
                                         @{{ errors.department_id[0] }}
@@ -146,7 +152,10 @@
                                         :reduce="label => label.value"
                                         :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
 
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                     <span class="error" v-if="errors && errors.employee_id">
                                         @{{ errors.employee_id[0] }}
                                     </span>
@@ -161,7 +170,10 @@
                                         :reduce="label => label.value"
                                         :options="leave_types.map(leave_types => ({label: leave_types.title, value: leave_types.id}))">
 
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                     <span class="error" v-if="errors && errors.leave_type_id">
                                         @{{ errors.leave_type_id[0] }}
                                     </span>
@@ -207,7 +219,10 @@
                                                                 {label: '@lang('translate.pending')', value: 'pending'},
                                                                 {label: '@lang('translate.rejected')', value: 'rejected'},
                                                             ]">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.status">
                                         @{{ errors.status[0] }}

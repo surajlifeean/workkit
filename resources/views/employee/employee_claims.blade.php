@@ -67,11 +67,11 @@
                                    <td>
                                     <a @click="Cancel_claim( {{$claim->id}} )"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Cancel Leave Request">
+                                        data-placement="top" title="{{ __('translate.Cancel_claim_Request') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     <a @click="Edit_claim( {{ $claim->id}})" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                    </td>

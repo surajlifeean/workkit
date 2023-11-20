@@ -60,13 +60,13 @@
                                 <td>
                                     @can('event_edit')
                                     <a @click="Edit_Event( {{ $event}})" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('event_delete')
                                     <a @click="Remove_Event( {{ $event->id}})" class="ul-link-action text-danger mr-1"
-                                        data-toggle="tooltip" data-placement="top" title="Delete">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
@@ -141,7 +141,10 @@
                                                     {label: 'Pending', value: 'pending'},
                                                     {label: 'Rejected', value: 'rejected'},
                                                 ]">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.status">
                                         @{{ errors.status[0] }}
@@ -155,7 +158,10 @@
                                         placeholder="{{ __('translate.Choose_Company') }}" v-model="event.company_id"
                                         :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}
@@ -169,7 +175,10 @@
                                         placeholder="{{ __('translate.Choose_Department') }}"
                                         v-model="event.department_id" :reduce="label => label.value"
                                         :options="departments.map(departments => ({label: departments.department, value: departments.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                     <span class="error" v-if="errors && errors.department_id">
                                         @{{ errors.department_id[0] }}
                                     </span>

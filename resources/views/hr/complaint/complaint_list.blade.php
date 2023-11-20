@@ -58,14 +58,14 @@
                                 <td>
                                     @can('complaint_edit')
                                     <a @click="Edit_Complaint( {{ $complaint}})" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('complaint_delete')
                                     <a @click="Remove_Complaint( {{ $complaint->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
@@ -114,7 +114,10 @@
                                         placeholder="{{ __('translate.Choose_Company') }}"
                                         v-model="complaint.company_id" :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}
@@ -128,7 +131,10 @@
                                         placeholder="{{ __('translate.Choose_Employee') }}"
                                         v-model="complaint.employee_from" :reduce="label => label.value"
                                         :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                     <span class="error" v-if="errors && errors.employee_from">
                                         @{{ errors.employee_from[0] }}
                                     </span>
@@ -141,7 +147,10 @@
                                         placeholder="{{ __('translate.Choose_Employee') }}"
                                         v-model="complaint.employee_against" :reduce="label => label.value"
                                         :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                     <span class="error" v-if="errors && errors.employee_against">
                                         @{{ errors.employee_against[0] }}
                                     </span>

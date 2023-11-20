@@ -53,23 +53,23 @@
                                 <td @click="selected_row( {{ $announcement->id}})"></td>
                                 <td>{{$announcement->title}}</td>
                                 <td>{{$announcement->company_name}}</td>
-                                <td>{{$announcement->department_name?$announcement->department_name:'all departments'}}
-                                </td>
-                                <td>{{$announcement->start_date}}</td>
-                                <td>{{$announcement->end_date}}</td>
+                                <td>{{$announcement->department_name?$announcement->department_name:'all departments'}}</td>
+                                <td>{{ $announcement->start_date ? \Carbon\Carbon::parse($announcement->start_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $announcement->end_date ? \Carbon\Carbon::parse($announcement->end_date)->format('d/m/Y') : '' }}</td>
+
                                 @if(auth()->user()->role_users_id != 2)
                                 <td>
                                     @can('announcement_edit')
                                     <a  @click="Edit_Announcement( {{ $announcement}})"
                                         class="ul-link-action text-success" data-toggle="tooltip" data-placement="top"
-                                        title="Edit">
+                                        title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('announcement_delete')
                                     <a @click="Remove_Announcement( {{ $announcement->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
@@ -158,7 +158,10 @@
                                         placeholder="{{ __('translate.Choose_Company') }}"
                                         v-model="announcement.company_id" :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}
@@ -173,7 +176,10 @@
                                         v-model="announcement.department_id" :reduce="label => label.value"
                                         :options="departments.map(departments => ({label: departments.department, value: departments.id}))">
 
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.department">
                                         @{{ errors.department[0] }}

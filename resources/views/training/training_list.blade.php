@@ -56,8 +56,9 @@
                                 <td>{{$training->company->name}}</td>
                                 <td>{{$training->trainer->name}}</td>
                                 <td>{{$training->TrainingSkill->training_skill}}</td>
-                                <td>{{$training->start_date}}</td>
-                                <td>{{$training->end_date}}</td>
+                                <td>{{ $training->start_date ? \Carbon\Carbon::parse($training->start_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $training->end_date ? \Carbon\Carbon::parse($training->end_date)->format('d/m/Y') : '' }}</td>
+
                                 <td>{{$training->training_cost}}</td>
                                 <td>
                                     @if($training->status)
@@ -69,7 +70,7 @@
                                 <td>
                                     @can('training_edit')
                                     <a href="/trainings/{{$training->id}}/edit" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
@@ -77,7 +78,7 @@
                                     @can('training_delete')
                                     <a @click="Remove_Training( {{ $training->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan

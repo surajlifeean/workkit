@@ -106,8 +106,8 @@
                                 <td><a href="/projects/{{$project->id}}">{{$project->title}}</a></td>
                                 <td>{{$project->client->username}}</td>
                                 <td>{{$project->company->name}}</td>
-                                <td>{{$project->start_date}}</td>
-                                <td>{{$project->end_date}}</td>
+                                <td>{{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d/m/Y') : '' }}</td>
                                 <td>
                                     @if($project->status == 'completed')
                                     <span class="badge badge-success m-2">{{ __('translate.Completed') }}</span>
@@ -133,14 +133,14 @@
 
                                     @can('project_edit')
                                     <a href="/projects/{{$project->id}}/edit" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('project_delete')
                                     <a @click="Remove_Project( {{ $project->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
