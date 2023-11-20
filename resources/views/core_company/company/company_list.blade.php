@@ -55,14 +55,14 @@
                                 <td>
                                     @can('company_edit')
                                     <a @click="Edit_Company( {{ $company}})" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('company_delete')
                                     <a @click="Remove_Company( {{ $company->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan

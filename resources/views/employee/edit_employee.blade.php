@@ -50,7 +50,10 @@
                                             {label: 'Male', value: 'male'},
                                             {label: 'Female', value: 'female'},
                                         ]">
-                                </v-select>
+                                <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                             <span class="error" v-if="errors && errors.gender">
                                 @{{ errors.gender[0] }}
@@ -86,6 +89,9 @@
                                 :disabled="employee.role_users_id === 1" v-model="employee.role_users_id"
                                 :reduce="label => label.value"
                                 :options="roles.map(roles => ({label: roles.name, value: roles.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.role_users_id">
@@ -159,6 +165,9 @@
                             <v-select @input="Selected_Company" placeholder="{{ __('translate.Choose_Company') }}"
                                 v-model="employee.company_id" :reduce="label => label.value"
                                 :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.company_id">
@@ -173,6 +182,9 @@
                             <v-select @input="Selected_Department" placeholder="{{ __('translate.Choose_Department') }}"
                                 v-model="employee.department_id" :reduce="label => label.value"
                                 :options="departments.map(departments => ({label: departments.department, value: departments.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.department_id">
@@ -187,6 +199,9 @@
                                 placeholder="{{ __('translate.Choose_Designation') }}" v-model="employee.designation_id"
                                 :reduce="label => label.value"
                                 :options="designations.map(designations => ({label: designations.designation, value: designations.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.designation_id">
@@ -202,6 +217,9 @@
                                 placeholder="{{ __('translate.Choose_Office_Shift') }}"
                                 v-model="employee.office_shift_id" :reduce="label => label.value"
                                 :options="office_shifts.map(office_shifts => ({label: office_shifts.name, value: office_shifts.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.office_shift_id">
@@ -216,6 +234,9 @@
                                 placeholder="{{ __('translate.Direct_Manager') }}"
                                 v-model="employee.direct_manager_user_id" :reduce="label => label.value"
                                 :options="users.map(user => ({label: user.username, value: user.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             

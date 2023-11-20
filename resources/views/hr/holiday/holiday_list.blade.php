@@ -50,19 +50,20 @@
                                 <td @click="selected_row( {{ $holiday->id}})"></td>
                                 <td>{{$holiday->title}}</td>
                                 <td>{{$holiday->company->name}}</td>
-                                <td>{{$holiday->start_date}}</td>
-                                <td>{{$holiday->end_date}}</td>
+                                <td>{{ $holiday->start_date ? \Carbon\Carbon::parse($holiday->start_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $holiday->end_date ? \Carbon\Carbon::parse($holiday->end_date)->format('d/m/Y') : '' }}</td>
+
                                 <td>
                                     @can('holiday_edit')
                                     <a @click="Edit_Holiday( {{ $holiday}})" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('holiday_delete')
                                     <a @click="Remove_Holiday( {{ $holiday->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
@@ -100,7 +101,10 @@
                                         placeholder="{{ __('translate.Choose_Company') }}" v-model="holiday.company_id"
                                         :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}

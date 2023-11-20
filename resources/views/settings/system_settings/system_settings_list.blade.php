@@ -34,7 +34,10 @@
                                     placeholder="{{ __('translate.Enter_Default_Currency') }}"
                                     v-model="setting.currency_id" :reduce="label => label.value"
                                     :options="currencies.map(currencies => ({label: currencies.name, value: currencies.id}))">
-                                </v-select>
+                                <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                 <span class="error" v-if="errors_settings && errors_settings.currency_id">
                                     @{{ errors_settings.currency_id[0] }}
                                 </span>

@@ -53,14 +53,14 @@
                                 <td>
                                     @can('department_edit')
                                     <a @click="Edit_Department( {{ $department}})" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('department_delete')
                                     <a @click="Remove_Department( {{ $department->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
@@ -108,7 +108,10 @@
                                         placeholder="{{ __('translate.Choose_Company') }}"
                                         v-model="department.company_id" :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}
@@ -122,7 +125,10 @@
                                         v-model="department.department_head" :reduce="label => label.value"
                                         :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
 
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                 </div>
                             </div>

@@ -111,8 +111,9 @@
                                 <td><a href="/tasks/{{$task->id}}">{{$task->title}}</a></td>
                                 <td>{{$task->company->name}}</td>
                                 <td><a href="/projects/{{$task->project->id}}">{{$task->project->title}}</a></td>
-                                <td>{{$task->start_date}}</td>
-                                <td>{{$task->end_date}}</td>
+                                <td>{{ $task->start_date ? \Carbon\Carbon::parse($task->start_date)->format('d/m/Y') : '' }}</td>
+                                 <td>{{ $task->end_date ? \Carbon\Carbon::parse($task->end_date)->format('d/m/Y') : '' }}</td>
+
                                 <td>
                                     @if($task->status == 'completed')
                                     <span class="badge badge-success m-2">{{ __('translate.Completed') }}</span>
@@ -137,14 +138,14 @@
 
                                     @can('task_edit')
                                     <a href="/tasks/{{$task->id}}/edit" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
 
                                     @can('task_delete')
                                     <a @click="Remove_Task( {{ $task->id}})" class="ul-link-action text-danger mr-1"
-                                        data-toggle="tooltip" data-placement="top" title="Delete">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan

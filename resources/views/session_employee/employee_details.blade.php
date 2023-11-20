@@ -135,7 +135,10 @@
                                                             { label: '@lang('translate.Male')', value: 'male' },
                                                             { label: '@lang('translate.Female')', value: 'female' },
                                                         ]">
-                                                    </v-select>
+                                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                             <span class="error" v-if="errors && errors.gender">
                                                 @{{ errors.gender[0] }}
@@ -153,7 +156,10 @@
                                                         {label: 'Single', value: 'single'},
                                                         {label: 'Divorced', value: 'divorced'},
                                                     ]">
-                                            </v-select>
+                                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                         </div>
 
                                         <div class="form-group col-md-4">
@@ -290,13 +296,13 @@
                                                         <td>
                                                             <a @click="Edit_Document( {{ $document}})"
                                                                 class="ul-link-action text-success"
-                                                                data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                                                 <i class="i-Edit"></i>
                                                             </a>
                                                             <a @click="Remove_Document( {{ $document->id}})"
                                                                 class="ul-link-action text-danger mr-1"
                                                                 data-toggle="tooltip" data-placement="top"
-                                                                title="Delete">
+                                                                title="{{ __('translate.Delete') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                         </td>
@@ -495,13 +501,13 @@
                                                         <td>
                                                             <a @click="Edit_Experience( {{ $experience}})"
                                                                 class="ul-link-action text-success"
-                                                                data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                                                 <i class="i-Edit"></i>
                                                             </a>
                                                             <a @click="Remove_Experience( {{ $experience->id}})"
                                                                 class="ul-link-action text-danger mr-1"
                                                                 data-toggle="tooltip" data-placement="top"
-                                                                title="Delete">
+                                                                title="{{ __('translate.Delete') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                         </td>
@@ -565,7 +571,10 @@
                                                                         {label: 'Apprenticeship', value: 'apprenticeship'},
                                                                         {label: 'Seasonal', value: 'seasonal'},
                                                                     ]">
-                                                                </v-select>
+                                                                <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                                                 <span class="error"
                                                                     v-if="errors_experience && errors_experience.employment_type">
@@ -700,13 +709,13 @@
                                                         <td>
                                                             <a @click="Edit_Account( {{ $account_bank}})"
                                                                 class="ul-link-action text-success"
-                                                                data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                                                 <i class="i-Edit"></i>
                                                             </a>
                                                             <a @click="Remove_Account( {{ $account_bank->id}})"
                                                                 class="ul-link-action text-danger mr-1"
                                                                 data-toggle="tooltip" data-placement="top"
-                                                                title="Delete">
+                                                                title="{{ __('translate.Delete') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                         </td>
@@ -854,7 +863,7 @@
                                                         <td>
                                                             <a @click="Cancel_leave( {{auth()->user()->id}}, {{$leave->id}})"
                                                                 class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                                                data-placement="top" title="Cancel Leave Request">
+                                                                data-placement="top" title="{{ __('translate.Cancel_Leave_Request') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                             <a @click="Follow_up_msg({{ $leave->id }})"
@@ -898,7 +907,10 @@
                                                                 :reduce="label => label.value"
                                                                 :options="leave_types.map(leave_types => ({label: leave_types.title, value: leave_types.id}))">
 
-                                                            </v-select>
+                                                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                                             <span class="error"
                                                                 v-if="errors_leave && errors_leave.leave_type_id">
                                                                 @{{ errors_leave.leave_type_id[0] }}
@@ -1176,12 +1188,12 @@
                                                         <td>
                                                       
                                                          <a @click="Edit_Travel( {{ $travel}})" class="ul-link-action text-success"
-                                                             data-toggle="tooltip" data-placement="top" title="Edit">
+                                                             data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                                              <i class="i-Edit"></i>
                                                          </a>
                                                        
                                                          <a @click="Remove_Travel( {{ $travel->id}})" class="ul-link-action text-danger mr-1"
-                                                             data-toggle="tooltip" data-placement="top" title="Delete">
+                                                             data-toggle="tooltip" data-placement="top" title="{{ __('translate.Delete') }}">
                                                              <i class="i-Close-Window"></i>
                                                          </a>
                                                    
@@ -1289,7 +1301,10 @@
                                                                         {label: 'Air', value: 'air'},
                                                                         {label: 'Other', value: 'other'},
                                                                     ]">
-                                                            </v-select>
+                                                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                         
                                                             <span class="error" v-if="errors && errors.travel_mode">
                                                                 @{{ errors.travel_mode[0] }}
@@ -1304,7 +1319,10 @@
                                                                 v-model="travel.arrangement_type_id" :reduce="label => label.value"
                                                                 :options="arrangement_types.map(arrangement_types => ({label: arrangement_types.title, value: arrangement_types.id}))">
                         
-                                                            </v-select>
+                                                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                         
                                                             <span class="error" v-if="errors && errors.arrangement_type_id">
                                                                 @{{ errors.arrangement_type_id[0] }}
@@ -1349,7 +1367,10 @@
                                                                         {label: 'Pending', value: 'pending'},
                                                                         {label: 'Rejected', value: 'rejected'},
                                                                     ]">
-                                                            </v-select>
+                                                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                         
                                                             <span class="error" v-if="errors && errors.status">
                                                                 @{{ errors.status[0] }}
@@ -1679,7 +1700,7 @@
                                                            <td>
                                                             <a @click="Cancel_claim( {{$claim->id}} )"
                                                                 class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                                                data-placement="top" title="Cancel Leave Request">
+                                                                data-placement="top" title="{{ __('translate.Cancel_claim_Request') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                             

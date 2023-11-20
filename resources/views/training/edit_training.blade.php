@@ -32,6 +32,9 @@
                             <v-select @input="Selected_Trainer" placeholder="{{ __('translate.Choose_Trainer') }}"
                                 v-model="training.trainer_id" :reduce="label => label.value"
                                 :options="trainers.map(trainers => ({label: trainers.name, value: trainers.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
                             <span class="error" v-if="errors && errors.trainer_id">
                                 @{{ errors.trainer_id[0] }}
@@ -45,6 +48,9 @@
                                 placeholder="{{ __('translate.Choose_Training_Skill') }}"
                                 v-model="training.training_skill_id" :reduce="label => label.value"
                                 :options="training_skills.map(training_skills => ({label: training_skills.training_skill, value: training_skills.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
                             <span class="error" v-if="errors && errors.training_skill_id">
                                 @{{ errors.training_skill_id[0] }}
@@ -57,6 +63,9 @@
                             <v-select @input="Selected_Company" placeholder="{{ __('translate.Choose_Company') }}"
                                 v-model="training.company_id" :reduce="label => label.value"
                                 :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.company_id">
@@ -71,6 +80,9 @@
                                 placeholder="{{ __('translate.Choose_Employees') }}" v-model="assigned_employees"
                                 :reduce="label => label.value"
                                 :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
                             <span class="error" v-if="errors && errors.assigned_to">
                                 @{{ errors.assigned_to[0] }}
@@ -128,6 +140,9 @@
                                                 {label: 'Active', value: 1},
                                                 {label: 'Inactive', value: 0},
                                             ]">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.status">

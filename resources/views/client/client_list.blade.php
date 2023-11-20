@@ -61,13 +61,13 @@
                                 <td>
                                     @can('client_edit')
                                     <a @click="Edit_Client( {{ $client}})" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('client_delete')
                                     <a @click="Remove_Client( {{ $client->id}})" class="ul-link-action text-danger mr-1"
-                                        data-toggle="tooltip" data-placement="top" title="Delete">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan

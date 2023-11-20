@@ -131,7 +131,10 @@
                                         placeholder="{{ __('translate.Choose_Company') }}" v-model="project.company_id"
                                         :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}
@@ -163,7 +166,10 @@
                                                 {label: 'Medium', value: 'medium'},
                                                 {label: 'Low', value: 'low'},
                                             ]">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.priority">
                                         @{{ errors.priority[0] }}

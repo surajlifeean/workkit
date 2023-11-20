@@ -10,10 +10,10 @@
 @endsection
 
 <div class="breadcrumb">
-    <h1>{{ __('translate.Office_Shift_List') }}</h1>
+    <h1>{{ __('translate.Office_Shift') }}</h1>
     <ul>
-        <li><a href="/hr/office_shift">{{ __('translate.Office_Shifts') }}</a></li>
-        <li>{{ __('translate.Office_Shift_List') }}</li>
+        {{-- <li><a href="/hr/office_shift">{{ __('translate.Office_Shifts') }}</a></li>
+        <li>{{ __('translate.Office_Shift_List') }}</li> --}}
     </ul>
 </div>
 
@@ -59,71 +59,71 @@
                                 <td>
                                     <div>
                                         <span><strong>{{ __('translate.In') }}</strong>
-                                            :{{$office_shift->monday_in}}</span><br>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->monday_in)}}</span><br>
                                         <span><strong>{{ __('translate.Out') }}</strong> :
-                                            {{$office_shift->monday_out}}</span>
+                                            {{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->monday_out)}}</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div>
                                         <span><strong>{{ __('translate.In') }}</strong>
-                                            :{{$office_shift->tuesday_in}}</span><br>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->tuesday_in)}}</span><br>
                                         <span><strong>{{ __('translate.Out') }}</strong> :
-                                            {{$office_shift->tuesday_out}}</span>
+                                            {{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->tuesday_out)}}</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div>
                                         <span><strong>{{ __('translate.In') }}</strong>
-                                            :{{$office_shift->wednesday_in}}</span><br>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->wednesday_in)}}</span><br>
                                         <span><strong>{{ __('translate.Out') }}</strong>
-                                            :{{$office_shift->wednesday_out}}</span>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->wednesday_out)}}</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div>
                                         <span><strong>{{ __('translate.In') }}</strong>
-                                            :{{$office_shift->thursday_in}}</span><br>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->thursday_in)}}</span><br>
                                         <span><strong>{{ __('translate.Out') }}</strong>
-                                            :{{$office_shift->thursday_out}}</span>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->thursday_out)}}</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div>
                                         <span><strong>{{ __('translate.In') }}</strong>
-                                            :{{$office_shift->friday_in}}</span><br>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->friday_in)}}</span><br>
                                         <span><strong>{{ __('translate.Out') }}</strong>
-                                            :{{$office_shift->friday_out}}</span>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->friday_out)}}</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div>
                                         <span><strong>{{ __('translate.In') }}</strong>
-                                            :{{$office_shift->saturday_in}}</span><br>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->saturday_in)}}</span><br>
                                         <span><strong>{{ __('translate.Out') }}</strong>
-                                            :{{$office_shift->saturday_out}}</span>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->saturday_out)}}</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div>
                                         <span><strong>{{ __('translate.In') }}</strong>
-                                            :{{$office_shift->sunday_in}}</span><br>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->sunday_in)}}</span><br>
                                         <span><strong>{{ __('translate.Out') }}</strong>
-                                            :{{$office_shift->sunday_out}}</span>
+                                            :{{str_replace(['AM', 'PM', 'am', 'pm'], '', $office_shift->sunday_out)}}</span>
                                     </div>
                                 </td>
                                 <td>
                                     @can('office_shift_edit')
                                     <a @click="Edit_office_shift( {{ $office_shift}})"
                                         class="ul-link-action text-success" data-toggle="tooltip" data-placement="top"
-                                        title="Edit">
+                                        title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('office_shift_delete')
                                     <a @click="Remove_office_shift( {{ $office_shift->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
@@ -161,7 +161,10 @@
                                         placeholder="{{ __('translate.Choose_Company') }}"
                                         v-model="office_shift.company_id" :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}

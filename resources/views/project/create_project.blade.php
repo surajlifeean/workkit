@@ -72,6 +72,9 @@
                             <v-select @input="Selected_Client" placeholder="{{ __('translate.Choose_Client') }}"
                                 v-model="project.client_id" :reduce="label => label.value"
                                 :options="clients.map(clients => ({label: clients.username, value: clients.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
                             <span class="error" v-if="errors && errors.client">
                                 @{{ errors.client[0] }}
@@ -84,6 +87,9 @@
                             <v-select @input="Selected_Company" placeholder="{{ __('translate.Choose_Company') }}"
                                 v-model="project.company_id" :reduce="label => label.value"
                                 :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.company_id">
@@ -97,6 +103,9 @@
                             <v-select multiple @input="Selected_Team" placeholder="{{ __('translate.Choose_Team') }}"
                                 v-model="project.assigned_to" :reduce="label => label.value"
                                 :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
                             <span class="error" v-if="errors && errors.assigned_to">
                                 @{{ errors.assigned_to[0] }}
@@ -126,6 +135,9 @@
                                             {label: '{{ __('translate.Medium') }}', value: 'medium'},
                                             {label: '{{ __('translate.Low') }}', value: 'low'},
                                         ]">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.priority">
@@ -145,6 +157,9 @@
                                                 {label: '{{ __('translate.On_Hold') }}', value: 'hold'},
                                                 {label: '{{ __('translate.Completed') }}', value: 'completed'},
                                             ]">
+                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
                             </v-select>
 
                             <span class="error" v-if="errors && errors.status">

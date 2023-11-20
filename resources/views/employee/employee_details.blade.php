@@ -34,12 +34,12 @@
                                 role="tab" aria-controls="nav-document"
                                 aria-selected="false">{{ __('translate.Document') }}</a>
 
-                            <a class="nav-item nav-link" id="nav-social-tab" data-toggle="tab" href="#nav-social"
+                            {{-- <a class="nav-item nav-link" id="nav-social-tab" data-toggle="tab" href="#nav-social"
                                 role="tab" aria-controls="nav-social"
-                                aria-selected="false">{{ __('translate.Social_Media') }}</a>
-                            <a class="nav-item nav-link" id="nav-experience-tab" data-toggle="tab"
+                                aria-selected="false">{{ __('translate.Social_Media') }}</a> --}}
+                            {{-- <a class="nav-item nav-link" id="nav-experience-tab" data-toggle="tab"
                                 href="#nav-experience" role="tab" aria-controls="nav-experience"
-                                aria-selected="false">{{ __('translate.Experience') }}</a>
+                                aria-selected="false">{{ __('translate.Experience') }}</a> --}}
                             <a class="nav-item nav-link" id="nav-bank-tab" data-toggle="tab" href="#nav-bank" role="tab"
                                 aria-controls="nav-bank" aria-selected="false">{{ __('translate.Bank_Account') }}</a>
                             <a class="nav-item nav-link" id="nav-leave-tab" data-toggle="tab" href="#nav-leave"
@@ -103,9 +103,12 @@
                                                 <v-select @input="Selected_Gender" placeholder="{{ __('translate.Choose_Gender') }}"
                                                     v-model="employee.gender" :reduce="(option) => option.value" :options="
                                                         [
-                                                            {label: 'Male', value: 'male'},
-                                                            {label: 'Female', value: 'female'},
+                                                            { label: '@lang('translate.Male')', value: 'male' },
+                                                            { label: '@lang('translate.Female')', value: 'female' },
                                                         ]">
+                                                    <template #no-options>
+                                                        {{ __('translate.Sorry, no matching options') }}
+                                                    </template>
                                                 </v-select>
 
                                             <span class="error" v-if="errors && errors.gender">
@@ -124,6 +127,9 @@
                                                         {label: 'Single', value: 'single'},
                                                         {label: 'Divorced', value: 'divorced'},
                                                     ]">
+                                                        <template #no-options>
+                                                                {{ __('translate.Sorry, no matching options') }}
+                                                            </template>
                                             </v-select>
                                         </div>
 
@@ -219,6 +225,9 @@
                                                 v-model="employee.role_users_id"
                                                 :disabled="employee.role_users_id === 1" :reduce="label => label.value"
                                                 :options="roles.map(roles => ({label: roles.name, value: roles.id}))">
+                                                            <template #no-options>
+                                                    {{ __('translate.Sorry, no matching options') }}
+                                                </template>
                                             </v-select>
 
                                             <span class="error" v-if="errors && errors.role_users_id">
@@ -233,15 +242,17 @@
                                                 v-model="employee.employment_type" :reduce="label => label.value"
                                                 :options="
                                                 [
-                                                    {label: 'Full-time', value: 'full_time'},
-                                                    {label: 'Part-time', value: 'part_time'},
-                                                    {label: 'Self-employed', value: 'self_employed'},
-                                                    {label: 'Freelance', value: 'freelance'},
-                                                    {label: 'Contract', value: 'contract'},
-                                                    {label: 'Internship', value: 'internship'},
-                                                    {label: 'Apprenticeship', value: 'apprenticeship'},
-                                                    {label: 'Seasonal', value: 'seasonal'},
+                                                    { label: '@lang('translate.full_time')', value: 'full_time' },
+                                                    { label: '@lang('translate.part_time')', value: 'part_time' },
+                                                    { label: '@lang('translate.self_employed')', value: 'self_employed' },
+                                                    { label: '@lang('translate.freelance')', value: 'freelance' },
+                                                    { label: '@lang('translate.internship')', value: 'internship' },
+                                                    { label: '@lang('translate.apprenticeship')', value: 'apprenticeship' },
+                                                    { label: '@lang('translate.seasonal')', value: 'seasonal' },
                                                 ]">
+                                                            <template #no-options>
+                                                    {{ __('translate.Sorry, no matching options') }}
+                                                </template>
                                             </v-select>
                                         </div>
 
@@ -278,6 +289,9 @@
                                                 placeholder="{{ __('translate.Choose_Company') }}"
                                                 v-model="employee.company_id" :reduce="label => label.value"
                                                 :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
+                                                            <template #no-options>
+                                                    {{ __('translate.Sorry, no matching options') }}
+                                                </template>
                                             </v-select>
 
                                             <span class="error" v-if="errors && errors.company_id">
@@ -293,6 +307,9 @@
                                                 placeholder="{{ __('translate.Choose_Department') }}"
                                                 v-model="employee.department_id" :reduce="label => label.value"
                                                 :options="departments.map(departments => ({label: departments.department, value: departments.id}))">
+                                            <template #no-options>
+                                                    {{ __('translate.Sorry, no matching options') }}
+                                                </template>
                                             </v-select>
 
                                             <span class="error" v-if="errors && errors.department_id">
@@ -307,6 +324,9 @@
                                                 placeholder="{{ __('translate.Choose_Designation') }}"
                                                 v-model="employee.designation_id" :reduce="label => label.value"
                                                 :options="designations.map(designations => ({label: designations.designation, value: designations.id}))">
+                                            <template #no-options>
+                                                    {{ __('translate.Sorry, no matching options') }}
+                                                </template>
                                             </v-select>
 
                                             <span class="error" v-if="errors && errors.designation_id">
@@ -322,6 +342,9 @@
                                                 placeholder="{{ __('translate.Choose_Office_Shift') }}"
                                                 v-model="employee.office_shift_id" :reduce="label => label.value"
                                                 :options="office_shifts.map(office_shifts => ({label: office_shifts.name, value: office_shifts.id}))">
+                                            <template #no-options>
+                                                    {{ __('translate.Sorry, no matching options') }}
+                                                </template>
                                             </v-select>
 
                                             <span class="error" v-if="errors && errors.office_shift_id">
@@ -423,13 +446,13 @@
                                                         <td>
                                                             <a @click="Edit_Document( {{ $document}})"
                                                                 class="ul-link-action text-success"
-                                                                data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                                                 <i class="i-Edit"></i>
                                                             </a>
                                                             <a @click="Remove_Document( {{ $document->id}})"
                                                                 class="ul-link-action text-danger mr-1"
                                                                 data-toggle="tooltip" data-placement="top"
-                                                                title="Delete">
+                                                                title="{{ __('translate.Delete') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                         </td>
@@ -529,7 +552,7 @@
                         </div>
 
                         {{-- Social media --}}
-                        <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
+                        {{-- <div class="tab-pane fade" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
 
                             <div class="row">
                                 <!--begin::form-->
@@ -593,10 +616,10 @@
                                 <!-- end::form -->
                             </div>
 
-                        </div>
+                        </div> --}}
 
                         {{-- Work Experience --}}
-                        <div class="tab-pane fade" id="nav-experience" role="tabpanel"
+                        {{-- <div class="tab-pane fade" id="nav-experience" role="tabpanel"
                             aria-labelledby="nav-experience-tab">
 
                             <div class="row" id="section_Experience_list">
@@ -630,13 +653,13 @@
                                                         <td>
                                                             <a @click="Edit_Experience( {{ $experience}})"
                                                                 class="ul-link-action text-success"
-                                                                data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                                                 <i class="i-Edit"></i>
                                                             </a>
                                                             <a @click="Remove_Experience( {{ $experience->id}})"
                                                                 class="ul-link-action text-danger mr-1"
                                                                 data-toggle="tooltip" data-placement="top"
-                                                                title="Delete">
+                                                                title="{{ __('translate.Delete') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                         </td>
@@ -700,7 +723,10 @@
                                                                         {label: 'Apprenticeship', value: 'apprenticeship'},
                                                                         {label: 'Seasonal', value: 'seasonal'},
                                                                     ]">
-                                                                </v-select>
+                                                                <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                                                 <span class="error"
                                                                     v-if="errors_experience && errors_experience.employment_type">
@@ -803,7 +829,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- Bank Account --}}
                         <div class="tab-pane fade" id="nav-bank" role="tabpanel" aria-labelledby="nav-bank-tab">
@@ -836,13 +862,13 @@
                                                         <td>
                                                             <a @click="Edit_Account( {{ $account_bank}})"
                                                                 class="ul-link-action text-success"
-                                                                data-toggle="tooltip" data-placement="top" title="Edit">
+                                                                data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                                                 <i class="i-Edit"></i>
                                                             </a>
                                                             <a @click="Remove_Account( {{ $account_bank->id}})"
                                                                 class="ul-link-action text-danger mr-1"
                                                                 data-toggle="tooltip" data-placement="top"
-                                                                title="Delete">
+                                                                title="{{ __('translate.Delete') }}">
                                                                 <i class="i-Close-Window"></i>
                                                             </a>
                                                         </td>

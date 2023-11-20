@@ -31,7 +31,7 @@
                             <div class="col-md-4 my-2">
                                 <div class="card" style="box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.06); height: 18rem;">
                                     <div class="card-header bg-{{$setting->theme_color}}">
-                                        <h5 class="text-white">{{ __('Logo dark') }}</h5>
+                                        <h5 class="text-white">{{ __('translate.Logo_Dark') }}</h5>
                                     </div>
                                     <div class="card-body pt-0 d-flex flex-column position-relative">
                                         <div class=" setting-card">
@@ -61,7 +61,7 @@
                             <div class="col-md-4 my-2">
                                 <div class="card" style="box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.06); height: 18rem;">
                                     <div class="card-header bg-{{$setting->theme_color}}">
-                                        <h5 class="text-white">{{ __('Logo Light') }}</h5>
+                                        <h5 class="text-white">{{ __('translate.Logo_Light') }}</h5>
                                     </div>
 
                                     <div class="card-body pt-0 d-flex flex-column position-relative">
@@ -141,7 +141,7 @@
                             <div class="col-md-4 my-2">
                                 <div class="card" style="box-shadow: 0 4px 20px 1px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.06); height: 18rem;">
                                     <div class="card-header bg-{{$setting->theme_color}}">
-                                        <h5 class="text-white">{{ __('Background Image') }}</h5>
+                                        <h5 class="text-white">{{ __('translate.Background_Image') }}</h5>
                                     </div>
                                     <div class="card-body pt-0 d-flex flex-column position-relative">
                                         <div class=" setting-card">

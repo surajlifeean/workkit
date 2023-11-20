@@ -131,7 +131,10 @@
                                         placeholder="{{ __('translate.Choose_Company') }}" v-model="task.company_id"
                                         :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}
@@ -145,7 +148,10 @@
                                         placeholder="{{ __('translate.Select_Project') }}" v-model="task.project_id"
                                         :reduce="label => label.value"
                                         :options="projects.map(projects => ({label: projects.title, value: projects.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                     <span class="error" v-if="errors && errors.project_id">
                                         @{{ errors.project_id[0] }}
                                     </span>
@@ -174,7 +180,10 @@
                                                 {label: 'Medium', value: 'medium'},
                                                 {label: 'Low', value: 'low'},
                                             ]">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.priority">
                                         @{{ errors.priority[0] }}

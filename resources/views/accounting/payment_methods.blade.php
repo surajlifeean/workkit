@@ -48,14 +48,14 @@
                                     @can('payment_method')
                                     <a @click="Edit_payment_method( {{ $payment_method}})"
                                         class="ul-link-action text-success" data-toggle="tooltip" data-placement="top"
-                                        title="Edit">
+                                        title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
                                     @can('payment_method')
                                     <a @click="Remove_payment_method( {{ $payment_method->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan

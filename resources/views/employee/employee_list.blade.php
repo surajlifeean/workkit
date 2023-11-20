@@ -111,7 +111,7 @@
 
                                     @can('employee_edit')
                                     <a href="/employees/{{$employee->id}}/edit" class="ul-link-action text-success"
-                                        data-toggle="tooltip" data-placement="top" title="Edit">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     @endcan
@@ -119,7 +119,7 @@
                                     @can('employee_delete')
                                     <a @click="Remove_Employee( {{ $employee->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
@@ -361,12 +361,12 @@
                       <i class="i-Eye"></i>
                     </a>
                     <a href="/employees/${employee.id}/edit" class="ul-link-action text-success"
-                        data-toggle="tooltip" data-placement="top" title="Edit">
+                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                         <i class="i-Edit"></i>
                     </a>
                     <a onclick="removeEmployee( ${employee.id} )"
                         class="ul-link-action text-danger mr-1 cursor-pointer" data-toggle="tooltip"
-                        data-placement="top" title="Delete">
+                        data-placement="top" title="{{ __('translate.Delete') }}">
                         <i class="i-Close-Window"></i>
                     </a>
                 `}

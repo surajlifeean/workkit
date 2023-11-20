@@ -47,13 +47,13 @@
                                     @can('training_skills')
                                     <a @click="Edit_training_skill( {{ $training_skill}})"
                                         class="ul-link-action text-success" data-toggle="tooltip" data-placement="top"
-                                        title="Edit">
+                                        title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
 
                                     <a @click="Remove_training_skill( {{ $training_skill->id}})"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan

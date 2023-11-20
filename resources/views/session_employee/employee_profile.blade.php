@@ -141,7 +141,10 @@
                                             { label: '@lang('translate.Male')', value: 'male' },
                                             { label: '@lang('translate.Female')', value: 'female' },
                                         ]">
-                                </v-select>
+                                <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                 <span class="error" v-if="errors && errors.gender">
                                     @{{ errors.gender[0] }}
@@ -156,7 +159,10 @@
                                                         {label: 'Single', value: 'single'},
                                                         {label: 'Divorced', value: 'divorced'},
                                                     ]">
-                                </v-select>
+                                <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                             </div>
 
                             <div class="form-group col-md-4">
@@ -264,10 +270,10 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <a @click="Edit_Document( {{ $document}})" class="ul-link-action text-success" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                <a @click="Edit_Document( {{ $document}})" class="ul-link-action text-success" data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                                     <i class="i-Edit"></i>
                                                 </a>
-                                                <a @click="Remove_Document( {{ $document->id}})" class="ul-link-action text-danger mr-1" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                <a @click="Remove_Document( {{ $document->id}})" class="ul-link-action text-danger mr-1" data-toggle="tooltip" data-placement="top" title="{{ __('translate.Delete') }}">
                                                     <i class="i-Close-Window"></i>
                                                 </a>
                                             </td>
@@ -377,10 +383,10 @@
                                             <td>{{$account_bank->bank_branch}}</td>
                                             <td>{{$account_bank->account_no}}</td>
                                             <td>
-                                                <a @click="Edit_Account( {{ $account_bank}})" class="ul-link-action text-success" data-toggle="tooltip" data-placement="top" title="Edit">
+                                                <a @click="Edit_Account( {{ $account_bank}})" class="ul-link-action text-success" data-toggle="tooltip" data-placement="top" title="{{ __('translate.Edit') }}">
                                                     <i class="i-Edit"></i>
                                                 </a>
-                                                <a @click="Remove_Account( {{ $account_bank->id}})" class="ul-link-action text-danger mr-1" data-toggle="tooltip" data-placement="top" title="Delete">
+                                                <a @click="Remove_Account( {{ $account_bank->id}})" class="ul-link-action text-danger mr-1" data-toggle="tooltip" data-placement="top" title="{{ __('translate.Delete') }}">
                                                     <i class="i-Close-Window"></i>
                                                 </a>
                                             </td>

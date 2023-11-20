@@ -54,11 +54,11 @@
                                 <td>
                                     <a href="/settings/permissions/{{$role->id}}/edit"
                                         class="ul-link-action text-success" data-toggle="tooltip" data-placement="top"
-                                        title="Edit">
+                                        title="{{ __('translate.Edit') }}">
                                         <i class="i-Edit"></i>
                                     </a>
                                     <a @click="Remove_role( {{ $role->id}})" class="ul-link-action text-danger mr-1"
-                                        data-toggle="tooltip" data-placement="top" title="Delete">
+                                        data-toggle="tooltip" data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                 </td>

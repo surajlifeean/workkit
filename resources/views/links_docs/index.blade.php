@@ -94,7 +94,7 @@
                                     @can('comp_docs_link_delete')
                                     <a @click="Remove_Doc_Link( {{ $ld->id}} )"
                                         class="ul-link-action text-danger mr-1" data-toggle="tooltip"
-                                        data-placement="top" title="Delete">
+                                        data-placement="top" title="{{ __('translate.Delete') }}">
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
@@ -151,7 +151,10 @@
                                                v-model="links_docs.type"
                                                :reduce="label => label.value"
                                                :options="types.map(type => ({ label: type.up, value: type.name }))">
-                                            </v-select>
+                                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
 
                                     <span class="error" v-if="errors && errors.type">
@@ -166,7 +169,10 @@
                                         placeholder="{{ __('translate.Choose_Company') }}"
                                         v-model="announcements.company_id" :reduce="label => label.value"
                                         :options="companies.map(companies => ({label: companies.name, value: companies.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
                                     <span class="error" v-if="errors && errors.company_id">
                                         @{{ errors.company_id[0] }}
@@ -194,7 +200,10 @@
                                         placeholder="{{ __('translate.Choose_Employees') }}" v-model="links_docs.employees_id"
                                         :reduce="label => label.value"
                                         :options="employees.map(employees => ({label: employees.username, value: employees.id}))">
-                                    </v-select>
+                                    <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
                                     <span class="error" v-if="errors && errors.employees_id">
                                         @{{ errors.employees_id[0] }}
                                     </span>
@@ -294,7 +303,10 @@
                                                v-model="em_links_docs.type"
                                                :reduce="label => label.value"
                                                :options="types.map(type => ({ label: type.up, value: type.name }))">
-                                            </v-select>
+                                            <template #no-options>
+                                    {{ __('translate.Sorry, no matching options') }}
+                                </template>
+                            </v-select>
 
 
                                     <span class="error" v-if="errors && errors.type">
