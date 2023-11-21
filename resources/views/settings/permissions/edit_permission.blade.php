@@ -208,7 +208,52 @@
                                 </div>
                             </div>
                         </div>
-
+                        {{-- actions --}}
+                        <div class="col-md-4 mt-3">
+                           <div class="card">
+                               <div class="accordion" id="accordion_Actions">
+                                   <div class="card-header">{{ __('translate.Actions') }}</div>
+                                   <div class="card-body">
+                                       <div class="row">
+                                           {{-- employee_view --}}
+                                           <div class="col-md-6">
+                                               <label class="checkbox checkbox-outline-primary">
+                                                   <input type="checkbox" checked v-model="permissions"
+                                                       value="Actions_view">
+                                                   <span>{{ __('translate.View') }}</span>
+                                                   <span class="checkmark"></span>
+                                               </label>
+                                           </div>
+                                        
+                        
+                                         
+                        
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                        </div>
+                        {{-- home office --}}
+                        <div class="col-md-4 mt-3">
+                            <div class="card">
+                                <div class="accordion" id="accordion_Home_office">
+                                    <div class="card-header">{{ __('translate.Home_Office') }}</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            {{-- employee_view --}}
+                                            <div class="col-md-6">
+                                                <label class="checkbox checkbox-outline-primary">
+                                                    <input type="checkbox" checked v-model="permissions"
+                                                        value="Home_Office_View">
+                                                    <span>{{ __('translate.View') }}</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!--Department -->
                         <div class="col-md-4 mt-3">
                             <div class="card">

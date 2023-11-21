@@ -7,11 +7,21 @@
 @section('main-content')
 @section('page-css')
     <link rel="stylesheet" href="{{ asset('assets/styles/vendor/datatables.min.css') }}">
+    <style>
+        @media (min-width: 992px) {
+            .col-lg-2 {
+                flex: 0 0 20%;
+                max-width: 20%;
+            }
+    
+   
+        }
+    </style>
 @endsection
 
 <div class="row" id="section_Dashboard">
     <!-- ICON BG -->
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-lg-2 col-md-6 col-sm-6">
         <a href="/employees">
             <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
@@ -25,7 +35,7 @@
         </a>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-lg-2 col-md-6 col-sm-6">
         <a href="/clients">
             <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
@@ -39,7 +49,7 @@
         </a>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-lg-2 col-md-6 col-sm-6">
         <a href="/projects">
             <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
@@ -53,7 +63,7 @@
         </a>
     </div>
 
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-lg-2 col-md-6 col-sm-6">
         <a href="/tasks">
             <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
                 <div class="card-body text-center">
@@ -67,6 +77,19 @@
         </a>
     </div>
 
+    <div class="col-lg-2 col-md-6 col-sm-6">
+        <a href="/leave">
+            <div class="card card-icon-bg card-icon-bg-{{  $setting->theme_color  }} o-hidden mb-4">
+                <div class="card-body text-center">
+                    <i class="i-Check-2"></i>
+                    <div class="content">
+                        <p class="text-muted mt-2 mb-0">{{ __('translate.Actions') }}</p>
+                        <p class="text-{{  $setting->theme_color  }} text-24 line-height-1 mb-2">{{ $count_project }}</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
 </div>
 
 <div class="row">

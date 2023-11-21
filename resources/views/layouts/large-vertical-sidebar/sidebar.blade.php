@@ -43,6 +43,15 @@
                         </div>
                     </a>
                 </li>
+            @elseif(auth()->user()->role_users_id > 4)
+                <li class="">
+                    <a class="link_btn {{ request()->is('dashboard/*') ? 'active_link' : '' }}" href="/dashboard/others">
+                        <div class="d-flex align-items-center justify-content-start">
+                        <i class="nav-icon text-{{$setting->theme_color}} i-Bar-Chart"></i>
+                        <span>{{ __('translate.Dashboard') }}</span>
+                        </div>
+                    </a>
+                </li>
             @endif
             {{----------------------------------------- Notification ----------------------------------------------}}
             @if (auth()->user()->role_users_id == 1)
@@ -297,7 +306,7 @@
             {{---------------------------------------------- Employees -------------------------------------------}}
             @if (auth()->user()->can('employee_view') || auth()->user()->can('employee_add') )
                 <li class="" data-item="employees">
-                    <a class="link_btn {{ request()->is('employees') || request()->is('employees/*') || request()->is('get_employees_claims') ? 'active_link' : '' }}" href="#"
+                    <a class="link_btn {{ request()->is('employees') || request()->is('employees/*')  ? 'active_link' : '' }}" href="#"
                         aria-expanded="true" data-toggle="collapse" data-target="#collapse_employees"
                         aria-expanded="true" aria-controls="collapse_employees"
                         >
@@ -329,15 +338,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @if(auth()->user()->role_users_id === 1)
-                        <li class="child_links">
-                            <a href="/get_employees_claims"
-                                class="{{ Route::currentRouteName() == 'employees.index' ? 'open' : '' }}">
-                                <i class="nav-icon text-{{$setting->theme_color}} i-Business-Mens"></i>
-                                <span class="item-name">{{ __('translate.Employee') }} {{ __('translate.claims') }}</span>
-                            </a>
-                        </li>
-                        @endif
+                        
                     </ul>
                 </li>
 
@@ -364,9 +365,9 @@
                 </li>
             @endcan
             {{---------------------------------------------- Actions ----------------------------------------------}}
-            @if( auth()->user()->role_users_id == 4 )
+            @can('Actions_view')
                 <li class="" data-item="actions">
-                    <a class="link_btn {{ request()->is('leave') ||  request()->is('accounting/expense')  || request()->is('tasks') ? 'active_link' : '' }}" href="/tasks"
+                    <a class="link_btn {{ request()->is('leave') ||  request()->is('accounting/expense')  || request()->is('tasks') || request()->is('get_employees_claims') ? 'active_link' : '' }}" href="/tasks"
                         aria-expanded="true" data-toggle="collapse" data-target="#collapse_tasks"
                         aria-expanded="true" aria-controls="collapse_tasks"
                         >
@@ -387,6 +388,15 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('leave_type')
+                            <li class="child_links">
+                                <a class="{{ Route::currentRouteName() == 'leave_type.index' ? 'open' : '' }}"
+                                    href="{{ route('leave_type.index') }}">
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
+                                    <span class="item-name">{{ __('translate.Leave_Type') }}</span>
+                                </a>
+                            </li>
+                        @endcan
                         @can('expense_view')
                             <li class="child_links">
                                 <a href="{{ route('expense.index') }}"
@@ -396,9 +406,19 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('Employee_claims_view')
+                            <li class="child_links">
+                                <a href="/get_employees_claims"
+                                    class="{{ Route::currentRouteName() == 'employees.index' ? 'open' : '' }}">
+                                    <i class="nav-icon text-{{$setting->theme_color}} i-Business-Mens"></i>
+                                    <span class="item-name">{{ __('translate.Employee') }} {{ __('translate.claims') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+
                     </ul>
                 </li>
-            @endif
+            @endcan
 
             @can('client_view')
                 <li class="">
@@ -541,7 +561,7 @@
             @endif
             @endif 
             {{------------------------------------------------leave------------------------------------------------}}
-            @if(auth()->user()->role_users_id != 4)
+            {{-- @if(auth()->user()->role_users_id != 4)
                 @if (auth()->user()->can('leave_view') ||auth()->user()->can('leave_type'))
                     <li class="" data-item="leave">
                         <a class="link_btn {{ request()->is('leave') || request()->is('leave_type') ? 'active_link' : '' }}" href="#"
@@ -567,21 +587,13 @@
                                     </li>
                                 @endcan
                     
-                                @can('leave_type')
-                                    <li class="child_links">
-                                        <a class="{{ Route::currentRouteName() == 'leave_type.index' ? 'open' : '' }}"
-                                            href="{{ route('leave_type.index') }}">
-                                            <i class="nav-icon text-{{$setting->theme_color}} i-Wallet"></i>
-                                            <span class="item-name">{{ __('translate.Leave_Type') }}</span>
-                                        </a>
-                                    </li>
-                                @endcan
+                                
                             </ul>
 
                             
                     </li>
                 @endif
-            @endif
+            @endif --}}
             <!-- ---------------------------------------------------Tranings--------------------------------------------------- -->
 
             @if (auth()->user()->can('training_view') || auth()->user()->can('trainer') || auth()->user()->can('training_skills'))
@@ -654,7 +666,7 @@
                     <ul class="submenu list-unstyled collapse" id="collapse_settings"
                     aria-labelledby="headingOne" data-parent="#accordionExample"
                     >
-                        @can('settings')
+                       {{-- @can('settings')
                        
             
                             <li class="child_links">
@@ -664,7 +676,7 @@
                                     <span class="item-name">{{ __('translate.Update_Log') }}</span>
                                 </a>
                             </li>
-                        @endcan
+                        @endcan --}}
             
                         {{-- @can('module_settings')
                         <li class="child_links ">

@@ -523,6 +523,11 @@ class DashboardController extends Controller
         }
         return abort('403', __('You are not authorized'));
     }
+
+    public function dashboard_others()
+    {
+        
+    }
     /**
      * Show the form for creating a new resource.
      *

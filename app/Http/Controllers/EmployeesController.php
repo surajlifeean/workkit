@@ -131,7 +131,7 @@ class EmployeesController extends Controller
                 $user_data = [];
                 $user_data['username'] = $request['firstname'] . ' ' . $request['lastname'];
                 $user_data['email'] = $request->email;
-                $user_data['avatar'] = 'no_avatar.png';
+                $user_data['avatar'] = 'no_avatar.jpeg';
                 $user_data['password'] = Hash::make($request['password']);
                 $user_data['status'] = 1;
                 $user_data['role_users_id'] = intval($request['role_users_id']);

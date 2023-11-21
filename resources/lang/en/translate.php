@@ -651,5 +651,6 @@ return [
     "Delete" => "Delete",
     "Edit" => "Edit",
     "Cancel_Leave_Request" => "Cancel Leave Request",
-    "Cancel_claim_Request" => "Cancel claim request"
+    "Cancel_claim_Request" => "Cancel claim request",
+    'Edit_Permissions' => 'Edit Permissions',
 ];

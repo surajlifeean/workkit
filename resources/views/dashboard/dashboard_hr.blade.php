@@ -21,7 +21,7 @@
                 <span class="clock_in float-left card-title m-0">{{str_replace(['AM', 'PM', 'am', 'pm'], '', $punch_in)}} - {{str_replace(['AM', 'PM', 'am', 'pm'], '', $punch_out)}}
                 @isset($employee_attendance->clock_in_out)
                     @if($employee_attendance->clock_in_out != 0)
-                        ({{ __('translate.Punch_In') }}: {{ date('h:i A', strtotime($employee_attendance->clock_in)) }})
+                        ({{ __('translate.Punch_In') }}: {{ date('h:i', strtotime($employee_attendance->clock_in)) }})
                     {{-- @else
                      ({{ __('translate.Punch_Out') }}: {{ date('h:i A', strtotime($employee_attendance->clock_out)) }}) --}}
                     @endif
@@ -115,6 +115,10 @@
 </div>
 
 <div class="row">
+    @php
+    // $permissions = DB::table('permissions')->get();
+    @endphp
+    {{-- @dump($permissions) --}}
     <div class="col-lg-8 col-md-12">
         <div class="card mb-5" style="height: 95%">
             <div class="card-body">
