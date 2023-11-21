@@ -614,5 +614,6 @@ return [
     "Delete" => "حذف",
     "Edit" => "تحرير",
     "Cancel_Leave_Request" => "إلغاء طلب الإجازة",
-    "Cancel_claim_Request" => "إلغاء طلب التعويض"
+    "Cancel_claim_Request" => "إلغاء طلب التعويض",
+    'Edit_Permissions' => 'تعديل الصلاحيات',
 ];

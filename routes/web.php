@@ -54,6 +54,7 @@ if ($installed === true) {
             Route::get('dashboard/employee', "DashboardController@dashboard_employee")->name('dashboard_employee');
             Route::get('dashboard/client', "DashboardController@dashboard_client")->name('dashboard_client');
             Route::get('dashboard/hr', "DashboardController@dashboard_hr")->name('dashboard_hr');
+            Route::get('dashboard/others', "DashboardController@dashboard_others")->name('dashboard_others');
 
             //------------------------------- Employee --------------------------\\
             //--------------------------------------------------------------------\\

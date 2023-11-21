@@ -22,6 +22,7 @@ class PermissionsController extends Controller
 		if ($user_auth->can('group_permission')){
 
             $roles = Role::where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
+            // dd($roles);
             return view('settings.permissions.permissions_list', compact('roles'));
 
         }
@@ -103,7 +104,7 @@ class PermissionsController extends Controller
     public function edit($id)
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('group_permission') && $user_auth->role_users_id != 1 && $user_auth->role_users_id != 2 && $user_auth->role_users_id != 3){
+		if ($user_auth->can('group_permission') && $user_auth->role_users_id != 2 && $user_auth->role_users_id != 3 && $user_auth->role_users_id != 4){
 
             $Role = Role::where('deleted_at', '=', null)->with('permissions')->findOrFail($id);
             if ($Role) {
@@ -117,7 +118,7 @@ class PermissionsController extends Controller
                     }
                 }
             }
-
+          
             return view('settings.permissions.edit_permission', compact('permissions','role'));
 
         }
@@ -135,7 +136,7 @@ class PermissionsController extends Controller
     public function update(Request $request, $id)
     {
         $user_auth = auth()->user();
-		if ($user_auth->can('group_permission') && $user_auth->role_users_id != 1 && $user_auth->role_users_id != 2 && $user_auth->role_users_id != 3){
+		if ($user_auth->can('group_permission')  && $user_auth->role_users_id != 2 && $user_auth->role_users_id != 3 && $user_auth->role_users_id != 4){
 
             request()->validate([
                 'name' => 'required',

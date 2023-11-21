@@ -99,7 +99,7 @@ $setting = App\Models\Setting::where('id', 1)->first();
             <!-- User avatar dropdown -->
             <div class="dropdown">
                 <div class="user col align-self-end position-relative">
-                    <img src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}" id="userDropdown" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{asset('assets/images/avatar/'. Auth::user()->avatar ? Auth::user()->avatar : 'no_avatar.jpeg')}}"  id="userDropdown" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="bg-success position-absolute active_div"></div>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
                         <div class="dropdown-header">
@@ -161,7 +161,7 @@ $setting = App\Models\Setting::where('id', 1)->first();
         <a class="m-0">{{ __('translate.Tasks') }}</a>
         @elseif(request()->is('leave/*'))
         <a class="m-0">{{ __('translate.Leave') }}</a>
-        @elseif( request()->is('accounting/expense') && auth()->user()->role_users_id === 4)
+        @elseif( request()->is('leave') ||  request()->is('accounting/expense')  || request()->is('tasks') || request()->is('get_employees_claims') )
         <a class="m-0">{{ __('translate.Actions') }}</a>
         @elseif(request()->is('accounting/*'))
         <a class="m-0">{{ __('translate.Accounting') }}</a>
