@@ -38,7 +38,7 @@ class DashboardController extends Controller
         }
 
         $user_auth = auth()->user();
-        if ($user_auth->role_users_id === 1) {
+        if ($user_auth->role_users_id === 1 || auth()->user()->can('Admin_dashboard_view') ) {
 
             $count_employee = Employee::where('deleted_at', '=', null)->count();
             $count_clients = Client::where('deleted_at', '=', null)->count();
@@ -128,14 +128,14 @@ class DashboardController extends Controller
                     DB::raw("SUM(amount) as expense_amount"),
                 )
                 ->pluck('expense_amount');
-
+            // dd($expense_amount);
             $deposit_amount = Deposit::where('deleted_at', '=', null)
                 ->select(
                     DB::raw("SUM(amount) as deposit_amount"),
                 )
                 ->pluck('deposit_amount');
 
-
+            
             //echart Project by status
 
             $project_status =  Project::where('deleted_at', '=', null)
@@ -345,7 +345,7 @@ class DashboardController extends Controller
             $punch_out = $employee->office_shift->$day_out_now;
             $punch_name = $employee->office_shift->name;
 
-            $employee_attendance =   Attendance::where('deleted_at', '=', null)
+            $employee_attendance = Attendance::where('deleted_at', '=', null)
                 ->where('date', now()->format('Y-m-d'))
                 ->where('employee_id', $employee->id)
                 ->orderBy('id', 'desc')->first() ?? null;
@@ -527,6 +527,14 @@ class DashboardController extends Controller
     public function dashboard_others()
     {
         
+        $user_auth = auth()->user();
+
+        if ($user_auth->can('Admin_dashboard_view')) {
+            return redirect()->route('dashboard');
+        } elseif($user_auth->can('Employee_dashboard_view')) {
+            return redirect()->route('dashboard_employee');
+        }
+        return abort('403', __('You are not authorized'));
     }
     /**
      * Show the form for creating a new resource.

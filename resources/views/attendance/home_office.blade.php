@@ -37,20 +37,22 @@ $lang = ($currentLanguage ?? '') === 'en' ? 'en' : (($currentLanguage === 'fr') 
                     <div class="row mb-3">
                         <div class="col-md-3 mb-2">
                             <select id="customFilterDep" class="form-select form-control">
-                                 <option value="">{{ __('translate.Chose department')}}</option>
-                                 @foreach($otherEmployees as $item)
-                                  <option value="{{$item->department}}">{{$item->department}}</option>
-                                 @endforeach
+                                <option value="">{{ __('translate.Chose department')}}</option>
+                                @foreach(collect($otherEmployees)->unique('department') as $item)
+                                    <option value="{{$item['department']}}">{{$item['department']}}</option>
+                                @endforeach
                             </select>
                         </div>
+
                         <div class="col-md-3 ">
                             <select id="customFilterDesignation" class="form-select form-control">
                                 <option value="">{{__('translate.Chose designation')}}</option>
-                                 @foreach($otherEmployees as $item)
-                                  <option value="{{$item->designation}}">{{$item->designation}}</option>
-                                 @endforeach                            
+                                @foreach(collect($otherEmployees)->unique('designation') as $item)
+                                    <option value="{{$item['designation']}}">{{$item['designation']}}</option>
+                                @endforeach                            
                             </select>
                         </div>
+
                     </div>
                     <table id="attendance_list_table" class="display table">
                         <thead>
@@ -70,7 +72,7 @@ $lang = ($currentLanguage ?? '') === 'en' ? 'en' : (($currentLanguage === 'fr') 
                         <tbody>
                              <tr id="self_row">
                                 <td class="align-middle"></td>
-                                <td class="align-middle">{{ $employee->username }}</td>
+                                <td class="align-middle">{{ $employee && $employee->username ? $employee->username : auth()->user()->username}}</td>
                              </tr>
                              @foreach ($otherEmployees as $item)
                                 <tr id="em{{$item->employee_id}}">
@@ -215,7 +217,7 @@ $lang = ($currentLanguage ?? '') === 'en' ? 'en' : (($currentLanguage === 'fr') 
     function checkWorkFromHome(date){
         let shiftTime = getWorkScheduleForDate(date, shifts);
         shiftTime = shiftTime.replace(/PM|AM/ig, '');
-        if (wfhDates.includes(date)) {
+        if (wfhDates && wfhDates.includes(date)) {
             $('#self_row').append(`
                <td class="align-middle ${formattedDate}">
                    <a onclick="Wfh('${formattedDate}', 'From Home')" class="from-home d-flex align-items-center flex-column justify-content-center d-none  w-100px py-1 px-1" style="border: 2px solid #ff000040;border-radius: 0.5rem;box-shadow: 3px 4px 6px rgba(0, 0, 0, 0.1);">

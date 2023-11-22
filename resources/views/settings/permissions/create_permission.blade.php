@@ -48,10 +48,10 @@
 
                     <div class="row">
 
-                         <!--Dashboard -->
-                        <div class="col-md-4 mt-3">
+                          <!--Dashboard -->
+                          <div class="col-md-4 mt-3">
                             <div class="card">
-                                <div class="accordion" id="accordion_Employee">
+                                <div class="accordion" id="accordion_Dashboard">
                                     <div class="card-header">{{ __('translate.Dashboard') }}</div>
                                     <div class="card-body">
                                         <div class="row">
@@ -60,8 +60,8 @@
                                             <div class="col-md-6">
                                                 <label class="checkbox checkbox-outline-primary">
                                                     <input type="checkbox" checked v-model="permissions"
-                                                        value="employee_view">
-                                                    <span>{{ __('translate.View') }}</span>
+                                                        value="Employee_dashboard_view" @change="handleCheckboxChange('Employee_dashboard_view')">
+                                                    <span>{{ __('translate.Employee') }}</span>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
@@ -69,45 +69,18 @@
                                             <div class="col-md-6">
                                                 <label class="checkbox checkbox-outline-primary">
                                                     <input type="checkbox" checked v-model="permissions"
-                                                        value="employee_add">
-                                                    <span>{{ __('translate.Create') }}</span>
+                                                        value="Admin_dashboard_view" @change="handleCheckboxChange('Admin_dashboard_view')">
+                                                    <span>{{ __('translate.Admin') }}</span>
                                                     <span class="checkmark"></span>
                                                 </label>
                                             </div>
-                                            {{-- employee_edit --}}
-                                            <div class="col-md-6">
-                                                <label class="checkbox checkbox-outline-primary">
-                                                    <input type="checkbox" checked v-model="permissions"
-                                                        value="employee_edit">
-                                                    <span>{{ __('translate.Edit') }}</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-                                            {{-- employee_delete --}}
-                                            <div class="col-md-6">
-                                                <label class="checkbox checkbox-outline-primary">
-                                                    <input type="checkbox" checked v-model="permissions"
-                                                        value="employee_delete">
-                                                    <span>{{ __('translate.Delete') }}</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-
-                                            {{-- employee_details --}}
-                                            <div class="col-md-6">
-                                                <label class="checkbox checkbox-outline-primary">
-                                                    <input type="checkbox" checked v-model="permissions"
-                                                        value="employee_details">
-                                                    <span>{{ __('translate.Details') }}</span>
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
+                                            
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                         </div>
                         
                         <!--Employee -->
                         <div class="col-md-4 mt-3">
@@ -1550,7 +1523,18 @@
    
    
     methods: {
+        handleCheckboxChange(per) {
+            // console.log(per);
+            // console.log(this.permissions);
+    
+            if (per === 'Admin_dashboard_view') {
+                this.permissions = this.permissions.filter(item => item !== 'Employee_dashboard_view');
+            } else if (per === 'Employee_dashboard_view') {
+                this.permissions = this.permissions.filter(item => item !== 'Admin_dashboard_view');
+            }
 
+            console.log(this.permissions);
+        },
         //------------------------ Create Permissions ---------------------------\\
         Create_Permission() {
             var self = this;

@@ -619,7 +619,16 @@ class PermissionsSeeder extends Seeder
             'name' => 'Employee_claims_view',
             'guard_name' => 'web',
 		],
-		
+		[
+			'id' => 122,
+            'name' => 'Admin_dashboard_view',
+            'guard_name' => 'web',
+		],
+		[
+			'id' => 123,
+            'name' => 'Employee_dashboard_view',
+            'guard_name' => 'web',
+		],
 		)
 	);
     }

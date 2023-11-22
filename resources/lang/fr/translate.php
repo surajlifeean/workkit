@@ -622,4 +622,5 @@ return [
     "Cancel_Leave_Request" => "Annuler la demande",
     "Cancel_claim_Request" => "Annuler la Réclamation",
     'Edit_Permissions' => 'Modifier les autorisations',
+    'Admin' => 'Admin',
 ];
