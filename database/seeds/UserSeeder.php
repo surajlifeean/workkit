@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
                 'username' => 'William Castillo',
                 'email' => 'admin@example.com',
                 'password' => '$2y$10$IFj6SwqC0Sxrsiv4YkCt.OJv1UV4mZrWuyLoRG7qt47mseP9mJ58u',
-                'avatar' => 'no_avatar.png',
+                'avatar' => 'no_avatar.jpeg',
                 'role_users_id' => 1,
                 'status' => 1,
             )
