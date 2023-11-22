@@ -616,4 +616,5 @@ return [
     "Cancel_Leave_Request" => "إلغاء طلب الإجازة",
     "Cancel_claim_Request" => "إلغاء طلب التعويض",
     'Edit_Permissions' => 'تعديل الصلاحيات',
+    'Admin' => 'المشرف',
 ];

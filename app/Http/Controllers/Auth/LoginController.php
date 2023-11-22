@@ -45,24 +45,29 @@ class LoginController extends Controller
 
     public function authenticate(Request $request)
     {
+        // dd($request);
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
+       
         if (Auth::attempt($credentials)) {
 
             $request->session()->regenerate();
             
             $user_Auth = Auth::User();
+            // \Log::info('User Role ID: ' . $user_Auth->role_users_id);
+
                 if($user_Auth->role_users_id == 1){
                     return redirect('/dashboard/admin');
-                }elseif($user_Auth->role_users_id = 3){
+                }elseif($user_Auth->role_users_id == 3){
                     return redirect('/dashboard/client');
-                }elseif($user_Auth->role_users_id = 4){
+                }elseif($user_Auth->role_users_id == 4){
                     return redirect('/dashboard/hr');
-                }else{
+                }elseif($user_Auth->role_users_id == 2){
                     return redirect('/dashboard/employee');
+                }elseif($user_Auth->role_users_id > 4 ){
+                    return redirect('/dashboard/others');
                 }
         }
 

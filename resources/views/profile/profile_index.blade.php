@@ -79,12 +79,20 @@
                     </span>
                 </div>
 
+                <div class="col-md-6">
+                    <label class="ul-form__label">{{ __('translate.Office_Shift') }} </label>
+                    <select v-model="user.office_shift_id" class="form-select form-control">
+                        <option value="">{{ __('translate.Choose_Office_Shift') }}</option>
+                        @foreach($office_shifts as $office_shift)
+                            <option value="{{ $office_shift->id }}">{{ $office_shift->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
 
             </div>
 
             <div class="row mt-3">
-
                 <div class="col-md-6">
                     <button type="submit" class="btn btn-{{$setting->theme_color}}" :disabled="SubmitProcessing">
                         {{ __('translate.Submit') }}
@@ -94,6 +102,7 @@
                     </div>
                 </div>
             </div>
+
         </form>
     </div>
 </div>
@@ -112,6 +121,7 @@
             SubmitProcessing:false,
             errors:[],
             user: @json($user),
+            office_shifts: [],
         },
        
         methods: {
@@ -122,6 +132,11 @@
                 this.user.avatar = file;
             },
 
+            // Selected_Office_shift(value) {
+            //   if (value === null) {
+            //     this.user.office_shift_id = "";
+            //   }
+            // },
 
            //----------------------- Update Profile ---------------------------\\
            Update_Profile() {
@@ -132,6 +147,7 @@
                 self.data.append("password", self.user.password);
                 self.data.append("password_confirmation", self.user.password_confirmation);
                 self.data.append("avatar", self.user.avatar);
+                self.data.append('office_shift_id', self.user.office_shift_id);
                 self.data.append("_method", "put");
 
                 axios

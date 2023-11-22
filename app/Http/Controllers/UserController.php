@@ -162,8 +162,8 @@ class UserController extends Controller
             ], [
                 'email.unique' => 'This Email already taken.',
             ]);
-
-
+           $user = User::where('id', $id)->first();
+        //    dd()
             $current = $user->password;
 
             if ($request->password != null) {
@@ -235,7 +235,7 @@ class UserController extends Controller
     public function assignRole(Request $request)
     {
         $user_auth = auth()->user();
-        if ($user_auth->can('group_permission') && $user_auth->role_users_id != 1 && $user_auth->role_users_id != 3) {
+        if ($user_auth->can('group_permission')  && $user_auth->role_users_id != 3) {
 
             User::whereId($request->user_id)->update([
                 'role_users_id' => $request->role_id,

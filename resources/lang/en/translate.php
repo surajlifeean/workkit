@@ -653,4 +653,5 @@ return [
     "Cancel_Leave_Request" => "Cancel Leave Request",
     "Cancel_claim_Request" => "Cancel claim request",
     'Edit_Permissions' => 'Edit Permissions',
+    'Admin' => 'Admin',
 ];

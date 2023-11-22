@@ -48,6 +48,40 @@
 
                     <div class="row">
 
+                         <!--Dashboard -->
+                         <div class="col-md-4 mt-3">
+                            <div class="card">
+                                <div class="accordion" id="accordion_Dashboard">
+                                    <div class="card-header">{{ __('translate.Dashboard') }}</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            
+                                            {{-- employee_view --}}
+                                            <div class="col-md-6">
+                                                <label class="checkbox checkbox-outline-primary">
+                                                    <input type="checkbox" checked v-model="permissions"
+                                                        value="Employee_dashboard_view" @change="handleCheckboxChange('Employee_dashboard_view')">
+                                                    <span>{{ __('translate.Employee') }}</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            {{-- employee_add --}}
+                                            <div class="col-md-6">
+                                                <label class="checkbox checkbox-outline-primary">
+                                                    <input type="checkbox" checked v-model="permissions"
+                                                        value="Admin_dashboard_view" @change="handleCheckboxChange('Admin_dashboard_view')">
+                                                    <span>{{ __('translate.Admin') }}</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                            
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                         </div>
+
                         <!--Employee -->
                         <div class="col-md-4 mt-3">
                             <div class="card">
@@ -1486,7 +1520,18 @@
    
    
     methods: {
+        handleCheckboxChange(per) {
+            // console.log(per);
+            // console.log(this.permissions);
+    
+            if (per === 'Admin_dashboard_view') {
+                this.permissions = this.permissions.filter(item => item !== 'Employee_dashboard_view');
+            } else if (per === 'Employee_dashboard_view') {
+                this.permissions = this.permissions.filter(item => item !== 'Admin_dashboard_view');
+            }
 
+            // console.log(this.permissions);
+        },
         //------------------------ Update Permissions ---------------------------\\
         Update_Permission() {
             var self = this;

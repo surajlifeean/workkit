@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\OfficeShift;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -31,8 +32,10 @@ class ProfileController extends Controller
             $user['avatar'] = "";
             $user['password'] = "";
             $user['password_confirmation'] = "";
-        
-            return view('profile.profile_index', compact('user'));
+            $user['office_shift_id'] = Auth()->user()->office_shift_id;
+            $office_shifts = OfficeShift::select('id', 'name')->get();
+            
+            return view('profile.profile_index', compact('user', 'office_shifts'));
         }
         return abort('403', __('You are not authorized'));
     }
@@ -272,6 +275,7 @@ class ProfileController extends Controller
             'email'     => $request['email'],
             'avatar'    => $filename,
             'password'  => $pass,
+            'office_shift_id' => $request['office_shift_id'],
         ]);
 
         return response()->json(['success' => true]);

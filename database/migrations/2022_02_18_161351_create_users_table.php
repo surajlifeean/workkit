@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration {
 			$table->bigInteger('role_users_id')->unsigned()->index('users_role_users_id');
 			$table->string('password', 192);
 			$table->string('client_id', 200)->nullable();
+			$table->integer('office_shift_id')->nullable();
             $table->rememberToken();
 			$table->timestamps(6);
 			$table->softDeletes();
