@@ -215,7 +215,7 @@
         echartBar.setOption({
 
             formatter: function(params) {
-                return `${params.value} employee`;
+                return `${params.value} {{__('translate.Employees')}}`;
             },
             grid: {
                 left: '8px',

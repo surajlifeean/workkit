@@ -267,6 +267,32 @@
                                </div>
                            </div>
                         </div>
+
+                        {{-- Employee claims --}}
+                        <div class="col-md-4 mt-3">
+                            <div class="card">
+                                <div class="accordion" id="accordion_Employee">
+                                    <div class="card-header">{{ __('translate.Employee') }} {{ __('translate.claims') }}</div>
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                           
+                                            <div class="col-md-6">
+                                                <label class="checkbox checkbox-outline-primary">
+                                                    <input type="checkbox" checked v-model="permissions"
+                                                        value="Employee_claims_view">
+                                                    <span>{{ __('translate.View') }}</span>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+
+                                           
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         {{-- home office --}}
                         <div class="col-md-4 mt-3">
                             <div class="card">
