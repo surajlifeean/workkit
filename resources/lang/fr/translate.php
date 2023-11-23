@@ -623,4 +623,6 @@ return [
     "Cancel_claim_Request" => "Annuler la Réclamation",
     'Edit_Permissions' => 'Modifier les autorisations',
     'Admin' => 'Admin',
+    'Hr' => 'RH',
+    'Employee Access' => 'Employé Access',
 ];

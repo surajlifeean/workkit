@@ -54,30 +54,47 @@
                                     <span class="badge badge-danger m-2">{{ __('translate.Inactive') }}</span>
                                     @endif
                                 </td>
-                                <td>{{$user->RoleUser['name']}}</td>
-                                @can('group_permission')
-                                @if($user->role_users_id === 1)
-                                <td>{{ __('translate.Cannot_change_Permissions_for_admin') }}</td>
-                                @elseif($user->role_users_id === 3)
-                                <td>{{ __('translate.Cannot_change_Permissions_for_client') }}</td>
-                                @else
-
                                 <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-{{$setting->theme_color}} btn-md m-1 dropdown-toggle" type="button"
-                                            id="assignRole" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            {{ __('translate.Assign_Role') }}
-                                        </button>
-                                        <div class="dropdown-menu" aria-labelledby="assignRole">
-                                            @foreach ($roles as $role)
-                                            <a class="dropdown-item" href="#"
-                                                @click="assignRole( {{ $user->id}} , {{ $role->id}})">{{$role->name}}</a>
-                                            @endforeach
-                                        </div>
-                                    </div>
+                              
+                                    @if($user->RoleUser['name'] == 'Hr')
+                                    {{ __('translate.'.$user->RoleUser['name'])}}
+                                    @elseif($user->RoleUser['name'] == 'Employee')
+                                    {{ __('translate.'.$user->RoleUser['name'])}}
+                                    @else
+                                    {{$user->RoleUser['name']}}
+                                    @endif
                                 </td>
-                                @endif
+                                @can('group_permission')
+                                   @if($user->role_users_id === 1)
+                                   <td>{{ __('translate.Cannot_change_Permissions_for_admin') }}</td>
+                                   @elseif($user->role_users_id === 3)
+                                   <td>{{ __('translate.Cannot_change_Permissions_for_client') }}</td>
+                                   @else
+   
+                                   <td>
+                                       <div class="dropdown">
+                                           <button class="btn btn-{{$setting->theme_color}} btn-md m-1 dropdown-toggle" type="button"
+                                               id="assignRole" data-toggle="dropdown" aria-haspopup="true"
+                                               aria-expanded="false">
+                                               {{ __('translate.Assign_Role') }}
+                                           </button>
+                                           <div class="dropdown-menu" aria-labelledby="assignRole">
+                                               @foreach ($roles as $role)
+                                               <a class="dropdown-item" href="#"
+                                                   @click="assignRole( {{ $user->id}} , {{ $role->id}})">
+                                                   @if($role->name == 'Hr')
+                                                   {{ __('translate.'.$role->name)}}
+                                                   @elseif($role->name == 'Employee')
+                                                   {{ __('translate.'.$role->name)}}
+                                                   @else
+                                                   {{$role->name}}
+                                                   @endif
+                                                </a>
+                                               @endforeach
+                                           </div>
+                                       </div>
+                                   </td>
+                                   @endif
                                 @endcan
                                 @if(auth()->user()->role_users_id == 4)
                                   <td>--</td>

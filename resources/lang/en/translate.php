@@ -654,4 +654,6 @@ return [
     "Cancel_claim_Request" => "Cancel claim request",
     'Edit_Permissions' => 'Edit Permissions',
     'Admin' => 'Admin',
+    'Hr' => 'HR',
+    'Employee Access' => 'Employee Access'
 ];

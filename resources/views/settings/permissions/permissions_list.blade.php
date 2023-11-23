@@ -38,14 +38,31 @@
                         <tbody>
                             @foreach($roles as $role)
                             <tr>
-                                <td>{{$role->name}}</td>
                                 <td>
-                                {{ Illuminate\Support\Str::limit($role->description, $limit = 35) }}
+                                    @if($role->name == 'Hr')
+                                    {{ __('translate.'.$role->name)}}
+                                    @elseif($role->name == 'Employee')
+                                    {{ __('translate.'.$role->name)}}
+                                    @else
+                                    {{$role->name}}
+                                    @endif
+
+                                </td>
+                                <td>
+                                @if($role->description == 'Employee Access') 
+                                {{ Illuminate\Support\Str::limit( __('translate.' .$role->description), $limit = 35) }}
                                     <a @click="Open_Text( {{ $role }})" class="ul-link-action text-{{ $setting->theme_color }} cursor-pointer"
                                         data-toggle="tooltip" data-placement="top" title="Read more" style="font-size: 11px;">
                                         Read more...
                                     </a>
                                 </td>
+                                @else
+                                {{ Illuminate\Support\Str::limit($role->description, $limit = 35) }}
+                                    <a @click="Open_Text( {{ $role }})" class="ul-link-action text-{{ $setting->theme_color }} cursor-pointer"
+                                        data-toggle="tooltip" data-placement="top" title="Read more" style="font-size: 11px;">
+                                        Read more...
+                                    </a>
+                                @endif
                                 @can('group_permission')
                                  @if($role->id === 1 || $role->id === 2 || $role->id === 3 || $role->id === 4)
                                   <td>{{ __('translate.Cannot_change_Default_Permissions') }}</td> 

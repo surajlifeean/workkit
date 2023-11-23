@@ -617,4 +617,5 @@ return [
     "Cancel_claim_Request" => "إلغاء طلب التعويض",
     'Edit_Permissions' => 'تعديل الصلاحيات',
     'Admin' => 'المشرف',
+    'Hr' => 'Hr',
 ];
