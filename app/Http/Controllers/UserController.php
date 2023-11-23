@@ -186,7 +186,7 @@ class UserController extends Controller
                     $path = public_path() . '/assets/images/avatar';
                     $userPhoto = $path . '/' . $currentAvatar;
                     if (file_exists($userPhoto)) {
-                        if ($user->avatar != 'no_avatar.png') {
+                        if ($user->avatar != 'no_avatar.jpeg') {
                             @unlink($userPhoto);
                         }
                     }
