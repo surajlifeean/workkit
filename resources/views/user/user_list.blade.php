@@ -100,7 +100,9 @@
                                   <td>--</td>
                                 @endif
                                 <td>
-                                  
+                                  @if($user->RoleUser['name'] === 'Super Admin' && auth()->user()->role_users_id !== 1)
+                                   <td>--</td>
+                                  @elseif($user->RoleUser['name'] !== 'Super Admin' || auth()->user()->role_users_id === 1)
                                     @can('user_edit')
                                      @if( auth()->user()->role_users_id == 1 || $user->id != 1)
                                       <a @click="Edit_User( {{ $user}})" class="ul-link-action text-success"
@@ -119,7 +121,7 @@
                                         <i class="i-Close-Window"></i>
                                     </a>
                                     @endcan
-
+                                  @endif
                                 </td>
                             </tr>
                             @endforeach
