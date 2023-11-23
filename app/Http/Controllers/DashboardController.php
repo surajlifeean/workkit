@@ -153,8 +153,12 @@ class DashboardController extends Controller
                     DB::raw("count(*) As count"),
                 ])
                 ->pluck('count', 'status_task');
-            // dd($project_status);
-
+                foreach ($days as &$day) {
+                    $day = \Carbon\Carbon::parse($day)->format('d/m/y');
+                }
+                
+                // dd($days);
+                
             return view('dashboard.dashboard', ([
                 'project_status' => $project_status,
                 'task_status' => $task_status,

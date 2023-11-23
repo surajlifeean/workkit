@@ -907,10 +907,10 @@
                                                                 :reduce="label => label.value"
                                                                 :options="leave_types.map(leave_types => ({label: leave_types.title, value: leave_types.id}))">
 
-                                                            <template #no-options>
-                                    {{ __('translate.Sorry, no matching options') }}
-                                </template>
-                            </v-select>
+                                                                <template #no-options>
+                                                                    {{ __('translate.Sorry, no matching options') }}
+                                                                </template>
+                                                            </v-select>
                                                             <span class="error"
                                                                 v-if="errors_leave && errors_leave.leave_type_id">
                                                                 @{{ errors_leave.leave_type_id[0] }}
@@ -2994,13 +2994,19 @@ if (echartElemleave) {
                     value: @json($total_leave_taken),
                     itemStyle: {
                         color: '#663399',
-                    }
+                    },
+                    label: {
+                        fontSize: 9, 
+                    },
                 }, {
                     name: "{{ __('translate.Remaining') }}",
                     value: @json($total_leave_remaining),
                     itemStyle: {
                         color: '#ced4da',
-                    }
+                    },
+                    label: {
+                        fontSize: 9, 
+                    },
                 }]
             }]
         }
@@ -3036,6 +3042,9 @@ if (echartElemleave) {
                         @endforeach
                       
                     ],
+                    label: {
+                        fontSize: 9, 
+                    },
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,
@@ -3077,6 +3086,9 @@ if (echartElemleave) {
                         @endforeach
                       
                     ],
+                    label: {
+                        fontSize: 9, 
+                    },
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,

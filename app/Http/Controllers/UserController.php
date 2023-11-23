@@ -86,7 +86,7 @@ class UserController extends Controller
                     $filename = time() . '.' . $image->extension();
                     $image->move(public_path('/assets/images/avatar'), $filename);
                 } else {
-                    $filename = 'no_avatar.png';
+                    $filename = 'no_avatar.jpeg';
                 }
 
                 $user = User::create([

@@ -534,7 +534,7 @@ return [
     "Work from home" => "En télétravail",
     "Expenses" => "Notes de frais",
     "Team Attendance" => "Présence de l'équipe",
-    "Personal Attendance" => "Présence personnelle",
+    "Personal Attendance" => "Pointages",
     "Employee Expenses" => "Dépenses des employés",
     "Employee Expense List" => "Liste des dépenses des employés",
     "This Week Expense" => "Dépense de cette semaine",

@@ -283,7 +283,10 @@
                     data: @json($total_employee),
                     label: {
                         show: false,
-                        color: '#639'
+                        color: '#639',
+                   
+                        fontSize: 9, 
+      
                     },
                     type: 'bar',
                     barGap: 0,
@@ -333,6 +336,9 @@
                     //     name: 'Deposit'
                     // },
                 ],
+                label: {
+                        fontSize: 9, 
+                    },
                 itemStyle: {
                     emphasis: {
                         shadowBlur: 10,
@@ -427,6 +433,7 @@
                     label: {
                         show: false,
                         color: '#f44336',
+                        fontSize: 9, 
                     },
                     type: 'bar',
                     color: '#f44336',
@@ -480,7 +487,9 @@
                         @endforeach
 
                     ],
-
+                    label: {
+                        fontSize: 9, 
+                    },
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,
@@ -524,7 +533,9 @@
                         @endforeach
 
                     ],
-
+                    label: {
+                        fontSize: 9, 
+                    },
                     itemStyle: {
                         emphasis: {
                             shadowBlur: 10,

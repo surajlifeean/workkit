@@ -173,7 +173,7 @@ class PermissionsController extends Controller
     public function destroy($id)
     {        
         $user_auth = auth()->user();
-		if ($user_auth->can('group_permission') && $user_auth->role_users_id != 1 && $user_auth->role_users_id != 2 && $user_auth->role_users_id != 3){
+		if ($user_auth->can('group_permission') && $user_auth->role_users_id == 1 ){
 
             Role::whereId($id)->update([
                 'deleted_at' => Carbon::now(),
