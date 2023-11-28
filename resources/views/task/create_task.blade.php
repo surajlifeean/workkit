@@ -125,10 +125,10 @@
                             <v-select @input="Selected_Priority" placeholder="{{ __('translate.Select_priority') }}"
                                 v-model="task.priority" :reduce="(option) => option.value" :options="
                                         [
-                                            {label: 'Urgent', value: 'urgent'},
-                                            {label: 'High', value: 'high'},
-                                            {label: 'Medium', value: 'medium'},
-                                            {label: 'Low', value: 'low'},
+                                            {label: '@lang('translate.Urgent')', value: 'urgent'},
+                                            {label: '@lang('translate.High')', value: 'high'},
+                                            {label: '@lang('translate.Medium')', value: 'medium'},
+                                            {label: '@lang('translate.Low')', value: 'low'},
                                         ]">
                             <template #no-options>
                                     {{ __('translate.Sorry, no matching options') }}
@@ -146,11 +146,11 @@
                             <v-select @input="Selected_Status" placeholder="{{ __('translate.Select_status') }}"
                                 v-model="task.status" :reduce="(option) => option.value" :options="
                                             [
-                                                {label: 'Not Started', value: 'not_started'},
-                                                {label: 'In Progress', value: 'progress'},
-                                                {label: 'Cancelled', value: 'cancelled'},
-                                                {label: 'On Hold', value: 'hold'},
-                                                {label: 'Completed', value: 'completed'},
+                                                {label: '@lang('translate.Not_Started')', value: 'not_started'},
+                                                {label: '@lang('translate.In_Progress')', value: 'progress'},
+                                                {label: '@lang('translate.Cancelled')', value: 'cancelled'},
+                                                {label: '@lang('translate.On_Hold')', value: 'hold'},
+                                                {label: '@lang('translate.Completed')', value: 'completed'},
                                             ]">
                             <template #no-options>
                                     {{ __('translate.Sorry, no matching options') }}
