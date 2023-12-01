@@ -28,7 +28,7 @@
 
                             @isset($employee_attendance->clock_in_out)
                                 @if($employee_attendance->clock_in_out != 0)
-                                    ({{ __('translate.Punch_In') }}: {{ date('h:i', strtotime($employee_attendance->clock_in)) }})
+                                ({{ __('translate.Punch_In') }}: {{ date('H:i', strtotime($employee_attendance->clock_in) + (new DateTimeZone($setting->timezone))->getOffset(new DateTime()) ) }})
                                 {{-- @else
                                  ({{ __('translate.Punch_Out') }}: {{ date('h:i A', strtotime($employee_attendance->clock_out)) }}) --}}
                                 @endif

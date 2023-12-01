@@ -111,8 +111,8 @@
                                 <td><a href="/tasks/{{$task->id}}">{{$task->title}}</a></td>
                                 <td>{{$task->company->name}}</td>
                                 <td><a href="/projects/{{$task->project->id}}">{{$task->project->title}}</a></td>
-                                <td>{{ $task->start_date ? \Carbon\Carbon::parse($task->start_date)->format('d/m/Y') : '' }}</td>
-                                 <td>{{ $task->end_date ? \Carbon\Carbon::parse($task->end_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $task->start_date ? \Carbon\Carbon::parse($task->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                 <td>{{ $task->end_date ? \Carbon\Carbon::parse($task->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
 
                                 <td>
                                     @if($task->status == 'completed')

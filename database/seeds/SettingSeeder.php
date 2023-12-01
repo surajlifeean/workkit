@@ -26,6 +26,8 @@ class SettingSeeder extends Seeder
                 'logo' => 'LOGO1.png',
                 'default_language' => 'en',
                 'theme_color' => 'primary',
+                'country' => '',
+                'timezone' => 'UTC',
             )           
         );
     }

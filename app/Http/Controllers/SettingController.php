@@ -102,7 +102,7 @@ class SettingController extends Controller
     {
         $user_auth = auth()->user();
         if ($user_auth->can('settings')) {
-
+            // dd($request);
             $request->validate([
                 'CompanyName'      => 'required|string|max:255',
                 'CompanyPhone'     => 'nullable|numeric',
@@ -112,6 +112,8 @@ class SettingController extends Controller
                 'footer'           => 'required|string|max:255',
                 // 'logo'             => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
                 'currency_id'      => 'required',
+                'country' => 'required',
+                'timezone' => 'required',
             ]);
 
             $setting = Setting::findOrFail($id);
@@ -163,6 +165,8 @@ class SettingController extends Controller
                 'footer' => $request['footer'],
                 'developed_by' => $request['developed_by'],
                 'logo' => $filename,
+                'country' =>  $request['country'],
+                'timezone' => $request['timezone']
             ]);
 
             return response()->json(['success' => true]);

@@ -33,6 +33,7 @@ class AttendancesController extends Controller
             } else {
                 $attendances = Attendance::where('deleted_at', '=', null)
                     ->where('employee_id', '=', $user_auth->id)->orderBy('id', 'desc')->get();
+                    // dd($attendances);
                 return view('attendance.attendance_list', compact('attendances'));
             }
         }

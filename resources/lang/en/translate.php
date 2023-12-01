@@ -655,5 +655,8 @@ return [
     'Edit_Permissions' => 'Edit Permissions',
     'Admin' => 'Admin',
     'Hr' => 'HR',
-    'Employee Access' => 'Employee Access'
+    'Employee Access' => 'Employee Access',
+    'Select_Country' => 'Select Country',
+    'Select_Time_Zone' =>  'Select Time Zone',
+    'Time_Zone' => 'Time Zone',
 ];

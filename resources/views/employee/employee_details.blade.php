@@ -647,8 +647,8 @@
                                                     <tr>
                                                         <td>{{$experience->title}}</td>
                                                         <td>{{$experience->company_name}}</td>
-                                                        <td>{{ $experience->start_date ? \Carbon\Carbon::parse($experience->start_date)->format('d/m/Y') : '' }}</td>
-                                                        <td>{{ $experience->end_date ? \Carbon\Carbon::parse($experience->end_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $experience->start_date ? \Carbon\Carbon::parse($experience->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $experience->end_date ? \Carbon\Carbon::parse($experience->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
 
                                                         <td>
                                                             <a @click="Edit_Experience( {{ $experience}})"
@@ -1009,8 +1009,8 @@
                                                         <td>{{$leave->company_name}}</td>
                                                         <td>{{$leave->department_name}}</td>
                                                         <td>{{$leave->leave_type_title}}</td>
-                                                        <td>{{ $leave->start_date ? \Carbon\Carbon::parse($leave->start_date)->format('d/m/Y') : '' }}</td>
-                                                        <td>{{ $leave->end_date ? \Carbon\Carbon::parse($leave->end_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $leave->start_date ? \Carbon\Carbon::parse($leave->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $leave->end_date ? \Carbon\Carbon::parse($leave->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
 
                                                         <td>{{$leave->days}}</td>
                                                         <td>{{ __('translate.' .$leave->status) }}</td>
@@ -1126,8 +1126,8 @@
                                                     <tr>
                                                         <td>{{$travel->company->name ?? 'N/A'}}</td>
                                                         <td>{{$travel->arrangement_type->title ?? 'N/A'}}</td>
-                                                        <td>{{ $travel->start_date ? \Carbon\Carbon::parse($travel->start_date)->format('d/m/Y') : '' }}</td>
-                                                        <td>{{ $travel->end_date ? \Carbon\Carbon::parse($travel->end_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $travel->start_date ? \Carbon\Carbon::parse($travel->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $travel->end_date ? \Carbon\Carbon::parse($travel->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
 
                                                         <td>{{$travel->visit_purpose}}</td>
                                                         <td>{{$travel->expected_budget}}</td>
@@ -1168,8 +1168,8 @@
                                                         <td>{{$training->company->name}}</td>
                                                         <td>{{$training->trainer->name}}</td>
                                                         <td>{{$training->TrainingSkill->training_skill}}</td>
-                                                        <td>{{ $training->start_date ? \Carbon\Carbon::parse($training->start_date)->format('d/m/Y') : '' }}</td>
-                                                        <td>{{ $training->end_date ? \Carbon\Carbon::parse($training->end_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $training->start_date ? \Carbon\Carbon::parse($training->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $training->end_date ? \Carbon\Carbon::parse($training->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
 
                                                         <td>{{$training->training_cost}}</td>
                                                         <td>
@@ -1217,8 +1217,8 @@
                                                         <td>{{$project->title}}</td>
                                                         <td>{{$project->company->name}}</td>
                                                         <td>{{$project->client->username}}</td>
-                                                        <td>{{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d/m/Y') : '' }}</td>
-                                                        <td>{{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
 
                                                         <td>{{$project->priority}}</td>
                                                         <td>
@@ -1274,8 +1274,8 @@
                                                         <td>{{$task->title}}</td>
                                                         <td>{{$task->company->name}}</td>
                                                         <td>{{$task->project->title}}</td>
-                                                        <td>{{ $task->start_date ? \Carbon\Carbon::parse($task->start_date)->format('d/m/Y') : '' }}</td>
-                                                        <td>{{ $task->end_date ? \Carbon\Carbon::parse($task->end_date)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $task->start_date ? \Carbon\Carbon::parse($task->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                                        <td>{{ $task->end_date ? \Carbon\Carbon::parse($task->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
 
                                                         <td>
                                                             @if($task->status == 'completed')
