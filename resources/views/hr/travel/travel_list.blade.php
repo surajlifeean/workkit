@@ -65,8 +65,8 @@ DB::table('notifications')
                                 <td>{{$travel->employee->username ?? 'N/A'}}</td>
                                 <td>{{$travel->company->name}}</td>
                                 <td>{{ $travel->expenseCategory->title ?? 'N/A' }}</td>
-                                <td>{{ $travel->start_date ? \Carbon\Carbon::parse($travel->start_date)->format('d/m/Y') : '' }}</td>
-                                <td>{{ $travel->end_date ? \Carbon\Carbon::parse($travel->end_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $travel->start_date ? \Carbon\Carbon::parse($travel->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $travel->end_date ? \Carbon\Carbon::parse($travel->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
 
                                 <td>{{$travel->visit_purpose}}</td>
                                 <td>{{$travel->expected_budget}}</td>

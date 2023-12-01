@@ -106,8 +106,8 @@
                                 <td><a href="/projects/{{$project->id}}">{{$project->title}}</a></td>
                                 <td>{{$project->client->username}}</td>
                                 <td>{{$project->company->name}}</td>
-                                <td>{{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->format('d/m/Y') : '' }}</td>
-                                <td>{{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $project->start_date ? \Carbon\Carbon::parse($project->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $project->end_date ? \Carbon\Carbon::parse($project->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
                                 <td>
                                     @if($project->status == 'completed')
                                     <span class="badge badge-success m-2">{{ __('translate.Completed') }}</span>

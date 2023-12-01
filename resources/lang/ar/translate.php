@@ -618,4 +618,7 @@ return [
     'Edit_Permissions' => 'تعديل الصلاحيات',
     'Admin' => 'المشرف',
     'Hr' => 'Hr',
+    'Select_Country' => 'حدد الدولة',
+    'Select_Time_Zone' => 'اختر المنطقة الزمنية',
+    'Time_Zone' =>'المنطقة الزمنية',
 ];

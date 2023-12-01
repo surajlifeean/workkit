@@ -56,7 +56,7 @@
                                         Read more...
                                     </a>
                                    </td>
-                                   <td>{{ $claim->created_at ? \Carbon\Carbon::parse($claim->created_at)->format('d/m/Y H:i') : '' }}</td>
+                                   <td>{{ $claim->created_at ? \Carbon\Carbon::parse($claim->created_at)->timezone($setting->timezone)->format('d/m/Y H:i') : '' }}</td>
 
                                    <td>{{ __('translate.' . $claim->status) }}</td>
                                    <td>

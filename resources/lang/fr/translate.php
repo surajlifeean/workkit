@@ -625,4 +625,7 @@ return [
     'Admin' => 'Admin',
     'Hr' => 'RH',
     'Employee Access' => 'Employé Access',
+    'Select_Country' => 'Choisissez le pays',
+    'Select_Time_Zone' => 'Sélectionner le fuseau horaire',
+    'Time_Zone' =>  'Fuseau horaire',
 ];

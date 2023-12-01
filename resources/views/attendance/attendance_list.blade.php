@@ -54,8 +54,8 @@
                                 <td>{{$attendance->employee->username}}</td>
                                 <td>{{$attendance->company->name}}</td>
                                 <td>{{ $attendance->date ? \Carbon\Carbon::parse($attendance->date)->format('d/m/Y') : '' }}</td>
-                                <td>{{$attendance->clock_in}}</td>
-                                <td>{{$attendance->clock_out}}</td>
+                                <td>{{ $attendance->clock_in ? \Carbon\Carbon::parse($attendance->clock_in)->timezone($setting->timezone)->format('H:i') : '' }}</td>
+                                <td>{{ $attendance->clock_out ? \Carbon\Carbon::parse($attendance->clock_out)->timezone($setting->timezone)->format('H:i') : '' }}</td>                                
                                 <td>{{$attendance->total_work}}</td>
 
                                 <td>

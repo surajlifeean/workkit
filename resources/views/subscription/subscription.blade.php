@@ -82,7 +82,7 @@ $active_plan = ActivePlan::whereIn('status', ['active', 'hold'])
                              {{ ucwords($active_plan->status) }}
                            </span>
                            <span>
-                            {{ __('translate.Exp Date:') }} {{ \Carbon\Carbon::parse($active_plan->end_date)->format('d/m/Y H:i:s') }}    
+                            {{ __('translate.Exp Date:') }} {{ \Carbon\Carbon::parse($active_plan->end_date->format('d/m/Y H:i:s'))->timezone($setting->timezone) }}    
                            </span>
                         @else
                         <a href="{{ route('stripe.checkout', [ 'price' => ( $dt['is_offer_price'] == 1 ? $dt['offered_price'] : $dt['price'] ), 'product' => $dt['plan'], 'currency' => $dt['currency'] , 'plan_id' => $dt['id'] , 'is_offer_price' => $dt['is_offer_price'] ] ) }}" class="btn btn-{{$setting->theme_color}}">{{ __('translate.BUY_NOW') }}</a>

@@ -50,8 +50,8 @@
                                 <td @click="selected_row( {{ $holiday->id}})"></td>
                                 <td>{{$holiday->title}}</td>
                                 <td>{{$holiday->company->name}}</td>
-                                <td>{{ $holiday->start_date ? \Carbon\Carbon::parse($holiday->start_date)->format('d/m/Y') : '' }}</td>
-                                <td>{{ $holiday->end_date ? \Carbon\Carbon::parse($holiday->end_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $holiday->start_date ? \Carbon\Carbon::parse($holiday->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $holiday->end_date ? \Carbon\Carbon::parse($holiday->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
 
                                 <td>
                                     @can('holiday_edit')

@@ -29,7 +29,7 @@
               <div class="card p-2" style="max-width: 80%;width: fit-content;min-width: 300px;">
                <h3>{{ $notification->title }}</h3>
                <p style="max-width: 100%; overflow-wrap: break-word" class="m-0">{{ $notification->message }}</p>
-               <p style="font-size: 10px;" class="ml-auto mt-0 mb-0">{{ $notification->created_at->format('d/m/Y H:i:s') }}</p>
+               <p style="font-size: 10px;" class="ml-auto mt-0 mb-0">{{ $notification->created_at->timezone($setting->timezone)->format('d/m/Y H:i:s') }}</p>
               </div>
             </div>
         @else
@@ -37,7 +37,7 @@
               <div class="card p-2 ml-auto" style="max-width: 90%;width: fit-content;min-width: 300px; background: #D9FDD3;">
                <h3>{{ $notification->title }}</h3>
                <p style="max-width: 100%; overflow-wrap: break-word" class="m-0">{{ $notification->message }}</p>
-               <p style="font-size: 10px;" class="ml-auto mt-0 mb-0">{{  $notification->created_at->format('d/m/Y H:i:s') }}</p>
+               <p style="font-size: 10px;" class="ml-auto mt-0 mb-0">{{  $notification->created_at->timezone($setting->timezone)->format('d/m/Y H:i:s') }}</p>
               </div>
             </div>
         @endif
@@ -85,7 +85,6 @@
 
 <script src="{{asset('assets/js/vendor/datatables.min.js')}}"></script>
 <script src="{{asset('assets/js/datatables.script.js')}}"></script>
-
 
 <script>
     var app = new Vue({
@@ -295,6 +294,7 @@
         });
 
     });
+    
 </script>
 <script>
 window.addEventListener("load", function() {

@@ -56,8 +56,8 @@
                                 <td>{{$training->company->name}}</td>
                                 <td>{{$training->trainer->name}}</td>
                                 <td>{{$training->TrainingSkill->training_skill}}</td>
-                                <td>{{ $training->start_date ? \Carbon\Carbon::parse($training->start_date)->format('d/m/Y') : '' }}</td>
-                                <td>{{ $training->end_date ? \Carbon\Carbon::parse($training->end_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $training->start_date ? \Carbon\Carbon::parse($training->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $training->end_date ? \Carbon\Carbon::parse($training->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
 
                                 <td>{{$training->training_cost}}</td>
                                 <td>

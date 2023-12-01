@@ -54,8 +54,8 @@
                                 <td>{{$announcement->title}}</td>
                                 <td>{{$announcement->company_name}}</td>
                                 <td>{{$announcement->department_name?$announcement->department_name:'all departments'}}</td>
-                                <td>{{ $announcement->start_date ? \Carbon\Carbon::parse($announcement->start_date)->format('d/m/Y') : '' }}</td>
-                                <td>{{ $announcement->end_date ? \Carbon\Carbon::parse($announcement->end_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $announcement->start_date ? \Carbon\Carbon::parse($announcement->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $announcement->end_date ? \Carbon\Carbon::parse($announcement->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
 
                                 @if(auth()->user()->role_users_id != 2)
                                 <td>

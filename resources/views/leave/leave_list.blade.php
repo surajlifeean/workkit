@@ -57,8 +57,9 @@
                                 <td>{{$leave->company_name}}</td>
                                 <td>{{$leave->department_name}}</td>
                                 <td>{{$leave->leave_type_title}}</td>
-                                <td>{{ $leave->start_date ? \Carbon\Carbon::parse($leave->start_date)->format('d/m/Y') : '' }}</td>
-                                <td>{{ $leave->end_date ? \Carbon\Carbon::parse($leave->end_date)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $leave->start_date ? \Carbon\Carbon::parse($leave->start_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                <td>{{ $leave->end_date ? \Carbon\Carbon::parse($leave->end_date)->timezone($setting->timezone)->format('d/m/Y') : '' }}</td>
+                                
                                 <td>{{$leave->days}}</td>
                                 <td>{{ __('translate.' . $leave->status) }}</td>
                                 <td>

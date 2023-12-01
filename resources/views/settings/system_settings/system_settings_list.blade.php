@@ -103,7 +103,26 @@
                                 </span>
                             </div>
 
+                            <div class="col-md-4">
+                                <label for="country" class="ul-form__label">{{ __('translate.Country') }}</label>
+                                <select v-model="setting.country" name="country" onclick="showTimeZones(this.value)" class="form-control" id="country">
+                                    <option value="">{{ __('translate.Select_Country') }}</option>
+                                </select>
+                                <span class="error" v-if="errors_settings && errors_settings.country">
+                                    @{{ errors_settings.country[0] }}
+                                </span>
+                            </div>
 
+                            <div class="col-md-4">
+                                <label for="timezone" class="ul-form__label">{{ __('translate.Time_Zone') }}</label>
+                                <select  class="form-control" name="timezone" id="timezone">
+                                    <option value="" >{{ __('translate.Select_Time_Zone')}}</option>
+                                </select>
+                                <span class="error" v-if="errors_settings && errors_settings.timezone">
+                                    @{{ errors_settings.timezone[0] }}
+                                </span>
+                            </div>
+                            
                             <div class="col-md-12">
                                 <label for="CompanyAdress" class="ul-form__label">{{ __('translate.Company_Adress') }}
                                     <span class="field_required">*</span></label>
@@ -272,6 +291,10 @@
 @endsection
 
 @section('page-js')
+<script src="{{asset('assets/js/countries/index.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js"></script>
+
 
 <script>
     Vue.component('v-select', VueSelect.VueSelect)
@@ -339,12 +362,15 @@
                 self.data.append("CompanyAdress", self.setting.CompanyAdress);
                 self.data.append("footer", self.setting.footer);
                 self.data.append("developed_by", self.setting.developed_by);
+                self.data.append("country", self.setting.country);
+                self.data.append("timezone", $('#timezone').val());
                 self.data.append("_method", "put");
 
                 axios
                     .post("/settings/system_settings/" + self.setting.id, self.data)
                     .then(response => {
                         self.SubmitProcessing = false;
+                        console.log(response)
                         window.location.href = '/settings/system_settings'; 
                         toastr.success('{{ __('translate.Updated_in_successfully') }}');
                         self.errors_settings = {};
@@ -397,7 +423,38 @@
         created() {
         }
 
-    })
+    });
 
+  
+        var country = @json($setting);
+  
+        //loop the countries
+        countries.forEach(i => {
+            $('#country').append(`
+              <option value="${i.code}" ${country.country === i.code ? 'selected' :''}>${i.name}</option>
+            `);
+        });
+
+        //get the time zones
+        function showTimeZones(src){
+            const timeZones = moment.tz.zonesForCountry(src);
+            console.log('show',timeZones);
+            $('#timezone').empty().append(`
+              <option value="" >{{ __('translate.Select_Time_Zone')}}</option>
+            `);
+        
+            timeZones.forEach(i => {
+              $('#timezone').append(`
+                <option value="${i}" ${country.timezone === i ? 'selected' :''}>${i}</option>
+              `);
+            });
+        }
+        //selecting the timezone if data exist 
+        if(country.country != null){
+            console.log(country.country);
+            showTimeZones(country.country);
+        }
+  
+  
 </script>
 @endsection
