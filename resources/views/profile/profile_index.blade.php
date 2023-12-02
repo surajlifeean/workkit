@@ -24,7 +24,7 @@
     <div class="header-cover"></div>
     <div class="user-info">
         <img class="profile-picture avatar-lg mb-2" src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}"
-            alt="">
+            alt="{{ Auth::user()->avatar }}" onerror="this.src='{{ asset('assets/images/avatar/no_avatar.jpeg') }}'">
         <p class="m-0 text-24">@{{ user.username }}</p>
     </div>
     <div class="card-body">
