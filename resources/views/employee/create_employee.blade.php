@@ -84,13 +84,16 @@
                         <div class="form-group col-md-6">
                             <label class="ul-form__label">{{ __('translate.Role') }} <span
                                     class="field_required">*</span></label>
-                            <v-select @input="Selected_Role" placeholder="{{ __('translate.Choose_Role') }}"
-                                v-model="employee.role_users_id" :reduce="label => label.value"
-                                :options="roles.map(roles => ({label: roles.name, value: roles.id}))">
-                            <template #no-options>
-                                    {{ __('translate.Sorry, no matching options') }}
-                                </template>
-                            </v-select>
+                            <select name="role_users_id" id="role_users_id" class="form-control" v-model="employee.role_users_id" @input="Selected_Role">
+                                <option value="">{{ __('translate.Choose_Role') }}</option>
+                                @foreach($roles as $role)
+                                @if($role->name === 'Employee' || $role->name === 'Hr')
+                                    <option value="{{ $role->id }}">{{ __('translate.' . $role->name) }}</option>
+                                @else
+                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                @endif
+                                @endforeach
+                            </select>
 
                             <span class="error" v-if="errors && errors.role_users_id">
                                 @{{ errors.role_users_id[0] }}

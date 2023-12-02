@@ -42,7 +42,7 @@
                                 <td>
                                     <div class="ul-widget-app__profile-pic">
                                         <img class="profile-picture avatar-sm mb-2 rounded-circle img-fluid"
-                                            src="{{ asset('assets/images/avatar/'.$user->avatar) }}" alt="">
+                                            src="{{ asset('assets/images/avatar/'.$user->avatar) }}" alt="" onerror="this.src='{{ asset('assets/images/avatar/no_avatar.jpeg') }}'">
                                     </div>
                                 </td>
                                 <td>{{$user->username}}</td>

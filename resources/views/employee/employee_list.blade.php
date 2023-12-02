@@ -36,11 +36,8 @@
         <div class="row flex-wrap mt-3">
                 @foreach($employees as $employee)
                     <div data-employee="{{ json_encode($employee) }}" data-name="{{ $employee->firstname . ' ' . $employee->lastname }}" class="employee-modal-trigger cursor-pointer mx-3 d-flex align-items-center justify-content-center flex-column" style="width: fit-content">
-                        @if ($employee->user->avatar)
-                            <img style="height: 80px; width: 100px;" src="{{ asset('assets/images/avatar/'. $employee->user->avatar) }}" alt="user avatar">
-                        @else
-                            No avatar
-                        @endif
+                            <img style="height: 80px; width: 100px;" src="{{ asset('assets/images/avatar/'. $employee->user->avatar) }}" alt="user avatar" onerror="this.src='{{ asset('assets/images/avatar/no_avatar.jpeg') }}'">
+                     
                         <p class="mt-1">{{$employee->firstname}} {{$employee->lastname}}</p>
                     </div>
                 @endforeach              
@@ -85,15 +82,13 @@
                             <tr>
                                 <td></td>
                                 <td @click="selected_row( {{ $employee->id}})"></td>
-                                @if ($employee->user->avatar)
+                              
                                 <td>
                                     <a href="{{ asset('assets/images/avatar/'. $employee->user->avatar) }}" target="_blank" onclick="openImageWindow(event)">
-                                        <img style="height: 40px; width: 40px; border-radius: 100%;" src="{{ asset('assets/images/avatar/'. $employee->user->avatar) }}" alt="user avatar">
+                                        <img style="height: 40px; width: 40px; border-radius: 100%;" src="{{ asset('assets/images/avatar/'. $employee->user->avatar) }}" alt="user avatar" onerror="this.src='{{ asset('assets/images/avatar/no_avatar.jpeg') }}'">
                                     </a>
                                 </td>
-                                @else
-                                   No avatar
-                                @endif
+                               
                                 <td>{{$employee->firstname}}</td>
                                 <td>{{$employee->lastname}}</td>
                                 <td>{{$employee->phone}}</td>
