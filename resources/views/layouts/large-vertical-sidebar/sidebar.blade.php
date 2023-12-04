@@ -708,7 +708,7 @@
                             </li>
                         @endcan
             
-                        @can('backup')
+                        {{--@can('backup')
                             <li class="child_links">
                                 <a class="{{ Route::currentRouteName() == 'backup.index' ? 'open' : '' }}"
                                     href="{{ route('backup.index') }}">
@@ -716,7 +716,7 @@
                                     <span class="item-name">{{ __('translate.Backup') }}</span>
                                 </a>
                             </li>
-                        @endcan
+                        @endcan --}}
                     </ul>
 
                 </li>
