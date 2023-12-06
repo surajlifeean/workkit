@@ -383,10 +383,10 @@
                     .post("/users", self.data)
                     .then(response => {
                         self.SubmitProcessing = false;
-                        console.log(response.data.status === 'reached limit');
+                        console.log(response.data);
                          
                         if(response.data.status === 'reached limit'){
-                            toastr.error(response.data.message);
+                            toastr.error("{{ __('translate.plan_limit_exceeded_user')}}");
                         }else{
                             toastr.success('{{ __('translate.Created_in_successfully') }}');
                             window.location.href = '/users';
@@ -398,6 +398,7 @@
                     if (error.response.status == 422) {
                         self.errors = error.response.data.errors;
                     }
+                    console.error(error)
                     toastr.error('{{ __('translate.There_was_something_wronge') }}');
                 });
             },
