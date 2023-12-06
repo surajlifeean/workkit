@@ -628,4 +628,6 @@ return [
     'Select_Country' => 'Choisissez le pays',
     'Select_Time_Zone' => 'Sélectionner le fuseau horaire',
     'Time_Zone' =>  'Fuseau horaire',
+    'plan_limit_exceeded' => 'Limite de plan dépassée ou vous n\'avez pas de plan actif. Impossible de créer plus d\'employés.',
+    'plan_limit_exceeded_user' => 'Limite de plan dépassée ou vous n\'avez pas de plan actif. Impossible de créer plus d\'utilisateurs.',
 ];

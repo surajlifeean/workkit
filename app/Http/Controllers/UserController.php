@@ -59,56 +59,62 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user_auth = auth()->user();
-        if ($user_auth->can('user_add')) {
-            $active_plan = ActivePlan::where('status', 'active')
-            ->where('start_date', '<=', now()) 
-            ->where('end_date', '>=', now())  
-            ->select('total_users')
-            ->first();
-            // dd($active_plan);   
-            $userCount = User::count();
-            // dd($userCount);
-            if (  $active_plan->total_users > $userCount ) {
-             
-                $request->validate([
-                    'username'  => 'required|string|max:255',
-                    'email'     => 'required|string|email|max:255|unique:users',
-                    'password'  => 'required|string|min:6|confirmed',
-                    'password_confirmation' => 'required',
-                    'avatar'    => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
-                    'status'    => 'required',
-                ]);
+        // try {
 
-                if ($request->hasFile('avatar')) {
+            $user_auth = auth()->user();
+            if ($user_auth->can('user_add')) {
+                $active_plan = ActivePlan::where('status', 'active')
+                    ->where('start_date', '<=', now())
+                    ->where('end_date', '>=', now())
+                    ->latest()
+                    ->select('total_users')
+                    ->first();
+                // return $active_plan;
+                $userCount = User::count();
+                // dd($userCount);
+                if ($active_plan && $active_plan->total_users > $userCount) {
 
-                    $image = $request->file('avatar');
-                    $filename = time() . '.' . $image->extension();
-                    $image->move(public_path('/assets/images/avatar'), $filename);
+                    $request->validate([
+                        'username'  => 'required|string|max:255',
+                        'email'     => 'required|string|email|max:255|unique:users',
+                        'password'  => 'required|string|min:6|confirmed',
+                        'password_confirmation' => 'required',
+                        'avatar'    => 'nullable|image|mimes:jpeg,png,jpg,bmp,gif,svg|max:2048',
+                        'status'    => 'required',
+                    ]);
+
+                    if ($request->hasFile('avatar')) {
+
+                        $image = $request->file('avatar');
+                        $filename = time() . '.' . $image->extension();
+                        $image->move(public_path('/assets/images/avatar'), $filename);
+                    } else {
+                        $filename = 'no_avatar.jpeg';
+                    }
+
+                    $user = User::create([
+                        'username'  => $request['username'],
+                        'email'     => $request['email'],
+                        'avatar'    => $filename,
+                        'password'  => Hash::make($request['password']),
+                        'role_users_id'   => 1,
+                        'status'    => $request['status'],
+                    ]);
+
+                    $user->assignRole(1);
+
+                    return response()->json(['success' => true]);
                 } else {
-                    $filename = 'no_avatar.jpeg';
+                    return response()->json([
+                        'status' => 'reached limit',
+                        'message' => 'Plan Limit exceeded. Cannot create more users.'
+                    ]);
                 }
-
-                $user = User::create([
-                    'username'  => $request['username'],
-                    'email'     => $request['email'],
-                    'avatar'    => $filename,
-                    'password'  => Hash::make($request['password']),
-                    'role_users_id'   => 1,
-                    'status'    => $request['status'],
-                ]);
-
-                $user->assignRole(1);
-
-                return response()->json(['success' => true]);
-            }else{
-                return response()->json([
-                    'status' => 'reached limit', 
-                    'message' => 'Plan Limit exceeded. Cannot create more users.'
-                ]);
             }
-        }
-        return abort('403', __('You are not authorized'));
+            return abort('403', __('You are not authorized'));
+        // } catch (\Throwable $th) {
+        //     return $th;
+        // }
     }
 
     /**
@@ -162,8 +168,8 @@ class UserController extends Controller
             ], [
                 'email.unique' => 'This Email already taken.',
             ]);
-           $user = User::where('id', $id)->first();
-        //    dd()
+            $user = User::where('id', $id)->first();
+            //    dd()
             $current = $user->password;
 
             if ($request->password != null) {

@@ -659,4 +659,6 @@ return [
     'Select_Country' => 'Select Country',
     'Select_Time_Zone' =>  'Select Time Zone',
     'Time_Zone' => 'Time Zone',
+    'plan_limit_exceeded' => 'Plan Limit exceeded or you don\'t have an active plan. Cannot create more employees.',
+    'plan_limit_exceeded_user' => 'Cannot create more user. Plan limit exceeded or you don\'t have an active plan.',
 ];

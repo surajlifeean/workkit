@@ -407,9 +407,9 @@
             }).then(response => {
                     self.SubmitProcessing = false;
                    
-                    console.log(response)
+                    console.log(response.data)
                     if(response.data.status === 'reached limit'){
-                        toastr.error(response.data.message);
+                        toastr.error("{{ __('translate.plan_limit_exceeded')}}");
                     }else{
                         window.location.href = '/employees'; 
                         toastr.success('{{ __('translate.Created_in_successfully') }}');

@@ -79,82 +79,90 @@ class EmployeesController extends Controller
      */
     public function store(Request $request)
     {
-        $user_auth = auth()->user();
-        $active_plan = ActivePlan::where('status', 'active')
-            ->where('start_date', '<=', now())
-            ->where('end_date', '>=', now())
-            ->select('total_users')
-            ->first();
-        // dd($active_plan);   
-        $userCount = Employee::count();
-        // dd($userCount);
+        try {
 
-        if ($user_auth->can('employee_add')) {
 
-            if ( ( $active_plan->total_users - 1 ) > $userCount) {
-             
-                $this->validate($request, [
-                    'firstname'      => 'required|string|max:255',
-                    'lastname'       => 'required|string|max:255',
-                    'country'        => 'required|string|max:255',
-                    'gender'         => 'required',
-                    'phone'          => 'required',
-                    'company_id'     => 'required',
-                    'department_id'  => 'required',
-                    'designation_id' => 'required',
-                    'office_shift_id'   => 'required',
-                    'role_users_id'   => 'required',
-                    'email'     => 'required|string|email|max:255|unique:users',
-                    'password'  => 'required|string|min:6|confirmed',
-                    'password_confirmation' => 'required',
-                ], [
-                    'email.unique' => 'This Email already taken.',
-                ]);
+            $user_auth = auth()->user();
+            $active_plan = ActivePlan::where('status', 'active')
+                ->where('start_date', '<=', now())
+                ->where('end_date', '>=', now())
+                ->latest()
+                ->select('total_users')
+                ->first();
+            // return response()->json([ 'data' => $active_plan]);  
+            $userCount = Employee::count();
 
-                $data = [];
-                $data['firstname'] = $request['firstname'];
-                $data['lastname'] = $request['lastname'];
-                $data['username'] = $request['firstname'] . ' ' . $request['lastname'];
-                $data['country'] = $request['country'];
-                $data['email'] = $request['email'];
-                $data['gender'] = $request['gender'];
-                $data['phone'] = $request['phone'];
-                $data['birth_date'] = $request['birth_date'];
-                $data['company_id'] = $request['company_id'];
-                $data['department_id'] = $request['department_id'];
-                $data['designation_id'] = $request['designation_id'];
-                $data['office_shift_id'] = $request['office_shift_id'];
-                $data['joining_date'] = $request['joining_date'];
-                $data['role_users_id'] = $request['role_users_id'];
-                $data['direct_manager_user_id'] =  intval($request['direct_manager_user_id']);
 
-                $user_data = [];
-                $user_data['username'] = $request['firstname'] . ' ' . $request['lastname'];
-                $user_data['email'] = $request->email;
-                $user_data['avatar'] = 'no_avatar.jpeg';
-                $user_data['password'] = Hash::make($request['password']);
-                $user_data['status'] = 1;
-                $user_data['role_users_id'] = intval($request['role_users_id']);
-                // return response()->json($data);
-                \DB::transaction(function () use ($request, $user_data, $data) {
+            if ($user_auth->can('employee_add')) {
 
-                    $user = User::create($user_data);
-                    $user->syncRoles($request['role_users_id']);
+                if ($active_plan && ($active_plan->total_users - 1) > $userCount) {
 
-                    $data['id'] = $user->id;
-                    $data['user_id'] = Auth::user()->id;
-                    $emp = Employee::create($data);
-                }, 10);
+                    $this->validate($request, [
+                        'firstname'      => 'required|string|max:255',
+                        'lastname'       => 'required|string|max:255',
+                        'country'        => 'required|string|max:255',
+                        'gender'         => 'required',
+                        'phone'          => 'required',
+                        'company_id'     => 'required',
+                        'department_id'  => 'required',
+                        'designation_id' => 'required',
+                        'office_shift_id'   => 'required',
+                        'role_users_id'   => 'required',
+                        'email'     => 'required|string|email|max:255|unique:users',
+                        'password'  => 'required|string|min:6|confirmed',
+                        'password_confirmation' => 'required',
+                    ], [
+                        'email.unique' => 'This Email already taken.',
+                    ]);
 
-                return response()->json(['success' => true]);
-            }else{
-                return response()->json([
-                    'status' => 'reached limit', 
-                    'message' => 'Plan Limit exceeded. Cannot create more employees.'
-                ]);
+                    $data = [];
+                    $data['firstname'] = $request['firstname'];
+                    $data['lastname'] = $request['lastname'];
+                    $data['username'] = $request['firstname'] . ' ' . $request['lastname'];
+                    $data['country'] = $request['country'];
+                    $data['email'] = $request['email'];
+                    $data['gender'] = $request['gender'];
+                    $data['phone'] = $request['phone'];
+                    $data['birth_date'] = $request['birth_date'];
+                    $data['company_id'] = $request['company_id'];
+                    $data['department_id'] = $request['department_id'];
+                    $data['designation_id'] = $request['designation_id'];
+                    $data['office_shift_id'] = $request['office_shift_id'];
+                    $data['joining_date'] = $request['joining_date'];
+                    $data['role_users_id'] = $request['role_users_id'];
+                    $data['direct_manager_user_id'] =  intval($request['direct_manager_user_id']);
+
+                    $user_data = [];
+                    $user_data['username'] = $request['firstname'] . ' ' . $request['lastname'];
+                    $user_data['email'] = $request->email;
+                    $user_data['avatar'] = 'no_avatar.jpeg';
+                    $user_data['password'] = Hash::make($request['password']);
+                    $user_data['status'] = 1;
+                    $user_data['role_users_id'] = intval($request['role_users_id']);
+                    // return response()->json($data);
+                    \DB::transaction(function () use ($request, $user_data, $data) {
+
+                        $user = User::create($user_data);
+                        $user->syncRoles($request['role_users_id']);
+
+                        $data['id'] = $user->id;
+                        $data['user_id'] = Auth::user()->id;
+                        $emp = Employee::create($data);
+                    }, 10);
+
+                    return response()->json(['success' => true]);
+                } else {
+
+                    return response()->json([
+                        'status' => 'reached limit',
+                        'message' => 'Plan Limit exceeded or you dont have a active plan. Cannot create more employees.'
+                    ]);
+                }
             }
+            return abort('403', __('You are not authorized'));
+        } catch (\Throwable $th) {
+            return $th;
         }
-        return abort('403', __('You are not authorized'));
     }
 
     /**
@@ -482,19 +490,21 @@ class EmployeesController extends Controller
         return response()->json($employees);
     }
 
-    public function get_employees_claims(){
+    public function get_employees_claims()
+    {
 
         $claims = Claim::leftJoin('employees', 'claims.employee_id', '=', 'employees.id')
-        ->leftJoin('users', 'employees.id', '=', 'users.id')
-        ->whereNull('claims.deleted_at')
-        ->select('claims.title', 'claims.description', 'claims.created_at', 'claims.status', 'claims.id', 'claims.attachment', 'employees.username', 'users.avatar')
-        ->get();
+            ->leftJoin('users', 'employees.id', '=', 'users.id')
+            ->whereNull('claims.deleted_at')
+            ->select('claims.title', 'claims.description', 'claims.created_at', 'claims.status', 'claims.id', 'claims.attachment', 'employees.username', 'users.avatar')
+            ->get();
 
         // dd($claims); 
         return view('employee.employee_claims', compact('claims'));
     }
-    public function employees_claims(Request $request, $id){
-    //    dd($request);
+    public function employees_claims(Request $request, $id)
+    {
+        //    dd($request);
         $claim = Claim::findOrFail($id);
         $claim->status = $request->input('status');
         $claim->save();
