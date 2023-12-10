@@ -36,7 +36,7 @@ $setting = App\Models\Setting::where('id', 1)->first();
     <div class="main-header">
 
         <div class="logo">
-            <img src="{{ asset('assets/images/' . ($setting->is_dark_mode == 0 ? $setting->logo : $setting->dark_logo)) }}" alt="">
+            <img src="{{ asset('assets/images/' . ($setting->is_dark_mode == 0 ? $setting->logo : $setting->dark_logo)) }}" alt="company logo" onerror="this.src='{{ asset('assets/images/avatar/no_avatar.jpeg') }}'">
         </div>
 
         <div class="margin_auto"></div>

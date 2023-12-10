@@ -8,7 +8,7 @@
 </div>
 <div class="breadcrumb">
      <div class="d-flex align-items-center w-100">
-     <img src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}" alt="employee avatar" class=" mr-4" style="border-radius: 10.5rem; width: 120px; height: 120px;">
+     <img src="{{asset('assets/images/avatar/'.Auth::user()->avatar)}}" alt="employee avatar" class=" mr-4" style="border-radius: 10.5rem; width: 120px; height: 120px;" onerror="this.src='{{ asset('assets/images/avatar/no_avatar.jpeg') }}'">
        <h1 class="text-secondary">{{ __('translate.Hi')}} {{ Auth::user()->username }}</h1>
        {{-- @dump(auth()->user());  --}}
      </div>
@@ -114,7 +114,7 @@
                         <div class="d-flex mx-1 py-3" style="overflow-x: scroll; display: flex;">
                         @foreach($not_clock_in as $notpresent)
                             <div class="mr-4" style="border-radius: 100%; overflow: hidden; min-height: 49px; min-width: 49px; max-width: 50px; max-height: 50px;">
-                                <img src="{{ asset('assets/images/avatar/'. $notpresent['avatar'] ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $notpresent['username'] }}">
+                                <img src="{{ asset('assets/images/avatar/'. $notpresent['avatar'] ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $notpresent['username'] }}" onerror="this.src='{{ asset('assets/images/avatar/no_avatar.jpeg') }}'">
                             </div>
                         @endforeach                        
                        </div>
@@ -126,7 +126,7 @@
                          <div class="d-flex mx-1 py-3" style="overflow-x: scroll; display: flex;">
                             @foreach($work_from_home as $wfh)
                                 <div class="mr-4" style="border-radius: 100%; overflow: hidden; min-height: 49px;min-width: 49px;max-width: 50px;max-height: 50px;">
-                                    <img src="{{ asset('assets/images/avatar/'. $wfh->avatar ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $wfh->username }}">
+                                    <img src="{{ asset('assets/images/avatar/'. $wfh->avatar ) }}" style="height: inherit; width: inherit;" alt="avatar" title="{{ $wfh->username }}" onerror="this.src='{{ asset('assets/images/avatar/no_avatar.jpeg') }}'">
                                 </div>
                             @endforeach
                         </div>
