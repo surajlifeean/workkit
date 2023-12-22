@@ -31,6 +31,7 @@ use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
+use Illuminate\Validation\ValidationException;
 
 class EmployeesController extends Controller
 {
@@ -96,25 +97,25 @@ class EmployeesController extends Controller
             if ($user_auth->can('employee_add')) {
 
                 if ($active_plan && ($active_plan->total_users - 1) > $userCount) {
-
-                    $this->validate($request, [
-                        'firstname'      => 'required|string|max:255',
-                        'lastname'       => 'required|string|max:255',
-                        'country'        => 'required|string|max:255',
-                        'gender'         => 'required',
-                        'phone'          => 'required',
-                        'company_id'     => 'required',
-                        'department_id'  => 'required',
-                        'designation_id' => 'required',
-                        'office_shift_id'   => 'required',
-                        'role_users_id'   => 'required',
-                        'email'     => 'required|string|email|max:255|unique:users',
-                        'password'  => 'required|string|min:6|confirmed',
-                        'password_confirmation' => 'required',
-                    ], [
-                        'email.unique' => 'This Email already taken.',
-                    ]);
-
+                    try {
+                        $validator = $request->validate([
+                            'firstname'      => 'required|string|max:255',
+                            'lastname'       => 'required|string|max:255',
+                            'country'        => 'required|string|max:255',
+                            'gender'         => 'required',
+                            'phone'          => 'required',
+                            'company_id'     => 'required',
+                            'department_id'  => 'required',
+                            'designation_id' => 'required',
+                            'office_shift_id'   => 'required',
+                            'role_users_id'   => 'required',
+                            'email'     => 'required|string|email|max:255|unique:users',
+                            'password'  => 'required|string|min:6|confirmed',
+                            'password_confirmation' => 'required',
+                        ]);
+                    } catch (ValidationException $e) {
+                        return response()->json(['errors' => $e->errors()], 422);
+                    }
                     $data = [];
                     $data['firstname'] = $request['firstname'];
                     $data['lastname'] = $request['lastname'];
@@ -322,26 +323,27 @@ class EmployeesController extends Controller
         $user_auth = auth()->user();
         if ($user_auth->can('employee_edit')) {
 
-            $this->validate($request, [
-                'firstname'      => 'required|string|max:255',
-                'lastname'       => 'required|string|max:255',
-                'country'        => 'required|string|max:255',
-                'gender'         => 'required',
-                'phone'          => 'required',
-                'total_leave'    => 'required|numeric|min:0',
-                'company_id'     => 'required',
-                'department_id'  => 'required',
-                'designation_id' => 'required',
-                'office_shift_id'   => 'required',
-                'email'     => 'required|string|email|max:255|unique:users',
-                'email'          => Rule::unique('users')->ignore($id),
-                'role_users_id'   => 'required',
-                'basic_salary'          => 'nullable|numeric',
-                'hourly_rate'          => 'nullable|numeric',
-            ], [
-                'email.unique' => 'This Email already taken.',
-            ]);
-
+            try {
+                $request->validate([
+                    'firstname'      => 'required|string|max:255',
+                    'lastname'       => 'required|string|max:255',
+                    'country'        => 'required|string|max:255',
+                    'gender'         => 'required',
+                    'phone'          => 'required',
+                    'total_leave'    => 'required|numeric|min:0',
+                    'company_id'     => 'required',
+                    'department_id'  => 'required',
+                    'designation_id' => 'required',
+                    'office_shift_id'   => 'required',
+                    'email'     => 'required|string|email|max:255|unique:users',
+                    'email'          => Rule::unique('users')->ignore($id),
+                    'role_users_id'   => 'required',
+                    'basic_salary'          => 'nullable|numeric',
+                    'hourly_rate'          => 'nullable|numeric',
+                ]);
+            } catch (ValidationException $e) {
+                return response()->json(['errors' => $e->errors()], 422);
+            }
 
             $data = [];
             $data['firstname'] = $request['firstname'];

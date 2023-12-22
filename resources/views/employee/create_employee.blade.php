@@ -221,8 +221,7 @@
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label class="ul-form__label">{{ __('translate.Direct_Manager') }} <span
-                                    class="field_required">*</span></label>
+                            <label class="ul-form__label">{{ __('translate.Direct_Manager') }}</label>
                             <v-select
                                 placeholder="{{ __('translate.Direct_Manager') }}"
                                 v-model="employee.direct_manager_user_id" :reduce="label => label.value"
@@ -231,7 +230,9 @@
                                     {{ __('translate.Sorry, no matching options') }}
                                 </template>
                             </v-select>
-
+                            <span class="error" v-if="errors && errors.direct_manager_user_id">
+                                @{{ errors.direct_manager_user_id[0] }}
+                            </span>
                             
                         </div>
 
@@ -407,7 +408,7 @@
             }).then(response => {
                     self.SubmitProcessing = false;
                    
-                    console.log(response.data)
+                    console.log(response);
                     if(response.data.status === 'reached limit'){
                         toastr.error("{{ __('translate.plan_limit_exceeded')}}");
                     }else{
@@ -418,6 +419,7 @@
             })
             .catch(error => {
                 self.SubmitProcessing = false;
+                console.log(error)
                 if (error.response.status == 422) {
                     self.errors = error.response.data.errors;
                 }
